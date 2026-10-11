@@ -70,6 +70,12 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   outings; one tile capped by the API's time limit (reaches back only to May
   2023; decision #77). **16 regions built**: 2,458 hiking traces, 1,707
   walking outings, 4,172 h; pooled v0 4.28 km/h, k 1.78.
+- **Pisgah built** (08:50): 75 hiking traces, 38 walking outings, 32
+  bike/ski. **All 17 planned regions are built** (12 full + 5 lab-only):
+  2,533 hiking traces, 1,745 walking outings, 4,227 walking hours, 446
+  bike/ski traces; pooled v0 4.27 [4.21, 4.33] km/h, k 1.78. Left for T1:
+  upgrading the 5 lab-only city regions with their full downloads (North
+  Shore running), plus the optional stop-rule hand check.
 
 ## Sat 10 Oct 2026
 
