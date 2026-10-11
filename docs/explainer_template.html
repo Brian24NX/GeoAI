@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your project, explained · Hiking speed from GPS traces and remote sensing</title>
+<style>
+:root{
+  color-scheme: light;
+  --surface:#fcfcfb; --surface-2:#f3f2ef; --surface-3:#e9e8e4; --line:#e1e0dc;
+  --text:#0b0b0b; --text-2:#52514e; --text-3:#7a7974;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --s8:#e34948;
+  --s1-soft:#cde2fb; --s2-soft:#fbe0d4; --s3-soft:#cfeee2; --s4-soft:#fbecc8;
+  --neutral:#9a9893; --grid:#e4e3df;
+  --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    color-scheme: dark;
+    --surface:#1a1a19; --surface-2:#232321; --surface-3:#2d2d2a; --line:#3a3a36;
+    --text:#ffffff; --text-2:#c3c2b7; --text-3:#9b9a91;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+    --s1-soft:#1d3a5e; --s2-soft:#4a2616; --s3-soft:#15392c; --s4-soft:#3f3110;
+    --neutral:#77766f; --grid:#33332f;
+    --shadow:none;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--surface);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+a{color:var(--s1)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+header.hero{padding:56px 0 30px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--surface-2),var(--surface))}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-2);font-weight:600}
+h1{font-size:38px;line-height:1.15;margin:8px 0 12px}
+h2{font-size:28px;margin:0 0 6px;line-height:1.2}
+h3{font-size:19px;margin:26px 0 8px}
+.lead{font-size:19px;color:var(--text-2);max-width:820px}
+.meta{font-size:14px;color:var(--text-3);margin-top:14px}
+nav.toc{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:4px;overflow-x:auto;padding-top:8px;padding-bottom:8px;scrollbar-width:none}
+nav.toc a{white-space:nowrap;text-decoration:none;color:var(--text-2);font-size:13.5px;padding:5px 10px;border-radius:999px}
+nav.toc a:hover,nav.toc a.on{background:var(--surface-3);color:var(--text)}
+section{padding:46px 0 10px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:none}
+.sub{color:var(--text-2);margin:0 0 18px;max-width:820px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){.g2,.g3,.g4{grid-template-columns:1fr}h1{font-size:30px}}
+.card{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow)}
+.card h4{margin:2px 0 6px;font-size:16px}
+.card p{margin:0;color:var(--text-2);font-size:15px}
+.icon{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;margin-bottom:8px}
+.stat{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.stat .n{font-size:30px;font-weight:700;line-height:1.1}
+.stat .l{font-size:13.5px;color:var(--text-2)}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface-3);color:var(--text-2);vertical-align:middle}
+.pill.done{background:var(--s1-soft);color:var(--s1)}
+.pill.now{background:var(--s4-soft);color:var(--text)}
+.pill.next{background:var(--surface-3)}
+.callout{border-left:4px solid var(--s1);background:var(--surface-2);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0}
+.callout.warn{border-left-color:var(--s2)}
+.callout.good{border-left-color:var(--s3)}
+.callout b{color:var(--text)}
+figure{margin:16px 0 8px}
+figcaption{font-size:13.5px;color:var(--text-2);margin-top:6px}
+.chart{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 12px 6px}
+svg text{font-family:inherit}
+.axis text{font-size:12px;fill:var(--text-2)}
+.axis line,.axis path{stroke:var(--line)}
+.gridline{stroke:var(--grid)}
+.lbl{font-size:12px;fill:var(--text-2)}
+.lbl-strong{font-size:12.5px;fill:var(--text);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:left;padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--text-2);font-weight:600;font-size:13px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+details{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:10px 0}
+details summary{cursor:pointer;font-weight:600}
+details[open] summary{margin-bottom:8px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--text-2);margin:8px 4px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+#tip{position:fixed;pointer-events:none;z-index:50;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.45;box-shadow:0 6px 20px rgba(0,0,0,.15);display:none;max-width:280px}
+#tip b{font-weight:650}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:4px 4px 8px;font-size:14px;color:var(--text-2)}
+select,input[type=search]{font:inherit;font-size:14px;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+input[type=range]{width:100%;accent-color:var(--s1)}
+.explore{display:grid;grid-template-columns:1.1fr 1fr;gap:14px;align-items:stretch}
+@media (max-width:760px){.explore{grid-template-columns:1fr}}
+.big{font-size:34px;font-weight:700;font-variant-numeric:tabular-nums}
+.muted{color:var(--text-2)}
+.small{font-size:13.5px}
+.timeline{position:relative;margin:10px 0 0 8px;padding-left:22px;border-left:2px solid var(--line)}
+.tl-item{position:relative;margin:0 0 18px}
+.tl-item:before{content:"";position:absolute;left:-30px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--s1);border:2px solid var(--surface)}
+.tl-item.fix:before{background:var(--s2)}
+.tl-date{font-size:13px;color:var(--text-3);font-weight:600}
+.tl-item h4{margin:2px 0 3px;font-size:16px}
+.tl-item p{margin:0;color:var(--text-2);font-size:15px}
+.flow{display:grid;gap:0}
+.check li{list-style:none;margin:6px 0}
+.check{padding-left:4px}
+.check li:before{content:"☐ ";color:var(--text-3)}
+.check li.ok:before{content:"☑ ";color:var(--s3)}
+.gloss dt{font-weight:650;margin-top:10px}
+.gloss dd{margin:2px 0 0 0;color:var(--text-2)}
+.k{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-3);padding:1px 5px;border-radius:5px}
+footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:760px){.twocol{grid-template-columns:1fr}}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.tag{font-size:12.5px;padding:2px 8px;border-radius:6px;background:var(--surface-3);color:var(--text-2)}
+.hl{background:var(--s4-soft);padding:0 3px;border-radius:3px}
+</style>
+</head>
+<body>
+<div id="tip"></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">WashU CSE 5999 · Independent study · Fall 2026 · MVRL (Prof. Nathan Jacobs)</div>
+    <h1>Your project, explained</h1>
+    <p class="lead"><b>How fast do people really hike, and can airborne laser scans and satellite data predict it on trails where maps say nothing about the terrain?</b> This page walks through the whole project: the idea, the background you need, what we have built, what we found, and what comes next. Everything is drawn from the real data.</p>
+    <div class="meta">Brian Zhou · mentors Danni Beaulieu &amp; Tianyi Gao · advisor Prof. Nathan Jacobs · target: <b>IGARSS 2027</b> (4-page paper, deadline <b>11 Jan 2027</b>) · numbers as of <span id="gen"></span></div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#tldr">1 · One minute</a><a href="#why">2 · Why it matters</a><a href="#basics">3 · The basics</a><a href="#design">4 · Research design</a><a href="#plan">5 · The plan</a><a href="#story">6 · What we did</a><a href="#pipeline">7 · The pipeline</a><a href="#dataset">8 · The dataset</a><a href="#findings">9 · Findings</a><a href="#fit">10 · Where we fit</a><a href="#next">11 · What's next</a><a href="#you">12 · Your to-do</a><a href="#glossary">13 · Glossary</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ============================================================ 1 -->
+<section id="tldr">
+  <h2>1 · The one-minute version</h2>
+  <p class="sub">Three ideas hold the whole project.</p>
+  <div class="grid g3">
+    <div class="card">
+      <div class="icon" style="background:var(--s2-soft)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--s2)" stroke-width="2"><path d="M3 20h18M5 20l6-12 4 6 4-4 2 10"/></svg></div>
+      <h4>The problem</h4>
+      <p>GIS software still estimates walking speed with <b>Tobler's 1993 formula</b>. It was fit to old marching tables, not to real hikes, and says you walk <b>6 km/h</b> on a gentle downhill. Real hikers are much slower, and the formula knows nothing about rocks, roots or vegetation.</p>
+    </div>
+    <div class="card">
+      <div class="icon" style="background:var(--s1-soft)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--s1)" stroke-width="2"><circle cx="5" cy="18" r="1.5"/><circle cx="9" cy="13" r="1.5"/><circle cx="14" cy="11" r="1.5"/><circle cx="19" cy="6" r="1.5"/><path d="M5 18l4-5 5-2 5-5" stroke-dasharray="2 2"/></svg></div>
+      <h4>The data</h4>
+      <p>Hikers upload GPS tracks to <b>OpenStreetMap</b>. We turned thousands of them into <b><span data-n="pooled.walking_segments"></span> measured 50 m stretches of trail</b>, each with a real speed and slope, across <b><span data-n="nregions"></span> US/Canadian mountain regions</b> so far.</p>
+    </div>
+    <div class="card">
+      <div class="icon" style="background:var(--s3-soft)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--s3)" stroke-width="2"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="4"/></svg></div>
+      <h4>The question</h4>
+      <p>Maps sometimes say how hard or rough a trail is (OSM "tags"), but usually don't. <b>Can remote sensing fill that gap?</b> Airborne lidar and satellite embeddings, ideally even in a region the model has never seen.</p>
+    </div>
+  </div>
+  <div class="callout good"><b>What you'll have at the end of the semester:</b> a 4-page paper for IGARSS 2027 (the big IEEE remote-sensing conference, Reykjavík, July 2027), the multi-region dataset behind it, and the code: all in your GitHub repo <span class="k">Brian24NX/GeoAI</span>.</div>
+</section>
+
+<!-- ============================================================ 2 -->
+<section id="why">
+  <h2>2 · Why anyone cares</h2>
+  <p class="sub">"How long will it take to get from A to B on foot?" sounds simple. Many decisions depend on the answer, especially in the backcountry, where maps are thin.</p>
+  <div class="grid g3">
+    <div class="card"><h4>🚁 Search &amp; rescue</h4><p>How far could a lost hiker have gone in 6 hours? The search area grows with the square of travel speed.</p></div>
+    <div class="card"><h4>🔥 Wildfire safety</h4><p>Escape routes for firefighters and evacuation planning need realistic travel times. Campbell's group at the US Forest Service works on exactly this.</p></div>
+    <div class="card"><h4>📱 Trail apps</h4><p>"3 h 40 min" on a trail app comes from a speed model. Wrong models mean people out after dark.</p></div>
+    <div class="card"><h4>🗺️ Accessibility maps</h4><p>"Travel-time maps" show how far you can get in X hours across a landscape, for planning, ecology and logistics.</p></div>
+    <div class="card"><h4>🌲 Parks &amp; trail design</h4><p>Which trails are slow, and why: steepness, rock, roots, vegetation? That guides maintenance and signage.</p></div>
+    <div class="card"><h4>🛰️ Remote sensing</h4><p>If satellites and lidar can predict trail difficulty, we get travel-time maps <b>anywhere</b>, even where nobody has mapped the trail details.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ 3 -->
+<section id="basics">
+  <h2>3 · The basics you need</h2>
+  <p class="sub">Six ideas, each with a picture. If you only read one section of this page closely, make it this one.</p>
+
+  <h3>3.1 · Slope, and Tobler's formula</h3>
+  <div class="twocol">
+    <div>
+      <p><b>Slope</b> is rise over run, written as a percent. Climbing 10 m over 100 m of trail is <b>+10%</b>; descending the same is <b>−10%</b>. We always measure it <b>in the direction the person is walking</b>, so uphill is positive. A test in the code guards this sign; getting it backwards would silently flip every result.</p>
+      <p><b>Tobler (1993):</b> <span class="k">speed = 6 · e<sup>−3.5 · |slope + 0.05|</sup></span> km/h. Fastest (6 km/h) at a gentle −5% downhill, falling off on both sides. It's used everywhere in GIS, but its constants came from old marching tables (Imhof, 1950), not from GPS tracks of real hikers.</p>
+    </div>
+    <figure class="chart" style="margin:0">
+      <svg viewBox="0 0 420 220" width="100%" role="img" aria-label="Slope diagram: rise over run">
+        <polygon points="40,190 360,190 360,110" fill="var(--s1-soft)" stroke="var(--s1)" stroke-width="2"/>
+        <line x1="360" y1="190" x2="360" y2="110" stroke="var(--s2)" stroke-width="3"/>
+        <line x1="40" y1="198" x2="360" y2="198" stroke="var(--text-2)" stroke-width="1.5" marker-end="url(#arrow)" marker-start="url(#arrowL)"/>
+        <text x="200" y="214" text-anchor="middle" class="lbl">run: 100 m along the ground</text>
+        <text x="368" y="155" class="lbl" fill="var(--s2)">rise: 10 m</text>
+        <text x="150" y="132" class="lbl-strong" transform="rotate(-14 150 132)">slope = 10 / 100 = +10% (uphill)</text>
+        <g transform="translate(118,148) rotate(-14)"><circle cx="0" cy="-26" r="5" fill="var(--text)"/><line x1="0" y1="-21" x2="0" y2="-6" stroke="var(--text)" stroke-width="2.5"/><line x1="0" y1="-6" x2="-6" y2="4" stroke="var(--text)" stroke-width="2.5"/><line x1="0" y1="-6" x2="6" y2="4" stroke="var(--text)" stroke-width="2.5"/><line x1="0" y1="-16" x2="8" y2="-10" stroke="var(--text)" stroke-width="2.5"/><line x1="0" y1="-16" x2="-7" y2="-11" stroke="var(--text)" stroke-width="2.5"/></g>
+        <text x="60" y="40" class="lbl">→ walking direction decides the sign:</text>
+        <text x="60" y="58" class="lbl">uphill = +, downhill = −</text>
+        <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="var(--text-2)"/></marker><marker id="arrowL" markerWidth="8" markerHeight="8" refX="1" refY="4" orient="auto"><path d="M8,0 L0,4 L8,8 z" fill="var(--text-2)"/></marker></defs>
+      </svg>
+    </figure>
+  </div>
+
+  <div class="explore" style="margin-top:14px">
+    <div class="chart">
+      <div class="controls"><b style="color:var(--text)">Try it:</b> drag to pick a trail slope</div>
+      <input id="slopeSlider" type="range" min="-40" max="40" step="1" value="10" aria-label="trail slope in percent">
+      <svg id="hiker" viewBox="0 0 420 190" width="100%" role="img" aria-label="hiker on a slope"></svg>
+    </div>
+    <div class="card" style="display:flex;flex-direction:column;justify-content:center">
+      <div class="small muted">At a slope of <b id="sv">+10%</b> (<span id="sdir">uphill</span>):</div>
+      <div class="grid g2" style="margin-top:10px">
+        <div><div class="small muted">Tobler predicts</div><div class="big" id="tv">–</div><div class="small muted">km/h · 1 km takes <b id="tt">–</b></div></div>
+        <div><div class="small muted">Real hikers (median)</div><div class="big" style="color:var(--s1)" id="rv">–</div><div class="small muted">km/h · 1 km takes <b id="rt">–</b></div></div>
+      </div>
+      <p class="small" id="sverdict" style="margin:12px 0 0"></p>
+    </div>
+  </div>
+
+  <h3>3.2 · GPS traces and OpenStreetMap</h3>
+  <div class="twocol">
+    <div>
+      <p><b>OpenStreetMap (OSM)</b> is the Wikipedia of maps. Volunteers draw roads and trails, and many upload their <b>GPS traces</b>: a list of points (latitude, longitude, time) recorded every 1–30 s while they walk, bike or drive.</p>
+      <p>When uploading, people pick a <b>privacy level</b>. That decides whether we can measure speed: speed needs <b>timestamps in order</b>. The OSM website's download service (the "API") strips the times from "public" traces. The lab's crawl of the <b>original files</b> keeps them, which is why the lab data added extra hikes.</p>
+    </div>
+    <figure class="chart" style="margin:0">
+      <svg viewBox="0 0 440 230" width="100%" role="img" aria-label="Privacy levels of OSM traces">
+        <text x="12" y="22" class="lbl-strong">Privacy level</text><text x="200" y="22" class="lbl-strong">via OSM API</text><text x="322" y="22" class="lbl-strong">via lab crawl</text>
+        <g class="rows"></g>
+      </svg>
+      <figcaption>Usable for speed = timestamps in the right order. Our data combines both sources and removes duplicates.</figcaption>
+    </figure>
+  </div>
+
+  <h3>3.3 · Map-matching: from wobbly dots to "which trail?"</h3>
+  <div class="twocol">
+    <div>
+      <p>GPS is noisy (a few meters, worse under trees). To know <b>which trail</b> someone was on, and so join its tags, slope and terrain, we "snap" the dots onto the OSM trail network. The method is an <b>HMM map-matcher</b> (hidden Markov model): it picks the most likely <i>sequence</i> of trails, not just the nearest trail for each dot.</p>
+      <p>Checked by hand: ~96% of points match. The failures are honest non-matches (canoe trips down a river, off-trail routes, unmapped paths), not wrong trails.</p>
+    </div>
+    <figure class="chart" style="margin:0">
+      <svg viewBox="0 0 440 210" width="100%" role="img" aria-label="Map-matching illustration">
+        <path d="M20,170 C90,160 120,120 170,110 S260,60 300,70 S380,110 420,90" fill="none" stroke="var(--neutral)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M170,110 C180,150 200,180 250,195" fill="none" stroke="var(--neutral)" stroke-width="5" stroke-linecap="round"/>
+        <text x="306" y="58" class="lbl">OSM trail</text>
+        <g id="mmdots"></g>
+        <path d="M20,170 C90,160 120,120 170,110 S260,60 300,70 S380,110 420,90" fill="none" stroke="var(--s1)" stroke-width="2.5" stroke-dasharray="7 5"/>
+        <text x="190" y="200" class="lbl">side trail (not taken)</text>
+        <circle cx="30" cy="22" r="4" fill="var(--s2)"/><text x="40" y="26" class="lbl">raw GPS point</text>
+        <line x1="140" y1="22" x2="170" y2="22" stroke="var(--s1)" stroke-width="2.5" stroke-dasharray="7 5"/><text x="176" y="26" class="lbl">matched path</text>
+      </svg>
+    </figure>
+  </div>
+
+  <h3>3.4 · Segments, stops and travel modes</h3>
+  <div class="grid g3">
+    <div class="card"><h4>✂️ 50 m segments</h4><p>Each matched hike is cut into 50 m pieces along the trail. Each piece gets <b>one speed</b> (distance ÷ moving time) and <b>one slope</b>. We tested 25 m too: same curve, but 50 m pieces are timed by twice as many GPS points.</p></div>
+    <div class="card"><h4>⏸️ Stops removed</h4><p>Lunch, photos and views aren't "slow walking". A <b>stop rule</b> (still for ≥ 60 s within 10 m) removes about a quarter of the time. We tried four different rules; the results barely move.</p></div>
+    <div class="card"><h4>🚶 🚴 Travel mode</h4><p>Trails are shared with runners, mountain bikers and skiers. We separate them using traces on <b>foot-only trails</b> (bikes not allowed) as the reference, plus a "gravity" check: wheels and skis come downhill far faster than they climb.</p></div>
+  </div>
+
+  <h3>3.5 · Remote sensing: lidar and satellites</h3>
+  <div class="twocol">
+    <div>
+      <p><b>Remote sensing</b> = measuring the Earth from above. Two kinds matter here:</p>
+      <p><b>Airborne lidar.</b> A plane fires laser pulses and times the echoes. Some echoes come from the tree tops, some from bushes, some from the ground. From them we get:</p>
+      <ul>
+        <li>a <b>DEM</b> (digital elevation model): a grid of ground heights, at 1 m or 5 m;</li>
+        <li><b>roughness</b>: rocks and roots on the trail;</li>
+        <li><b>vegetation density</b> at knee-to-chest height (0.85–1.2 m, the band the STRIDE model uses);</li>
+        <li><b>canopy height</b>.</li>
+      </ul>
+      <p><b>Satellite embeddings.</b> Google's "AlphaEarth" turns every 10 m pixel of the Earth into 64 numbers that summarize what's there (forest, rock, snow…). It's a free, pretrained summary we can attach to every trail segment.</p>
+    </div>
+    <figure class="chart" style="margin:0">
+      <svg viewBox="0 0 440 280" width="100%" role="img" aria-label="Lidar cross-section">
+        <rect x="0" y="0" width="440" height="280" fill="none"/>
+        <g opacity=".9">
+          <rect x="70" y="20" width="60" height="18" rx="4" fill="var(--text-2)"/><polygon points="130,24 160,29 130,34" fill="var(--text-2)"/>
+          <text x="40" y="16" class="lbl">survey plane</text>
+        </g>
+        <g id="pulses"></g>
+        <rect x="0" y="196" width="440" height="22" fill="var(--s4-soft)" opacity=".8"/>
+        <text x="300" y="211" class="lbl" fill="var(--text)">0.85–1.2 m: understory band</text>
+        <path d="M0,246 C80,240 140,250 220,236 S360,244 440,232 L440,280 L0,280 z" fill="var(--surface-3)"/>
+        <path d="M0,246 C80,240 140,250 220,236 S360,244 440,232" fill="none" stroke="var(--text-2)" stroke-width="2"/>
+        <text x="12" y="270" class="lbl">ground → DEM, slope, roughness</text>
+        <g id="trees"></g>
+        <path d="M150,241 L210,237" stroke="var(--s2)" stroke-width="5" stroke-linecap="round"/><text x="160" y="232" class="lbl" fill="var(--s2)">trail</text>
+        <circle cx="300" cy="80" r="4" fill="var(--s3)"/><text x="310" y="84" class="lbl">echo from canopy</text>
+        <circle cx="300" cy="100" r="4" fill="var(--s4)"/><text x="310" y="104" class="lbl">echo from understory</text>
+        <circle cx="300" cy="120" r="4" fill="var(--s1)"/><text x="310" y="124" class="lbl">echo from ground</text>
+      </svg>
+    </figure>
+  </div>
+
+  <h3>3.6 · OSM trail tags</h3>
+  <p>Mappers can attach <b>tags</b> to a trail. The useful ones for speed:</p>
+  <div class="grid g3">
+    <div class="card"><h4><span class="k">sac_scale</span> · difficulty</h4><p>hiking → mountain_hiking → demanding_mountain_hiking → alpine… In the White Mountains, at the same slope, "hiking"-grade trails were <b>~14% faster</b> than "mountain_hiking" ones.</p></div>
+    <div class="card"><h4><span class="k">surface</span> · ground type</h4><p>ground, dirt, rock, gravel, paved… Present on about half of the trail segments.</p></div>
+    <div class="card"><h4>The catch</h4><p>About <b>half the trails have no tags at all</b>, and <span class="k">width</span> is almost never tagged. <b>That gap is why remote sensing matters.</b></p></div>
+  </div>
+</section>
+
+<!-- ============================================================ 4 -->
+<section id="design">
+  <h2>4 · The research design</h2>
+  <p class="sub">The plan is built around <b>four questions</b> and <b>four "arms"</b>, competing ways to predict speed that differ only in what information they're allowed to see.</p>
+  <div class="grid g4">
+    <div class="card"><span class="pill">Q1</span><h4 style="margin-top:6px">Measurement</h4><p>What does slope vs speed really look like across thousands of real hikes? Is Tobler's shape right?</p></div>
+    <div class="card" style="border-color:var(--s1)"><span class="pill done">Q2 · the core</span><h4 style="margin-top:6px">Remote sensing vs tags</h4><p>Can lidar and satellite data stand in for missing trail tags, even in a new region?</p></div>
+    <div class="card"><span class="pill">Q3</span><h4 style="margin-top:6px">Asymmetry</h4><p>Is going down really faster than going up, and by how much? "Out-and-back" hikes are a natural experiment.</p></div>
+    <div class="card"><span class="pill">Q4 · stretch</span><h4 style="margin-top:6px">Mode</h4><p>Is a bike just "walking × a constant", or a different curve altogether?</p></div>
+  </div>
+  <figure class="chart" style="margin-top:16px">
+    <svg id="arms" viewBox="0 0 960 300" width="100%" role="img" aria-label="The four arms"></svg>
+    <figcaption>Every arm predicts the speed on each 50 m segment. The interesting outcome: the remote-sensing arm getting close to the tags arm. If it falls short, the size of the gap says which trail properties can't be seen from above, which is also worth publishing.</figcaption>
+  </figure>
+  <h3>The golden rule of evaluation: never test on what you trained on</h3>
+  <p>Points within one hike are almost copies of each other (same person, same day). If one hike sits in both training and testing, the model looks brilliant and means nothing. So we always hold out <b>whole hikes</b>, <b>whole 10 km map squares</b>, and, the headline test, <b>whole regions</b>:</p>
+  <figure class="chart"><svg id="loro" viewBox="0 0 960 170" width="100%" role="img" aria-label="Leave one region out"></svg>
+  <figcaption><b>Leave-one-region-out:</b> train on all regions but one, predict the held-out one, repeat for every region. This is the closest thing to "will it work somewhere new?". Click a region to make it the test region.</figcaption></figure>
+</section>
+
+<!-- ============================================================ 5 -->
+<section id="plan">
+  <h2>5 · The plan, and where we are on it</h2>
+  <p class="sub">The semester plan defines four deliverables (T1–T4) and two "gates", checkpoints where the project can change course.</p>
+  <div class="grid g4">
+    <div class="card"><span class="pill done">T1 · nearly done</span><h4 style="margin-top:6px">Trajectory dataset</h4><p>Clean, matched, segmented hikes with speed, slope, direction, mode, tags.</p></div>
+    <div class="card"><span class="pill now">T2 · next</span><h4 style="margin-top:6px">Remote-sensing covariates</h4><p>For every segment: lidar terrain, roughness, vegetation, canopy, satellite embeddings.</p></div>
+    <div class="card"><span class="pill next">T3</span><h4 style="margin-top:6px">Four-arm comparison</h4><p>Tobler vs tags vs remote sensing vs both, tested on held-out regions. <b>The headline experiment.</b></p></div>
+    <div class="card"><span class="pill next">T4</span><h4 style="margin-top:6px">Curves &amp; asymmetry</h4><p>Slope-speed curves, up vs down, by trail type and mode. First looks already done.</p></div>
+  </div>
+  <figure class="chart" style="margin-top:16px"><svg id="gantt" viewBox="0 0 960 330" width="100%" role="img" aria-label="Project timeline"></svg>
+  <figcaption>Dark bars: done. Light bars: planned. The dashed line is today. Gate 1 asked "are OSM traces usable at all?" (passed 2 Oct). Gate 2 asks "does remote sensing close the gap to tags?" (~13 Nov).</figcaption></figure>
+</section>
+
+<!-- ============================================================ 6 -->
+<section id="story">
+  <h2>6 · What we've done so far</h2>
+  <p class="sub">The story in order, including what broke. Orange dots mark problems we found and fixed; each of them would have quietly corrupted the results.</p>
+  <div class="timeline" id="storyline"></div>
+</section>
+
+<!-- ============================================================ 7 -->
+<section id="pipeline">
+  <h2>7 · How the dataset is built</h2>
+  <p class="sub">The same pipeline runs for every region, automatically, on the lab cluster. Numbers on the right are for the White Mountains (the first region) as an example.</p>
+  <figure class="chart"><svg id="flow" viewBox="0 0 960 760" width="100%" role="img" aria-label="Data pipeline flowchart"></svg></figure>
+  <div class="callout"><b>Two data sources, one dataset.</b> (1) The OSM API gives "trackable" and "identifiable" traces from all years, but only page by page: 5,000 points a page, ~5 s each, one request at a time. That's why downloads take hours: near highways we page through millions of car-logger points. (2) The lab's crawl of 1.5 million original trace files (2016–2022) adds "public" traces with their timestamps. The same hike from both sources is kept only once.</div>
+</section>
+
+<!-- ============================================================ 8 -->
+<section id="dataset">
+  <h2>8 · The dataset today</h2>
+  <p class="sub">Danni asked for "as many regions as possible across the US / North America". 23 candidate regions were scouted; these are built so far.</p>
+  <div class="grid g4" id="tiles"></div>
+  <figure class="chart" style="margin-top:14px">
+    <svg id="map" viewBox="0 0 960 520" width="100%" role="img" aria-label="Map of regions"></svg>
+    <div class="legend" id="mapLegend"></div>
+    <figcaption>Schematic map (outline simplified). Circle size = hours of walking data. Hover a circle for its numbers.</figcaption>
+  </figure>
+  <figure class="chart">
+    <div class="controls"><b style="color:var(--text)">Who's on the trails?</b> travel mode of each hiking trace, by region</div>
+    <svg id="modes" viewBox="0 0 960 470" width="100%" role="img" aria-label="Travel modes by region"></svg>
+    <div class="legend" id="modesLegend"></div>
+    <figcaption>Front Range (Boulder) and Tahoe are mountain-bike country, so the mode question (Q4) has real data. Walkers are what we fit the speed curves on.</figcaption>
+  </figure>
+  <details><summary>See every region's numbers (table)</summary><div style="overflow-x:auto"><table id="regionTable"></table></div></details>
+  <figure class="chart">
+    <img id="wmmap" alt="Map of White Mountains trail segments colored by speed" style="width:100%;border-radius:10px;background:#fff">
+    <figcaption>Real data: every walked trail segment in the White Mountains, colored by speed (purple slow, yellow fast). The long yellow lines are flat old railroad grades like the Lincoln Woods Trail (5.3 km/h); the purple tangles are steep, rocky climbs like Tuckerman Ravine (2.5 km/h).</figcaption>
+  </figure>
+  <h3>Quality checks (so we can trust it)</h3>
+  <div class="grid g3">
+    <div class="card"><h4>✅ Map-matching</h4><p>~96% of GPS points match a trail; the 12 worst hikes were inspected by eye. Failures are correct non-matches.</p></div>
+    <div class="card"><h4>✅ Stop rule</h4><p>Four different stop rules remove 21–30% of the time, yet the peak speed moves by only ~0.1 km/h.</p></div>
+    <div class="card"><h4>✅ Elevation</h4><p>1 m and 5 m elevation give the same slopes (median difference 0.3 points of grade). Most regions sit on 1 m lidar; Olympic and the North Shore don't (flagged).</p></div>
+    <div class="card"><h4>✅ Duplicates &amp; group hikes</h4><p>Re-uploads of the same hike are removed. Two phones on one hike count as one "outing", so we don't double-count people.</p></div>
+    <div class="card"><h4>✅ Bad dates</h4><p>A GPS clock bug put one 2007 hike in 1987. Flagged, so seasons aren't mislabeled.</p></div>
+    <div class="card"><h4>⚠️ Known limits</h4><p>OSM uploaders are enthusiasts, not average hikers. Some regions use lab data only so far. The API can't reach uploads older than ~2009 in the busiest tiles.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ 9 -->
+<section id="findings">
+  <h2>9 · What we've found</h2>
+  <p class="sub">All before any remote sensing, from the T1 data alone. Each chart says what it means in plain words.</p>
+
+  <h3>Finding 1 · Tobler is about 40% too fast at the peak, everywhere</h3>
+  <figure class="chart">
+    <div class="controls">Compare one region: <select id="regionPick"></select></div>
+    <svg id="curve" viewBox="0 0 960 430" width="100%" role="img" aria-label="Speed vs slope, real hikers vs Tobler"></svg>
+    <div class="legend" id="curveLegend"></div>
+    <figcaption><b>How to read it:</b>
+      <ul>
+        <li>The x-axis is the trail slope in the walking direction.</li>
+        <li>The blue line is the median speed of real walkers at each slope; the shaded band holds the middle 50% of segments.</li>
+        <li>The dashed line is Tobler's formula.</li>
+      </ul>
+      Real hikers peak at about <b><span data-n="pooled.v0"></span> km/h</b> near −5%, not 6. The top of the curve is <b>rounded</b>, not a sharp point. On steep grades the data and Tobler roughly agree. Hover to read values.</figcaption>
+  </figure>
+  <div class="callout warn"><b>Honest context:</b> Campbell et al. (2019, 2022) found the same thing with Strava and AllTrails data from Utah and California (~4.1 km/h, a rounded "Lorentz" curve). So Finding 1 <b>confirms</b> earlier work, now across many regions. It's supporting context, not the paper's main claim (section 10 explains).</div>
+
+  <h3>Finding 2 · Regions differ, and that's what remote sensing has to explain</h3>
+  <figure class="chart"><svg id="regionsFit" viewBox="0 0 960 520" width="100%" role="img" aria-label="Peak speed and slope sensitivity by region"></svg>
+  <figcaption><b>Left:</b> peak speed (v0). <b>Right:</b> slope sensitivity (k): how sharply speed drops as trails steepen. Bars are 95% intervals from resampling whole hikes. Rocky northeastern ranges (Adirondacks, White Mountains, Green Mountains) have high k, so steepness slows people a lot. Western trails with graded switchbacks have lower k. Olympic's low k is partly coarse elevation data. Explaining these differences with terrain and vegetation is T2's job.</figcaption></figure>
+
+  <div class="twocol">
+    <div>
+      <h3>Finding 3 · Downhill is only a bit faster</h3>
+      <figure class="chart"><svg id="asym" viewBox="0 0 460 320" width="100%" role="img" aria-label="Downhill vs uphill speed ratio"></svg>
+      <figcaption>Same person, same trail, both directions ("out-and-back"). Coming down is <b>8% faster</b> on gentle trails and <b>~24% faster</b> on very steep ones, never Tobler's constant 42%.</figcaption></figure>
+    </div>
+    <div>
+      <h3>Finding 4 · Who you are vs where you walk</h3>
+      <figure class="chart"><svg id="variance" viewBox="0 0 460 320" width="100%" role="img" aria-label="Variance decomposition"></svg>
+      <figcaption>After accounting for slope, about <b>a quarter</b> of the remaining speed variation is the hiker and the day (fitness, pack, weather). <b>Three quarters</b> varies along the trail within a hike. That's the part terrain and vegetation data could explain. Only ~2% is "which region".</figcaption></figure>
+    </div>
+  </div>
+  <div class="grid g3">
+    <div class="card"><h4>Finding 5 · No fatigue signal</h4><p>Within a hike, speed (after slope) barely changes with hours walked: about −0.25% per hour.</p></div>
+    <div class="card"><h4>Finding 6 · Tags carry information</h4><p>White Mountains: "hiking"-grade trails are ~14% faster than "mountain_hiking" ones at the same slope; untagged trails ~11% slower. Remote sensing has to recover this.</p></div>
+    <div class="card"><h4>Finding 7 · Winter isn't slower (?)</h4><p>In the White Mountains, winter hikes weren't slower, maybe because packed snow covers the rocks. To test properly with satellite snow maps.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================ 10 -->
+<section id="fit">
+  <h2>10 · Where we fit in the research world</h2>
+  <p class="sub">A literature survey on 11 Oct changed the paper's focus. Earlier work covers pieces of this, but nobody has put all three together:</p>
+  <figure class="chart"><svg id="venn" viewBox="0 0 960 430" width="100%" role="img" aria-label="Positioning against prior work"></svg></figure>
+  <table>
+    <thead><tr><th>Work</th><th>What they did</th><th>How we differ</th></tr></thead>
+    <tbody>
+      <tr><td>Tobler 1993</td><td>The formula everyone uses (from 1950s tables)</td><td>We test it on real hikes</td></tr>
+      <tr><td>Campbell et al. 2019, 2022</td><td>Strava / AllTrails hikes in Utah &amp; California; rounded "Lorentz" curves, ~4.1 km/h</td><td>We have many regions, test transfer, and add covariates</td></tr>
+      <tr><td><b>STRIDE</b> (Campbell 2024)</td><td>Lidar-based walking-speed model (vegetation density + roughness) from timed field walks</td><td>Our <b>lidar baseline</b>; we test on crowdsourced hikes in new regions</td></tr>
+      <tr><td><b>Wood et al. 2023</b></td><td>7,600 UK hikes (Hikr + OSM); OSM terrain class + lidar obstruction in a linear model</td><td>Closest work. No held-out-region test; we compare tags vs remote sensing head-to-head</td></tr>
+      <tr><td>HikingTTE 2024</td><td>Deep model of whole-hike time, personalized to the hiker</td><td>We predict per-segment speed from terrain, not from the person</td></tr>
+      <tr><td>RasterNet 2020 (our lab)</td><td>Road speed from lidar + aerial imagery</td><td>We do the same idea for trails</td></tr>
+    </tbody>
+  </table>
+  <div class="callout good"><b>So the paper's lead claim becomes:</b> <i>"Do we need a trail map? Predicting hiking speed in regions the model has never seen, from airborne lidar and satellite embeddings."</i> The four arms are tested with leave-one-region-out, with Campbell, Wood and STRIDE as baselines next to Tobler, and with calibrated uncertainty.</div>
+</section>
+
+<!-- ============================================================ 11 -->
+<section id="next">
+  <h2>11 · What's next</h2>
+  <h3>T2 · What remote sensing will add to every segment</h3>
+  <div class="grid g3">
+    <div class="card"><span class="pill now">tier 1</span><h4 style="margin-top:6px">⛰️ Terrain (1 m lidar DEM)</h4><p>Slope at 1 m, steepest pitch, <b>roughness</b> (rocks and roots: ground minus a 2 m-smoothed ground, STRIDE's definition).</p></div>
+    <div class="card"><span class="pill now">tier 1</span><h4 style="margin-top:6px">🌲 Canopy height</h4><p>Meta's free 1 m canopy-height map (covers Canada too). Plus land cover and canopy cover (NLCD, 30 m).</p></div>
+    <div class="card"><span class="pill now">tier 1</span><h4 style="margin-top:6px">🛰️ Satellite embeddings</h4><p>AlphaEarth: 64 numbers per 10 m pixel summarizing the landscape, matched to the hike's year. A free, pretrained summary of what's there.</p></div>
+    <div class="card"><span class="pill next">tier 2</span><h4 style="margin-top:6px">🌿 Understory density</h4><p>Share of lidar echoes at 0.85–1.2 m height (bushes at knee-to-chest level), from USGS point clouds on the cluster.</p></div>
+    <div class="card"><span class="pill next">tier 2</span><h4 style="margin-top:6px">❄️ Snow on the hike date</h4><p>Daily satellite snow maps (MODIS, SNODAS). Something no map can have: <b>conditions on that day</b>.</p></div>
+    <div class="card"><span class="pill next">tier 3</span><h4 style="margin-top:6px">🖼️ Aerial images</h4><p>Image features from 0.6 m aerial photos (NAIP), RasterNet-style. Stretch goal / follow-on paper.</p></div>
+  </div>
+  <h3>T3 · The models and the test</h3>
+  <div class="grid g3">
+    <div class="card"><h4>Models</h4><p>Gradient-boosted trees (a strong, honest baseline), and Tobler's formula with its constants <b>learned from terrain</b>. That gives readable results like "k ≈ 2.4 on rocky trails, 1.7 on smooth ones".</p></div>
+    <div class="card"><h4>Scores</h4><p>Speed errors per segment, whole-hike time errors, and <b>calibration</b>: does a predicted "80% range" really contain 80% of hikes?</p></div>
+    <div class="card"><h4>Gate 2 (~13 Nov)</h4><p>Does the remote-sensing arm get close to the tags arm in held-out regions? Either answer is publishable; the gap size is the finding.</p></div>
+  </div>
+  <h3>The paper: 4 pages, IEEE format</h3>
+  <figure class="chart"><svg id="paper" viewBox="0 0 960 250" width="100%" role="img" aria-label="Paper layout"></svg>
+  <figcaption>Four pages fit one headline result and two or three figures, so we write to the limit from the start. The submission portal opens 10 Nov 2026; the deadline is 11 Jan 2027; we aim to submit by ~8 Jan with the Student Paper Competition entry.</figcaption></figure>
+  <h3>Risks we're watching</h3>
+  <table>
+    <tbody>
+      <tr><td><b>Novelty overlap</b> with Campbell / Wood</td><td>Lead with transfer to new regions + remote sensing vs tags + calibration; use their models as baselines.</td></tr>
+      <tr><td><b>Small effective sample</b> (~1,600 walking outings)</td><td>Compact models; frozen pretrained embeddings; no giant neural nets.</td></tr>
+      <tr><td><b>Regions with coarse elevation</b> (Olympic, BC)</td><td>Canada's own lidar (NRCan HRDEM); flag or exclude in lidar arms.</td></tr>
+      <tr><td><b>Lab-only regions</b> miss anonymous traces</td><td>Full downloads are running and will rebuild them automatically.</td></tr>
+      <tr><td><b>Selection bias</b> (OSM uploaders are enthusiasts)</td><td>Can't fix; state it plainly in the paper.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================ 12 -->
+<section id="you">
+  <h2>12 · Your to-do, and what to say in meetings</h2>
+  <div class="twocol">
+    <div>
+      <h3>This week</h3>
+      <ul class="check">
+        <li>Read <b>Wood et al. 2023</b> (PLOS ONE) and <b>STRIDE</b> (Campbell 2024, Sci. Reports): the two papers closest to ours.</li>
+        <li>Then Campbell 2019 &amp; 2022, HikingTTE, RasterNet.</li>
+        <li>Label the 20 stop moments in <span class="k">stop_check/stop_check.html</span> (~15 min).</li>
+        <li>Ask Danni at the 16 Oct meeting (list on the right).</li>
+        <li class="ok">GitHub repo with a daily progress log: <span class="k">Brian24NX/GeoAI</span></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Questions for Danni &amp; Tianyi (16 Oct)</h3>
+      <ol>
+        <li>T1 is done once the last regions land. <b>OK to start T2?</b></li>
+        <li>Lead the paper with leave-one-region-out "remote sensing vs tags", with Campbell / Wood / STRIDE baselines. <b>Agree?</b></li>
+        <li><b>Earth Engine / Google Cloud</b> for the satellite embeddings, or the free mirror? A lab-preferred model?</li>
+        <li><b>Cluster account:</b> keep <span class="k">engr-class-any</span> (≤ 8 CPUs/job) or a lab account?</li>
+        <li>Can we <b>release a derived dataset</b> (no usernames) with the paper?</li>
+      </ol>
+    </div>
+  </div>
+  <details><summary>If a mentor asks… (short answers)</summary>
+    <p><b>"Why is the peak speed so low?"</b> Several reasons:</p>
+    <ul>
+      <li>Campbell found the same (~4.1 km/h).</li>
+      <li>Our number holds under four stop rules and with 1 m elevation.</li>
+      <li>The data match Tobler on steep grades, so speeds and slopes aren't broken.</li>
+      <li>Real trails are rough, and Tobler's constants came from 1950s marching tables.</li>
+    </ul>
+    <p><b>"How do you know which trail someone was on?"</b> HMM map-matching. ~96% of points match, and we inspected the worst cases by eye.</p>
+    <p><b>"Aren't segments from one hike correlated?"</b> Yes. Every interval resamples whole outings, and every test holds out whole hikes, map squares or regions, never single points.</p>
+    <p><b>"What's new compared with Campbell and Wood?"</b> Testing in unseen regions; remote sensing vs tags head-to-head; calibrated uncertainty; same-hiker asymmetry at scale.</p>
+    <p><b>"Why so many regions?"</b> You asked for it, and it enables the leave-one-region-out test, the paper's strongest claim.</p>
+  </details>
+</section>
+
+<!-- ============================================================ 13 -->
+<section id="glossary">
+  <h2>13 · Glossary</h2>
+  <div class="controls"><input id="gsearch" type="search" placeholder="Search a term…" aria-label="search the glossary"></div>
+  <dl class="gloss" id="gloss"></dl>
+  <h3>Where everything lives</h3>
+  <table>
+    <tbody>
+      <tr><td>Code, docs, daily log</td><td>GitHub <span class="k">Brian24NX/GeoAI</span> (private) = your <span class="k">~/Desktop/GeoAI</span> folder</td></tr>
+      <tr><td>The plan to the paper</td><td><span class="k">docs/NEXT_STEPS.md</span></td></tr>
+      <tr><td>Every decision and why</td><td><span class="k">DECISIONS_LOG.md</span></td></tr>
+      <tr><td>Day-by-day progress</td><td><span class="k">PROGRESS.md</span></td></tr>
+      <tr><td>All data + running jobs</td><td>Lab cluster: <span class="k">/engrfs/project/jacobsn/zhou.n/travel-speed/</span> (needs the WashU network or VPN)</td></tr>
+      <tr><td>This page</td><td><span class="k">Project_Explainer.html</span>; rebuild with <span class="k">python travel-speed-gate1/make_explainer.py</span></td></tr>
+    </tbody>
+  </table>
+</section>
+</main>
+
+<footer><div class="wrap">Built from the project's own data. AI assistance: Claude (Anthropic) wrote the code and drafted this page; Brian reviews the work and is responsible for it.</div></footer>
+
+<script id="data" type="application/json">/*__DATA__*/</script>
+<script>
+(function(){
+"use strict";
+const D = JSON.parse(document.getElementById("data").textContent);
+const NS = "http://www.w3.org/2000/svg";
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmt = (x, d=0) => (x==null||isNaN(x)) ? "–" : Number(x).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+function S(tag, attrs, parent, text){const e=document.createElementNS(NS,tag);for(const k in (attrs||{}))e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+const tip=document.getElementById("tip");
+function showTip(html,ev){tip.innerHTML=html;tip.style.display="block";const x=Math.min(ev.clientX+14,window.innerWidth-300);const y=Math.min(ev.clientY+14,window.innerHeight-tip.offsetHeight-10);tip.style.left=x+"px";tip.style.top=y+"px";}
+function hideTip(){tip.style.display="none";}
+function hover(el, html){el.style.cursor="default";el.addEventListener("mousemove",ev=>showTip(typeof html==="function"?html():html,ev));el.addEventListener("mouseleave",hideTip);}
+const lin=(d0,d1,r0,r1)=>v=>r0+(v-d0)/(d1-d0)*(r1-r0);
+
+// ---------------------------------------------------------------- numbers
+const regionsBuilt = D.regions || [];
+const pooled = D.pooled || {};
+document.getElementById("gen").textContent = (D.generated_utc||"") + " UTC";
+const N = {"pooled.walking_segments": fmt(pooled.walking_segments), "nregions": regionsBuilt.length, "pooled.v0": fmt(pooled.v0,2)};
+document.querySelectorAll("[data-n]").forEach(e=>{e.textContent=N[e.dataset.n]??"–";});
+const short = {wm:"White Mtns",adk:"Adirondacks",catskills:"Catskills",greenmtn:"Green Mtns",acadia:"Acadia",shenandoah:"Shenandoah",smokies:"Smokies",pisgah:"Pisgah",frontrange:"Front Range",cosprings:"Colo. Springs",wasatch:"Wasatch",tetons:"Tetons",glacier:"Glacier",sedona:"Sedona",boise:"Boise",cascades:"Cascades",gorge:"Col. Gorge",olympic:"Olympic",bayarea:"Bay Area",sangabriel:"San Gabriels",yosemite:"Yosemite",tahoe:"Tahoe",northshore:"North Shore"};
+const inProgress = new Set(["shenandoah","pisgah","bayarea","wasatch"]);
+
+// ---------------------------------------------------------- privacy table
+(function(){
+  const svg=document.querySelector("#basics svg[aria-label='Privacy levels of OSM traces'] .rows");
+  const rows=[["identifiable","name + times, in order","✔ speed","✔ speed"],["trackable","anonymous, times in order","✔ speed","✘ not listed"],["public","name shown, file public","✘ times removed","✔ speed"],["private","anonymous, no times","✘ no times","✘ hidden"]];
+  rows.forEach((r,i)=>{const y=48+i*42;S("rect",{x:6,y:y-20,width:428,height:34,rx:8,fill:i%2?"transparent":"var(--surface-3)"},svg);
+    S("text",{x:14,y:y,class:"lbl-strong"},svg,r[0]);S("text",{x:14,y:y+13,class:"lbl"},svg,r[1]);
+    [[200,r[2]],[322,r[3]]].forEach(([x,t])=>S("text",{x:x,y:y+4,class:"lbl",fill:t.startsWith("✔")?"var(--s3)":"var(--text-3)","font-weight":t.startsWith("✔")?"600":"400"},svg,t));});
+})();
+
+// ---------------------------------------------------------- map-matching dots
+(function(){
+  const g=document.getElementById("mmdots");
+  const pts=[[20,170],[60,158],[95,148],[122,128],[150,118],[180,103],[215,92],[245,78],[275,72],[305,72],[335,82],[365,96],[395,98],[418,90]];
+  const jit=[[4,-9],[-3,10],[6,-8],[-8,6],[5,11],[-6,-10],[8,9],[-4,-12],[6,10],[-7,-8],[4,12],[-6,-9],[7,8],[-5,-7]];
+  pts.forEach((p,i)=>{const x=p[0]+jit[i][0],y=p[1]+jit[i][1];S("line",{x1:x,y1:y,x2:p[0],y2:p[1],stroke:"var(--s2)","stroke-width":1,"stroke-dasharray":"2 2",opacity:.7},g);S("circle",{cx:x,cy:y,r:4.5,fill:"var(--s2)",stroke:"var(--surface-2)","stroke-width":1.5},g);});
+})();
+
+// ---------------------------------------------------------- lidar picture
+(function(){
+  const t=document.getElementById("trees"), p=document.getElementById("pulses");
+  [[60,244,120],[110,246,95],[260,238,130],[330,240,105],[395,236,115]].forEach(([x,gy,h])=>{
+    S("line",{x1:x,y1:gy,x2:x,y2:gy-h*0.35,stroke:"var(--text-2)","stroke-width":4},t);
+    S("ellipse",{cx:x,cy:gy-h*0.6,rx:26,ry:h*0.32,fill:"var(--s3)",opacity:.55},t);});
+  [[78,206],[96,204],[285,206],[352,207],[230,205]].forEach(([x,y])=>S("circle",{cx:x,cy:y,r:7,fill:"var(--s4)",opacity:.7},t));
+  [[60,72],[110,140],[180,238],[260,92],[300,200],[330,110],[395,96],[140,244]].forEach(([x,y],i)=>{
+    S("line",{x1:150,y1:34,x2:x,y2:y,stroke:"var(--s7)","stroke-width":1,opacity:.35,"stroke-dasharray":"3 3"},p);
+    const c = y>230? "var(--s1)" : (y>195? "var(--s4)":"var(--s3)");
+    S("circle",{cx:x,cy:y,r:4,fill:c},p);});
+})();
+
+// ---------------------------------------------------------- tobler explorer
+(function(){
+  const curve=(D.curves||{}).ALL||{slope_pct:[],median:[]};
+  const xs=curve.slope_pct, ys=curve.median;
+  function real(s){let best=null;for(let i=0;i<xs.length-1;i++){if(s>=xs[i]&&s<=xs[i+1]&&ys[i]!=null&&ys[i+1]!=null){const f=(s-xs[i])/(xs[i+1]-xs[i]);best=ys[i]+(ys[i+1]-ys[i])*f;}}
+    if(best==null){let d=1e9;xs.forEach((x,i)=>{if(ys[i]!=null&&Math.abs(x-s)<d){d=Math.abs(x-s);best=ys[i];}});}return best;}
+  const tob=s=>6*Math.exp(-3.5*Math.abs(s/100+0.05));
+  const svg=document.getElementById("hiker");
+  function minutes(v){const m=60/v;return m>=60?`${Math.floor(m/60)} h ${Math.round(m%60)} min`:`${Math.round(m)} min`;}
+  function draw(s){
+    svg.innerHTML="";
+    const ang=Math.atan(s/100)*180/Math.PI;
+    const g=S("g",{transform:`translate(210,120) rotate(${-ang})`},svg);
+    S("rect",{x:-200,y:0,width:400,height:60,fill:"var(--surface-3)"},g);
+    S("line",{x1:-200,y1:0,x2:200,y2:0,stroke:"var(--text-2)","stroke-width":3},g);
+    const h=S("g",{transform:"translate(0,-2)"},g);
+    S("circle",{cx:0,cy:-40,r:7,fill:"var(--text)"},h);
+    [[0,-33,0,-14],[0,-14,-8,0],[0,-14,8,0],[0,-28,10,-20],[0,-28,-9,-21]].forEach(l=>S("line",{x1:l[0],y1:l[1],x2:l[2],y2:l[3],stroke:"var(--text)","stroke-width":3,"stroke-linecap":"round"},h));
+    S("line",{x1:20,y1:-25,x2:52,y2:-25,stroke:"var(--s1)","stroke-width":2.5},g);
+    S("polygon",{points:"52,-30 62,-25 52,-20",fill:"var(--s1)"},g);
+    S("text",{x:210,y:24,"text-anchor":"middle",class:"lbl-strong"},svg,`${s>0?"+":""}${s}% ${s>0?"uphill":(s<0?"downhill":"flat")}`);
+  }
+  function update(){
+    const s=+document.getElementById("slopeSlider").value;
+    const t=tob(s), r=real(s);
+    document.getElementById("sv").textContent=`${s>0?"+":""}${s}%`;
+    document.getElementById("sdir").textContent=s>0?"uphill":(s<0?"downhill":"flat");
+    document.getElementById("tv").textContent=fmt(t,1);document.getElementById("tt").textContent=minutes(t);
+    document.getElementById("rv").textContent=r?fmt(r,1):"–";document.getElementById("rt").textContent=r?minutes(r):"–";
+    const diff=r?Math.round(100*(t/r-1)):0;
+    document.getElementById("sverdict").innerHTML = r ? (Math.abs(diff)<8 ? `Here Tobler is <b>about right</b>: ${fmt(t,1)} vs ${fmt(r,1)} km/h. On moderately steep trails the formula and real hikers agree.` : diff>0 ? `Tobler is <b>${diff}% too fast</b> here: it says 1 km takes ${minutes(t)}; real hikers need about ${minutes(r)}.` : `Tobler is <b>${-diff}% too slow</b> here: on very steep trails real hikers beat the formula (${minutes(r)} vs ${minutes(t)} per km).`) : "";
+    draw(s);
+  }
+  document.getElementById("slopeSlider").addEventListener("input",update);update();
+})();
+
+// ---------------------------------------------------------- four arms
+(function(){
+  const svg=document.getElementById("arms");
+  const arms=[["Tobler","slope only, fixed 1993 numbers","the baseline everyone uses","var(--neutral)"],["Tags","slope + OSM trail tags (difficulty, surface)","\"you already have a good map\" ceiling","var(--s2)"],["Remote sensing","slope + lidar + satellite data, NO tags","the contribution: no map needed?","var(--s1)"],["Both","everything","are they complementary or redundant?","var(--s3)"]];
+  arms.forEach((a,i)=>{const x=10+i*238;
+    S("rect",{x:x,y:20,width:222,height:260,rx:14,fill:"var(--surface)",stroke:a[3],"stroke-width":i==2?3:1.5},svg);
+    S("rect",{x:x,y:20,width:222,height:46,rx:14,fill:a[3],opacity:.16},svg);
+    S("text",{x:x+111,y:50,"text-anchor":"middle",class:"lbl-strong","font-size":17},svg,a[0]);
+    S("text",{x:x+14,y:92,class:"lbl"},svg,"sees:");
+    wrap(svg,a[1],x+14,112,190,"lbl-strong");
+    S("text",{x:x+14,y:192,class:"lbl"},svg,"tells us:");
+    wrap(svg,a[2],x+14,212,190,"lbl");
+    S("text",{x:x+111,y:268,"text-anchor":"middle",class:"lbl"},svg,"→ predicted speed per segment");});
+})();
+function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;const t=[];words.forEach(wd=>{const test=line?line+" "+wd:wd;if(test.length*6.6>w&&line){t.push(line);line=wd;}else line=test;});t.push(line);t.forEach((l,i)=>S("text",{x:x,y:yy+i*17,class:cls},svg,l));}
+
+// ---------------------------------------------------------- LORO
+(function(){
+  const svg=document.getElementById("loro");
+  const keys=regionsBuilt.map(r=>r.key);
+  let test=keys.indexOf("cascades");if(test<0)test=0;
+  function draw(){svg.innerHTML="";const n=keys.length, w=Math.min(60,(940)/n-6);
+    keys.forEach((k,i)=>{const x=10+i*(w+6),isT=i===test;
+      const r=S("rect",{x:x,y:30,width:w,height:70,rx:8,fill:isT?"var(--s2)":"var(--s1-soft)",stroke:isT?"var(--s2)":"var(--s1)","stroke-width":1.5},svg);
+      r.style.cursor="pointer";r.addEventListener("click",()=>{test=i;draw();});
+      const parts=(short[k]||k).split(" ");
+      S("text",{x:x+w/2,y:118,"text-anchor":"middle",class:"lbl","font-size":10.5},svg,parts[0]);
+      if(parts.length>1)S("text",{x:x+w/2,y:131,"text-anchor":"middle",class:"lbl","font-size":10.5},svg,parts.slice(1).join(" "));
+      S("text",{x:x+w/2,y:70,"text-anchor":"middle",class:"lbl-strong",fill:isT?"#fff":"var(--s1)","font-size":12},svg,isT?"TEST":"train");});
+    S("text",{x:10,y:18,class:"lbl-strong"},svg,`Round ${test+1} of ${keys.length}: train on ${keys.length-1} regions, predict ${short[keys[test]]||keys[test]}`);
+    S("text",{x:10,y:155,class:"lbl"},svg,"…then repeat with every other region as the test region, and average the scores.");}
+  draw();
+})();
+
+// ---------------------------------------------------------- gantt
+(function(){
+  const svg=document.getElementById("gantt");
+  const t0=Date.parse("2026-08-24"),t1=Date.parse("2027-01-15"),x=lin(t0,t1,170,945);
+  const today=Date.parse("2026-10-11");
+  const rows=[["Gate 1: are traces usable?","2026-08-24","2026-10-02",1],["T1: dataset (17 regions)","2026-10-02","2026-10-16",0.85],["T2: remote-sensing covariates","2026-10-16","2026-11-01",0],["T3: four-arm comparison","2026-11-01","2026-11-13",0],["Gate 2: does RS close the gap?","2026-11-13","2026-11-14",0],["T4: curves, asymmetry, modes","2026-11-09","2026-11-20",0.2],["Full paper draft","2026-11-13","2026-11-27",0],["Review + polish","2026-11-30","2026-12-18",0],["Submit (deadline 11 Jan)","2026-12-21","2027-01-11",0]];
+  // month grid
+  ["2026-09-01","2026-10-01","2026-11-01","2026-12-01","2027-01-01"].forEach(m=>{const xx=x(Date.parse(m));S("line",{x1:xx,y1:16,x2:xx,y2:310,class:"gridline"},svg);S("text",{x:xx+4,y:14,class:"lbl"},svg,new Date(m+"T12:00:00").toLocaleString("en-US",{month:"short",year:"numeric"}));});
+  rows.forEach((r,i)=>{const y=30+i*31,a=x(Date.parse(r[1])),b=Math.max(x(Date.parse(r[2])),a+6);
+    S("text",{x:6,y:y+15,class:i===8?"lbl-strong":"lbl"},svg,r[0]);
+    S("rect",{x:a,y:y+3,width:b-a,height:18,rx:5,fill:"var(--s1-soft)"},svg);
+    if(r[3]>0)S("rect",{x:a,y:y+3,width:(b-a)*r[3],height:18,rx:5,fill:"var(--s1)"},svg);
+    if(i===4||i===8)S("polygon",{points:`${b},${y+3} ${b+9},${y+12} ${b},${y+21}`,fill:i===8?"var(--s2)":"var(--s1)"},svg);});
+  const xt=x(today);S("line",{x1:xt,y1:22,x2:xt,y2:312,stroke:"var(--s2)","stroke-width":2,"stroke-dasharray":"5 4"},svg);
+  S("text",{x:xt+5,y:326,class:"lbl-strong",fill:"var(--s2)"},svg,"today (11 Oct)");
+  const xp=x(Date.parse("2026-11-10"));S("line",{x1:xp,y1:300,x2:xp,y2:312,stroke:"var(--text-3)","stroke-width":1.5},svg);
+  S("text",{x:xp+4,y:326,class:"lbl"},svg,"portal opens 10 Nov");
+})();
+
+// ---------------------------------------------------------- story
+(function(){
+  const items=[
+   ["24 Aug","First mentor meeting","Project scoped by Danni: Tobler vs tags vs remote sensing; target IGARSS 2027.",""],
+   ["11 Sep","Independent-study form","CSE 5999, 3 units; Danni and Tianyi mentors, Prof. Jacobs advisor.",""],
+   ["~26 Sep","Gate 1 script written","An earlier AI chat wrote a checker, tested only on fake data (its sandbox couldn't reach OSM).",""],
+   ["2 Oct","Gate 1 on real data: 3 regions","White Mountains, Cascades, Front Range. 44–54% of on-trail GPS points usable. Real data exposed 3 bugs in the fake-data script.","fix"],
+   ["2 Oct","Bugs fixed","Paging bias (it would have said ~100% usable), multi-hike uploads thrown away, 10 Hz car loggers read at walking pace.","fix"],
+   ["2 Oct","Region = White Mountains; Progress Report #1 submitted","Agreed with Danni after the meeting.",""],
+   ["8 Oct","T1 started","Full download of the White Mountains + original GPX files; HMM map-matching tested (median 100% matched, 2.2 m).",""],
+   ["9 Oct","T1 v0 + weekly meeting","192 hiking traces; Tobler ~30% too fast; robust to 4 stop rules. Danni: finish T1 across as many regions as possible, then T2.",""],
+   ["9 Oct","Lab data unlocked","Access to the lab drive came through. Its OSM crawl (1.5M original traces, 2016–2022) was indexed in 6 minutes on the cluster; 23 regions scouted.",""],
+   ["9 Oct","Pipeline made multi-region + checks","Near-duplicate hikes, group outings, travel modes, 50 m vs 25 m, 1 m vs 5 m elevation, map-match QA, split labels.",""],
+   ["10 Oct","Laptop outage → robustness","5-hour network loss broke downloads; added retries, completeness checks, elevation fallbacks.","fix"],
+   ["10 Oct","Moved to the lab cluster","The whole pipeline runs as cluster jobs; the laptop can sleep. Found the cluster limits (8 CPUs/job).",""],
+   ["10 Oct","OSM API depth limit","OSM times out past ~4.5M points in one area; the busiest tiles are capped (pre-2009 uploads lost) and documented.","fix"],
+   ["10 Oct","Corrupt GPX file","Raw receiver text where a coordinate should be crashed 5 builds; now skipped.","fix"],
+   ["10–11 Oct","10 → 14 regions built","Fast lab-only builds for city regions in parallel with full downloads (your idea).",""],
+   ["11 Oct","Findings, literature, GitHub, this page","Cross-region analyses; literature survey reframed the paper; repo Brian24NX/GeoAI with a daily log.",""]];
+  const box=document.getElementById("storyline");
+  items.forEach(it=>{const d=document.createElement("div");d.className="tl-item"+(it[3]==="fix"?" fix":"");d.innerHTML=`<div class="tl-date">${it[0]}</div><h4>${it[1]}</h4><p>${it[2]}</p>`;box.appendChild(d);});
+})();
+
+// ---------------------------------------------------------- pipeline flowchart
+(function(){
+  const svg=document.getElementById("flow");
+  const steps=[
+    ["Download GPS traces","OSM API (12 tiles × all pages) + original GPX files + lab crawl","3.34M points; 65% timestamped"],
+    ["Collect hikes","join pieces split at tile edges; drop car loggers, exact and near duplicates","378 car-logger pieces dropped → 342 traces"],
+    ["Clean & split","remove repeated times and > 60 km/h jumps; split at gaps > 5 min",""],
+    ["Find stops","still ≥ 60 s within 10 m → stopped time removed","~25% of time removed"],
+    ["Map-match (HMM)","snap points onto the OSM trail network","~96% of points matched"],
+    ["Cut 50 m segments","along the matched path: speed, moving time, direction, path geometry","66.6k segments (37.8k on trails)"],
+    ["Add attributes","slope from 5 m USGS elevation; OSM tags; date & time; travel mode","235 hiking traces"],
+    ["Group & label","outings (group hikes = 1); 10 km squares and trail networks for testing","218 outings; 51 squares"],
+    ["Data card + checks","every setting written down; stop-rule and sampling checks","→ the T1 dataset"]];
+  steps.forEach((s,i)=>{const y=12+i*82;
+    S("rect",{x:20,y:y,width:560,height:64,rx:12,fill:"var(--surface)",stroke:i===4?"var(--s1)":"var(--line)","stroke-width":i===4?2.5:1.5},svg);
+    S("circle",{cx:48,cy:y+32,r:15,fill:"var(--s1)"},svg);S("text",{x:48,y:y+37,"text-anchor":"middle",fill:"#fff","font-weight":"700","font-size":13},svg,i+1);
+    S("text",{x:74,y:y+27,class:"lbl-strong","font-size":15},svg,s[0]);S("text",{x:74,y:y+47,class:"lbl"},svg,s[1]);
+    if(s[2]){S("line",{x1:580,y1:y+32,x2:618,y2:y+32,stroke:"var(--line)","stroke-width":1.5,"stroke-dasharray":"3 3"},svg);
+      S("rect",{x:620,y:y+12,width:320,height:40,rx:10,fill:"var(--s1-soft)"},svg);S("text",{x:634,y:y+37,class:"lbl-strong",fill:"var(--s1)"},svg,s[2]);}
+    if(i<steps.length-1){S("line",{x1:48,y1:y+64,x2:48,y2:y+82,stroke:"var(--text-3)","stroke-width":2},svg);S("polygon",{points:`43,${y+76} 53,${y+76} 48,${y+82}`,fill:"var(--text-3)"},svg);}});
+  S("text",{x:620,y:12+82*0-2,class:"lbl"},svg,"White Mountains example");
+})();
+
+// ---------------------------------------------------------- tiles
+(function(){
+  const box=document.getElementById("tiles");
+  const t=[[fmt(pooled.hiking_traces),"hiking traces (uploads)"],[fmt(pooled.walking_outings),"walking hikes (independent outings)"],[fmt(pooled.walking_km)+" km",`walked on trails (${fmt(pooled.walking_hours)} moving hours)`],[regionsBuilt.length+" / 23","regions built / scouted"]];
+  t.forEach(([n,l])=>{const d=document.createElement("div");d.className="stat";d.innerHTML=`<div class="n">${n}</div><div class="l">${l}</div>`;box.appendChild(d);});
+})();
+
+// ---------------------------------------------------------- map
+(function(){
+  const svg=document.getElementById("map");
+  const W=960,H=520,px=lin(-126,-65,20,W-20),py=lin(51,24,20,H-20);
+  const us=[[-124.7,48.4],[-123.0,48.9],[-95.2,49.0],[-95.2,49.4],[-94.8,48.7],[-89.6,48.0],[-84.8,46.6],[-83.5,46.0],[-82.4,43.0],[-83.0,42.0],[-79.0,42.9],[-79.0,43.3],[-76.4,44.2],[-74.7,45.0],[-71.5,45.0],[-70.0,46.7],[-67.8,47.1],[-67.0,44.8],[-70.2,43.6],[-70.6,41.6],[-72.0,41.2],[-74.0,40.5],[-74.2,39.4],[-75.5,38.5],[-76.0,37.0],[-75.5,35.2],[-78.0,33.8],[-81.0,31.8],[-81.4,30.0],[-80.0,26.5],[-81.0,25.1],[-82.7,27.5],[-84.3,30.0],[-87.5,30.3],[-89.6,30.2],[-90.0,29.0],[-93.8,29.7],[-97.2,27.8],[-97.4,25.9],[-99.5,27.5],[-101.4,29.8],[-103.3,29.0],[-104.5,29.6],[-106.5,31.8],[-108.2,31.3],[-111.1,31.3],[-114.8,32.5],[-117.1,32.5],[-118.5,34.0],[-120.6,34.6],[-122.5,37.7],[-123.8,39.8],[-124.4,42.0],[-124.0,46.3]];
+  S("path",{d:"M"+us.map(p=>px(p[0])+","+py(p[1])).join("L")+"Z",fill:"var(--surface-3)",stroke:"var(--line)","stroke-width":1.5},svg);
+  S("text",{x:px(-112),y:py(50.2),class:"lbl"},svg,"CANADA");S("text",{x:px(-100),y:py(40.5),class:"lbl","font-size":13,"letter-spacing":"0.2em",opacity:.6},svg,"UNITED STATES");
+  const byKey={};regionsBuilt.forEach(r=>byKey[r.key]=r);
+  const maxH=Math.max(...regionsBuilt.map(r=>r.walking_hours||0),1);
+  const status=c=>{const r=byKey[c.key];if(r)return r.sources==="lab only"?"lab":"full";return inProgress.has(c.key)?"prog":"none";};
+  const col={full:"var(--s1)",lab:"var(--s2)",prog:"var(--s3)",none:"var(--neutral)"};
+  const lab={full:"built: full data (API + lab)",lab:"built: lab traces only (full download queued)",prog:"downloading / building now",none:"scouted, not queued (too little data)"};
+  const cands=(D.candidates||[]).slice().sort((a,b)=>((byKey[b.key]||{}).walking_hours||0)-((byKey[a.key]||{}).walking_hours||0));
+  cands.forEach(c=>{const st=status(c),r=byKey[c.key];const rad=r?6+22*Math.sqrt((r.walking_hours||0)/maxH):5;
+    const g=S("g",{},svg);
+    const circ=S("circle",{cx:px(c.lon),cy:py(c.lat),r:rad,fill:col[st],"fill-opacity":st==="none"?0.35:0.75,stroke:"var(--surface-2)","stroke-width":2},g);
+    const off={northshore:[34,-16,"start"],olympic:[-10,34,"end"],gorge:[18,22,"start"],adk:[-30,-26,"end"],greenmtn:[0,-36,"middle"],wm:[24,24,"start"],catskills:[-20,18,"end"],bayarea:[-16,20,"end"],smokies:[-16,-18,"end"],pisgah:[18,20,"start"],shenandoah:[14,-10,"start"]};
+    if(r||st==="prog"){const cx=px(c.lon),cy=py(c.lat);const o=off[c.key]||[rad+3,4,"start"];
+      if(off[c.key])S("line",{x1:cx,y1:cy,x2:cx+o[0]*0.85,y2:cy+o[1]*0.85,stroke:"var(--text-3)","stroke-width":1},g);
+      S("text",{x:cx+o[0],y:cy+o[1]+(o[1]<0?-2:4),"text-anchor":o[2],class:"lbl",fill:r?"var(--text)":"var(--text-3)"},g,short[c.key]||c.key);}
+    hover(g,()=>{let h=`<b>${c.label}</b><br>${lab[st]}<br><span style="color:var(--text-2)">${c.veg}</span>`;
+      if(r)h+=`<br>hiking traces: <b>${fmt(r.hiking_traces)}</b><br>walking hikes: <b>${fmt(r.walking_outings)}</b> (${fmt(r.walking_hours)} h)<br>peak speed: <b>${fmt(r.v0,2)} km/h</b> · k ${fmt(r.k,2)}`;return h;});});
+  const L=document.getElementById("mapLegend");
+  Object.keys(lab).forEach(k=>{const s=document.createElement("span");s.innerHTML=`<i style="background:${col[k]};opacity:${k==="none"?.5:1}"></i>${lab[k]}`;L.appendChild(s);});
+})();
+
+// ---------------------------------------------------------- modes
+(function(){
+  const svg=document.getElementById("modes");
+  const order=["walk","bike/ski","run","fast","unknown"],col={"walk":"var(--s1)","bike/ski":"var(--s2)","run":"var(--s3)","fast":"var(--s4)","unknown":"var(--neutral)"};
+  const rs=regionsBuilt.slice().sort((a,b)=>Object.values(b.modes).reduce((x,y)=>x+y,0)-Object.values(a.modes).reduce((x,y)=>x+y,0));
+  const max=Math.max(...rs.map(r=>Object.values(r.modes).reduce((x,y)=>x+y,0)));
+  const x=lin(0,max,150,900);
+  rs.forEach((r,i)=>{const y=14+i*31;let acc=0;
+    S("text",{x:142,y:y+16,"text-anchor":"end",class:"lbl",fill:"var(--text)"},svg,(short[r.key]||r.key)+(r.sources==="lab only"?" *":""));
+    order.forEach(m=>{const n=r.modes[m]||0;if(!n)return;const a=x(acc),b=x(acc+n);acc+=n;
+      const rect=S("rect",{x:a,y:y+2,width:Math.max(b-a-2,1),height:20,rx:3,fill:col[m]},svg);
+      hover(rect,`<b>${short[r.key]}</b>: ${n} ${m} traces`);});
+    S("text",{x:x(acc)+6,y:y+16,class:"lbl"},svg,fmt(acc));});
+  S("text",{x:150,y:14+rs.length*31+12,class:"lbl"},svg,"* lab-only build so far (no anonymous traces yet)");
+  const L=document.getElementById("modesLegend");order.forEach(m=>{const s=document.createElement("span");s.innerHTML=`<i style="background:${col[m]}"></i>${m}`;L.appendChild(s);});
+})();
+
+// ---------------------------------------------------------- table
+(function(){
+  const t=document.getElementById("regionTable");
+  t.innerHTML=`<thead><tr><th>Region</th><th>Data</th><th class="num">Hiking traces</th><th class="num">Walking hikes</th><th class="num">Walking hours</th><th class="num">Bike/ski</th><th class="num">Peak v0 (km/h)</th><th class="num">k</th><th class="num">Matched %</th></tr></thead>`;
+  const b=document.createElement("tbody");regionsBuilt.slice().sort((a,b)=>(b.walking_hours||0)-(a.walking_hours||0)).forEach(r=>{const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${r.label}</td><td>${r.sources}</td><td class="num">${fmt(r.hiking_traces)}</td><td class="num">${fmt(r.walking_outings)}</td><td class="num">${fmt(r.walking_hours)}</td><td class="num">${fmt(r.bike_ski_traces)}</td><td class="num">${fmt(r.v0,2)}</td><td class="num">${fmt(r.k,2)}</td><td class="num">${fmt(r.match_rate_pct,1)}</td>`;b.appendChild(tr);});
+  const tr=document.createElement("tr");tr.innerHTML=`<td><b>All pooled</b></td><td></td><td class="num"><b>${fmt(pooled.hiking_traces)}</b></td><td class="num"><b>${fmt(pooled.walking_outings)}</b></td><td class="num"><b>${fmt(pooled.walking_hours)}</b></td><td class="num"><b>${fmt(pooled.bike_ski_traces)}</b></td><td class="num"><b>${fmt(pooled.v0,2)}</b></td><td class="num"><b>${fmt(pooled.k,2)}</b></td><td></td>`;b.appendChild(tr);
+  t.appendChild(b);
+})();
+
+// ---------------------------------------------------------- the curve
+(function(){
+  const svg=document.getElementById("curve"),sel=document.getElementById("regionPick");
+  const W=960,H=430,m={l:56,r:20,t:16,b:44},x=lin(-40,40,m.l,W-m.r),y=lin(0,6.6,H-m.b,m.t);
+  const C=D.curves||{},all=C.ALL;
+  const forms=(D.findings||{}).forms_cv||{};
+  const smooth=(forms.smooth||{}).params_all;
+  const tob=s=>6*Math.exp(-3.5*Math.abs(s/100+0.05));
+  const sm=s=>{if(!smooth)return null;const [a,k,s0,e]=smooth;const z=s/100+s0;return Math.exp(a-k*(Math.sqrt(z*z+e*e)-Math.abs(e)));};
+  sel.innerHTML='<option value="">(none: all regions pooled)</option>'+regionsBuilt.slice().sort((a,b)=>(b.walking_outings||0)-(a.walking_outings||0)).map(r=>`<option value="${r.key}">${r.label} (${fmt(r.walking_outings)} hikes)</option>`).join("");
+  function line(xs,ys,minN,ns){let d="";xs.forEach((s,i)=>{if(ys[i]==null||(ns&&ns[i]<minN)){return;}d+=(d?"L":"M")+x(s)+","+y(ys[i]);});return d;}
+  function draw(key){
+    svg.innerHTML="";
+    for(let v=0;v<=6;v++){S("line",{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),class:"gridline"},svg);S("text",{x:m.l-8,y:y(v)+4,"text-anchor":"end",class:"lbl"},svg,v);}
+    [-40,-30,-20,-10,0,10,20,30,40].forEach(s=>{S("text",{x:x(s),y:H-m.b+18,"text-anchor":"middle",class:"lbl"},svg,(s>0?"+":"")+s+"%");});
+    S("text",{x:(m.l+W-m.r)/2,y:H-6,"text-anchor":"middle",class:"lbl"},svg,"trail slope in the walking direction  (← downhill · uphill →)");
+    S("text",{x:14,y:(m.t+H-m.b)/2,class:"lbl",transform:`rotate(-90 14 ${(m.t+H-m.b)/2})`,"text-anchor":"middle"},svg,"walking speed (km/h)");
+    if(all){let up="",dn="";all.slope_pct.forEach((s,i)=>{if(all.q75[i]!=null&&all.n[i]>=50)up+=(up?"L":"M")+x(s)+","+y(all.q75[i]);});
+      for(let i=all.slope_pct.length-1;i>=0;i--){if(all.q25[i]!=null&&all.n[i]>=50)dn+="L"+x(all.slope_pct[i])+","+y(all.q25[i]);}
+      S("path",{d:up+dn+"Z",fill:"var(--s1)",opacity:.14},svg);}
+    let td="";for(let s=-40;s<=40;s+=0.5)td+=(td?"L":"M")+x(s)+","+y(tob(s));
+    S("path",{d:td,fill:"none",stroke:"var(--text-2)","stroke-width":2,"stroke-dasharray":"7 5"},svg);
+    if(smooth){let sd="";for(let s=-40;s<=40;s+=0.5)sd+=(sd?"L":"M")+x(s)+","+y(sm(s));S("path",{d:sd,fill:"none",stroke:"var(--s3)","stroke-width":2},svg);}
+    if(all)S("path",{d:line(all.slope_pct,all.median,50,all.n),fill:"none",stroke:"var(--s1)","stroke-width":3},svg);
+    if(key&&C[key])S("path",{d:line(C[key].slope_pct,C[key].median,30,C[key].n),fill:"none",stroke:"var(--s2)","stroke-width":2.5},svg);
+    S("text",{x:x(-5)+8,y:y(6)-4,class:"lbl-strong",fill:"var(--text-2)"},svg,"Tobler: 6.0 km/h at −5%");
+    const pk=all?Math.max(...all.median.filter(v=>v!=null)):null;
+    if(pk)S("text",{x:x(-5)+8,y:y(pk)-12,class:"lbl-strong",fill:"var(--s1)"},svg,`real hikers: ~${fmt(pk,1)} km/h`);
+    const cross=S("line",{x1:0,x2:0,y1:m.t,y2:H-m.b,stroke:"var(--text-3)","stroke-width":1,visibility:"hidden"},svg);
+    const ov=S("rect",{x:m.l,y:m.t,width:W-m.l-m.r,height:H-m.t-m.b,fill:"transparent"},svg);
+    ov.addEventListener("mousemove",ev=>{const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const p=pt.matrixTransform(svg.getScreenCTM().inverse());
+      const s=(p.x-m.l)/(W-m.l-m.r)*80-40;let i=0,best=1e9;all.slope_pct.forEach((v,j)=>{if(Math.abs(v-s)<best){best=Math.abs(v-s);i=j;}});
+      const sv=all.slope_pct[i];cross.setAttribute("x1",x(sv));cross.setAttribute("x2",x(sv));cross.setAttribute("visibility","visible");
+      let h=`<b>slope ${sv>0?"+":""}${fmt(sv,0)}%</b><br>real median: <b>${fmt(all.median[i],2)}</b> km/h (middle 50%: ${fmt(all.q25[i],1)}–${fmt(all.q75[i],1)})<br>Tobler: ${fmt(tob(sv),2)} km/h<br><span style="color:var(--text-2)">${fmt(all.n[i])} segments</span>`;
+      if(key&&C[key]&&C[key].median[i]!=null)h+=`<br><span style="color:var(--s2)">${short[key]}: ${fmt(C[key].median[i],2)} km/h (${fmt(C[key].n[i])} seg.)</span>`;
+      showTip(h,ev);});
+    ov.addEventListener("mouseleave",()=>{hideTip();cross.setAttribute("visibility","hidden");});
+  }
+  sel.addEventListener("change",()=>draw(sel.value));draw("");
+  const L=document.getElementById("curveLegend");
+  [["var(--s1)","real walkers, all regions (median)"],["var(--s1);opacity:.25","middle 50% of segments"],["var(--s3)","best smooth fit (rounded top)"],["var(--text-2)","Tobler 1993 (dashed)"],["var(--s2)","selected region"]].forEach(([c,t])=>{const s=document.createElement("span");s.innerHTML=`<i style="background:${c}"></i>${t}`;L.appendChild(s);});
+})();
+
+// ---------------------------------------------------------- region fits
+(function(){
+  const svg=document.getElementById("regionsFit");
+  const rs=regionsBuilt.filter(r=>r.v0!=null).slice().sort((a,b)=>b.k-a.k);
+  const H=Math.max(140,rs.length*30+70);svg.setAttribute("viewBox",`0 0 960 ${H}`);
+  const xa=lin(3.4,6.2,190,520),xb=lin(0.6,3.7,600,940);
+  [[xa,[3.5,4,4.5,5,5.5,6],6.0,"peak speed v0 (km/h)",190,520],[xb,[1,1.5,2,2.5,3,3.5],3.5,"slope sensitivity k",600,940]].forEach(([sc,ticks,tob,lab,a,b])=>{
+    ticks.forEach(t=>{S("line",{x1:sc(t),x2:sc(t),y1:20,y2:H-40,class:"gridline"},svg);S("text",{x:sc(t),y:H-24,"text-anchor":"middle",class:"lbl"},svg,t);});
+    S("line",{x1:sc(tob),x2:sc(tob),y1:16,y2:H-40,stroke:"var(--text-2)","stroke-width":1.5,"stroke-dasharray":"6 4"},svg);
+    S("text",{x:sc(tob),y:12,"text-anchor":"middle",class:"lbl"},svg,"Tobler");
+    S("text",{x:(a+b)/2,y:H-6,"text-anchor":"middle",class:"lbl-strong"},svg,lab);});
+  rs.forEach((r,i)=>{const yy=34+i*30;
+    S("text",{x:182,y:yy+4,"text-anchor":"end",class:"lbl",fill:"var(--text)"},svg,(short[r.key]||r.key)+(r.sources==="lab only"?" *":""));
+    [[xa,r.v0,r.v0_lo,r.v0_hi],[xb,r.k,r.k_lo,r.k_hi]].forEach(([sc,v,lo,hi])=>{
+      const g=S("g",{},svg);S("line",{x1:sc(lo),x2:sc(hi),y1:yy,y2:yy,stroke:"var(--s1)","stroke-width":2},g);
+      S("circle",{cx:sc(v),cy:yy,r:6,fill:"var(--s1)",stroke:"var(--surface-2)","stroke-width":2},g);
+      hover(g,`<b>${r.label}</b><br>v0 ${fmt(r.v0,2)} km/h [${fmt(r.v0_lo,2)}, ${fmt(r.v0_hi,2)}]<br>k ${fmt(r.k,2)} [${fmt(r.k_lo,2)}, ${fmt(r.k_hi,2)}]<br>${fmt(r.walking_outings)} walking hikes · ${r.sources}`);});});
+})();
+
+// ---------------------------------------------------------- asymmetry
+(function(){
+  const svg=document.getElementById("asym");const a=((D.findings||{}).asymmetry||{});const gb=a.by_grade||{};
+  const keys=Object.keys(gb);const x=i=>80+i*100,y=lin(0.95,1.5,280,20);
+  [1.0,1.1,1.2,1.3,1.4,1.5].forEach(v=>{S("line",{x1:50,x2:450,y1:y(v),y2:y(v),class:"gridline"},svg);S("text",{x:44,y:y(v)+4,"text-anchor":"end",class:"lbl"},svg,fmt(v,1));});
+  S("line",{x1:50,x2:450,y1:y(1.42),y2:y(1.42),stroke:"var(--text-2)","stroke-width":1.5,"stroke-dasharray":"6 4"},svg);
+  S("text",{x:446,y:y(1.42)-6,"text-anchor":"end",class:"lbl"},svg,"Tobler: 1.42 at every grade");
+  keys.forEach((k,i)=>{const [m,[lo,hi],n]=gb[k];const g=S("g",{},svg);
+    S("line",{x1:x(i),x2:x(i),y1:y(lo),y2:y(hi),stroke:"var(--s1)","stroke-width":3},g);
+    S("circle",{cx:x(i),cy:y(m),r:8,fill:"var(--s1)",stroke:"var(--surface-2)","stroke-width":2},g);
+    S("text",{x:x(i)+12,y:y(m)+4,class:"lbl-strong"},g,"×"+fmt(m,2));
+    const [g0,g1]=k.split("-").map(v=>Math.round(+v*100));
+    S("text",{x:x(i),y:302,"text-anchor":"middle",class:"lbl"},svg,g1>=100?`${g0}%+`:`${g0}–${g1}%`);
+    hover(g,`<b>grade ${k.split("-").map(v=>Math.round(+v*100)+"%").join("–")}</b><br>down/up ratio: <b>${fmt(m,3)}</b><br>95%: ${fmt(lo,3)}–${fmt(hi,3)}<br>${fmt(n)} same-hiker pairs`);});
+  S("text",{x:250,y:318,"text-anchor":"middle",class:"lbl"},svg,"trail grade");
+  S("text",{x:14,y:150,class:"lbl",transform:"rotate(-90 14 150)","text-anchor":"middle"},svg,"speed down ÷ speed up");
+})();
+
+// ---------------------------------------------------------- variance
+(function(){
+  const svg=document.getElementById("variance");const v=((D.findings||{}).variance_split_outing||{});
+  const b=v.share_between_pct||25.6, reg=(D.findings||{}).variance_between_regions_pct_of_total||2;
+  const x=lin(0,100,20,440);
+  S("rect",{x:x(0),y:110,width:x(b)-x(0)-2,height:60,rx:6,fill:"var(--s2)"},svg);
+  S("rect",{x:x(0),y:110,width:x(reg)-x(0),height:60,rx:6,fill:"var(--s7)"},svg);
+  S("rect",{x:x(b)+2,y:110,width:x(100)-x(b)-2,height:60,rx:6,fill:"var(--s1)"},svg);
+  S("text",{x:x(b/2),y:92,"text-anchor":"middle",class:"lbl-strong"},svg,`${fmt(b,0)}%: who & which day`);
+  S("text",{x:x(b/2),y:200,"text-anchor":"middle",class:"lbl"},svg,"fitness, pace, pack, weather");
+  S("text",{x:x(b+(100-b)/2),y:92,"text-anchor":"middle",class:"lbl-strong"},svg,`${fmt(100-b,0)}%: where on the trail`);
+  S("text",{x:x(b+(100-b)/2),y:200,"text-anchor":"middle",class:"lbl"},svg,"rocks, roots, surface, steps, GPS noise");
+  S("text",{x:x(0),y:232,class:"lbl"},svg,`purple sliver: ~${fmt(reg,0)}% is "which region"`);
+  S("text",{x:x(0),y:40,class:"lbl-strong"},svg,"Speed variation left after slope");
+  S("text",{x:x(0),y:268,class:"lbl"},svg,"→ terrain + vegetation data can only explain the blue part");
+  S("text",{x:x(0),y:286,class:"lbl"},svg,"   (the orange part needs to know the person)");
+})();
+
+// ---------------------------------------------------------- venn
+(function(){
+  const svg=document.getElementById("venn");
+  const c=[[360,170,"var(--s1)","crowdsourced GPS hikes"],[600,170,"var(--s2)","lidar / remote-sensing covariates"],[480,320,"var(--s3)","tested on unseen regions"]];
+  c.forEach(([x,y,col,l])=>{S("circle",{cx:x,cy:y,r:150,fill:col,"fill-opacity":.13,stroke:col,"stroke-width":2},svg);});
+  S("text",{x:250,y:60,class:"lbl-strong",fill:"var(--s1)"},svg,c[0][3]);S("text",{x:600,y:60,class:"lbl-strong",fill:"var(--s2)"},svg,c[1][3]);S("text",{x:480,y:418,"text-anchor":"middle",class:"lbl-strong",fill:"var(--s3)"},svg,c[2][3]);
+  [[285,150,"Campbell 2019, 2022"],[285,168,"HikingTTE 2024"],[285,186,"Irmischer & Clarke 2018"],[690,150,"STRIDE 2024 (field walks)"],[690,168,"Cutler 2026 (off-trail)"],[690,186,"RasterNet 2020 (roads)"],[480,150,"Wood 2023 (UK)"],[480,168,"Šerić 2022 (Croatia)"]].forEach(([x,y,t])=>S("text",{x:x,y:y,"text-anchor":"middle",class:"lbl"},svg,t));
+  S("circle",{cx:480,cy:236,r:34,fill:"var(--surface)",stroke:"var(--text)","stroke-width":2},svg);
+  S("text",{x:480,y:233,"text-anchor":"middle",class:"lbl-strong"},svg,"OUR");S("text",{x:480,y:249,"text-anchor":"middle",class:"lbl-strong"},svg,"PAPER");
+  S("text",{x:480,y:290,"text-anchor":"middle",class:"lbl"},svg,"no prior work in the middle");
+})();
+
+// ---------------------------------------------------------- paper layout
+(function(){
+  const svg=document.getElementById("paper");
+  const pages=[["Intro + related work","why speed matters; Tobler; Campbell, Wood, STRIDE; our gap"],["Data (T1) + covariates (T2)","17 regions, how built, usable share, what's wrong; lidar + embeddings"],["Method + results (T3)","four arms × leave-one-region-out; the lead figure"],["Curves, asymmetry, limits","slope-speed vs Tobler/Campbell; up vs down; conclusion"]];
+  pages.forEach((p,i)=>{const x=20+i*235;S("rect",{x:x,y:20,width:210,height:210,rx:6,fill:"var(--surface)",stroke:"var(--line)","stroke-width":1.5},svg);
+    S("text",{x:x+12,y:44,class:"lbl-strong"},svg,`Page ${i+1}`);wrap(svg,p[0],x+12,68,190,"lbl-strong");wrap(svg,p[1],x+12,110,190,"lbl");
+    if(i===2){S("rect",{x:x+14,y:160,width:182,height:56,rx:6,fill:"var(--s1-soft)"},svg);S("text",{x:x+105,y:193,"text-anchor":"middle",class:"lbl-strong",fill:"var(--s1)"},svg,"lead figure: 4 arms");}
+    if(i===3){S("rect",{x:x+14,y:160,width:182,height:56,rx:6,fill:"var(--s2-soft)"},svg);S("text",{x:x+105,y:193,"text-anchor":"middle",class:"lbl-strong",fill:"var(--s2)"},svg,"curves + asymmetry");}});
+})();
+
+// ---------------------------------------------------------- glossary
+(function(){
+  const G=[["OSM (OpenStreetMap)","Free, volunteer-made map of the world: the 'Wikipedia of maps'."],["GPS trace","A recording of positions with timestamps, e.g. every 5 s during a hike."],["Trackpoints API","OSM's service that hands out GPS points in a box, 5,000 per page."],["Identifiable / trackable / public / private","Privacy levels a trace uploader chooses; only some keep usable timestamps."],["Lab crawl","The lab's copy of 1.5M original OSM trace files (2016–2022), on the cluster drive."],["Car logger","Driver-assist software (sunnypilot, openpilot…) that uploads huge numbers of car traces; removed."],["Map-matching","Snapping noisy GPS points onto the trail network to know which trail someone was on."],["HMM","Hidden Markov model: picks the most likely sequence of trails for a whole track."],["Segment","A 50 m piece of trail walked by one trace, with one speed and one slope."],["Stop rule","How we decide someone was standing still (≥ 60 s within 10 m); that time is removed."],["Outing","One hike by one group on one day; two phones on the same hike = one outing."],["Travel mode","Walk, run, or bike/ski, inferred from speed patterns, anchored on foot-only trails."],["Slope / grade","Rise over run in percent, in the walking direction (uphill = +)."],["Tobler's hiking function","speed = 6·e^(−3.5·|slope+0.05|) km/h, from 1993, the standard in GIS."],["v0, k, s0","Peak speed, slope sensitivity, and the slope of the peak, the three numbers of a Tobler-type curve."],["Lorentz curve","A rounded bell-shaped curve Campbell et al. use instead of Tobler's sharp peak."],["Asymmetry","How much faster going down is than going up the same slope."],["Out-and-back","A hike that goes up a trail and returns the same way: same person, both directions."],["DEM","Digital elevation model: a grid of ground heights (we use 5 m and 1 m)."],["Lidar","Laser scanning from a plane; echoes from canopy, understory and ground give 3-D structure."],["3DEP","USGS's national lidar and elevation program (free data)."],["Roughness","Small bumps on the ground (rocks, roots): ground minus a smoothed ground."],["Understory density","Share of lidar echoes at 0.85–1.2 m height: bushes at knee-to-chest level."],["Canopy height","How tall the trees are above the ground."],["Remote sensing","Measuring the Earth from aircraft or satellites."],["Embedding (AlphaEarth)","A compact list of numbers summarizing what a satellite 'sees' at a place, learned by a big pretrained model."],["sac_scale","OSM's hiking-difficulty tag (hiking → mountain_hiking → demanding…)."],["Four arms","Tobler / Tags / Remote sensing / Both: four predictors that differ only in what they can see."],["Leave-one-region-out","Train on all regions but one, test on the left-out one, repeat; tests transfer to new places."],["10 km block","A 10 × 10 km map square; whole squares are held out to test geographic generalization."],["Bootstrap (by outing)","Re-draw whole hikes at random many times to get honest 95% intervals."],["CRPS / calibration","Scores for predicted ranges: are they sharp, and do they contain the truth as often as claimed?"],["Gate 1 / Gate 2","Plan checkpoints: are traces usable? (passed); does remote sensing close the gap to tags? (~13 Nov)"],["IGARSS","IEEE's International Geoscience and Remote Sensing Symposium, our target venue (4 pages)."],["Slurm","The cluster's job scheduler: we submit jobs; it runs them on compute nodes."],["ENGRFS","The engineering school's research drive where the lab data and our project copy live (not backed up)."]];
+  const dl=document.getElementById("gloss");
+  function render(q){dl.innerHTML="";G.filter(g=>!q||(g[0]+" "+g[1]).toLowerCase().includes(q.toLowerCase())).forEach(g=>{const dt=document.createElement("dt");dt.textContent=g[0];const dd=document.createElement("dd");dd.textContent=g[1];dl.appendChild(dt);dl.appendChild(dd);});}
+  document.getElementById("gsearch").addEventListener("input",e=>render(e.target.value));render("");
+})();
+
+// ---------------------------------------------------------- image + nav highlight
+document.getElementById("wmmap").src="data:image/png;base64,__IMG_WM_MAP__";
+const links=[...document.querySelectorAll("nav.toc a")];
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id));}});},{rootMargin:"-40% 0px -55% 0px"});
+document.querySelectorAll("main section").forEach(s=>obs.observe(s));
+})();
+</script>
+</body>
+</html>

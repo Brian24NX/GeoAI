@@ -58,6 +58,13 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   height (AWS), 3DEP point clouds (AWS), MODIS/SNODAS snow. IGARSS: deadline
   11 Jan 2027 confirmed, portal opens 10 Nov.
 - Plan to the paper written: **`docs/NEXT_STEPS.md`**.
+- **`Project_Explainer.html`**: one visual page explaining the whole project
+  (basics, design, plan, story, pipeline, dataset map, findings, literature,
+  next steps, glossary), drawn from the real numbers. Rebuild with
+  `make_explainer_data.py` (cluster) + `make_explainer.py`.
+- Lab-only builds finished for North Shore, San Gabriels, Columbia Gorge,
+  Wasatch: **14 regions built**, 2,198 hiking traces, 1,564 walking outings,
+  12,224 km, 3,992 h; pooled v0 4.25 [4.18, 4.35] km/h, k 1.78.
 
 ## Sat 10 Oct 2026
 
