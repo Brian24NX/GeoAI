@@ -127,6 +127,8 @@ under `"settings"`.
 
 | 75 | More tiles left out (11 Oct) | `shenandoah_r0_c2` (US-29 Piedmont, >750 car-logger pages), `shenandoah_r1_c0`, `shenandoah_r2_c0` (valley floor), `pisgah_r1_c0`, `pisgah_r1_c1` (Asheville). Each had **0 hike-like traces in the lab crawl**, and highway tiles cost ~1–1.5 h of OSM API time each. Kept: the park-ridge tiles (Big Meadows, Old Rag, Front Royal) and Pisgah's mountain-bike tiles. Rule from now on: a tile with heavy traffic and no hiking signal in the lab index is left out, with the reason recorded in `regions.EXCLUDE_TILES`. | 11 Oct |
 
+| 76 | API time limit in busy areas | The trackpoints query can time out (503) well before page ~906 in dense areas: Shenandoah's Big Meadows tile timed out at pages 116, 158, 186, 301, 302, 310 and 318 over 6 passes. Rule: retry stopped tiles (up to 6 passes, 5 min apart); after that, a tile still stopped at page ≥ 250 counts as **capped** (newest uploads in, oldest out of reach; on the data card), one stopped below 250 as incomplete. | 11 Oct |
+
 ## T2 (from 9 Oct 2026)
 
 | # | Decision | Value | Status |

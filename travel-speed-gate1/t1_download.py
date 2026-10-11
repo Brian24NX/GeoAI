@@ -41,8 +41,11 @@ WEST, SOUTH, EAST, NORTH = regions.CANDIDATES["wm"][1]
 MAX_PAGES = 2000                         # read ALL usable pages per tile
 DEEP_LIMIT = 800                         # the API times out paging deeper
                                          # (~page 906: "503 first byte
-                                         # timeout"); a tile stopped there is
-                                         # complete up to the API's limit
+                                         # timeout"): no use retrying there
+CAP_MIN_PAGE = 250                       # after all passes, a tile still
+                                         # timing out this deep is capped by
+                                         # the API's query time (busy areas
+                                         # hit it sooner: Shenandoah ~318)
 MAX_PASSES = 6                           # retry tiles stopped by network
 RETRY_WAIT_S = 300                       #   errors, 5 min apart
                                          # (WM's busiest tile had 98; the
@@ -78,21 +81,29 @@ def _stopped(key):
     return out
 
 
-def incomplete_tiles(key):
-    """Tiles whose download stopped on an error (network outage, server
-    error) before the API's depth limit. Their pages so far are cached;
-    another pass continues them."""
+def retry_tiles(key):
+    """Stopped tiles worth another pass (not already at the depth limit)."""
     st = _stopped(key)
     if st is None:
         return ["(no summary yet)"]
     return [t for t, page in st.items() if page < DEEP_LIMIT]
 
 
+def incomplete_tiles(key):
+    """Tiles stopped early (< CAP_MIN_PAGE): a real failure (network outage,
+    server error). Their pages so far are cached; another run continues."""
+    st = _stopped(key)
+    if st is None:
+        return ["(no summary yet)"]
+    return [t for t, page in st.items() if page < CAP_MIN_PAGE]
+
+
 def capped_tiles(key):
-    """Tiles cut by the API's depth limit: the newest ~4.5M points of the
-    tile are in, the oldest uploads aren't reachable (a stated limit)."""
+    """Tiles cut by the API's limits: the newest uploads of the tile are in,
+    the oldest aren't reachable (the query times out past ~4.5M points, or
+    sooner in busy areas). A stated limitation, on the data card."""
     st = _stopped(key) or {}
-    return {t: page for t, page in st.items() if page >= DEEP_LIMIT}
+    return {t: page for t, page in st.items() if page >= CAP_MIN_PAGE}
 
 
 def trace_id(url):
@@ -164,7 +175,7 @@ def main():
     if args.step in ("all", "trackpoints"):
         for n in range(1, MAX_PASSES + 1):
             table = step_trackpoints(args.region)
-            bad = incomplete_tiles(args.region)
+            bad = retry_tiles(args.region)
             if not bad or n == MAX_PASSES:
                 break
             print(f"\n{len(bad)} tiles stopped on errors ({', '.join(bad)});"
