@@ -1,0 +1,25 @@
+  sign check passed: heading uphill reads +0.100, downhill -0.100
+  segment sign test passed: northbound +10%, southbound -10%
+front_range_boulder_flatirons_q00: (1201, 922), 9 s
+front_range_boulder_flatirons_q01: (1201, 922), 9 s
+front_range_boulder_flatirons_q10: (1201, 921), 8 s
+front_range_boulder_flatirons_q11: (1201, 921), 13 s
+front_range_rmnp_bear_lake_q00: (1201, 918), 8 s
+front_range_rmnp_bear_lake_q01: (1201, 918), 5 s
+front_range_rmnp_bear_lake_q10: (1201, 917), 5 s
+front_range_rmnp_bear_lake_q11: (1201, 917), 5 s
+front_range_golden_foothills_q00: (1201, 925), 9 s
+front_range_golden_foothills_q01: (1201, 925), 9 s
+front_range_golden_foothills_q10: (1201, 925), 7 s
+front_range_golden_foothills_q11: (1201, 925), 8 s
+front_range_brainard_lake_q00: (1201, 921), 16 s
+front_range_brainard_lake_q01: (1201, 921), 12 s
+front_range_brainard_lake_q10: (1201, 920), 17 s
+front_range_brainard_lake_q11: (1201, 920), 9 s
+121 traces to process ({'car_logger_pieces': 900, 'identifiable_tile_pieces': 99, 'duplicates_dropped': 6, 'near_duplicates_dropped': 0, 'named': 94, 'anonymous': 27}); 5 s
+  50/121 traces matched (35 s)
+  100/121 traces matched (46 s)
+  121/121 traces matched (53 s)
+segments_L50: 15,966 rows (12,952 on trails)
+segments_L25: 32,199 rows (26,105 on trails)
+done in 53 s -> data/t1_sample_front_range/

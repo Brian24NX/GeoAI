@@ -1,0 +1,5 @@
+window60_10  removed  28.1% | 184 traces, 31,901 segs | v0 4.25 [4.08, 4.47]  k 2.08 [1.95, 2.22]  peak -5.0%
+window30_5   removed  22.6% | 184 traces, 32,578 segs | v0 4.18 [3.93, 4.41]  k 2.13 [1.97, 2.29]  peak -5.5%
+window90_15  removed  29.8% | 184 traces, 31,443 segs | v0 4.25 [4.04, 4.44]  k 2.05 [1.92, 2.19]  peak -4.5%
+crude05      removed  21.4% | 184 traces, 33,035 segs | v0 4.14 [3.93, 4.37]  k 2.13 [1.99, 2.28]  peak -5.5%
+saved data/t1_white_mountains/stop_rule_sensitivity.csv

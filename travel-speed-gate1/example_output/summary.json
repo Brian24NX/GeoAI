@@ -1,0 +1,95 @@
+{
+  "region": "SYNTHETIC_selftest",
+  "settings": {
+    "stop_speed_kmh": 0.5,
+    "glitch_speed_kmh": 60.0,
+    "max_pages_per_box": 10,
+    "bands": [
+      [
+        "walking-like",
+        1.5,
+        6.0
+      ],
+      [
+        "in-between",
+        6.0,
+        10.0
+      ],
+      [
+        "cycling-like",
+        10.0,
+        30.0
+      ]
+    ],
+    "boxes": [
+      [
+        "box_a",
+        -71.4,
+        44.2,
+        -71.3,
+        44.3
+      ],
+      [
+        "box_b",
+        -71.6,
+        44.1,
+        -71.5,
+        44.2
+      ]
+    ]
+  },
+  "boxes": [
+    {
+      "box": "box_a",
+      "pages": 1,
+      "traces": 4,
+      "points": 2300,
+      "status": "ok"
+    },
+    {
+      "box": "box_b",
+      "pages": 2,
+      "traces": 1,
+      "points": 6000,
+      "status": "ok"
+    }
+  ],
+  "traces_total": 5,
+  "by_type": {
+    "identifiable": 2,
+    "trackable": 2,
+    "unordered": 1
+  },
+  "usable_traces": 4,
+  "usable_trace_pct": 80.0,
+  "points_total": 8300,
+  "points_usable": 7300,
+  "usable_point_pct": 87.95180722891567,
+  "median_moving_speed_kmh": 3.7220207944675066,
+  "time_removed_by_stop_filter_pct": 0.15107451750575596,
+  "bands": {
+    "walking-like": 3,
+    "cycling-like": 1
+  },
+  "speed_by_interval": {
+    "under 5 s": {
+      "traces": 1,
+      "median_speed_kmh": 3.495968494117152
+    },
+    "5-15 s": {
+      "traces": 2,
+      "median_speed_kmh": 3.515365419232255
+    },
+    "over 15 s": {
+      "traces": 0,
+      "median_speed_kmh": null
+    }
+  },
+  "known_limitations": [
+    "0.5 km/h stop filter is crude: GPS jitter can hide real stops",
+    "trackable traces split across pages are counted twice",
+    "a hike crossing two boxes is counted in both boxes",
+    "speed bands are a rough first look, not mode inference",
+    "point-to-point speed is inflated when GPS records very often"
+  ]
+}

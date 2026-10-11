@@ -1,0 +1,18 @@
+t1_tahoe_tahoe_r0_c0_q00: (2590, 1802), 59 s
+t1_tahoe_tahoe_r0_c0_q01: (2590, 1802), 19 s
+t1_tahoe_tahoe_r0_c0_q10: (2590, 1799), 31 s
+t1_tahoe_tahoe_r0_c0_q11: (2590, 1799), 9 s
+t1_tahoe_tahoe_r0_c1_q00: (2590, 1802), 8 s
+t1_tahoe_tahoe_r0_c1_q01: (2590, 1802), 43 s
+t1_tahoe_tahoe_r0_c1_q10: (2590, 1799), 10 s
+t1_tahoe_tahoe_r0_c1_q11: (2590, 1799), 20 s
+t1_tahoe_tahoe_r1_c0_q00: (2590, 1797), 24 s
+t1_tahoe_tahoe_r1_c0_q01: (2590, 1797), 7 s
+t1_tahoe_tahoe_r1_c0_q10: (2590, 1794), 74 s
+t1_tahoe_tahoe_r1_c0_q11: (2590, 1794), 21 s
+t1_tahoe_tahoe_r1_c1_q00: (2590, 1797), 8 s
+t1_tahoe_tahoe_r1_c1_q01: (2590, 1797), 22 s
+t1_tahoe_tahoe_r1_c1_q10: (2590, 1794), 22 s
+  t1_tahoe_tahoe_r1_c1_q11: HTTPError, retrying
+t1_tahoe_tahoe_r1_c1_q11: (2590, 1794), 181 s
+DEM PREFETCH DONE

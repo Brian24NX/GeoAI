@@ -1,0 +1,60 @@
+  sign check passed: heading uphill reads +0.100, downhill -0.100
+  segment sign test passed: northbound +10%, southbound -10%
+t1_white_mountains_wm_r0_c0_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c0_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c0_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c0_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c1_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c1_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c1_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c1_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c2_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c2_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c2_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c2_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c3_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c3_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c3_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c3_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r1_c0_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c0_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c0_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c0_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c1_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c1_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c1_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c1_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c2_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c2_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c2_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c2_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c3_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c3_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c3_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c3_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r2_c0_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c0_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c0_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c0_q11: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c1_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c1_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c1_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c1_q11: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c2_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c2_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c2_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c2_q11: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c3_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c3_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c3_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c3_q11: (2682, 2051), 0 s
+294 traces to process ({'car_logger_pieces': 378, 'identifiable_full_gpx': 145, 'anonymous_pieces_stitched': 34, 'duplicates_dropped': 11, 'identifiable': 142, 'anonymous': 152}); 10 s
+  50/294 traces matched (73 s)
+  100/294 traces matched (91 s)
+  150/294 traces matched (105 s)
+  200/294 traces matched (118 s)
+  250/294 traces matched (137 s)
+  294/294 traces matched (169 s)
+segments_L50: 62,809 rows (34,709 on trails)
+segments_L25: 126,516 rows (69,702 on trails)
+done in 172 s -> data/t1_white_mountains/

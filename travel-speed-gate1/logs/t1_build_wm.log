@@ -1,0 +1,102 @@
+  sign check passed: heading uphill reads +0.100, downhill -0.100
+  segment sign test passed: northbound +10%, southbound -10%
+t1_white_mountains_wm_r0_c0_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c0_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c0_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c0_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c1_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c1_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c1_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c1_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c2_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c2_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c2_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c2_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c3_q00: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c3_q01: (2682, 2071), 0 s
+t1_white_mountains_wm_r0_c3_q10: (2682, 2067), 0 s
+t1_white_mountains_wm_r0_c3_q11: (2682, 2067), 0 s
+t1_white_mountains_wm_r1_c0_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c0_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c0_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c0_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c1_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c1_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c1_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c1_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c2_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c2_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c2_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c2_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c3_q00: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c3_q01: (2683, 2063), 0 s
+t1_white_mountains_wm_r1_c3_q10: (2683, 2059), 0 s
+t1_white_mountains_wm_r1_c3_q11: (2683, 2059), 0 s
+t1_white_mountains_wm_r2_c0_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c0_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c0_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c0_q11: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c1_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c1_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c1_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c1_q11: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c2_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c2_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c2_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c2_q11: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c3_q00: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c3_q01: (2682, 2055), 0 s
+t1_white_mountains_wm_r2_c3_q10: (2682, 2051), 0 s
+t1_white_mountains_wm_r2_c3_q11: (2682, 2051), 0 s
+342 traces to process ({'car_logger_pieces': 378, 'identifiable_full_gpx': 145, 'anonymous_pieces_stitched': 34, 'lab_traces_already_from_api': 37, 'lab_traces_added': 60, 'lab_car_loggers': 4, 'duplicates_dropped': 16, 'near_duplicates_dropped': 7, 'named': 195, 'anonymous': 147}); 13 s
+  50/342 traces matched (86 s)
+  100/342 traces matched (111 s)
+  150/342 traces matched (127 s)
+  200/342 traces matched (143 s)
+  250/342 traces matched (162 s)
+  300/342 traces matched (186 s)
+  342/342 traces matched (203 s)
+segments_L50: 66,564 rows (37,801 on trails)
+segments_L25: 134,111 rows (75,948 on trails)
+done in 206 s -> data/t1_white_mountains/
+{
+  "traces": 248,
+  "classified": 215,
+  "by_mode": {
+    "walk": 201,
+    "unknown": 33,
+    "bike/ski": 10,
+    "fast": 4
+  },
+  "anchor_traces": 99,
+  "anchors_called_bike_ski": 1,
+  "anchors_called_walk": 98,
+  "median_confidence": 0.9961510487550869,
+  "walkers_conf_over_0.9": 0.9601990049751243,
+  "model": {
+    "walk_anchor": {
+      "median_kmh": 2.8700460369086205,
+      "sd_ln": 0.32305810522988904,
+      "traces": 99
+    },
+    "walk_fast_boundary_kmh": 7.56477334712119,
+    "gravity_rule": "(down/up >= 1.7 and downhill median >= 6.0 km/h) or p90 >= 20.0 km/h"
+  }
+}
+walkers: t1_modes.py
+window60_10  removed  28.5% | 201 traces, 34,535 segs | v0 4.23 [4.04, 4.44]  k 2.10 [1.98, 2.25]  peak -5.0%
+window30_5   removed  22.4% | 201 traces, 35,252 segs | v0 4.15 [3.91, 4.37]  k 2.17 [2.00, 2.30]  peak -5.0%
+window90_15  removed  30.1% | 201 traces, 34,036 segs | v0 4.21 [4.00, 4.42]  k 2.07 [1.92, 2.20]  peak -4.5%
+crude05      removed  22.8% | 201 traces, 35,683 segs | v0 4.13 [3.93, 4.32]  k 2.15 [2.01, 2.28]  peak -5.0%
+saved data/t1_white_mountains/stop_rule_sensitivity.csv
+
+## T1 final (t1_finalize.py)
+
+- travel mode of hiking traces (t1_modes.py): {'walk': 201, 'unknown': 21, 'bike/ski': 9, 'fast': 4}
+- foot-only anchor traces called walking: 98 of 99
+- walking trail segments (50 m, not suspect): 34,535 from 201 traces = 189 outings
+- map-match rate: 95.3% of points (hiking traces 95.6%)
+- trail networks with walking segments: 80; largest holds 40% of segments
+- 10 km blocks with walking segments (unit for geographic hold-out): 51
+- curve by GPS sampling interval (walkers): <= 2 s: 39 traces, v0 4.77 [4.30, 5.19], k 2.25; 2-6 s: 59 traces, v0 4.26 [3.75, 4.79], k 1.97; > 6 s: 103 traces, v0 4.09 [3.79, 4.29], k 2.13
+- stop-rule sensitivity (walkers): window60_10 removes 29%, v0 4.23 [4.04, 4.44], k 2.10; window30_5 removes 22%, v0 4.15 [3.91, 4.37], k 2.17; window90_15 removes 30%, v0 4.21 [4.00, 4.42], k 2.07; crude05 removes 23%, v0 4.13 [3.93, 4.32], k 2.15

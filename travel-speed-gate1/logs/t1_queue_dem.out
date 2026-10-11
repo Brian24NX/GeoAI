@@ -1,0 +1,21 @@
+2026-10-09 16:45:58  DEM frontrange: start
+2026-10-09 20:57:36  DEM frontrange: exit 1
+2026-10-09 20:57:36  DEM adk: start
+2026-10-09 21:19:52  DEM adk: exit 1
+2026-10-09 21:19:52  DEM catskills: start
+2026-10-09 22:27:50  DEM catskills: exit 1
+2026-10-09 22:27:50  DEM yosemite: start
+2026-10-09 22:37:49  DEM yosemite: exit 0
+2026-10-09 22:37:49  DEM olympic: start
+2026-10-09 22:44:07  DEM olympic: exit 0
+2026-10-09 22:44:07  DEM tahoe: start
+2026-10-09 22:53:28  DEM tahoe: exit 0
+2026-10-09 22:53:28  DEM greenmtn: start
+2026-10-09 23:02:46  DEM greenmtn: exit 0
+2026-10-09 23:02:46  DEM smokies: start
+2026-10-09 23:15:31  DEM smokies: exit 0
+2026-10-09 23:15:31  DEM shenandoah: start
+2026-10-09 23:39:40  DEM shenandoah: exit 0
+2026-10-09 23:39:40  DEM pisgah: start
+2026-10-09 23:43:15  DEM pisgah: exit 0
+2026-10-09 23:43:15  QUEUE dem DONE: frontrange adk catskills yosemite olympic tahoe greenmtn smokies shenandoah pisgah

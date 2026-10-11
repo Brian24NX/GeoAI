@@ -1,0 +1,17 @@
+t1_yosemite_yosemite_r0_c0_q00: (1756, 2273), 51 s
+t1_yosemite_yosemite_r0_c0_q01: (1756, 2273), 23 s
+t1_yosemite_yosemite_r0_c0_q10: (1756, 2271), 76 s
+t1_yosemite_yosemite_r0_c0_q11: (1756, 2271), 26 s
+t1_yosemite_yosemite_r0_c1_q00: (1756, 2273), 26 s
+t1_yosemite_yosemite_r0_c1_q01: (1756, 2273), 29 s
+t1_yosemite_yosemite_r0_c1_q10: (1756, 2271), 28 s
+t1_yosemite_yosemite_r0_c1_q11: (1756, 2271), 54 s
+t1_yosemite_yosemite_r1_c0_q00: (1756, 2269), 43 s
+t1_yosemite_yosemite_r1_c0_q01: (1756, 2269), 31 s
+t1_yosemite_yosemite_r1_c0_q10: (1756, 2266), 29 s
+t1_yosemite_yosemite_r1_c0_q11: (1756, 2266), 27 s
+t1_yosemite_yosemite_r1_c1_q00: (1756, 2269), 29 s
+t1_yosemite_yosemite_r1_c1_q01: (1756, 2269), 45 s
+t1_yosemite_yosemite_r1_c1_q10: (1756, 2266), 54 s
+t1_yosemite_yosemite_r1_c1_q11: (1756, 2266), 26 s
+DEM PREFETCH DONE

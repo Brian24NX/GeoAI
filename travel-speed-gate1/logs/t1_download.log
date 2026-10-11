@@ -1,0 +1,59 @@
+Region t1_white_mountains: 12 tiles, -71.95..-70.95 E, 43.8..44.5 N
+
+=== t1_white_mountains: 12 boxes ===
+    ! Overpass overpass-api.de: HTTP 504
+  wm_r0_c0                     points=  133,633  usable=   94,444 ( 71%)  traces=  29  pages read= 29  ways=1529  [ok]
+  wm_r0_c1                     points=  514,526  usable=  441,916 ( 86%)  traces= 112  pages read= 98  ways=2882  [ok]
+    ! network problem on wm_r0_c2 page 0: HTTPSConnectionPool(host='api.openstreetmap.org', port=443): Read timed out. (read timeout=120)
+    ! Overpass overpass-api.de: ConnectionError
+    ! Overpass maps.mail.ru: ConnectionError
+    ! Overpass overpass.kumi.systems: ConnectionError
+    ... all Overpass servers busy; waiting 2 min (round 2 of 2)
+    ! Overpass overpass-api.de: ConnectionError
+    ! Overpass maps.mail.ru: HTTP 504
+  wm_r0_c2                     points=        -  usable=        - (   -)  traces=   0  pages read=  0  ways=2218  [stopped: page 0: error]
+    ! Overpass overpass-api.de: HTTP 504
+  wm_r0_c3                     points=  286,718  usable=  182,324 ( 64%)  traces=  76  pages read= 50  ways=6117  [ok]
+  wm_r1_c0                     points=  243,957  usable=   65,460 ( 27%)  traces=  31  pages read= 28  ways=3033  [ok]
+    ! Overpass overpass-api.de: ReadTimeout
+  wm_r1_c1                     points=  488,049  usable=  344,871 ( 71%)  traces= 108  pages read= 81  ways=2820  [ok]
+  wm_r1_c2                     points=  385,628  usable=  263,336 ( 68%)  traces=  86  pages read= 65  ways=2247  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+  wm_r1_c3                     points=  338,619  usable=  174,222 ( 51%)  traces=  91  pages read= 49  ways=4128  [ok]
+  wm_r2_c0                     points=  115,971  usable=   63,449 ( 55%)  traces=  33  pages read= 22  ways=5578  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+  wm_r2_c1                     points=  141,148  usable=  107,544 ( 76%)  traces=  50  pages read= 28  ways=6113  [ok]
+  wm_r2_c2                     points=  286,492  usable=  202,138 ( 71%)  traces=  71  pages read= 52  ways=1806  [ok]
+  wm_r2_c3                     points=  179,651  usable=  124,932 ( 70%)  traces=  60  pages read= 34  ways=3128  [ok]
+
+  Boxes fully counted: 11 of 12
+  Usable points: 2,064,636 of 3,114,392 (66%)   <- write this down (plan sec. 6)
+  On trails only: ~51% of GPS points are usable (~658,367 usable vs ~633,151 unusable; unusable side estimated from 484,756 sampled points, 11 of 12 boxes)
+  Of the usable points, ~32% are on trails (the rest: roads, lifts, off the map)
+  Usable traces: 747 (identifiable 575 from 49 users, trackable 172); trace-days 803
+  Where the usable time is: trail 81%, track 2%, road 10%, none 5%, lift/rail/piste/other 2%
+  Trail traces (5+ moving min on trails): 194  (separate outings 173, trace-days 249, 745 h on trails; duplicate uploads dropped: 12)
+  Who: 38 named uploaders + 93 anonymous traces; busiest uploader has 16 traces
+  Median on-trail moving speed per trace: 2.6 km/h (window stop rule: 2.8)
+  Trail traces by speed: walking-like 165 | in-between 2 | cycling-like 6 | other 21
+  Trail time removed as stops: crude 0.5 km/h rule 21.0%  vs  draft 60 s / 10 m rule 26.8%
+  On-trail moving time by permitted mode: foot-only 70%, bicycle-permitted 4%, bike+horse 2%, unclear 25%
+  Trail network 3386 km; share with tag: surface 37%, sac_scale 17%, width 2%, trail_visibility 2%
+
+  Gate 1 checks (plan section 6):
+   - usable share of points: 66%; trail traces: 194 -> 'enough'? decide with Danni and Tianyi
+   - median on-trail speed in walking range 1.5-5 km/h: YES (2.6)
+   - faster second lobe (cyclists): 6 trail traces at 10-30 km/h
+
+  Wobble check, walking trail traces recorded every 1-2 s (n=47): point-to-point 2.9 km/h vs 10-s steps 2.7 km/h (median inflation +11%)
+  saved in results/t1_white_mountains/: summary.json, traces.csv, speed_histograms.png, trace_map.png
+
+Full GPX files: 134 identifiable traces (car loggers skipped), 0 already cached, 134 to fetch
+  25/134 fetched
+  50/134 fetched
+  75/134 fetched
+  100/134 fetched
+  125/134 fetched
+  134/134 fetched
+
+T1 DOWNLOAD DONE

@@ -1,0 +1,118 @@
+{
+  "dataset": {
+    "traces_processed": 294,
+    "hiking_traces": 192,
+    "named_uploaders": 40,
+    "anonymous_hiking_traces": 98,
+    "full_gpx_hiking_traces": 94,
+    "trail_segments_50m": 34652,
+    "trail_km_traversed": 1732.6000000000001,
+    "trail_hours_moving": 591.7204896293224,
+    "distinct_osm_trail_ways": 789,
+    "median_matched_share": 1.0,
+    "median_match_err_m": 2.8763722998888035,
+    "suspect_pct": 0.8253491861941591,
+    "years": "1987-2026",
+    "winter_share_pct": 32.33480305307318,
+    "foot_only_pct": 64.97749047674016,
+    "sac_scale_tagged_pct": 51.307283850859974,
+    "surface_tagged_pct": 48.05494632344454,
+    "width_tagged_pct": 0.1587209973450306
+  },
+  "fit_default_rule": {
+    "walker_traces": 184,
+    "segments": 31901,
+    "v0_kmh": 4.253571701967995,
+    "v0_ci": [
+      4.036838032533167,
+      4.467284889630874
+    ],
+    "k": 2.0825561273856747,
+    "k_ci": [
+      1.9534203603711944,
+      2.238451432729603
+    ],
+    "peak_slope_pct": -5.000000000000012,
+    "peak_ci_pct": [
+      -6.000000000000013,
+      -3.987500000000012
+    ]
+  },
+  "stop_rules": [
+    {
+      "rule": "window60_10",
+      "spec": "('window', 60, 10)",
+      "time_removed_pct": 28.10145726250486,
+      "walker_traces": 184,
+      "segments": 31901,
+      "median_speed_kmh": 3.33557505610548,
+      "v0_kmh": 4.253571701967995,
+      "v0_lo": 4.082530106773584,
+      "v0_hi": 4.4674712259471,
+      "k": 2.0825561273856747,
+      "k_lo": 1.951247990060501,
+      "k_hi": 2.2156770961759964,
+      "peak_slope_pct": -5.000000000000012,
+      "peak_lo": -6.000000000000013,
+      "peak_hi": -3.987500000000012
+    },
+    {
+      "rule": "window30_5",
+      "spec": "('window', 30, 5)",
+      "time_removed_pct": 22.57831650871239,
+      "walker_traces": 184,
+      "segments": 32578,
+      "median_speed_kmh": 3.2908003496168012,
+      "v0_kmh": 4.181512020113033,
+      "v0_lo": 3.933871408083551,
+      "v0_hi": 4.41179232273152,
+      "k": 2.127521479176233,
+      "k_lo": 1.96773962071979,
+      "k_hi": 2.2924690858170083,
+      "peak_slope_pct": -5.500000000000013,
+      "peak_lo": -6.500000000000014,
+      "peak_hi": -3.987500000000012
+    },
+    {
+      "rule": "window90_15",
+      "spec": "('window', 90, 15)",
+      "time_removed_pct": 29.770740216582585,
+      "walker_traces": 184,
+      "segments": 31443,
+      "median_speed_kmh": 3.3533065220471507,
+      "v0_kmh": 4.249011244327032,
+      "v0_lo": 4.040930119928531,
+      "v0_hi": 4.438024198351899,
+      "k": 2.0523913515434753,
+      "k_lo": 1.916870541265833,
+      "k_hi": 2.190777167360231,
+      "peak_slope_pct": -4.500000000000012,
+      "peak_lo": -5.500000000000013,
+      "peak_hi": -3.5000000000000115
+    },
+    {
+      "rule": "crude05",
+      "spec": "('crude', 0, 0.5)",
+      "time_removed_pct": 21.380696219816393,
+      "walker_traces": 184,
+      "segments": 33035,
+      "median_speed_kmh": 3.2779982484830743,
+      "v0_kmh": 4.138209014159126,
+      "v0_lo": 3.926349048237108,
+      "v0_hi": 4.3712301475335,
+      "k": 2.1292327466027947,
+      "k_lo": 1.9930965866503172,
+      "k_hi": 2.2827732543821884,
+      "peak_slope_pct": -5.500000000000013,
+      "peak_lo": -6.500000000000014,
+      "peak_hi": -4.0000000000000115
+    }
+  ],
+  "out_and_back": {
+    "pairs": 293,
+    "hikers": 107,
+    "median_up_kmh": 2.547437047394205,
+    "median_down_kmh": 3.0553711962391583,
+    "share_down_faster_pct": 75.42662116040955
+  }
+}

@@ -30,10 +30,18 @@ that maps usually don't have?**
 | `meeting_plots/`, `Meeting_Notes_*.md`, `Meeting_Prep_*.md` | Weekly meeting material |
 | `progress_report_1/` | Progress Report #1 (CVPR template, LaTeX) |
 
-**Not in this repo, on purpose:** raw GPS data and built datasets (OSM traces
-carry usernames; the lab's OSM crawl is the lab's), download caches,
-elevation grids. The working copy with all data lives on the lab cluster at
-`/engrfs/project/jacobsn/zhou.n/travel-speed/`.
+**Everything in the project folder is here** (code, documents, built
+datasets, logs, results), except two folders: `travel-speed-gate1/cache/`
+(12 GB of raw downloads: OSM API pages, elevation grids and lab extracts;
+GitHub refuses files over 100 MB) and `.venv/` (the Python environment).
+Copies of the caches are on the lab cluster at
+`/engrfs/project/jacobsn/zhou.n/travel-speed/cache/`, and the scripts can
+re-create them.
+
+**Keep this repository private.** The built datasets carry OSM usernames
+and GPS tracks, and some documents are personal or course material.
+Before ever making it public, remove `travel-speed-gate1/data/`, the logs
+and the personal documents.
 
 ## Running it
 

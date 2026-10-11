@@ -1,0 +1,52 @@
+328,945 walked trail points -> 1,832 cells of 500 m (~1.83 GB)
+0 already on disk, 1,832 to fetch
+01:10:11  50/1,832 cells, 0 failed, ~91 min left
+01:12:43  100/1,832 cells, 0 failed, ~88 min left
+01:15:10  150/1,832 cells, 0 failed, ~84 min left
+01:17:43  200/1,832 cells, 0 failed, ~82 min left
+01:20:11  250/1,832 cells, 0 failed, ~79 min left
+01:22:51  300/1,832 cells, 0 failed, ~78 min left
+01:25:23  350/1,832 cells, 0 failed, ~75 min left
+01:27:58  400/1,832 cells, 0 failed, ~73 min left
+01:30:35  450/1,832 cells, 0 failed, ~70 min left
+01:37:41  500/1,832 cells, 0 failed, ~80 min left
+01:47:33  550/1,832 cells, 0 failed, ~93 min left
+01:50:16  600/1,832 cells, 0 failed, ~88 min left
+01:52:46  650/1,832 cells, 0 failed, ~82 min left
+01:55:12  700/1,832 cells, 0 failed, ~77 min left
+01:57:41  750/1,832 cells, 0 failed, ~72 min left
+02:00:10  800/1,832 cells, 0 failed, ~68 min left
+02:02:54  850/1,832 cells, 0 failed, ~64 min left
+02:05:38  900/1,832 cells, 0 failed, ~60 min left
+02:08:21  950/1,832 cells, 0 failed, ~56 min left
+02:10:55  1,000/1,832 cells, 0 failed, ~53 min left
+02:13:25  1,050/1,832 cells, 0 failed, ~49 min left
+02:15:58  1,100/1,832 cells, 0 failed, ~45 min left
+02:18:25  1,150/1,832 cells, 0 failed, ~42 min left
+02:21:02  1,200/1,832 cells, 0 failed, ~39 min left
+02:24:20  1,250/1,832 cells, 0 failed, ~36 min left
+02:26:51  1,300/1,832 cells, 0 failed, ~32 min left
+02:29:16  1,350/1,832 cells, 0 failed, ~29 min left
+02:31:44  1,400/1,832 cells, 0 failed, ~26 min left
+02:34:17  1,450/1,832 cells, 0 failed, ~23 min left
+02:36:55  1,500/1,832 cells, 0 failed, ~20 min left
+02:39:16  1,550/1,832 cells, 0 failed, ~17 min left
+02:41:46  1,600/1,832 cells, 0 failed, ~14 min left
+02:44:13  1,650/1,832 cells, 0 failed, ~11 min left
+02:46:37  1,700/1,832 cells, 0 failed, ~8 min left
+02:49:07  1,750/1,832 cells, 0 failed, ~5 min left
+02:51:39  1,800/1,832 cells, 0 failed, ~2 min left
+02:53:13  1,832/1,832 cells, 0 failed, ~0 min left
+{
+  "cells_wanted": 1832,
+  "cells_on_disk": 1832,
+  "failed": [],
+  "cells_with_any_nodata": 0,
+  "walked_points_covered_pct": 100.0,
+  "gb_on_disk": 1.923381992,
+  "minutes": 105.58097486893335,
+  "grid": "EPSG:26919, 500 m cells, 1 m pixels",
+  "margin_m": 25,
+  "source": "https://elevation.nationalmap.gov/arcgis/rest/services/3DEPElevation/ImageServer/exportImage"
+}
+DEM1M DONE

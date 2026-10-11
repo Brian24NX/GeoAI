@@ -1,0 +1,17 @@
+t1_greenmtn_greenmtn_r0_c0_q00: (2590, 1660), 25 s
+t1_greenmtn_greenmtn_r0_c0_q01: (2590, 1660), 29 s
+t1_greenmtn_greenmtn_r0_c0_q10: (2590, 1657), 40 s
+t1_greenmtn_greenmtn_r0_c0_q11: (2590, 1657), 28 s
+t1_greenmtn_greenmtn_r0_c1_q00: (2590, 1660), 28 s
+t1_greenmtn_greenmtn_r0_c1_q01: (2590, 1660), 31 s
+t1_greenmtn_greenmtn_r0_c1_q10: (2590, 1657), 25 s
+t1_greenmtn_greenmtn_r0_c1_q11: (2590, 1657), 28 s
+t1_greenmtn_greenmtn_r1_c0_q00: (2590, 1654), 21 s
+t1_greenmtn_greenmtn_r1_c0_q01: (2590, 1654), 26 s
+t1_greenmtn_greenmtn_r1_c0_q10: (2590, 1651), 59 s
+t1_greenmtn_greenmtn_r1_c0_q11: (2590, 1651), 31 s
+t1_greenmtn_greenmtn_r1_c1_q00: (2590, 1654), 59 s
+t1_greenmtn_greenmtn_r1_c1_q01: (2590, 1654), 29 s
+t1_greenmtn_greenmtn_r1_c1_q10: (2590, 1651), 70 s
+t1_greenmtn_greenmtn_r1_c1_q11: (2590, 1651), 28 s
+DEM PREFETCH DONE

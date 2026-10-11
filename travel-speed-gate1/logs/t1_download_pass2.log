@@ -1,0 +1,42 @@
+Region t1_white_mountains: 12 tiles, -71.95..-70.95 E, 43.8..44.5 N
+
+=== t1_white_mountains: 12 boxes ===
+  wm_r0_c0                     points=  133,633  usable=   94,444 ( 71%)  traces=  29  pages read= 29  ways=1529  [ok]
+  wm_r0_c1                     points=  514,526  usable=  441,916 ( 86%)  traces= 112  pages read= 98  ways=2882  [ok]
+  wm_r0_c2                     points=  223,243  usable=  120,882 ( 54%)  traces=  43  pages read= 38  ways=2218  [ok]
+  wm_r0_c3                     points=  286,718  usable=  182,324 ( 64%)  traces=  76  pages read= 50  ways=6117  [ok]
+  wm_r1_c0                     points=  243,957  usable=   65,460 ( 27%)  traces=  31  pages read= 28  ways=3033  [ok]
+  wm_r1_c1                     points=  488,049  usable=  344,871 ( 71%)  traces= 108  pages read= 81  ways=2820  [ok]
+  wm_r1_c2                     points=  385,628  usable=  263,336 ( 68%)  traces=  86  pages read= 65  ways=2247  [ok]
+  wm_r1_c3                     points=  338,619  usable=  174,222 ( 51%)  traces=  91  pages read= 49  ways=4128  [ok]
+  wm_r2_c0                     points=  115,971  usable=   63,449 ( 55%)  traces=  33  pages read= 22  ways=5578  [ok]
+  wm_r2_c1                     points=  141,148  usable=  107,544 ( 76%)  traces=  50  pages read= 28  ways=6113  [ok]
+  wm_r2_c2                     points=  286,492  usable=  202,138 ( 71%)  traces=  71  pages read= 52  ways=1806  [ok]
+  wm_r2_c3                     points=  179,651  usable=  124,932 ( 70%)  traces=  60  pages read= 34  ways=3128  [ok]
+
+  Boxes fully counted: 12 of 12
+  Usable points: 2,185,518 of 3,337,635 (65%)   <- write this down (plan sec. 6)
+  On trails only: ~51% of GPS points are usable (~715,869 usable vs ~693,538 unusable; unusable side estimated from 537,117 sampled points, 12 of 12 boxes)
+  Of the usable points, ~33% are on trails (the rest: roads, lifts, off the map)
+  Usable traces: 790 (identifiable 606 from 52 users, trackable 184); trace-days 853
+  Where the usable time is: trail 81%, track 2%, road 10%, none 5%, lift/rail/piste/other 2%
+  Trail traces (5+ moving min on trails): 212  (separate outings 190, trace-days 270, 816 h on trails; duplicate uploads dropped: 13)
+  Who: 40 named uploaders + 101 anonymous traces; busiest uploader has 17 traces
+  Median on-trail moving speed per trace: 2.6 km/h (window stop rule: 2.8)
+  Trail traces by speed: walking-like 181 | in-between 2 | cycling-like 6 | other 23
+  Trail time removed as stops: crude 0.5 km/h rule 21.4%  vs  draft 60 s / 10 m rule 27.2%
+  On-trail moving time by permitted mode: foot-only 70%, bicycle-permitted 3%, bike+horse 2%, unclear 25%
+  Trail network 3386 km; share with tag: surface 37%, sac_scale 17%, width 2%, trail_visibility 2%
+
+  Gate 1 checks (plan section 6):
+   - usable share of points: 65%; trail traces: 212 -> 'enough'? decide with Danni and Tianyi
+   - median on-trail speed in walking range 1.5-5 km/h: YES (2.6)
+   - faster second lobe (cyclists): 6 trail traces at 10-30 km/h
+
+  Wobble check, walking trail traces recorded every 1-2 s (n=50): point-to-point 3.0 km/h vs 10-s steps 2.7 km/h (median inflation +12%)
+  saved in results/t1_white_mountains/: summary.json, traces.csv, speed_histograms.png, trace_map.png
+
+Full GPX files: 145 identifiable traces (car loggers skipped), 134 already cached, 11 to fetch
+  11/11 fetched
+
+T1 DOWNLOAD DONE

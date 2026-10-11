@@ -1,39 +1,14 @@
-# Whitelist: ignore everything at the top, then add back what belongs here.
-# Never commit raw GPS data (it carries OSM usernames), the lab's crawl,
-# caches, elevation grids, environments, or personal / course documents.
-/*
-!/.gitignore
-!/README.md
-!/PROGRESS.md
-!/DECISIONS_LOG.md
-!/reading_notes.md
-!/Meeting_Notes_v*.md
-!/Meeting_Prep_*.md
-!/Your_Project_Explained_Simply.html
-!/docs/
-!/meeting_plots/
-!/progress_report_1/
-!/travel-speed-gate1/
-
-# the pipeline folder: code, docs and small summaries only
-/travel-speed-gate1/cache/
-/travel-speed-gate1/data/
-/travel-speed-gate1/logs/
-/travel-speed-gate1/example_output/
-/travel-speed-gate1/results/**/traces.csv
-/travel-speed-gate1/results/first_look_chunks.csv
-/travel-speed-gate1/results/stop_check_key.csv
-/travel-speed-gate1/results/t1_summary/
+# Everything in GeoAI is tracked except:
+# - the Python environment (machine-specific; rebuild from requirements.txt)
+.venv/
+# - download caches: 12 GB of OSM pages, elevation grids and lab extracts,
+#   too big for GitHub (100 MB file limit). A copy is on the lab cluster at
+#   /engrfs/project/jacobsn/zhou.n/travel-speed/cache and the scripts can
+#   re-create them.
+travel-speed-gate1/cache/
+# - system and Python junk
+.DS_Store
 __pycache__/
 *.pyc
-.DS_Store
 *.part
 *.tmp
-
-# LaTeX build files
-*.aux
-*.log
-*.out
-*.synctex.gz
-*.fls
-*.fdb_latexmk

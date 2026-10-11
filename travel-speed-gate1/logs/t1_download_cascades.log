@@ -1,0 +1,108 @@
+Region t1_cascades: 18 tiles, -122.1..-120.6 E, 47.2..47.9 N
+
+=== t1_cascades: 18 boxes ===
+  cascades_r0_c0               points=  531,611  usable=  436,777 ( 82%)  traces= 167  pages read=100  ways=16162  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r0_c1               points=  170,729  usable=  142,748 ( 84%)  traces= 166  pages read= 36  ways=894  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r0_c2               points=1,437,393  usable=1,322,126 ( 92%)  traces= 412  pages read=278  ways=1777  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+    ! Overpass overpass-api.de: HTTP 504
+    ! Overpass maps.mail.ru: ReadTimeout
+    ! Overpass overpass.kumi.systems: HTTP 500
+    ... all Overpass servers busy; waiting 2 min (round 2 of 2)
+  cascades_r0_c3               points=1,140,642  usable=  958,907 ( 84%)  traces= 317  pages read=205  ways=1603  [ok]
+    ! network problem on cascades_r0_c4 page 0: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r0_c4               points=        -  usable=        - (   -)  traces=   0  pages read=  0  ways=3053  [stopped: page 0: error]
+    ! network problem on cascades_r0_c5 page 0: HTTPSConnectionPool(host='api.openstreetmap.org', port=443): Read timed out. (read timeout=120)
+  cascades_r0_c5               points=        -  usable=        - (   -)  traces=   0  pages read=  0  ways=1071  [stopped: page 0: error]
+    ! network problem on cascades_r1_c0 page 2: HTTPSConnectionPool(host='api.openstreetmap.org', port=443): Read timed out. (read timeout=120)
+    ! Overpass overpass-api.de: ConnectionError
+    ! Overpass maps.mail.ru: ConnectionError
+    ! Overpass overpass.kumi.systems: ConnectionError
+    ... all Overpass servers busy; waiting 2 min (round 2 of 2)
+    ! Overpass overpass-api.de: ConnectionError
+    ! Overpass maps.mail.ru: ConnectionError
+    ! Overpass overpass.kumi.systems: ConnectionError
+    ... trying the box again as 16 smaller pieces
+    ! Overpass overpass-api.de: ConnectionError
+    ! Overpass maps.mail.ru: ConnectionError
+    ! Overpass overpass.kumi.systems: ConnectionError
+    ... all Overpass servers busy; waiting 2 min (round 2 of 3)
+    ! Overpass overpass-api.de: ConnectionError
+    ! Overpass maps.mail.ru: ConnectionError
+    ! Overpass overpass.kumi.systems: ConnectionError
+    ... all Overpass servers busy; waiting 2 min (round 3 of 3)
+    ! Overpass overpass-api.de: HTTP 504
+    ! Overpass overpass-api.de: HTTP 504
+    ! Overpass overpass-api.de: HTTP 429
+    ! Overpass overpass-api.de: HTTP 504
+    ! Overpass overpass-api.de: HTTP 504
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r1_c0               points=        -  usable=        - (   -)  traces=   4  pages read=  2  ways=29613  [stopped: page 2: error]
+    ! network problem on cascades_r1_c1 page 0: ("Connection broken: InvalidChunkLength(got length b'\\r\\n', 0 bytes read)", InvalidChunkLength(got length b'\r\n', 0 bytes read))
+  cascades_r1_c1               points=        -  usable=        - (   -)  traces=   0  pages read=  0  ways=7251  [stopped: page 0: error]
+  cascades_r1_c2               points=  208,583  usable=  112,716 ( 54%)  traces=  66  pages read= 35  ways=559  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r1_c3               points=  274,287  usable=  225,634 ( 82%)  traces=  30  pages read= 56  ways=333  [ok]
+  cascades_r1_c4               points=   91,117  usable=   53,236 ( 58%)  traces=  24  pages read= 21  ways=311  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r1_c5               points=1,177,674  usable=1,094,852 ( 93%)  traces= 362  pages read=230  ways=4341  [ok]
+    ! HTTP 503 on cascades_r2_c0 page 750: '\n<?xml version="1.0" encoding="utf-8"?>\n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"\n "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">'
+  cascades_r2_c0               points=        -  usable=        - (   -)  traces=1562  pages read=750  ways=24417  [stopped: page 750: error]
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r2_c1               points=1,269,065  usable=1,182,075 ( 93%)  traces= 356  pages read=248  ways=4437  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r2_c2               points=  943,975  usable=  905,179 ( 96%)  traces= 290  pages read=188  ways=976  [ok]
+    ! Overpass overpass-api.de: HTTP 504
+  cascades_r2_c3               points=  881,911  usable=  840,028 ( 95%)  traces= 243  pages read=179  ways=624  [ok]
+  cascades_r2_c4               points=  703,202  usable=  652,617 ( 93%)  traces= 241  pages read=142  ways=571  [ok]
+  cascades_r2_c5               points=  482,362  usable=  452,070 ( 94%)  traces= 141  pages read= 98  ways=1621  [ok]
+
+  Boxes fully counted: 13 of 18
+  Usable points: 8,378,965 of 9,312,551 (90%)   <- write this down (plan sec. 6)
+  On trails only: ~59% of GPS points are usable (~874,151 usable vs ~610,448 unusable; unusable side estimated from 538,586 sampled points, 13 of 18 boxes)
+  Of the usable points, ~10% are on trails (the rest: roads, lifts, off the map)
+  Usable traces: 4381 (identifiable 4168 from 68 users, trackable 213); trace-days 4345
+  Where the usable time is: trail 69%, track 6%, road 12%, none 9%, lift/rail/piste/other 4%
+  Trail traces (5+ moving min on trails): 382  (separate outings 372, trace-days 431, 1033 h on trails; duplicate uploads dropped: 31)
+  Who: 46 named uploaders + 139 anonymous traces; busiest uploader has 46 traces
+  Median on-trail moving speed per trace: 3.1 km/h (window stop rule: 3.2)
+  Trail traces by speed: walking-like 346 | in-between 7 | cycling-like 6 | other 23
+  Trail time removed as stops: crude 0.5 km/h rule 15.3%  vs  draft 60 s / 10 m rule 19.8%
+  On-trail moving time by permitted mode: foot-only 49%, bicycle-permitted 2%, horse-permitted 24%, bike+horse 6%, unclear 18%
+  Trail network 5033 km; share with tag: surface 73%, sac_scale 18%, width 6%, trail_visibility 20%
+
+  Gate 1 checks (plan section 6):
+   - usable share of points: 90%; trail traces: 382 -> 'enough'? decide with Danni and Tianyi
+   - median on-trail speed in walking range 1.5-5 km/h: YES (3.1)
+   - faster second lobe (cyclists): 6 trail traces at 10-30 km/h
+
+  Wobble check, walking trail traces recorded every 1-2 s (n=54): point-to-point 3.5 km/h vs 10-s steps 3.3 km/h (median inflation +5%)
+  saved in results/t1_cascades/: summary.json, traces.csv, speed_histograms.png, trace_map.png
+
+Full GPX files: 262 identifiable traces (car loggers skipped), 145 already cached, 262 to fetch
+  25/262 fetched
+  50/262 fetched
+  75/262 fetched
+  100/262 fetched
+  125/262 fetched
+  150/262 fetched
+  175/262 fetched
+  200/262 fetched
+  225/262 fetched
+  250/262 fetched
+  262/262 fetched
+
+T1 DOWNLOAD DONE
+Region t1_cascades: 17 tiles, -122.1..-120.6 E, 47.2..47.9 N
+
+=== t1_cascades: 17 boxes ===
+  cascades_r0_c0               points=  531,611  usable=  436,777 ( 82%)  traces= 167  pages read=100  ways=16162  [ok]
+  cascades_r0_c1               points=  170,729  usable=  142,748 ( 84%)  traces= 166  pages read= 36  ways=894  [ok]
+  cascades_r0_c2               points=1,437,393  usable=1,322,126 ( 92%)  traces= 412  pages read=278  ways=1777  [ok]
+  cascades_r0_c3               points=1,140,642  usable=  958,907 ( 84%)  traces= 317  pages read=205  ways=1603  [ok]
+  cascades_r0_c4               points=  339,632  usable=  272,749 ( 80%)  traces= 246  pages read= 65  ways=3053  [ok]
+  cascades_r0_c5               points=  555,721  usable=  523,302 ( 94%)  traces= 181  pages read=111  ways=1071  [ok]

@@ -1,0 +1,191 @@
+t1_frontrange_frontrange_r0_c0_q00: (2312, 1785), 120 s
+t1_frontrange_frontrange_r0_c0_q01: (2312, 1785), 27 s
+t1_frontrange_frontrange_r0_c0_q10: (2312, 1782), 72 s
+t1_frontrange_frontrange_r0_c0_q11: (2312, 1782), 72 s
+t1_frontrange_frontrange_r0_c1_q00: (2312, 1785), 59 s
+t1_frontrange_frontrange_r0_c1_q01: (2312, 1785), 60 s
+t1_frontrange_frontrange_r0_c1_q10: (2312, 1782), 122 s
+t1_frontrange_frontrange_r0_c1_q11: (2312, 1782), 30 s
+t1_frontrange_frontrange_r0_c2_q00: (2312, 1785), 26 s
+t1_frontrange_frontrange_r0_c2_q01: (2312, 1785), 27 s
+t1_frontrange_frontrange_r0_c2_q10: (2312, 1782), 27 s
+t1_frontrange_frontrange_r0_c2_q11: (2312, 1782), 21 s
+t1_frontrange_frontrange_r1_c0_q00: (2312, 1779), 73 s
+t1_frontrange_frontrange_r1_c0_q01: (2312, 1779), 28 s
+t1_frontrange_frontrange_r1_c0_q10: (2312, 1777), 30 s
+t1_frontrange_frontrange_r1_c0_q11: (2312, 1777), 62 s
+t1_frontrange_frontrange_r1_c1_q00: (2312, 1779), 139 s
+t1_frontrange_frontrange_r1_c1_q01: (2312, 1779), 43 s
+t1_frontrange_frontrange_r1_c1_q10: (2312, 1777), 24 s
+t1_frontrange_frontrange_r1_c1_q11: (2312, 1777), 62 s
+t1_frontrange_frontrange_r1_c2_q00: (2312, 1779), 45 s
+t1_frontrange_frontrange_r1_c2_q01: (2312, 1779), 18 s
+t1_frontrange_frontrange_r1_c2_q10: (2312, 1777), 53 s
+t1_frontrange_frontrange_r1_c2_q11: (2312, 1777), 15 s
+t1_frontrange_frontrange_r2_c0_q00: (2312, 1774), 86 s
+t1_frontrange_frontrange_r2_c0_q01: (2312, 1774), 90 s
+t1_frontrange_frontrange_r2_c0_q10: (2312, 1772), 28 s
+t1_frontrange_frontrange_r2_c0_q11: (2312, 1772), 60 s
+t1_frontrange_frontrange_r2_c1_q00: (2312, 1774), 20 s
+t1_frontrange_frontrange_r2_c1_q01: (2312, 1774), 140 s
+t1_frontrange_frontrange_r2_c1_q10: (2312, 1772), 28 s
+t1_frontrange_frontrange_r2_c1_q11: (2312, 1772), 30 s
+t1_frontrange_frontrange_r2_c2_q00: (2312, 1774), 17 s
+t1_frontrange_frontrange_r2_c2_q01: (2312, 1774), 56 s
+  t1_frontrange_frontrange_r2_c2_q10: HTTPError, retrying
+  t1_frontrange_frontrange_r2_c2_q10: HTTPError, retrying
+Traceback (most recent call last):
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connection.py", line 239, in _new_conn
+    sock = connection.create_connection(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/util/connection.py", line 60, in create_connection
+    for res in socket.getaddrinfo(host, port, family, socket.SOCK_STREAM):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.12_2/Frameworks/Python.framework/Versions/3.12/lib/python3.12/socket.py", line 978, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+socket.gaierror: [Errno 8] nodename nor servname provided, or not known
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 793, in urlopen
+    response = self._make_request(
+               ^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 494, in _make_request
+    raise new_e
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 470, in _make_request
+    self._validate_conn(conn)
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 1125, in _validate_conn
+    conn.connect()
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connection.py", line 827, in connect
+    self.sock = sock = self._new_conn()
+                       ^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connection.py", line 246, in _new_conn
+    raise NameResolutionError(self.host, self, e) from e
+urllib3.exceptions.NameResolutionError: HTTPSConnection(host='elevation.nationalmap.gov', port=443): Failed to resolve 'elevation.nationalmap.gov' ([Errno 8] nodename nor servname provided, or not known)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/requests/adapters.py", line 696, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/connectionpool.py", line 847, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/urllib3/util/retry.py", line 555, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='elevation.nationalmap.gov', port=443): Max retries exceeded with url: /arcgis/rest/services/3DEPElevation/ImageServer/exportImage?bbox=-105.35199999999999%2C40.047999999999995%2C-105.248%2C40.152&bboxSR=4326&imageSR=4326&size=1772%2C2312&format=tiff&pixelType=F32&noData=-9999&interpolation=RSP_BilinearInterpolation&adjustAspectRatio=false&f=json (Caused by NameResolutionError("HTTPSConnection(host='elevation.nationalmap.gov', port=443): Failed to resolve 'elevation.nationalmap.gov' ([Errno 8] nodename nor servname provided, or not known)"))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/brian/Desktop/GeoAI/travel-speed-gate1/t1_prefetch_dem.py", line 52, in <module>
+    ensure_dems(regions.region_name(key), regions.tiles(key))
+  File "/Users/brian/Desktop/GeoAI/travel-speed-gate1/t1_prefetch_dem.py", line 34, in ensure_dems
+    a, _ = fl.dem(CACHE, stem, extent)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/travel-speed-gate1/first_look_slope.py", line 81, in dem
+    r = requests.get(DEM_URL, params=params, headers=AGENT,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/requests/api.py", line 87, in get
+    return request("get", url, params=params, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/requests/api.py", line 71, in request
+    return session.request(method=method, url=url, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/requests/sessions.py", line 651, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/requests/sessions.py", line 784, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/requests/adapters.py", line 729, in send
+    raise ConnectionError(e, request=request)
+requests.exceptions.ConnectionError: HTTPSConnectionPool(host='elevation.nationalmap.gov', port=443): Max retries exceeded with url: /arcgis/rest/services/3DEPElevation/ImageServer/exportImage?bbox=-105.35199999999999%2C40.047999999999995%2C-105.248%2C40.152&bboxSR=4326&imageSR=4326&size=1772%2C2312&format=tiff&pixelType=F32&noData=-9999&interpolation=RSP_BilinearInterpolation&adjustAspectRatio=false&f=json (Caused by NameResolutionError("HTTPSConnection(host='elevation.nationalmap.gov', port=443): Failed to resolve 'elevation.nationalmap.gov' ([Errno 8] nodename nor servname provided, or not known)"))
+t1_frontrange_frontrange_r0_c0_q00: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c0_q01: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c0_q10: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c0_q11: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c1_q00: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c1_q01: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c1_q10: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c1_q11: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c2_q00: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c2_q01: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c2_q10: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c2_q11: (2312, 1782), 0 s
+t1_frontrange_frontrange_r1_c0_q00: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c0_q01: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c0_q10: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c0_q11: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c1_q00: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c1_q01: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c1_q10: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c1_q11: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c2_q00: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c2_q01: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c2_q10: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c2_q11: (2312, 1777), 0 s
+t1_frontrange_frontrange_r2_c0_q00: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c0_q01: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c0_q10: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c0_q11: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c1_q00: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c1_q01: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c1_q10: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c1_q11: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c2_q00: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c2_q01: (2312, 1774), 0 s
+  t1_frontrange_frontrange_r2_c2_q10: HTTPError, retrying
+  t1_frontrange_frontrange_r2_c2_q10: HTTPError, retrying
+Traceback (most recent call last):
+  File "/Users/brian/Desktop/GeoAI/travel-speed-gate1/t1_prefetch_dem.py", line 52, in <module>
+    ensure_dems(regions.region_name(key), regions.tiles(key))
+  File "/Users/brian/Desktop/GeoAI/travel-speed-gate1/t1_prefetch_dem.py", line 34, in ensure_dems
+    a, _ = fl.dem(CACHE, stem, extent)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/brian/Desktop/GeoAI/travel-speed-gate1/first_look_slope.py", line 86, in dem
+    img.raise_for_status()
+  File "/Users/brian/Desktop/GeoAI/.venv/lib/python3.12/site-packages/requests/models.py", line 1167, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 400 Client Error: Bad Request for url: https://elevation.nationalmap.gov/arcgis/rest/directories/elevation_output/3DEPElevation_ImageServer/_ags_d58e51c9_32ed_4bc7_813f_1e2b21d28c07.tif
+t1_frontrange_frontrange_r0_c0_q00: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c0_q01: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c0_q10: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c0_q11: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c1_q00: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c1_q01: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c1_q10: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c1_q11: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c2_q00: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c2_q01: (2312, 1785), 0 s
+t1_frontrange_frontrange_r0_c2_q10: (2312, 1782), 0 s
+t1_frontrange_frontrange_r0_c2_q11: (2312, 1782), 0 s
+t1_frontrange_frontrange_r1_c0_q00: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c0_q01: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c0_q10: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c0_q11: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c1_q00: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c1_q01: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c1_q10: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c1_q11: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c2_q00: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c2_q01: (2312, 1779), 0 s
+t1_frontrange_frontrange_r1_c2_q10: (2312, 1777), 0 s
+t1_frontrange_frontrange_r1_c2_q11: (2312, 1777), 0 s
+t1_frontrange_frontrange_r2_c0_q00: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c0_q01: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c0_q10: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c0_q11: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c1_q00: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c1_q01: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c1_q10: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c1_q11: (2312, 1772), 0 s
+t1_frontrange_frontrange_r2_c2_q00: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c2_q01: (2312, 1774), 0 s
+t1_frontrange_frontrange_r2_c2_q10: (2312, 1772), 45 s
+t1_frontrange_frontrange_r2_c2_q11: (2312, 1772), 29 s
+DEM PREFETCH DONE
