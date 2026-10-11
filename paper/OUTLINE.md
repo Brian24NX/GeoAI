@@ -119,7 +119,9 @@ value. A hiker's own pace still matters most.
 - **R2. Tags don't transfer.** They help a little within a region and
   barely in a new one. Trees on tags overfit regional tagging habits.
 - **R3. Terrain transfers.** It beats tags in 15 of 17 held-out regions,
-  and on tagged segments (+1.8% vs +0.5%). About 60% of the gain is
+  and on tagged segments (+1.8% vs +0.5%). 95% intervals resampling whole
+  regions: terrain +0.8 to +2.8% (additive), tags −0.5 to +1.0%;
+  terrain minus tags +0.7 to +2.4%. About 60% of the gain is
   uneven grade inside the 50 m segment ("hidden climbing"); the rest is
   difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
   here.

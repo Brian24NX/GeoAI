@@ -3,7 +3,7 @@
  "outings": 1744,
  "regions": 17,
  "tagged_share": 0.493,
- "minutes": 6.2,
+ "minutes": 7.3,
  "personal_beta_median": 0.599,
  "place_kappa_median": 5.0,
  "ridge_lambda_median": 0.01,
@@ -3329,5 +3329,412 @@
   "relief_sd_5m",
   "hidden_grade_5m",
   "cross_slope_5m"
+ ],
+ "skill_ci": [
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_both",
+   "skill_lo": 2.436,
+   "skill_hi": 4.293,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_rs",
+   "skill_lo": 2.277,
+   "skill_hi": 3.13,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_slope",
+   "skill_lo": -0.151,
+   "skill_hi": 0.059,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_tags",
+   "skill_lo": 0.127,
+   "skill_hi": 1.816,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_both",
+   "skill_lo": 2.102,
+   "skill_hi": 3.436,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_rs",
+   "skill_lo": 1.617,
+   "skill_hi": 2.422,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_tags",
+   "skill_lo": 0.46,
+   "skill_hi": 1.612,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lorentz_refit",
+   "skill_lo": -0.117,
+   "skill_hi": 0.005,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "place_memory",
+   "skill_lo": 1.123,
+   "skill_hi": 1.567,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "tobler",
+   "skill_lo": -15.888,
+   "skill_hi": -11.993,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "tobler_refit",
+   "skill_lo": -0.564,
+   "skill_hi": -0.348,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_rs - lin_tags",
+   "skill_lo": 0.362,
+   "skill_hi": 1.529,
+   "share_draws_above_0": 0.999
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_rs - gbm_tags",
+   "skill_lo": 0.886,
+   "skill_hi": 2.498,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_both - lin_tags",
+   "skill_lo": 1.464,
+   "skill_hi": 2.0,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "outing5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_both - gbm_tags",
+   "skill_lo": 2.053,
+   "skill_hi": 2.729,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_both",
+   "skill_lo": 2.072,
+   "skill_hi": 3.541,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_rs",
+   "skill_lo": 2.198,
+   "skill_hi": 3.018,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_slope",
+   "skill_lo": -0.148,
+   "skill_hi": 0.049,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_tags",
+   "skill_lo": -0.087,
+   "skill_hi": 1.225,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_both",
+   "skill_lo": 1.833,
+   "skill_hi": 2.993,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_rs",
+   "skill_lo": 1.697,
+   "skill_hi": 2.414,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_tags",
+   "skill_lo": 0.474,
+   "skill_hi": 1.327,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lorentz_refit",
+   "skill_lo": -0.111,
+   "skill_hi": 0.001,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "place_memory",
+   "skill_lo": -0.142,
+   "skill_hi": -0.002,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "tobler",
+   "skill_lo": -15.717,
+   "skill_hi": -12.011,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "tobler_refit",
+   "skill_lo": -0.57,
+   "skill_hi": -0.365,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_rs - lin_tags",
+   "skill_lo": 0.706,
+   "skill_hi": 1.6,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_rs - gbm_tags",
+   "skill_lo": 1.352,
+   "skill_hi": 2.769,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "lin_both - lin_tags",
+   "skill_lo": 1.214,
+   "skill_hi": 1.821,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "block5",
+   "unit": "outing_id",
+   "units": 1744,
+   "arm": "gbm_both - gbm_tags",
+   "skill_lo": 1.923,
+   "skill_hi": 2.612,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "gbm_both",
+   "skill_lo": -0.108,
+   "skill_hi": 3.107,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "gbm_rs",
+   "skill_lo": 1.063,
+   "skill_hi": 3.635,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "gbm_slope",
+   "skill_lo": -0.475,
+   "skill_hi": 0.266,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "gbm_tags",
+   "skill_lo": -2.55,
+   "skill_hi": 0.379,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "lin_both",
+   "skill_lo": 0.64,
+   "skill_hi": 3.008,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "lin_rs",
+   "skill_lo": 0.75,
+   "skill_hi": 2.774,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "lin_tags",
+   "skill_lo": -0.484,
+   "skill_hi": 0.99,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "lorentz_refit",
+   "skill_lo": -0.217,
+   "skill_hi": 0.182,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "place_memory",
+   "skill_lo": -0.239,
+   "skill_hi": 0.133,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "tobler",
+   "skill_lo": -17.082,
+   "skill_hi": -10.864,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "tobler_refit",
+   "skill_lo": -0.667,
+   "skill_hi": -0.156,
+   "share_draws_above_0": NaN
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "lin_rs - lin_tags",
+   "skill_lo": 0.734,
+   "skill_hi": 2.41,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "gbm_rs - gbm_tags",
+   "skill_lo": 1.421,
+   "skill_hi": 5.239,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "lin_both - lin_tags",
+   "skill_lo": 0.866,
+   "skill_hi": 2.188,
+   "share_draws_above_0": 1.0
+  },
+  {
+   "split": "loro",
+   "unit": "region",
+   "units": 17,
+   "arm": "gbm_both - gbm_tags",
+   "skill_lo": 0.932,
+   "skill_hi": 3.597,
+   "share_draws_above_0": 1.0
+  }
  ]
 }

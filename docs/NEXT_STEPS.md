@@ -159,6 +159,10 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
 
 - Terrain beats tags in **15 of 17** held-out regions (the other two tie),
   and on tagged segments (+1.8% vs +0.5%).
+- **95% intervals, resampling whole regions:**
+  - terrain +0.8 to +2.8% (additive) and +1.1 to +3.6% (trees);
+  - tags −0.5 to +1.0%;
+  - terrain minus tags +0.7 to +2.4%, above zero in every bootstrap draw.
 - ~60% of the gain is uneven grade inside the segment ("hidden climbing":
   a DEM sees it, an average slope or a tag can't); ~40% is difficulty
   beyond grade.

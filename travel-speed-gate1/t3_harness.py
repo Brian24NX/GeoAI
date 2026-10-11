@@ -569,7 +569,7 @@ def main():
     knobs = pd.DataFrame(knobs)
     knobs.to_csv(OUT / "knobs.csv", index=False)
     sc = pd.concat(scored, ignore_index=True)
-    base = w[["region", "trace_id", "length_m", "moving_s", "y",
+    base = w[["region", "trace_id", "outing_id", "length_m", "moving_s", "y",
               "tagged", "rest", "stretch"]].reset_index(names="row")
     sc = sc.merge(base, on="row")
 
@@ -588,6 +588,9 @@ def main():
     met["crps_skill_vs_slope_pct"] = 100 * (1 - met.crps_log / met.ref)
     met = met.drop(columns="ref")
     met.to_csv(OUT / "metrics.csv", index=False)
+    ci = skill_intervals(sc, splits)
+    ci.to_csv(OUT / "skill_ci.csv", index=False)
+    print(ci.round(2).to_string(index=False))
 
     lo = sc[(sc.split == "loro") & ~sc.arm.str.endswith("+me")]
     by = pd.DataFrame([{"region": reg, "arm": arm, **summarize(d)}
@@ -623,7 +626,8 @@ def main():
                                          "time_ape_median",
                                          "crps_skill_vs_slope_pct"]]
         .mean().round(4).to_dict("index") if len(by) else {},
-        "remote_sensing_covariates": rs_cols}
+        "remote_sensing_covariates": rs_cols,
+        "skill_ci": ci.round(3).to_dict("records")}
     (OUT / "summary.json").write_text(json.dumps(summary, indent=1))
     figure(met[~met.arm.str.endswith("+me")], by, splits)
     show = met[met.subset == "all"][["split", "arm", "rmse_log", "crps_log",
@@ -638,6 +642,41 @@ def main():
                 "crps_skill_vs_slope_pct"]]
           .round(4).to_string(index=False))
     print(f"done in {(time.time() - t0) / 60:.1f} min")
+
+
+def skill_intervals(sc, splits, B=2000):
+    """95% bootstrap intervals of each arm's CRPS skill vs the baseline,
+    resampling outings (outing and block folds) or whole regions (leave one
+    region out: the honest unit for a transfer claim), plus paired
+    intervals for the remote-sensing arms minus the matching tags arm."""
+    rng = np.random.default_rng(SEED)
+    pairs = [("lin_rs", "lin_tags"), ("gbm_rs", "gbm_tags"),
+             ("lin_both", "lin_tags"), ("gbm_both", "gbm_tags")]
+    rows = []
+    for split in splits:
+        unit = "region" if split == "loro" else "outing_id"
+        d = sc[(sc.split == split) & ~sc.arm.str.endswith("+me")
+               & (sc.arm != "slope_curve_local")]
+        g = d.groupby([unit, "arm"]).crps_log.sum().unstack("arm")
+        if BASELINE not in g:
+            continue
+        idx = rng.integers(0, len(g), (B, len(g)))
+        base = g[BASELINE].to_numpy()[idx].sum(1)
+        skill = {a: 100 * (1 - g[a].to_numpy()[idx].sum(1) / base)
+                 for a in g.columns if a != BASELINE}
+        for a, s in skill.items():
+            lo, hi = np.percentile(s, [2.5, 97.5])
+            rows.append({"split": split, "unit": unit, "units": len(g),
+                         "arm": a, "skill_lo": lo, "skill_hi": hi})
+        for a, b in pairs:
+            if a in skill and b in skill:
+                dlt = skill[a] - skill[b]
+                lo, hi = np.percentile(dlt, [2.5, 97.5])
+                rows.append({"split": split, "unit": unit, "units": len(g),
+                             "arm": f"{a} - {b}", "skill_lo": lo,
+                             "skill_hi": hi,
+                             "share_draws_above_0": float((dlt > 0).mean())})
+    return pd.DataFrame(rows)
 
 
 def tag_effects(s, y, blocks, names, lam):
