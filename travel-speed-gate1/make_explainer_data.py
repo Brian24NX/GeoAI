@@ -112,6 +112,12 @@ def main():
                                      values="crps_skill_vs_slope_pct")
             if {"lin_rs", "lin_tags"} <= set(b.columns):
                 out["terrain_wins"] = int((b.lin_rs > b.lin_tags).sum())
+    tq = Path("results/t2_terrain_effects/quintiles.csv")
+    if tq.exists():                      # t2_terrain_effects.py
+        q = pd.read_csv(tq)
+        q = q[(q.region == "ALL") & (q.feature == "pitch_sd_5m")]
+        out["terrain_quintiles"] = [round(float(v), 1) for v in
+                                    q.sort_values("quintile").speed_pct]
     mc = Path("results/t1_mode_check/summary.json")
     if mc.exists():
         out["mode_check"] = {k: v for k, v in json.loads(mc.read_text())

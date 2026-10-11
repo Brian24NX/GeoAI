@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-11 16:02",
+ "generated_utc": "2026-10-11 16:18",
  "regions": [
   {
    "key": "wm",
@@ -6311,6 +6311,13 @@
   }
  ],
  "terrain_wins": 15,
+ "terrain_quintiles": [
+  9.3,
+  4.7,
+  1.5,
+  -2.0,
+  -7.8
+ ],
  "mode_check": {
   "hiking_traces_with_original_file": 1114,
   "labeled": 246,

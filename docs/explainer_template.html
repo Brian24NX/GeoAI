@@ -466,7 +466,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
   <p class="sub">A pilot in one region, run the same day. Along every walked 50 m of trail we read the 1 m lidar elevation every metre. From it we measured how rough the ground is, how "steppy" the trail profile is (short steep pitches, rock steps), and how steep the hillside is across the trail.</p>
   <div class="twocol">
     <figure class="chart"><svg id="pilotQ" viewBox="0 0 460 300" width="100%" role="img" aria-label="Speed by trail steppiness"></svg>
-    <figcaption>Segments sorted into five equal groups by "steppiness" (spread of 5 m pitches along the path). Bars show speed compared with what slope alone predicts.</figcaption></figure>
+    <figcaption>All 17 regions: segments sorted into five equal groups by "steppiness" (spread of 5 m pitches along the path). Bars show speed compared with what slope alone predicts. Every region shows the same downhill pattern.</figcaption></figure>
     <figure class="chart"><svg id="pilotS" viewBox="0 0 460 300" width="100%" role="img" aria-label="Lidar vs tags skill in the White Mountains"></svg>
     <figcaption>CRPS skill vs the slope-only curve in the White Mountains. Light bars: new hikers. Dark bars: new 10 km map squares.</figcaption></figure>
   </div>
@@ -1049,7 +1049,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
   })();
   // lidar pilot (White Mountains, decision #83)
   (function(){
-    const q = [14.2, 7.2, 1.7, -2.8, -11.4];
+    const q = D.terrain_quintiles || [14.2, 7.2, 1.7, -2.8, -11.4];
     const svg = document.getElementById("pilotQ");
     const x0 = 60, bw = 64, y = lin(-15, 15, 250, 30);
     [-10,-5,0,5,10].forEach(v=>{S("line",{x1:40,y1:y(v),x2:440,y2:y(v),class:"gridline"},svg);S("text",{x:34,y:y(v)+4,"text-anchor":"end",class:"lbl"},svg,(v>0?"+":"")+v+"%");});
