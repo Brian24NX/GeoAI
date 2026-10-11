@@ -149,6 +149,15 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   2,684 hiking traces, 1,848 walking outings, 4,374 h, v0 4.27 km/h. San
   Gabriels downloading next (≤ 2,307 pages).
 - Paper outline: `paper/OUTLINE.md` (4-page budget, Table 1, figures).
+- 95% bootstrap intervals (resampling whole regions): terrain minus tags in
+  unseen regions +0.7 to +2.4 points, above zero in every draw.
+- What "terrain" means in speed, all 17 regions (`t2_terrain_effects.py`):
+  - the smoothest fifth of trail profiles is ~9% faster than slope alone
+    predicts; the steppiest fifth ~8% slower;
+  - every region shows the same direction;
+  - side slope doesn't matter.
+- Draft paper figures: `paper/figures/fig_skill.png` (skill by model with
+  CIs) and `fig_regions.png` (terrain vs tags per held-out region).
 
 ## Sat 10 Oct 2026
 
