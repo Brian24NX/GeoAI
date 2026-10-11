@@ -169,6 +169,10 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
 - It isn't a proxy for "which region" (decision #86). Region offsets alone
   add +0.3–0.7%; terrain still adds ~1.8 points on top of them. Nor is it
   a hiker proxy: it adds ~1.8 points on top of personal pace.
+- **Vegetation from 30 m national maps adds nothing** (decision #87): NLCD
+  canopy cover and land cover give +0.0% in unseen regions, alone or on
+  top of terrain. Fine-scale understory (lidar points, tier 2) is the only
+  vegetation test left.
 
 **Next:**
 - The 1 m elevation for all 16 US regions is downloading (decision #84,

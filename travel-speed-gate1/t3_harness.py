@@ -485,7 +485,15 @@ def main():
         w = w[w.region.isin(args.regions)].reset_index(drop=True)
     rs_cols = []
     if args.covariates:
-        cov = pd.concat([pd.read_parquet(f) for f in args.covariates])
+        groups = {}                  # per-region files of one kind stack;
+        for f in args.covariates:    # different kinds join on segment_id
+            d = pd.read_parquet(f)
+            groups.setdefault(tuple(sorted(d.columns)), []).append(d)
+        cov = None
+        for parts in groups.values():
+            g = pd.concat(parts, ignore_index=True)
+            cov = g if cov is None else cov.merge(g, on="segment_id",
+                                                  how="outer")
         rs_cols = [c for c in cov.columns if c not in RS_SKIP
                    and pd.api.types.is_numeric_dtype(cov[c])
                    and (not args.features or c in args.features)]

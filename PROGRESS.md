@@ -166,6 +166,12 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   downloading next (≤ 3,076 pages).
 - The 1 m elevation download is slower than estimated: the Cascades alone
   have 2,766 cells (~3.5 h). ETA for all regions ~21:00 CDT.
+- Robustness (decision #86): terrain is not a proxy for "which region". It
+  adds ~1.8 points on top of each region's own speed offset.
+- **Vegetation from 30 m national maps adds nothing** (decision #87): tree
+  canopy cover and land cover (NLCD 2021) give +0.0% in unseen regions,
+  alone or with terrain. The remote-sensing signal is in the elevation
+  data; fine-scale understory from lidar points is the last vegetation test.
 
 ## Sat 10 Oct 2026
 

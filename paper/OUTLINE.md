@@ -123,7 +123,9 @@ value. A hiker's own pace still matters most.
   regions: terrain +0.8 to +2.8% (additive), tags −0.5 to +1.0%;
   terrain minus tags +0.7 to +2.4%.
   Robustness: it adds ~1.8 points on top of region offsets (not a region
-  proxy) and on top of personal pace (not a hiker proxy). About 60% of the gain is
+  proxy) and on top of personal pace (not a hiker proxy).
+  Vegetation from 30 m maps (NLCD canopy, land cover) adds nothing, alone
+  or with terrain: the remote-sensing signal is in the elevation data. About 60% of the gain is
   uneven grade inside the 50 m segment ("hidden climbing"); the rest is
   difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
   here.
