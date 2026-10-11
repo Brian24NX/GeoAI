@@ -1,0 +1,341 @@
+{
+  "region": "white_mountains",
+  "run_utc": "2026-10-02T09:02:49Z",
+  "settings": {
+    "stop_speed_kmh": 0.5,
+    "fast_speed_kmh": 60.0,
+    "min_step_s": 10.0,
+    "max_gap_s": 300.0,
+    "window_stop_s": 60.0,
+    "window_stop_m": 10.0,
+    "match_radius_m": 25.0,
+    "min_trail_min": 5.0,
+    "continue_s": 600.0,
+    "max_pages_per_box": 150,
+    "trails": true,
+    "bands": [
+      [
+        "walking-like",
+        1.5,
+        6.0
+      ],
+      [
+        "in-between",
+        6.0,
+        10.0
+      ],
+      [
+        "cycling-like",
+        10.0,
+        30.0
+      ]
+    ],
+    "boxes": [
+      [
+        "presidentials_mt_washington",
+        -71.35,
+        44.22,
+        -71.25,
+        44.32
+      ],
+      [
+        "franconia_ridge",
+        -71.7,
+        44.1,
+        -71.6,
+        44.2
+      ],
+      [
+        "crawford_notch",
+        -71.46,
+        44.15,
+        -71.36,
+        44.25
+      ],
+      [
+        "lincoln_woods",
+        -71.62,
+        44.02,
+        -71.52,
+        44.12
+      ]
+    ]
+  },
+  "boxes": [
+    {
+      "box": "presidentials_mt_washington",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 32,
+      "usable_pages_used": 23,
+      "boundary_page": 22,
+      "last_page": 36,
+      "points_total": 184242,
+      "points_timed": 110215,
+      "points_untimed": 74027,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 362,
+      "network": {
+        "trail_km": 145.64824398048574,
+        "trail_km_with_tag": {
+          "surface": 92.10035867131567,
+          "sac_scale": 46.14106698562602,
+          "width": 0.01708181998023196,
+          "trail_visibility": 0.0,
+          "smoothness": 0.0,
+          "mtb:scale": 0.0,
+          "incline": 0.0
+        },
+        "trail_km_by_permission": {
+          "foot-only": 134.73335471394412,
+          "bicycle-permitted": 0.0,
+          "horse-permitted": 0.0,
+          "bike+horse": 0.0,
+          "unclear": 10.914889266541639
+        }
+      },
+      "timed_points_checked": 110215,
+      "timed_trail_share": 0.5883954089733703,
+      "untimed_points_sampled": 44027,
+      "untimed_trail_share": 0.7547414086810367,
+      "traces": 36
+    },
+    {
+      "box": "franconia_ridge",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 36,
+      "usable_pages_used": 23,
+      "boundary_page": 22,
+      "last_page": 45,
+      "points_total": 226521,
+      "points_timed": 114629,
+      "points_untimed": 111892,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 656,
+      "network": {
+        "trail_km": 108.08392484107955,
+        "trail_km_with_tag": {
+          "surface": 63.095639934898706,
+          "sac_scale": 72.63967790759587,
+          "width": 0.3705958636643164,
+          "trail_visibility": 5.602921774840778,
+          "smoothness": 0.0,
+          "mtb:scale": 0.0,
+          "incline": 0.16427699825868985
+        },
+        "trail_km_by_permission": {
+          "foot-only": 67.76033429343725,
+          "bicycle-permitted": 12.776188203045004,
+          "horse-permitted": 0.0,
+          "bike+horse": 0.17029073171717377,
+          "unclear": 27.3771116128801
+        }
+      },
+      "timed_points_checked": 114629,
+      "timed_trail_share": 0.453419291802249,
+      "untimed_points_sampled": 56892,
+      "untimed_trail_share": 0.8568164241018069,
+      "traces": 49
+    },
+    {
+      "box": "crawford_notch",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 17,
+      "usable_pages_used": 10,
+      "boundary_page": 9,
+      "last_page": 15,
+      "points_total": 76598,
+      "points_timed": 49355,
+      "points_untimed": 27243,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 346,
+      "network": {
+        "trail_km": 97.0531999415711,
+        "trail_km_with_tag": {
+          "surface": 56.80047504995255,
+          "sac_scale": 23.89046342826728,
+          "width": 0.04763541575686216,
+          "trail_visibility": 0.0,
+          "smoothness": 0.0,
+          "mtb:scale": 0.0,
+          "incline": 0.0056473065730686094
+        },
+        "trail_km_by_permission": {
+          "foot-only": 69.38399445200515,
+          "bicycle-permitted": 0.0,
+          "horse-permitted": 0.0,
+          "bike+horse": 3.2289387899973474,
+          "unclear": 24.440266699568575
+        }
+      },
+      "timed_points_checked": 49355,
+      "timed_trail_share": 0.5246884814101914,
+      "untimed_points_sampled": 27243,
+      "untimed_trail_share": 0.8573211467165878,
+      "traces": 23
+    },
+    {
+      "box": "lincoln_woods",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 11,
+      "usable_pages_used": 8,
+      "boundary_page": 7,
+      "last_page": 9,
+      "points_total": 49070,
+      "points_timed": 36446,
+      "points_untimed": 12624,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 148,
+      "network": {
+        "trail_km": 53.01630858103567,
+        "trail_km_with_tag": {
+          "surface": 21.618526307528512,
+          "sac_scale": 18.492350058996266,
+          "width": 0.0,
+          "trail_visibility": 4.787538847119196,
+          "smoothness": 0.0,
+          "mtb:scale": 0.0,
+          "incline": 0.0
+        },
+        "trail_km_by_permission": {
+          "foot-only": 36.35243715926576,
+          "bicycle-permitted": 4.41691242337327,
+          "horse-permitted": 0.0,
+          "bike+horse": 0.0,
+          "unclear": 12.246958998396636
+        }
+      },
+      "timed_points_checked": 36446,
+      "timed_trail_share": 0.47022992921033857,
+      "untimed_points_sampled": 12624,
+      "untimed_trail_share": 0.8360266159695817,
+      "traces": 18
+    }
+  ],
+  "boxes_counted": "4 of 4",
+  "points_total": 536431,
+  "points_usable": 310645,
+  "usable_point_pct": 57.90959135471291,
+  "traces_by_type": {
+    "identifiable": 88,
+    "trackable": 38,
+    "duplicate": 2
+  },
+  "usable_traces": 126,
+  "identifiable_unique": 85,
+  "identifiable_users": 22,
+  "trace_days": 154,
+  "duplicates_removed": 2,
+  "trail_traces": 54,
+  "trail_outings": 51,
+  "trail_named_users": 17,
+  "trail_anonymous_traces": 26,
+  "trail_top_user_traces": 5,
+  "trail_trace_days": 82,
+  "median_trail_speed_kmh": 2.680599998932204,
+  "median_trail_speed_window_kmh": 2.7306951107419764,
+  "trail_bands": {
+    "walking-like": 51,
+    "in-between": 2,
+    "other": 1
+  },
+  "trail_traces_by_permission": {
+    "foot-only": 45,
+    "unclear": 9
+  },
+  "sampling_interval": {
+    "1 s or less": 61,
+    "2-5 s": 27,
+    "6-15 s": 28,
+    "over 15 s": 10
+  },
+  "wobble_check": {
+    "traces": 12,
+    "median_p2p_kmh": 3.2965490348440856,
+    "median_10s_kmh": 3.277131089042589,
+    "median_inflation_pct": 2.2480422836269387
+  },
+  "known_limitations": [
+    "nearest-way matching is not real map-matching: near junctions and roads a point can pick the wrong way",
+    "a trackable trace split across pages at a recording-segment break is counted twice",
+    "a hike crossing two boxes is counted in both boxes (the Franconia and Lincoln Woods boxes also overlap slightly)",
+    "speed bands are a rough first look, not mode inference",
+    "the window stop rule is a first draft, not tuned",
+    "page order shifts when someone uploads a new trace, so pages cached on different days may not line up exactly"
+  ],
+  "time_share_by_way": {
+    "trail": 0.8728894874327818,
+    "track": 0.0002181579161102538,
+    "road": 0.036076330716067945,
+    "lift": 0.0,
+    "rail": 0.0005581442788794805,
+    "piste": 0.021233092761501454,
+    "other": 0.004804196187241823,
+    "none": 0.06422059070741717
+  },
+  "trail_hours": 254.4463888888889,
+  "trail_time_removed_pct": {
+    "crude_0.5_kmh": 20.406830952165212,
+    "window_60s_10m": 24.444136343936236
+  },
+  "trail_moving_time_by_permission": {
+    "foot-only": 0.8559003893953879,
+    "bicycle-permitted": 0.04818682200419982,
+    "horse-permitted": 0.0,
+    "bike+horse": 0.0033919506665258496,
+    "unclear": 0.09252083793388645
+  },
+  "trail_moving_time_with_tag": {
+    "surface": 0.6954308106528923,
+    "sac_scale": 0.5339503675184719,
+    "width": 1.37159347615279e-05,
+    "trail_visibility": 0.035171771508986,
+    "smoothness": 0.0,
+    "mtb:scale": 0.0,
+    "incline": 9.326835637838972e-05
+  },
+  "trail_moving_time_by_month": {
+    "1": 0.17325145834676353,
+    "2": 0.14888098546248074,
+    "3": 0.02871979579716327,
+    "5": 0.02103612914375534,
+    "6": 0.16673913252199007,
+    "7": 0.2586907591632731,
+    "8": 0.042085974222272206,
+    "9": 0.07171239330717247,
+    "10": 0.004135354330600662,
+    "11": 0.0757037303227771,
+    "12": 0.009044287381751498
+  },
+  "trail_points_usable_est": 159859,
+  "trail_points_unusable_est": 185652,
+  "usable_on_trail_pct": 46.26739311950674,
+  "usable_on_trail_boxes": "4 of 4",
+  "usable_points_on_trails_pct": 51.4603486294645,
+  "boxes_cut_at_max_pages": [],
+  "untimed_points_sampled": 140786,
+  "trail_network_km": 403.80167734417205,
+  "trail_network_share_with_tag": {
+    "surface": 0.5785389538255398,
+    "sac_scale": 0.39911562388860755,
+    "width": 0.001078036877569432,
+    "trail_visibility": 0.025731593514664575,
+    "smoothness": 0.0,
+    "mtb:scale": 0.0,
+    "incline": 0.0004208112902089978
+  },
+  "trail_network_share_by_permission": {
+    "foot-only": 0.7633205553921923,
+    "bicycle-permitted": 0.04257808124893966,
+    "horse-permitted": 0.0,
+    "bike+horse": 0.008418066869041898,
+    "unclear": 0.185683296489826
+  }
+}

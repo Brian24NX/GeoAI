@@ -1,0 +1,347 @@
+{
+  "region": "cascades",
+  "run_utc": "2026-10-02T09:02:38Z",
+  "settings": {
+    "stop_speed_kmh": 0.5,
+    "fast_speed_kmh": 60.0,
+    "min_step_s": 10.0,
+    "max_gap_s": 300.0,
+    "window_stop_s": 60.0,
+    "window_stop_m": 10.0,
+    "match_radius_m": 25.0,
+    "min_trail_min": 5.0,
+    "continue_s": 600.0,
+    "max_pages_per_box": 150,
+    "trails": true,
+    "bands": [
+      [
+        "walking-like",
+        1.5,
+        6.0
+      ],
+      [
+        "in-between",
+        6.0,
+        10.0
+      ],
+      [
+        "cycling-like",
+        10.0,
+        30.0
+      ]
+    ],
+    "boxes": [
+      [
+        "rainier_paradise",
+        -121.8,
+        46.74,
+        -121.7,
+        46.84
+      ],
+      [
+        "snoqualmie_pass",
+        -121.46,
+        47.38,
+        -121.36,
+        47.48
+      ],
+      [
+        "mount_si",
+        -121.78,
+        47.44,
+        -121.68,
+        47.54
+      ],
+      [
+        "cascade_pass",
+        -121.13,
+        48.43,
+        -121.03,
+        48.53
+      ]
+    ]
+  },
+  "boxes": [
+    {
+      "box": "rainier_paradise",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 59,
+      "usable_pages_used": 49,
+      "boundary_page": 48,
+      "last_page": 61,
+      "points_total": 309909,
+      "points_timed": 242084,
+      "points_untimed": 67825,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 267,
+      "network": {
+        "trail_km": 79.44547232754053,
+        "trail_km_with_tag": {
+          "surface": 60.973401090512894,
+          "sac_scale": 61.07409989209237,
+          "width": 8.631448612906862,
+          "trail_visibility": 20.141804731462166,
+          "smoothness": 0.0,
+          "mtb:scale": 1.4527523092791217,
+          "incline": 1.5766500939043437
+        },
+        "trail_km_by_permission": {
+          "foot-only": 67.58438210685219,
+          "bicycle-permitted": 1.4527523092791217,
+          "horse-permitted": 0.0,
+          "bike+horse": 0.0,
+          "unclear": 10.40833791140921
+        }
+      },
+      "timed_points_checked": 242084,
+      "timed_trail_share": 0.16424051155797162,
+      "untimed_points_sampled": 47825,
+      "untimed_trail_share": 0.6930057501306848,
+      "traces": 92
+    },
+    {
+      "box": "snoqualmie_pass",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 118,
+      "usable_pages_used": 108,
+      "boundary_page": 107,
+      "last_page": 122,
+      "points_total": 613295,
+      "points_timed": 539748,
+      "points_untimed": 73547,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 992,
+      "network": {
+        "trail_km": 89.85259066091139,
+        "trail_km_with_tag": {
+          "surface": 77.8913611577616,
+          "sac_scale": 52.62920553046933,
+          "width": 6.261811202578102,
+          "trail_visibility": 35.500636711121764,
+          "smoothness": 4.43630002172738,
+          "mtb:scale": 0.8014077584880457,
+          "incline": 13.48938387117889
+        },
+        "trail_km_by_permission": {
+          "foot-only": 31.44202859387962,
+          "bicycle-permitted": 1.0976296248661876,
+          "horse-permitted": 19.15232153861749,
+          "bike+horse": 6.716048805345496,
+          "unclear": 31.444562098202596
+        }
+      },
+      "timed_points_checked": 539747,
+      "timed_trail_share": 0.11196542083605837,
+      "untimed_points_sampled": 48547,
+      "untimed_trail_share": 0.4811625847117227,
+      "traces": 231
+    },
+    {
+      "box": "mount_si",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 97,
+      "usable_pages_used": 84,
+      "boundary_page": 83,
+      "last_page": 103,
+      "points_total": 519655,
+      "points_timed": 416681,
+      "points_untimed": 102974,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 3112,
+      "network": {
+        "trail_km": 108.38622117470398,
+        "trail_km_with_tag": {
+          "surface": 77.75047778010185,
+          "sac_scale": 37.88965036967148,
+          "width": 4.830434838870178,
+          "trail_visibility": 20.82284997062028,
+          "smoothness": 2.192380677647306,
+          "mtb:scale": 0.0,
+          "incline": 7.7529517544334565
+        },
+        "trail_km_by_permission": {
+          "foot-only": 63.34459067147431,
+          "bicycle-permitted": 9.559304602122161,
+          "horse-permitted": 0.0,
+          "bike+horse": 12.37600596866563,
+          "unclear": 23.10631993244188
+        }
+      },
+      "timed_points_checked": 416680,
+      "timed_trail_share": 0.0581525391187482,
+      "untimed_points_sampled": 52974,
+      "untimed_trail_share": 0.5886283837354174,
+      "traces": 243
+    },
+    {
+      "box": "cascade_pass",
+      "status": "ok",
+      "usable_part_complete": true,
+      "pages_read": 4,
+      "usable_pages_used": 1,
+      "boundary_page": 0,
+      "last_page": 3,
+      "points_total": 19832,
+      "points_timed": 1886,
+      "points_untimed": 17946,
+      "order_check": "ok",
+      "partly_timed_tracks": 0,
+      "ways": 36,
+      "network": {
+        "trail_km": 35.19479230752236,
+        "trail_km_with_tag": {
+          "surface": 29.303369102826903,
+          "sac_scale": 21.39540966032518,
+          "width": 0.0,
+          "trail_visibility": 25.105985406486198,
+          "smoothness": 0.0,
+          "mtb:scale": 0.0,
+          "incline": 0.0
+        },
+        "trail_km_by_permission": {
+          "foot-only": 32.70671748712651,
+          "bicycle-permitted": 0.0,
+          "horse-permitted": 0.0,
+          "bike+horse": 0.0,
+          "unclear": 2.4880748203958576
+        }
+      },
+      "timed_points_checked": 1886,
+      "timed_trail_share": 0.8128313891834571,
+      "untimed_points_sampled": 17946,
+      "untimed_trail_share": 0.8775771759723615,
+      "traces": 2
+    }
+  ],
+  "boxes_counted": "4 of 4",
+  "points_total": 1462691,
+  "points_usable": 1200399,
+  "usable_point_pct": 82.06784618213963,
+  "traces_by_type": {
+    "identifiable": 510,
+    "trackable": 58,
+    "duplicate": 9,
+    "too_short": 2
+  },
+  "usable_traces": 568,
+  "identifiable_unique": 498,
+  "identifiable_users": 40,
+  "trace_days": 572,
+  "duplicates_removed": 9,
+  "trail_traces": 80,
+  "trail_outings": 77,
+  "trail_named_users": 25,
+  "trail_anonymous_traces": 34,
+  "trail_top_user_traces": 7,
+  "trail_trace_days": 87,
+  "median_trail_speed_kmh": 3.1617665386132696,
+  "median_trail_speed_window_kmh": 3.2864191328274144,
+  "trail_bands": {
+    "walking-like": 70,
+    "other": 4,
+    "cycling-like": 4,
+    "in-between": 2
+  },
+  "trail_traces_by_permission": {
+    "foot-only": 54,
+    "unclear": 9,
+    "horse-permitted": 9,
+    "bike+horse": 5,
+    "bicycle-permitted": 3
+  },
+  "sampling_interval": {
+    "1 s or less": 452,
+    "2-5 s": 57,
+    "6-15 s": 42,
+    "over 15 s": 10
+  },
+  "wobble_check": {
+    "traces": 4,
+    "median_p2p_kmh": 3.4414918035799698,
+    "median_10s_kmh": 2.6794662231152238,
+    "median_inflation_pct": 17.556726527959476
+  },
+  "known_limitations": [
+    "nearest-way matching is not real map-matching: near junctions and roads a point can pick the wrong way",
+    "a trackable trace split across pages at a recording-segment break is counted twice",
+    "a hike crossing two boxes is counted in both boxes (the Franconia and Lincoln Woods boxes also overlap slightly)",
+    "speed bands are a rough first look, not mode inference",
+    "the window stop rule is a first draft, not tuned",
+    "page order shifts when someone uploads a new trace, so pages cached on different days may not line up exactly"
+  ],
+  "time_share_by_way": {
+    "trail": 0.734180710865356,
+    "track": 0.048199120720204144,
+    "road": 0.12885844354195236,
+    "lift": 0.0047495022298206764,
+    "rail": 0.0,
+    "piste": 0.021565649272554603,
+    "other": 0.007810433094312297,
+    "none": 0.05463614027579999
+  },
+  "trail_hours": 190.73305555555555,
+  "trail_time_removed_pct": {
+    "crude_0.5_kmh": 18.58094282439535,
+    "window_60s_10m": 21.227894133598586
+  },
+  "trail_moving_time_by_permission": {
+    "foot-only": 0.6936312169643416,
+    "bicycle-permitted": 0.009315720277969073,
+    "horse-permitted": 0.15513858207153142,
+    "bike+horse": 0.0192610744917763,
+    "unclear": 0.12265340619438159
+  },
+  "trail_moving_time_with_tag": {
+    "surface": 0.9478423410934523,
+    "sac_scale": 0.8164259330477324,
+    "width": 0.05786550518285321,
+    "trail_visibility": 0.30830776936079635,
+    "smoothness": 0.0017780003756338821,
+    "mtb:scale": 0.004031803668690916,
+    "incline": 0.11503698205006663
+  },
+  "trail_moving_time_by_month": {
+    "1": 0.014751679172889966,
+    "2": 0.037760148822566654,
+    "3": 0.014440439670515424,
+    "4": 0.04997719365715359,
+    "5": 0.07366359302751965,
+    "6": 0.02565579415263257,
+    "7": 0.18985967391401562,
+    "8": 0.1791612632030838,
+    "9": 0.20537871944620834,
+    "10": 0.16317893588287377,
+    "11": 0.0351772186994124,
+    "12": 0.010995340351128244
+  },
+  "trail_points_usable_est": 125957,
+  "trail_points_unusable_est": 158754,
+  "usable_on_trail_pct": 44.24039546993018,
+  "usable_on_trail_boxes": "4 of 4",
+  "usable_points_on_trails_pct": 10.492941939968288,
+  "boxes_cut_at_max_pages": [],
+  "untimed_points_sampled": 167292,
+  "trail_network_km": 312.8790764706782,
+  "trail_network_share_with_tag": {
+    "surface": 0.7859861129264415,
+    "sac_scale": 0.5528920866294175,
+    "width": 0.06303935334008687,
+    "trail_visibility": 0.32463428991618515,
+    "smoothness": 0.021186078577536006,
+    "mtb:scale": 0.007204572748022728,
+    "incline": 0.07293228418121847
+  },
+  "trail_network_share_by_permission": {
+    "foot-only": 0.6234923762235489,
+    "bicycle-permitted": 0.03870404717652106,
+    "horse-permitted": 0.061213174606172066,
+    "bike+horse": 0.061020554616090975,
+    "unclear": 0.21556984737766713
+  }
+}

@@ -1,0 +1,305 @@
+{
+  "presidentials_mt_washington": [
+    {
+      "project": "NH_Connecticut_River_2015",
+      "workunit": "NH_CT_RiverNorthL6_P2_2015",
+      "ql": "QL 2",
+      "collected": "2015-10 to 2015-11",
+      "leaf": "mixed",
+      "one_meter": "Meets",
+      "point_cloud_link": null
+    },
+    {
+      "project": "NH_Umbagog_LiDAR_2016_D16",
+      "workunit": "NH_Umbagog_2016",
+      "ql": "QL 2",
+      "collected": "2016-04 to 2018-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/NH_Umbagog_LiDAR_2016_D16/NH_Umbagog_2016"
+    }
+  ],
+  "franconia_ridge": [
+    {
+      "project": "NH_Connecticut_River_2015",
+      "workunit": "NH_CT_RiverNorthL6_P2_2015",
+      "ql": "QL 2",
+      "collected": "2015-10 to 2015-11",
+      "leaf": "mixed",
+      "one_meter": "Meets",
+      "point_cloud_link": null
+    },
+    {
+      "project": "NH_Umbagog_LiDAR_2016_D16",
+      "workunit": "NH_Umbagog_2016",
+      "ql": "QL 2",
+      "collected": "2016-04 to 2018-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/NH_Umbagog_LiDAR_2016_D16/NH_Umbagog_2016"
+    },
+    {
+      "project": "NY_NH_Gaps_D24",
+      "workunit": "NY_NHGaps_2_D24",
+      "ql": "QL 2",
+      "collected": "2024-05 to 2024-06",
+      "leaf": "leaf-on",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/NY_NH_Gaps_D24/NY_NHGaps_2_D24"
+    }
+  ],
+  "crawford_notch": [
+    {
+      "project": "NH_Connecticut_River_2015",
+      "workunit": "NH_CT_RiverNorthL6_P2_2015",
+      "ql": "QL 2",
+      "collected": "2015-10 to 2015-11",
+      "leaf": "mixed",
+      "one_meter": "Meets",
+      "point_cloud_link": null
+    },
+    {
+      "project": "NH_Umbagog_LiDAR_2016_D16",
+      "workunit": "NH_Umbagog_2016",
+      "ql": "QL 2",
+      "collected": "2016-04 to 2018-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/NH_Umbagog_LiDAR_2016_D16/NH_Umbagog_2016"
+    }
+  ],
+  "lincoln_woods": [
+    {
+      "project": "NH_Umbagog_LiDAR_2016_D16",
+      "workunit": "NH_Umbagog_2016",
+      "ql": "QL 2",
+      "collected": "2016-04 to 2018-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/NH_Umbagog_LiDAR_2016_D16/NH_Umbagog_2016"
+    }
+  ],
+  "rainier_paradise": [
+    {
+      "project": "WA_MOUNTRANIER_2007_2008_Legacy_Data",
+      "workunit": "WA_MOUNTRANIER_2007_2008",
+      "ql": "Other",
+      "collected": "2007-09 to 2008-10",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/legacy/WA_MOUNTRANIER_2007_2008"
+    },
+    {
+      "project": "WA_LEWISCO_2007_2009_Legacy_Data",
+      "workunit": "WA_LEWISCO_2007_2009",
+      "ql": "Other",
+      "collected": "2007-09 to 2009-07",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/legacy/WA_LEWISCO_2007_2009"
+    }
+  ],
+  "snoqualmie_pass": [
+    {
+      "project": "WA_EasternCascades_2019_B19",
+      "workunit": "WA_EasternCascades_5_2019",
+      "ql": "QL 1",
+      "collected": "2019-11 to 2020-08",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/WA_EasternCascades_2019_B19/WA_EasternCascades_5_2019"
+    },
+    {
+      "project": "WA_KingCounty_2021_B21",
+      "workunit": "WA_KingCo_2_2021",
+      "ql": "QL 1",
+      "collected": "2021-04 to 2021-09",
+      "leaf": "mixed",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/WA_KingCounty_2021_B21/WA_KingCo_2_2021"
+    }
+  ],
+  "mount_si": [
+    {
+      "project": "WA_KingCounty_2021_B21",
+      "workunit": "WA_KingCo_2_2021",
+      "ql": "QL 1",
+      "collected": "2021-04 to 2021-09",
+      "leaf": "mixed",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/WA_KingCounty_2021_B21/WA_KingCo_2_2021"
+    },
+    {
+      "project": "WA_KingCounty_2021_B21",
+      "workunit": "WA_KingCo_3_2021",
+      "ql": "QL 1",
+      "collected": "2021-07 to 2021-08",
+      "leaf": "leaf-on",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/WA_KingCounty_2021_B21/WA_KingCo_3_2021"
+    }
+  ],
+  "cascade_pass": [
+    {
+      "project": "WA_Western_WA_QL1_LiDAR_2016_B16",
+      "workunit": "WA_Western_North_2016",
+      "ql": "QL 1",
+      "collected": "2016-03 to 2017-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/WA_Western_WA_QL1_LiDAR_2016_B16/WA_Western_North_2016"
+    },
+    {
+      "project": "WA_EasternCascades_2019_B19",
+      "workunit": "WA_EasternCascades_6_2019",
+      "ql": "QL 1",
+      "collected": "2019-10 to 2020-08",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/WA_EasternCascades_2019_B19/WA_EasternCascades_6_2019"
+    }
+  ],
+  "boulder_flatirons": [
+    {
+      "project": "South_Platte_River_Flood_LiDAR",
+      "workunit": "CO_SoPlatteRiver_Lot5_2013",
+      "ql": "QL 3",
+      "collected": "2013-10 to 2014-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/South_Platte_River_Flood_LiDAR/CO_SoPlatteRiver_Lot5_2013"
+    },
+    {
+      "project": "South_Platte_River_Flood_LiDAR",
+      "workunit": "CO_SoPlatteRiver_Lot2a_2013",
+      "ql": "QL 2",
+      "collected": "2013-10 to 2014-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets with variance",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/South_Platte_River_Flood_LiDAR/CO_SoPlatteRiver_Lot2a_2013"
+    },
+    {
+      "project": "CO_DRCOG_2020_B20",
+      "workunit": "CO_DRCOG_2_2020",
+      "ql": "QL 2",
+      "collected": "2020-05 to 2020-06",
+      "leaf": "leaf-on",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_DRCOG_2020_B20/CO_DRCOG_2_2020"
+    },
+    {
+      "project": "CO_DRCOG_2020_B20",
+      "workunit": "CO_DRCOG_1_2020",
+      "ql": "QL 1",
+      "collected": "2020-05 to 2020-08",
+      "leaf": "leaf-on",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_DRCOG_2020_B20/CO_DRCOG_1_2020"
+    }
+  ],
+  "rmnp_bear_lake": [
+    {
+      "project": "ARRA_CO_GRANDCO_2010_Legacy_Data",
+      "workunit": "ARRA_CO_GRANDCO_2010",
+      "ql": "Other",
+      "collected": "2010-08 to 2010-08",
+      "leaf": "leaf-on",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/legacy/ARRA_CO_GRANDCO_2010"
+    },
+    {
+      "project": "CO_DRCOG_2020_B20",
+      "workunit": "CO_DRCOG_3_2020",
+      "ql": "QL 2",
+      "collected": "2020-06 to 2021-03",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_DRCOG_2020_B20/CO_DRCOG_3_2020"
+    }
+  ],
+  "golden_foothills": [
+    {
+      "project": "CO_DENVER_2008_Legacy_Data",
+      "workunit": "CO_DENVER_2008",
+      "ql": "Other",
+      "collected": "2008-03 to 2008-04",
+      "leaf": "leaf-off",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/legacy/CO_DENVER_2008"
+    },
+    {
+      "project": "CO_DENVERDNC_2008_Legacy_Data",
+      "workunit": "CO_DENVERDNC_2008",
+      "ql": "Other",
+      "collected": "2008-03 to 2008-04",
+      "leaf": "leaf-off",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/legacy/CO_DENVERDNC_2008"
+    },
+    {
+      "project": "South_Platte_River_Flood_LiDAR",
+      "workunit": "CO_SoPlatteRiver_Lot5_2013",
+      "ql": "QL 3",
+      "collected": "2013-10 to 2014-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/South_Platte_River_Flood_LiDAR/CO_SoPlatteRiver_Lot5_2013"
+    },
+    {
+      "project": "CO_DRCOG_2020_B20",
+      "workunit": "CO_DRCOG_2_2020",
+      "ql": "QL 2",
+      "collected": "2020-05 to 2020-06",
+      "leaf": "leaf-on",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_DRCOG_2020_B20/CO_DRCOG_2_2020"
+    }
+  ],
+  "brainard_lake": [
+    {
+      "project": "South_Platte_River_Flood_LiDAR",
+      "workunit": "CO_SoPlatteRiver_Lot5_2013",
+      "ql": "QL 3",
+      "collected": "2013-10 to 2014-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Does not meet",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/South_Platte_River_Flood_LiDAR/CO_SoPlatteRiver_Lot5_2013"
+    },
+    {
+      "project": "South_Platte_River_Flood_LiDAR",
+      "workunit": "CO_SoPlatteRiver_Lot2b_2013",
+      "ql": "QL 2",
+      "collected": "2013-10 to 2014-05",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets with variance",
+      "point_cloud_link": null
+    },
+    {
+      "project": "CO_DRCOG_2020_B20",
+      "workunit": "CO_DRCOG_1_2020",
+      "ql": "QL 1",
+      "collected": "2020-05 to 2020-08",
+      "leaf": "leaf-on",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_DRCOG_2020_B20/CO_DRCOG_1_2020"
+    },
+    {
+      "project": "CO_DRCOG_2020_B20",
+      "workunit": "CO_DRCOG_3_2020",
+      "ql": "QL 2",
+      "collected": "2020-06 to 2021-03",
+      "leaf": "mixed (long campaign)",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_DRCOG_2020_B20/CO_DRCOG_3_2020"
+    },
+    {
+      "project": "CO_ArapahoRooseveltPikeNF_D23",
+      "workunit": "CO_ArapahoRooseveltPikeNF_1_D23",
+      "ql": "QL 1",
+      "collected": "2023-07 to 2023-10",
+      "leaf": "leaf-on",
+      "one_meter": "Meets",
+      "point_cloud_link": "https://rockyweb.usgs.gov/vdelivery/Datasets/Staged/Elevation/LPC/Projects/CO_ArapahoRooseveltPikeNF_D23/CO_ArapahoRooseveltPikeNF_1_D23"
+    }
+  ]
+}

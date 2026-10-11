@@ -1,0 +1,7 @@
+# Everything Gate 1 needs. Install with:  pip install -r requirements.txt
+requests
+numpy
+pandas
+matplotlib
+scipy        # nearest-trail matching (KD-tree)
+tifffile     # reading the tree-canopy raster in region_layers.py

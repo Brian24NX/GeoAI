@@ -1,0 +1,145 @@
+# Decisions log
+
+Plan §15: *"Keep a decisions log. Every threshold, filter, and split boundary.
+You will need it for the data card and the paper's methods section, and you
+will not remember it in week 13."*
+
+**Status key:** **draft** = picked by us to get Gate 1 running; not yet
+discussed. **agreed** = confirmed with Danni / Tianyi (write the date).
+Every run also saves the numbers it used in `results/<region>/summary.json`
+under `"settings"`.
+
+## Gate 1 (from 2 Oct 2026, `gate1_audit.py` v2)
+
+| # | Decision | Value | Why | Status |
+|---|---|---|---|---|
+| 1 | What counts as usable | Points with timestamps (*identifiable* + *trackable* uploads). Untimed points (*public* + *private*) are unusable. | No timestamps means no speed. The API sends public/private points sorted by latitude, with no time. | draft |
+| 2 | How the usable fraction is measured | **By points**, not by traces | The API puts all untimed points on a page into one nameless track, so untimed *traces* can't be counted. | draft |
+| 3 | Sample boxes | 4 boxes per region, 0.1° × 0.1°, over popular trail areas (listed in `REGIONS`) | Picked by the previous Claude chat, not by the lab. The Franconia and Lincoln Woods boxes overlap a little. | draft |
+| 4 | Pages used for speeds | Up to 150 pages (750k points) of usable points per box; exact counts come from searching for the last page | At first this was 40. That cut off older hiking traces, because the newest uploads are car loggers. Only Boulder (≈500 usable pages, almost all car logs) still hits the cap. | draft |
+| 4b | "Usable on trails" estimate | Usable trail points ÷ (usable + unusable trail points). The unusable side comes from 6 evenly spaced untimed pages per box, plus the pages read while searching. | Car loggers inflate the plain usable %. Hikers are what we need. | draft |
+| 5 | Speed step | Speed measured between points **≥ 10 s apart** | GPS wobble inflates point-to-point speed when recording every 1–2 s. Fake data: +168% at 1 s. Real data: about +14% (n=3 walkers). | draft |
+| 6 | Repeated timestamps | Keep the first point of each second | Some loggers (e.g. car loggers at 10 Hz) store whole seconds only. | draft |
+| 7 | Gaps | Steps longer than **300 s** are dropped (neither moving nor stopped) | Signal loss, or the trace left the box and came back. | draft |
+| 8 | Too fast | Steps over **60 km/h** are dropped | Vehicle or GPS glitch. | draft |
+| 9 | Crude stop rule | Step speed **< 0.5 km/h** = stopped | Plan §6, "start with ~0.5 km/h; tune later". | from plan |
+| 10 | Draft stop rule | A stretch of **≥ 60 s** that ends **< 10 m** from where it started = stopped | Plan §8 asks for "speed threshold plus minimum duration". Wobble jiggles points but doesn't carry a standing person 10 m. **Not tuned.** | draft |
+| 11 | Matching points to trails (Gate 1 only) | Nearest OSM way within **25 m**; ways cut into points every 5 m | A crude stand-in for HMM map-matching (T1). | draft |
+| 12 | What counts as a trail | `highway` = path, footway, bridleway, steps, cycleway, via_ferrata, **but not** sidewalks, crossings, traffic islands or access aisles (`footway=` / `cycleway=` sidewalk etc.). `track` kept separate. Roads, lifts, railways and ski runs excluded. | Keeps cars, the Cog Railway and ski lifts out of walking speeds. Sidewalks were added after Boulder (~3,500 sidewalks/crosswalks) pulled car points onto "trails". | draft |
+| 13 | Trail trace | ≥ **5 moving minutes** on trails | Drops drive-through and parking-lot clips. | draft |
+| 14 | Permitted mode | Explicit `bicycle=` / `horse=` tags win. Otherwise cycleway or `mtb:scale` → bikes allowed; bridleway → horses allowed; footway/steps → neither. A plain path with no tag = "unclear". | US defaults for `highway=path` are disputed, so we don't guess. | draft |
+| 15 | Duplicate uploads | Identical point sets: keep one | Found real duplicates on Mt Washington. | draft |
+| 16 | Group hikes ("outings") | Traces starting within **15 min and 1 km** of each other in the same box = one outing | Two phones on one hike aren't independent samples. | draft |
+| 17 | Joining a trackable trace split by a page break | Join if the next piece starts within **10 min** | Trackable traces have no ID to join on. | draft |
+| 18 | Hike days | Counted in local solar time (UTC + longitude/15 h) | So an evening hike isn't split across two UTC dates. | draft |
+
+## Region layers (`region_layers.py`)
+
+| # | Decision | Value | Status |
+|---|---|---|---|
+| 19 | 1 m coverage test | Share of a 30 × 30 sample grid where USGS says the best DEM is 1 m | draft |
+| 20 | Relief | Highest minus lowest of those 900 samples (misses exact summits by up to ~50 m) | draft |
+| 21 | Canopy | NLCD 2021 Tree Canopy Cover (30 m), averaged over the box and along OSM trails | draft |
+
+## First look at slope vs speed (`first_look_slope.py`) — preview only
+
+| # | Decision | Value | Status |
+|---|---|---|---|
+| 22 | Unit of measurement | ~50 m chunks of continuous, moving, on-trail travel (both stop rules applied; any gap ends a chunk) | draft |
+| 23 | Elevation | 5 m USGS 3DEP DEM (bilinear), chunk ends snapped to the nearest trail point | draft |
+| 24 | Slope sign | rise / distance in the direction of travel, + = uphill; automatic sign test on a synthetic tilted DEM | agreed with plan §8 ("write a test for the sign convention") |
+| 25 | Walkers only | Drop traces whose median chunk speed is > 7 km/h, or that have < 6 chunks | draft (crude stand-in for mode inference) |
+| 26 | Outliers | Drop chunks with abs(slope) > 60% | draft |
+| 27 | Fit | Least squares in log space, `ln v = ln v0 − k·abs(s + s0)`, s0 by grid search | draft |
+
+## T1 (from 8 Oct 2026)
+
+| # | Decision | Value | Status |
+|---|---|---|---|
+| 28 | Region | **White Mountains** (White Mountain National Forest) | **agreed** with Danni, 2 Oct 2026 meeting |
+| 29 | Region box and tiles | 43.80–44.50 N, 71.95–70.95 W, as 12 tiles of 0.25° × 0.233° (`t1_download.py`) | draft |
+| 30 | Pages per tile | All usable pages (cap 600) | draft |
+| 31 | Whole hikes | Original GPX of every identifiable trace from `openstreetmap.org/trace/<id>/data`; car-logger accounts (sunnypilot, dragonpilot, openpilot, frogpilot) skipped | draft |
+| 32 | Map-matching | `leuvenmapmatching` DistanceMatcher (HMM). Graph = OSM trails + tracks + roads (no sidewalks); ways joined where they share a node (same coordinates to 7 decimals). Settings: obs_noise 15 m, obs_noise_ne 30 m, dist_noise 15 m, max_dist 60 m, lattice width 8, non-emitting states on. Restarts after a break; points with no way within 60 m stay unmatched. | draft. First test on 17 hikes: median 100% matched, 2.2 m from the way, 97% agreement with the Gate 1 nearest-way rule |
+
+## T1 dataset v0 (`t1_build_dataset.py`, 8–9 Oct 2026)
+
+| # | Decision | Value | Status |
+|---|---|---|---|
+| 33 | Thinning before matching | Points ≥ 5 s apart | draft |
+| 34 | Splitting recordings | At gaps > 5 min and at steps > 60 km/h | draft |
+| 35 | Segment length | 50 m (main) and 25 m (kept for comparison), cut along the **matched** path; standing still adds no distance | draft |
+| 36 | Segment speed | Length ÷ *moving* time (stopped time removed); wall-clock time and stopped fraction kept as columns | draft |
+| 37 | Slope | (elevation at end − at start) ÷ length, along the direction of travel, from a 5 m USGS 3DEP grid (in quarter-tile pieces). + = uphill, checked by an automatic test | draft. T2 will switch to the 1 m DEM |
+| 38 | Stop rule for v0 | Draft window rule (60 s ending < 10 m away). **Not hand-validated yet.** Instead, every headline result is reported under 4 rules (`t1_variants.py`) | **decided 8 Oct** (Claude, on Brian's request); hand-check still open |
+| 39 | Suspect segments | Flagged, not dropped: speed > 30 km/h, abs(slope) > 80%, or match error > 40 m | draft |
+| 40 | Hiking trace | ≥ 5 moving minutes on OSM trails (sidewalks excluded) | draft |
+| 41 | Walkers only (for slope–speed fits) | Traces whose median segment speed ≤ 7 km/h; ≥ 6 chunks (first look) | draft (crude stand-in for mode inference, plan §8) |
+| 42 | Uncertainty | 95% intervals by resampling **whole hikes** (200 bootstrap draws), never single points (plan §10) | draft |
+| 43 | Anonymous trace IDs | Hash of the point set (stable across runs); identifiable traces use their OSM trace ID | draft |
+| 44 | Counting unit | "Hiking traces" are **uploads**. Also report **hiking days** (a trace's trail time split by local date, ≥ 5 moving min): 192 traces = 235 days; 13 uploads span several days (one spans 16). Intervals still resample whole traces, which keeps one person's days together. | draft, 9 Oct |
+| 45 | Impossible dates | Flag traces dated before 2005 (before OSM took GPS uploads); don't trust their season columns. One so far: `osm2731854` (1987, probably a GPS week-rollover bug). | to implement in v1 |
+| 46 | Tobler error in hours (Q1 first look) | Per trace with ≥ 15 moving min on trails: predicted ÷ actual moving time, summed over its walker trail segments. The refit curve is cross-validated 5-fold by trace. | draft, 9 Oct (`t1_meeting_figures.py`, `extra_numbers`) |
+| 47 | Out-and-back pairs (Q3 first look) | Same trace, same OSM way, ≥ 2 segments each way, mean grade ≥ 3%, up side uphill and down side downhill. Ratio = moving speed down ÷ up; median with a trace-resampled interval. | draft, 9 Oct |
+
+## 9 Oct 2026 meeting (Danni, Tianyi)
+
+| # | Decision | Value | Status |
+|---|---|---|---|
+| 49 | Order of work | Finish T1 **completely** first, then move to T2 following the timeline plan. | **agreed** with Danni, 9 Oct |
+| 50 | Regions | **As many regions as possible across the US / North America**, not just the White Mountains: the Cascades and the Colorado Front Range, plus others. | **agreed** with Danni, 9 Oct. Replaces "one region" (#28 stays: WM is region 1) |
+| 51 | Lab OSM data | Danni asked Mark Bober (EIT) to add Brian to `ENGR-Lab-jacobsn`. **Works as of 9 Oct 16:10.** `OSM_data` = the lab's crawl of the ORIGINAL files of public + identifiable OSM traces uploaded 2016–2022 (Parquet, one row per trace, with timestamps), plus URL lists for 2008–2022 (~3.0M traces). The API gives "public" traces only as untimed points, so this adds data. | verified 9 Oct |
+| 52 | Cluster work area | `/engrfs/project/jacobsn/zhou.n/` (venv, index, logs). Not the home folder, which is at 28 of 30 GB. Slurm: Brian's accounts don't include `engr-lab-jacobsn` yet, so light jobs run at low priority on the login node for now. | draft, 9 Oct |
+
+## Finishing T1 (from 9 Oct 2026)
+
+| # | Decision | Value | Status |
+|---|---|---|---|
+| 53 | Segment length | **50 m** is the main length; 25 m is kept as the robustness variant. Inside a segment, the 10 m slope strays from the segment's slope by a median RMS of 4.5 points of grade at 50 m and 2.9 at 25 m (1 m DEM). But 50 m segments are timed by twice the GPS points (median 6 vs 3; under 3 points: 7% vs 33%), and the fitted curve is the same: 25 m gives v0 4.31 [4.05, 4.53], k 2.01 [1.85, 2.15]; 50 m gives 4.25, 2.08. | decided 9 Oct (`t1_slope_check.py`; plan §8 asks for this check) |
+| 54 | DEM for the T1 slope column | The **5 m** 3DEP grid is enough for T1. 1 m minus 5 m slope: median 0.0, median abs 0.3, 90th percentile 0.9 points of grade; same curve (v0 4.25, k 2.08, peak −5%) with either. The 1 m grid is for T2 (roughness, micro-terrain). The curve's rounded top is not DEM noise and not 50 m averaging, so it is probably real. | decided 9 Oct |
+| 55 | Never filter segments by GPS point count | Keeping only 25 m segments timed by ≥ 3 points drops v0 to 3.78: slow traversals collect more points, so the filter keeps the slow ones. | rule, 9 Oct |
+| 56 | Impossible dates | Column `date_suspect` = recorded before 2005. A flag, not a drop; the data card lists the traces. | implemented 9 Oct (applies from the next build) |
+| 57 | OSM snapshot | Record the Overpass download dates per region in the data card (WM: 8–9 Oct 2026). The cache JSON has no snapshot timestamp, so the file dates stand in. | implemented 9 Oct |
+
+| 58 | Lab traces in T1 | Each region's T1 build adds the lab crawl's original files (public + identifiable, 2016–2022; `cluster/extract_lab_traces.py` → `cache/lab_traces/<key>.parquet`). A lab trace is skipped if the API already gave the same trace id, or if it's a car logger. Uploader names come from the crawl's URL lists. | implemented 9 Oct |
+| 59 | Near-duplicate uploads | Exact copies were already dropped. New: if ≥ 50% of the shorter trace's points (same second, same ~10 m) are in another trace, it's the same recording re-uploaded, so keep the longer one. Found because the White Mountains had pairs matching second for second. | implemented 9 Oct |
+| 60 | Outings | Traces that start within 15 min and 1 km of each other are one outing (a group hike with two phones). `outing_id` is in `traces.csv` and the segment tables. All 95% intervals now resample **outings** (falling back to traces if there's no `outing_id`). | implemented 9 Oct |
+| 61 | White Mountains T1 v1 | v0 + lab traces + #59–60: 342 traces (lab +60), 235 hiking traces = **218 outings**, 54 named uploaders, 37,741 trail segments of 50 m. Curve unchanged: v0 4.22 [4.02, 4.40], k 2.10 [1.93, 2.24], peak −5% (v0 build: 4.25, 2.08). v0 is kept in `data/archive/`. | built 9 Oct |
+| 62 | Map-matching QA | Match rate: 96.7% of points (all traces), 97.2% (hiking traces); 10 of 192 hiking traces are under 90% matched. Hand-inspected the 12 worst (`results/t1_match_qa/`): unmatched points are correct non-matches (river canoe trips, bushwhacks or unmapped paths, GPS or trail geometry > 60 m off, wandering in town). No wrong-trail snaps in that sample. | done 9 Oct |
+| 63 | Travel mode (first draft, superseded by #64) | `t1_modes.py`: per-trace median speed and downhill/uphill speed ratio. Walk/run fitted on foot-only anchors (≥ 90% of segments where bikes aren't allowed), bike as a third mixture component. White Mountains: 0 of 83 anchors called bike, 9 bikes found. The "run" component isn't real running yet (too few runners there); retune on the Front Range. | draft |
+
+| 64 | Travel mode (final T1 version) | `t1_modes.py`. **Walk vs fast uses median speed only**, anchored on foot-only traces: walk_z = (ln median − anchor mean) / anchor spread; fast if walk_z > 3, which is ~7.5 km/h. The downhill/uphill ratio is NOT used to pick walkers, because Q3 studies it (circular; plan §8). **Gravity rule → bike/ski**: down/up ≥ 1.7 at ≥ 6 km/h downhill, or 90th-percentile speed ≥ 20 km/h; catches ski tours whose median looks like walking. Validation: 98 of 99 White Mountains anchors walk (the other is a March ski tour). Front Range sample: walk 4.2, run 8.5, bike 13.7 km/h. `mode` and `mode_conf` are on every segment row; walker fits use mode == walk. White Mountains curve unchanged: v0 4.22 [4.04, 4.44], k 2.11. | done 9 Oct; re-run on ALL regions when one is added (anchors are pooled) |
+| 65 | Geographic split labels | `t1_finalize.py`: `trail_network` (connected trails; the White Mountains' two largest hold 40% and 30%, too lumpy) and `block_10km` (UTM 10 km squares; 51 in the White Mountains, the largest 11%). T3 holds out **blocks**. | done 9 Oct |
+| 66 | Sampling interval | Recorded per segment (`native_interval_s`). White Mountains walkers: ≤ 2 s v0 4.77 [4.30, 5.19], 2–6 s 4.25, > 6 s 4.09 [3.79, 4.29]. But one uploader is 33% of the ≤ 2 s traces, and within 2016+ the gap is 4.44 vs 4.20 (overlapping CIs). So: report per region (data card), keep it as a T3 covariate, don't filter. | done 9 Oct |
+
+| 67 | Download robustness | (1) `t1_download.py` makes up to 6 passes, 5 min apart, until no tile is "stopped" on an error, and prints `T1 DOWNLOAD DONE` only then (else `INCOMPLETE`). (2) Builds start only when the latest pass is DONE and `summary.json` has no stopped tile, and they re-fetch missing elevation themselves. (3) Elevation: if USGS's output link fails ("400 Bad Request" on some extents), ask for the image directly; if that times out, fetch 4 quarter requests and stitch them on the same pixel grid (Boulder piece checked: overlap agrees within 5 cm). Why: the Mac was offline 9 Oct ~17:00–22:30; 4 Cascades tiles and 3 regions' elevation failed, and the old queue would have built Cascades with tiles missing. | done 10 Oct |
+
+| 68 | Tiles left out | `regions.EXCLUDE_TILES`: `cascades_r2_c0` (47.67–47.90 N, 122.10–121.85 W), lowland suburbs east of Redmond. It served >750 OSM pages of car-logger data with little relief or trail. The tile south of it (the Issaquah Alps) stays. Why: plan §7 "real relief", and not loading OSM's volunteer servers for nothing (single stream, 1 s apart, contact address in the User-Agent, no 429s so far). | 10 Oct |
+
+| 69 | Run T1 on the lab cluster | From 10 Oct 03:30 the pipeline runs on the cluster, not the laptop (Brian's call: no laptop needed, runs 24/7). Project copy: `/engrfs/project/jacobsn/zhou.n/travel-speed/` (code, OSM caches, data, 5 m grids; `cache/lab_index` and `cache/lab_traces` link to the cluster copies). Python 3.12 env `/engrfs/project/jacobsn/zhou.n/envs/t1` (micromamba), the same package versions as the laptop, installed offline from uploaded wheels (PyPI's file server was unreachable from the cluster that night). Slurm: `cluster/t1_osm_job.sh` (1 CPU, `linuxlab-project`, up to 7 days, account `engr-class-any`) downloads one region at a time; each finished region submits `cluster/t1_region_job.sh dem` (1 CPU), then `build` (16 CPUs, `--dependency=singleton`, so builds never overlap). **No GPUs for T1**: downloads and map-matching are CPU and network bound; GPUs are for T2/T3 encoders. Tested on a compute node: sample build identical to the laptop's. | 10 Oct; Slurm account still to confirm with Danni |
+
+| 70 | OSM API depth limit | The trackpoints API times out ("503 first byte timeout", 30 s) past ~page 906 of one bbox (~4.5M points; the oldest uploads, before ~late 2009). A tile stopped at page ≥ 800 counts as **complete up to the API's limit** (`t1_download.capped_tiles`), with the reach written on the data card. So far: `cascades_r1_c0` (Issaquah Alps, cut at 907) and `frontrange_r2_c2` (Boulder, cut at 931). Not re-split into smaller boxes: that would re-download ~2,000 cached pages to recover a few % of hikes (pre-2010 uploads were < 2% of White Mountains hikes). | 10 Oct; stated limitation |
+| 71 | Builder read only 600 cached pages per tile | Fixed: `collect_traces` now reads up to `MAX_PAGES` (2000), as the download does. It mattered only for tiles over 600 pages (Cascades and Front Range); the White Mountains maximum was 98. | fixed 10 Oct |
+| 72 | Cluster limits (`engr-class-any`, partition QoS `academic-job`) | **≤ 8 CPUs per job, ≤ 4 running jobs per user.** Build jobs use 8 CPUs; the download job holds one slot. sbatch also prints Kerberos (auks) lines, so the job id is parsed from the line that is only a number. A marker file per submitted region stops a restarted queue from double-submitting. | 10 Oct |
+
+| 73 | Elevation source under walked trails (`t1_dem_quality.py`, 300 random walking segments per region) | Share on 1 m lidar: White Mountains 100%, Tahoe 97%, Smokies 94%, Cascades 87%, **Olympic 29%** (70% on ~10 m). Slope noise flattens k, so Olympic's low k (1.10) is partly a data artifact. The Smokies' low k (1.06, wide CI) is not (94% at 1 m). For T2, which needs 1 m lidar, Olympic is weak. | 10 Oct |
+| 74 | Corrupt points in original GPX files | One file has NMEA text ("-$GPGG") as a coordinate; it crashed 5 builds. `read_original_gpx` now skips unreadable points. | fixed 10 Oct |
+
+| 75 | More tiles left out (11 Oct) | `shenandoah_r0_c2` (US-29 Piedmont, >750 car-logger pages), `shenandoah_r1_c0`, `shenandoah_r2_c0` (valley floor), `pisgah_r1_c0`, `pisgah_r1_c1` (Asheville). Each had **0 hike-like traces in the lab crawl**, and highway tiles cost ~1–1.5 h of OSM API time each. Kept: the park-ridge tiles (Big Meadows, Old Rag, Front Royal) and Pisgah's mountain-bike tiles. Rule from now on: a tile with heavy traffic and no hiking signal in the lab index is left out, with the reason recorded in `regions.EXCLUDE_TILES`. | 11 Oct |
+
+## T2 (from 9 Oct 2026)
+
+| # | Decision | Value | Status |
+|---|---|---|---|
+| 48 | 1 m elevation: where and on what grid | USGS 3DEP 1 m via the elevation ImageServer, only for 500 m × 500 m cells within 25 m of a walked trail point of a T1 hiking trace (1,832 cells). Grid: NAD83 / UTM 19N (EPSG:26919), cells aligned to multiples of 500 m, 1 m pixels, bilinear. Spot check: within 1 m of the 5 m grid; the Mt Washington cell's maximum is 1,915.8 m (summit 1,917 m). | draft, 9 Oct (`t2_prefetch_dem1m.py`). **Downloaded 9 Oct 02:53:** 1,832 of 1,832 cells, 0 failures, no gaps, 100% of walked trail points covered, 1.9 GB. Matches the 5 m grid at 3,000 trail points (median abs difference 0.18 m, 95th percentile 0.64 m). |
+
+## Still to decide (T1, plan §8)
+
+- Final stop rule (tune #10 using hand-checked stops)
+- Map-matching method (`leuvenmapmatching` or HMM per Newson & Krumm) and the minimum match confidence
+- ~~Segment length~~: 50 m, decided 9 Oct (#53)
+- Train/test split: by trace **and** by trail system, never by point (plan §10)
+- What counts as "enough" traces for Gate 1 (ask Danni and Tianyi)
+- OSM snapshot: download dates recorded per region (#57). Progress Report #1 said Geofabrik extracts; we use Overpass downloads with recorded dates instead
+- ~~One region or two~~: decided 9 Oct, many regions (#50). Still to decide: **which** regions (scout them with the lab index, #51)
+- Slurm account for heavy jobs: `engr-lab-jacobsn` (ask Danni / EIT) or `engr-class-any`

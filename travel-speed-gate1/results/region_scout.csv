@@ -1,0 +1,24 @@
+region,label,vegetation,traces_local,hike_like,ride_like,hike_uploaders,top_uploader_share_pct,hike_hours,median_hike_km,years
+bayarea,"Bay Area hills (Marin, East Bay, Peninsula), CA","grassland, chaparral, redwood; mixed-use",10325,291,79,42,64.26116838487972,811.5585911111112,5.934540520021331,2015-2022
+cascades,"Cascades I-90 + Alpine Lakes, WA",temperate rainforest -> dry pine east of the crest,592,183,29,31,36.612021857923494,733.3970236111112,9.107545118203271,2015-2022
+wm,"White Mountains, NH",northern hardwood + spruce-fir; rocky,126,67,4,25,25.37313432835821,327.4099008333333,8.57900516417177,1987-2022
+sangabriel,"San Gabriel Mountains (LA), CA","chaparral; steep, arid",124,67,4,19,32.83582089552239,312.5888888888889,9.084480941481685,2005-2022
+northshore,"North Shore Mountains (Vancouver), BC",temperate rainforest; steep,145,57,17,22,19.29824561403509,165.69926138888889,6.759532559507888,2015-2022
+tahoe,"Lake Tahoe, CA/NV",conifer + granite,229,50,70,10,44.0,104.7525,3.5835189705331403,2011-2022
+wasatch,"Wasatch Front (Salt Lake City), UT",scrub oak + conifer; semi-arid,138,32,11,10,59.375,74.72333333333333,5.6842201496931395,2016-2022
+frontrange,Colorado Front Range (Boulder-Golden),ponderosa + grassland; mixed-use trails,241,31,30,17,16.129032258064516,105.19836805555553,6.256317906483072,2011-2022
+olympic,"Olympic NP (north), WA",temperate rainforest + alpine,33,29,1,4,51.724137931034484,143.03861111111112,14.03551021252337,2016-2022
+adk,"Adirondack High Peaks, NY",northern hardwood + spruce-fir; rocky,71,28,3,8,64.28571428571429,109.17688194444445,7.090414337063186,2016-2022
+yosemite,"Yosemite Valley + High Sierra, CA",conifer + granite,78,25,3,9,24.0,106.70872222222224,8.992173745480455,2010-2019
+catskills,"Catskills, NY",hardwood forest,94,25,2,7,52.0,102.90004,7.604527382244299,2018-2022
+gorge,"Columbia River Gorge, OR/WA",Douglas-fir forest; steep,312,18,6,9,38.888888888888886,47.264809722222225,4.266013334973131,2017-2022
+shenandoah,"Shenandoah, VA",oak-hickory forest,1234,17,7,10,17.647058823529413,40.39138888888889,5.694152744127924,2016-2020
+sedona,"Sedona / Flagstaff, AZ",arid red rock + ponderosa,124,15,9,7,33.333333333333336,50.78805555555556,6.0219323427618425,2017-2022
+pisgah,"Asheville / Pisgah, NC",deciduous forest; MTB trails,280,11,39,10,18.181818181818183,26.3475,6.591801746559068,2016-2022
+greenmtn,"Green Mountains, VT",hardwood + spruce-fir,40,10,4,6,20.0,44.10583333333334,9.044137053329823,2018-2022
+smokies,"Great Smoky Mountains, TN/NC",dense deciduous + spruce-fir,185,10,6,5,30.0,34.42623555555556,7.679189604640806,2017-2021
+tetons,"Grand Teton, WY",conifer + alpine,16,8,1,6,25.0,41.2375,12.72926644567953,2016-2022
+acadia,"Acadia, ME","coastal spruce, granite",27,8,0,4,37.5,27.814444444444444,8.344201281234179,2017-2022
+cosprings,"Colorado Springs / Pikes Peak, CO","ponderosa, scrub; mixed-use",47,7,2,6,28.571428571428573,14.230285277777778,5.397403095628037,2013-2022
+glacier,"Glacier NP, MT",conifer + alpine,31,5,1,4,40.0,14.145,6.190836117695836,2011-2022
+boise,"Boise Foothills, ID",sagebrush steppe; mixed-use,36,3,7,3,33.333333333333336,8.997777777777777,8.457842182032627,2017-2022

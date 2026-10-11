@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Project — Plain English Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#f8f7f4;color:#2c2c2a;line-height:1.7}
+.wrap{max-width:720px;margin:0 auto;padding:24px 20px 80px}
+
+h1{font-size:28px;font-weight:700;margin-bottom:4px;color:#1a1a18}
+.subtitle{font-size:15px;color:#73726c;margin-bottom:40px}
+
+.card{background:#fff;border-radius:14px;padding:28px 24px;margin-bottom:20px;border:1px solid #e8e6df}
+
+.card-label{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;display:inline-block;padding:3px 10px;border-radius:20px}
+.label-blue{background:#E6F1FB;color:#185FA5}
+.label-teal{background:#E1F5EE;color:#0F6E56}
+.label-coral{background:#FAECE7;color:#993C1D}
+.label-purple{background:#EEEDFE;color:#534AB7}
+.label-amber{background:#FAEEDA;color:#854F0B}
+.label-green{background:#EAF3DE;color:#3B6D11}
+
+.card h2{font-size:20px;font-weight:600;margin-bottom:12px;color:#1a1a18}
+.card h3{font-size:16px;font-weight:600;margin:18px 0 8px;color:#2c2c2a}
+.card p,.card li{font-size:15px;color:#444441}
+.card ul{padding-left:20px;margin:8px 0}
+.card li{margin-bottom:6px}
+
+.emoji-row{display:flex;gap:12px;margin:16px 0;flex-wrap:wrap}
+.emoji-box{flex:1;min-width:140px;background:#f8f7f4;border-radius:10px;padding:14px;text-align:center;border:1px solid #e8e6df}
+.emoji-box .icon{font-size:28px;margin-bottom:6px}
+.emoji-box .label{font-size:13px;font-weight:500;color:#2c2c2a}
+.emoji-box .desc{font-size:12px;color:#73726c;margin-top:2px}
+
+.flow{display:flex;align-items:center;gap:0;margin:16px 0;flex-wrap:wrap;justify-content:center}
+.flow-step{background:#E6F1FB;color:#185FA5;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:500;text-align:center;min-width:80px}
+.flow-step.active{background:#185FA5;color:#fff}
+.flow-step.gate{background:#FAECE7;color:#993C1D;border:2px solid #D85A30}
+.flow-arrow{color:#b4b2a9;font-size:18px;padding:0 2px}
+
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.compare-box{padding:16px;border-radius:10px;border:1px solid #e8e6df}
+.compare-box h4{font-size:14px;font-weight:600;margin-bottom:6px}
+.compare-box p{font-size:13px;color:#5f5e5a}
+.compare-box.green{background:#EAF3DE;border-color:#C0DD97}
+.compare-box.green h4{color:#3B6D11}
+.compare-box.amber{background:#FAEEDA;border-color:#FAC775}
+.compare-box.amber h4{color:#854F0B}
+
+.analogy{background:#EEEDFE;border-radius:10px;padding:16px 20px;margin:14px 0;border-left:4px solid #7F77DD}
+.analogy p{font-size:14px;color:#3C3489}
+.analogy strong{color:#26215C}
+
+.timeline{margin:16px 0}
+.tl-row{display:flex;align-items:flex-start;gap:12px;margin-bottom:0;position:relative}
+.tl-dot{width:14px;height:14px;border-radius:50%;border:2px solid #b4b2a9;background:#fff;margin-top:4px;flex-shrink:0;z-index:1}
+.tl-dot.done{background:#5DCAA5;border-color:#1D9E75}
+.tl-dot.now{background:#D85A30;border-color:#993C1D;box-shadow:0 0 0 4px rgba(216,90,48,.2)}
+.tl-dot.future{background:#fff;border-color:#d3d1c7}
+.tl-line{position:absolute;left:6px;top:18px;width:2px;height:calc(100% + 4px);background:#e8e6df}
+.tl-content{flex:1;padding-bottom:18px}
+.tl-week{font-size:12px;font-weight:600;color:#73726c}
+.tl-task{font-size:14px;font-weight:500;color:#2c2c2a}
+.tl-detail{font-size:13px;color:#888780}
+
+.checklist{margin:14px 0}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:#f8f7f4;border-radius:8px;margin-bottom:6px;border:1px solid #e8e6df}
+.check-item .num{width:22px;height:22px;background:#185FA5;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;margin-top:1px}
+.check-item p{font-size:14px;color:#2c2c2a}
+
+.highlight{background:#FAEEDA;padding:14px 18px;border-radius:10px;margin:14px 0;border-left:4px solid #EF9F27}
+.highlight p{font-size:14px;color:#633806}
+
+.arm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.arm{padding:14px;border-radius:10px;text-align:center}
+.arm.a1{background:#f1efe8;border:1px solid #d3d1c7}
+.arm.a2{background:#E6F1FB;border:1px solid #B5D4F4}
+.arm.a3{background:#E1F5EE;border:1px solid #9FE1CB}
+.arm.a4{background:#EEEDFE;border:1px solid #CECBF6}
+.arm .arm-name{font-size:14px;font-weight:600;margin-bottom:4px}
+.arm .arm-sees{font-size:12px;color:#5f5e5a}
+.arm .arm-asks{font-size:12px;color:#73726c;margin-top:4px;font-style:italic}
+.a1 .arm-name{color:#444441}
+.a2 .arm-name{color:#185FA5}
+.a3 .arm-name{color:#0F6E56}
+.a4 .arm-name{color:#534AB7}
+
+.big-num{font-size:48px;font-weight:700;color:#185FA5;text-align:center;margin:8px 0 4px}
+.big-label{font-size:14px;color:#73726c;text-align:center;margin-bottom:12px}
+
+hr{border:none;border-top:1px solid #e8e6df;margin:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Your project, explained simply</h1>
+<p class="subtitle">A visual guide for Brian — read this before your meeting tomorrow</p>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-blue">The big picture</span>
+<h2>What is this project about?</h2>
+
+<p>Imagine you're using Google Maps for a hiking trail. It tells you "this hike takes 3 hours." But how does it know that?</p>
+
+<p>The answer: it uses a <strong>formula from 1993</strong> written by a guy named Waldo Tobler. His formula says: the steeper the hill, the slower you walk. Simple.</p>
+
+<p>The problem? <strong>He never actually measured real hikers.</strong> He just copied some numbers from a Swiss textbook. And 30 years later, everyone still uses his formula without questioning it.</p>
+
+<div class="analogy">
+<p><strong>Think of it this way:</strong> imagine if every restaurant in the world set their cooking times based on one recipe book from 1993, and nobody ever checked if the times were actually right. That's what's happening in geography right now with hiking speed.</p>
+</div>
+
+<h3>Your job: test it with real data</h3>
+<p>You're going to download <strong>real GPS tracks</strong> from thousands of actual hikers, measure how fast they really walked, and see if Tobler's formula is right or wrong.</p>
+
+<p>But here's the twist that makes it a <strong>remote sensing</strong> project...</p>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-teal">The twist</span>
+<h2>Why is this a remote sensing project?</h2>
+
+<p>Some trails on OpenStreetMap have labels like:</p>
+
+<div class="emoji-row">
+<div class="emoji-box"><div class="icon">🪨</div><div class="label">Surface: gravel</div></div>
+<div class="emoji-box"><div class="icon">📏</div><div class="label">Width: 2m</div></div>
+<div class="emoji-box"><div class="icon">⛰️</div><div class="label">Difficulty: hard</div></div>
+</div>
+
+<p>These labels predict hiking speed really well. But here's the catch: <strong>most trails in the world don't have these labels.</strong></p>
+
+<p>So the big question is:</p>
+
+<div class="analogy">
+<p><strong>Can we look at the ground from satellites and LiDAR (laser scanning from airplanes) and figure out the same information?</strong></p>
+<p>If yes → we can predict hiking speed <em>anywhere on Earth</em>, even where no map exists.</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-purple">The experiment</span>
+<h2>The 4-arm test (the core of your paper)</h2>
+
+<p>Think of it as giving the same exam to 4 students, but each student gets different cheat sheets:</p>
+
+<div class="arm-grid">
+<div class="arm a1">
+<div class="arm-name">Arm 1: Tobler</div>
+<div class="arm-sees">Only sees: slope</div>
+<div class="arm-asks">"How fast using the 1993 formula?"</div>
+</div>
+<div class="arm a2">
+<div class="arm-name">Arm 2: Map tags</div>
+<div class="arm-sees">Sees: slope + trail labels</div>
+<div class="arm-asks">"How fast if we have a good map?"</div>
+</div>
+<div class="arm a3">
+<div class="arm-name">Arm 3: Remote sensing</div>
+<div class="arm-sees">Sees: slope + satellite/LiDAR</div>
+<div class="arm-asks">"How fast from the sky alone?"</div>
+</div>
+<div class="arm a4">
+<div class="arm-name">Arm 4: Everything</div>
+<div class="arm-sees">Sees: all of the above</div>
+<div class="arm-asks">"How fast with all info?"</div>
+</div>
+</div>
+
+<div class="highlight">
+<p><strong>The winning outcome:</strong> Arm 3 (satellites only) scores close to Arm 2 (map labels). That would mean satellites can replace missing map data — a big deal.</p>
+</div>
+
+<p>Even if Arm 3 fails badly, that's still a useful result. It would tell the field exactly <em>which</em> trail features matter for speed but are invisible from above.</p>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-coral">What you build</span>
+<h2>The 4 things you deliver this semester</h2>
+
+<div class="emoji-row">
+<div class="emoji-box" style="flex:1.5">
+<div class="icon">📊</div>
+<div class="label">T1: The dataset</div>
+<div class="desc">GPS tracks, cleaned and matched to trails. THIS IS MOST OF YOUR WORK.</div>
+</div>
+<div class="emoji-box">
+<div class="icon">🛰️</div>
+<div class="label">T2: Satellite data</div>
+<div class="desc">Terrain shape + vegetation from LiDAR</div>
+</div>
+</div>
+<div class="emoji-row">
+<div class="emoji-box">
+<div class="icon">🧪</div>
+<div class="label">T3: The experiment</div>
+<div class="desc">Run the 4-arm comparison</div>
+</div>
+<div class="emoji-box">
+<div class="icon">📈</div>
+<div class="label">T4: The graphs</div>
+<div class="desc">Real slope vs. speed curves</div>
+</div>
+</div>
+
+<div class="highlight">
+<p><strong>Important to understand:</strong> T1 (the dataset) takes about <strong>6 weeks</strong> and is mostly data cleaning. It can feel like you're "not doing research yet." You are. The dataset IS the contribution. The modeling part is actually fast once the data is clean.</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-amber">Data cleaning</span>
+<h2>What does "cleaning the GPS traces" actually mean?</h2>
+<p>When someone uploads a GPS track from their hike, the raw data is messy. Here's what you have to fix:</p>
+
+<div class="emoji-row">
+<div class="emoji-box">
+<div class="icon">🍕</div>
+<div class="label">Remove stops</div>
+<div class="desc">Lunch breaks, photo stops, resting — they make speed look artificially slow</div>
+</div>
+<div class="emoji-box">
+<div class="icon">📍</div>
+<div class="label">Map-match</div>
+<div class="desc">Snap GPS points onto the actual trail (GPS drifts under trees)</div>
+</div>
+</div>
+<div class="emoji-row">
+<div class="emoji-box">
+<div class="icon">🚴</div>
+<div class="label">Detect mode</div>
+<div class="desc">Was this person walking, biking, or on horseback?</div>
+</div>
+<div class="emoji-box">
+<div class="icon">⬆️⬇️</div>
+<div class="label">Get direction</div>
+<div class="desc">Were they going uphill or downhill on this segment?</div>
+</div>
+</div>
+
+<p style="margin-top:12px">This is the hardest and most time-consuming part. The semester plan literally says: <em>"Read section 8 twice. It's the project."</em></p>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-coral">Checkpoints</span>
+<h2>The 2 gates (go or no-go decisions)</h2>
+
+<div class="compare-grid">
+<div class="compare-box amber">
+<h4>Gate 1 — Week 3</h4>
+<p><strong>"Can we even use this data?"</strong></p>
+<p style="margin-top:6px">When people upload GPS tracks to OpenStreetMap, they pick a privacy level. Some levels scramble the time order of the points. Without time order, you can't calculate speed. If most tracks in your region are scrambled → pick a different region.</p>
+</div>
+<div class="compare-box green">
+<h4>Gate 2 — Week 11</h4>
+<p><strong>"Did the satellites help?"</strong></p>
+<p style="margin-top:6px">Do your learned models beat Tobler's 1993 formula? Does remote sensing get close to what map labels give you? If nothing beats Tobler, that's a surprising finding worth publishing honestly.</p>
+</div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-green">Timeline</span>
+<h2>Where you are in the semester</h2>
+
+<div class="timeline">
+<div class="tl-row"><div class="tl-dot done"></div><div class="tl-line"></div><div class="tl-content"><div class="tl-week">Weeks 1–2</div><div class="tl-task">Pick a region, read the key papers</div><div class="tl-detail">White Mountains, Cascades, or Colorado Front Range</div></div></div>
+
+<div class="tl-row"><div class="tl-dot done"></div><div class="tl-line"></div><div class="tl-content"><div class="tl-week">Week 3 — GATE 1</div><div class="tl-task">Test if the GPS traces are usable</div><div class="tl-detail">Can kill the project → switch region if bad</div></div></div>
+
+<div class="tl-row"><div class="tl-dot now"></div><div class="tl-line"></div><div class="tl-content"><div class="tl-week">Weeks 4–6 ← roughly where you are</div><div class="tl-task">Download and clean all the GPS tracks</div><div class="tl-detail">Stop removal, map-matching, mode detection</div></div></div>
+
+<div class="tl-row"><div class="tl-dot future"></div><div class="tl-line"></div><div class="tl-content"><div class="tl-week">Weeks 7–8</div><div class="tl-task">Build the satellite/LiDAR data layer</div><div class="tl-detail">Slope, roughness, vegetation from point clouds</div></div></div>
+
+<div class="tl-row"><div class="tl-dot future"></div><div class="tl-line"></div><div class="tl-content"><div class="tl-week">Weeks 9–11</div><div class="tl-task">Run the 4-arm experiment</div><div class="tl-detail">Train models, compare arms — GATE 2 at week 11</div></div></div>
+
+<div class="tl-row"><div class="tl-dot future"></div><div class="tl-line"></div><div class="tl-content"><div class="tl-week">Week 12</div><div class="tl-task">Measure uphill vs. downhill asymmetry</div><div class="tl-detail">Using out-and-back hikes as natural experiments</div></div></div>
+
+<div class="tl-row"><div class="tl-dot future"></div><div class="tl-content"><div class="tl-week">Weeks 13–14</div><div class="tl-task">Write and submit the paper</div><div class="tl-detail">4-page paper → IGARSS 2027, deadline Jan 11</div></div></div>
+</div>
+
+<div class="highlight">
+<p><strong>Confirm with Danni tomorrow</strong> exactly where the project stands. Has Gate 1 been done? Which region was picked? What's been done so far and what's yours to start?</p>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-blue">Tomorrow's meeting</span>
+<h2>What to say and ask</h2>
+
+<h3>What to say</h3>
+<p>Be honest. You've been busy with classes and are now catching up. That's totally fine — say it. Then show you understand the project by hitting these points:</p>
+
+<div class="checklist">
+<div class="check-item"><div class="num">1</div><p>"I've read through the semester plan. I understand the main goal: test Tobler's formula with real data, and see if satellite imagery can replace missing map labels for predicting travel speed."</p></div>
+
+<div class="check-item"><div class="num">2</div><p>"I understand that building the dataset — cleaning the traces — is the main work this semester, not just setup."</p></div>
+
+<div class="check-item"><div class="num">3</div><p>"I know the paper target is IGARSS 2027, due January 11."</p></div>
+</div>
+
+<h3>What to ask</h3>
+<div class="checklist">
+<div class="check-item"><div class="num">?</div><p>"Has Gate 1 been done? Do we know the traces are usable? Which region are we using?"</p></div>
+
+<div class="check-item"><div class="num">?</div><p>"What has already been done, and what's my piece to start on this week?"</p></div>
+
+<div class="check-item"><div class="num">?</div><p>"Can you help me get access to Earth Engine, lab compute, and lab swipe? I'll need them by week 7."</p></div>
+
+<div class="check-item"><div class="num">?</div><p>"Is there existing code from RasterNet I should build on, or am I starting fresh?"</p></div>
+
+<div class="check-item"><div class="num">?</div><p>"What tools/libraries should I set up on my machine this week?"</p></div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="card">
+<span class="card-label label-purple">Key terms cheat sheet</span>
+<h2>Vocabulary you'll hear in the meeting</h2>
+
+<div class="checklist">
+<div class="check-item"><div class="num" style="background:#534AB7">T</div><p><strong>Tobler's function</strong> — the 1993 formula: speed = 6 × e^(-3.5 × |slope + 0.05|). The thing you're testing.</p></div>
+
+<div class="check-item"><div class="num" style="background:#534AB7">L</div><p><strong>LiDAR</strong> — laser scanning from airplanes. Gives you 3D shape of the ground and trees at 1-meter resolution.</p></div>
+
+<div class="check-item"><div class="num" style="background:#534AB7">O</div><p><strong>OSM</strong> — OpenStreetMap. Where the GPS hiking tracks come from. Also has trail labels (when they exist).</p></div>
+
+<div class="check-item"><div class="num" style="background:#534AB7">M</div><p><strong>Map-matching</strong> — snapping messy GPS points onto the actual trail on the map. Hard because GPS drifts under tree cover.</p></div>
+
+<div class="check-item"><div class="num" style="background:#534AB7">H</div><p><strong>Heteroscedastic</strong> — fancy word meaning "the model predicts both the speed AND how uncertain it is about that speed."</p></div>
+
+<div class="check-item"><div class="num" style="background:#534AB7">3</div><p><strong>3DEP</strong> — a US government program that provides 1-meter elevation data. You need to verify it covers your region.</p></div>
+
+<div class="check-item"><div class="num" style="background:#534AB7">N</div><p><strong>NAIP</strong> — aerial photos of the US at 1-meter resolution, 4 color bands (red, green, blue, near-infrared).</p></div>
+
+<div class="check-item"><div class="num" style="background:#534AB7">I</div><p><strong>IGARSS</strong> — the conference you're submitting to. In Reykjavík, Iceland, July 2027. 4-page paper format.</p></div>
+</div>
+</div>
+
+<!-- ============================================================ -->
+<div class="card" style="background:#E6F1FB;border-color:#B5D4F4">
+<h2 style="text-align:center">One last thing</h2>
+<p style="text-align:center;font-size:15px;color:#0C447C">If you have 20 minutes tonight, read <strong>section 8</strong> of the semester plan PDF. It covers trace handling — stop detection, map-matching, mode detection, direction of travel. The plan says to read it twice. It's the part of the project where you'll spend most of your time, and being able to ask a specific question about it tomorrow will make a strong impression.</p>
+</div>
+
+</div>
+</body>
+</html>

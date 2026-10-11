@@ -1,0 +1,43 @@
+# FULL toolset for the rest of the project (T1-T3). NOT needed for Gate 1.
+#
+# Ask Danni and Tianyi before installing: the lab may already have a
+# standard environment, and matching it saves you pain later.
+#
+# Create:    conda env create -f environment.yml
+# Activate:  conda activate travel-speed
+#
+# Untested starting point -- if conda can't solve it all at once, install
+# the groups below one at a time.
+name: travel-speed
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  # basics
+  - numpy
+  - pandas
+  - matplotlib
+  - requests
+  - jupyterlab
+  # maps and geometry (T1: trail network, map-matching)
+  - geopandas
+  - shapely
+  - pyproj
+  # elevation and LiDAR (T2: terrain + vegetation covariates)
+  - gdal
+  - rasterio
+  - laspy
+  - pdal
+  - python-pdal
+  # models (T3: the four-arm comparison)
+  - scikit-learn
+  - lightgbm
+  - xgboost
+  - pip
+  - pip:
+      - osmium              # read OSM extracts (pyosmium)
+      - pyrosm              # OSM trail network -> geopandas
+      - leuvenmapmatching   # snap GPS points onto trails (HMM matcher)
+      - earthengine-api     # Google Earth Engine: 3DEP, NAIP, NLCD, AlphaEarth
+# PyTorch is left out on purpose. Install it later using the command from
+# pytorch.org that matches your machine (CPU or GPU).
