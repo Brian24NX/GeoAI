@@ -273,7 +273,15 @@ Results go to `results/t3_harness/`. The remote-sensing arms plug into
 
 | Script | What it does |
 |---|---|
-| `t2_prefetch_dem1m.py` | Downloads the **1 m USGS 3DEP elevation** for every 500 m × 500 m cell the T1 hikes walked through (1,832 cells, ~1.8 GB, ~1.5 h), into `cache/dem1m/`. Grid: UTM zone 19N, 1 m pixels, cells aligned to multiples of 500 m. Resumes where it stopped. `--dry-run` just counts the cells. |
+| `t2_prefetch_dem1m.py` | (White Mountains, 9 Oct) Downloads the **1 m USGS 3DEP elevation** for every 500 m × 500 m cell the T1 hikes walked through (1,832 cells, ~1.8 GB, ~1.5 h), into `cache/dem1m/`. Grid: UTM zone 19N, 1 m pixels, cells aligned to multiples of 500 m. Resumes where it stopped. `--dry-run` just counts the cells. |
+| `t2_dem1m.py` | The same for **any region** (`--region <key>` or `--all`), from the combined dataset's walking segments, in each region's own UTM zone (12,499 cells, ~12.5 GB for the 16 US regions). The North Shore (Canada) is skipped. |
+| `t2_terrain1m.py` | Terrain covariates from the 1 m DEM along each walking segment's matched path, every 1 m: STRIDE roughness, relief along the line of travel, steepest and spread of 5 m pitches, side slope, and "hidden climbing" (a control). Writes `data/t2/terrain1m_<region>.parquet`. |
+| `t2_terrain5m.py` | The same profile from the **5 m grids T1 already has** (all 17 regions, minutes). In the White Mountains it matches the 1 m version. Writes `data/t2/terrain5m_<region>.parquet`. |
+
+To test a covariate set, add it to the harness: `python t3_harness.py
+--covariates data/t2/terrain5m_*.parquet --out results/t3_harness_terrain5m`.
+This adds the remote-sensing arms: additive, trees, and each combined with
+tags. `--features` picks columns; `--regions` and `--splits` run a pilot.
 
 ## Be polite to OpenStreetMap
 

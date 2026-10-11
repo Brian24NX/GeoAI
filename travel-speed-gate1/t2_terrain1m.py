@@ -108,6 +108,10 @@ def resample(x, y, step=1.0):
     return np.interp(s, d, x), np.interp(s, d, y), d[-1]
 
 
+def tobler(s):
+    return 6.0 * np.exp(-3.5 * np.abs(s + 0.05))
+
+
 def profile_metrics(z, L):
     out = {"slope_1m": (z[-1] - z[0]) / L if L > 0 else np.nan}
     if len(z) >= 11:
@@ -116,6 +120,14 @@ def profile_metrics(z, L):
         out["pitch_sd"] = float(np.nanstd(p))
         ma = np.convolve(z, np.ones(11) / 11, mode="valid")
         out["relief_sd"] = float(np.nanstd(z[5:-5] - ma))
+        # hidden climbing: extra time a slope-speed curve (Tobler's, fixed,
+        # so nothing is fitted on the data) predicts when the 50 m is walked
+        # as 5 m pieces instead of at its average grade. A control: is the
+        # profile's gain just uneven grade within the segment?
+        q = (z[5::5] - z[:-5:5]) / 5.0
+        if len(q) and np.isfinite(out["slope_1m"]):
+            out["hidden_grade"] = float(np.mean(1 / tobler(q))
+                                        * tobler(out["slope_1m"]) - 1)
     return out
 
 

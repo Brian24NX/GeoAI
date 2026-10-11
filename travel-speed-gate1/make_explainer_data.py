@@ -95,8 +95,10 @@ def main():
     q = Path("results/t1_dem_quality.csv")
     if q.exists():
         out["dem_quality"] = pd.read_csv(q).round(1).to_dict("records")
-    h = Path("results/t3_harness/metrics.csv")
-    if h.exists():                       # the first test (t3_harness.py)
+    h = next((d / "metrics.csv" for d in (Path("results/t3_harness_terrain5m"),
+                                          Path("results/t3_harness"))
+              if (d / "metrics.csv").exists()), Path("none"))
+    if h.exists():      # the first test (t3_harness.py, with terrain if run)
         m = pd.read_csv(h)
         m = m[m.split.isin(["outing5", "loro"])]
         out["harness"] = m[["split", "arm", "subset", "segments", "r2_log",
@@ -104,6 +106,12 @@ def main():
                             "cov90", "stretch_ape_median",
                             "time_ape_median", "hikes"]] \
             .round(4).to_dict("records")
+        b = h.parent / "loro_by_region.csv"
+        if b.exists():
+            b = pd.read_csv(b).pivot(index="region", columns="arm",
+                                     values="crps_skill_vs_slope_pct")
+            if {"lin_rs", "lin_tags"} <= set(b.columns):
+                out["terrain_wins"] = int((b.lin_rs > b.lin_tags).sum())
     mc = Path("results/t1_mode_check/summary.json")
     if mc.exists():
         out["mode_check"] = {k: v for k, v in json.loads(mc.read_text())

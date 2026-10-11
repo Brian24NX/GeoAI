@@ -463,6 +463,8 @@ def main():
     ap.add_argument("--splits", nargs="*", default=SPLITS, choices=SPLITS)
     ap.add_argument("--covariates", nargs="*", default=[],
                     help="T2 covariate tables: segment_id + numeric columns")
+    ap.add_argument("--features", nargs="*",
+                    help="use only these covariate columns")
     ap.add_argument("--out", help="output folder (default results/t3_harness)")
     args = ap.parse_args()
     quick, splits = args.quick, args.splits
@@ -481,7 +483,8 @@ def main():
     if args.covariates:
         cov = pd.concat([pd.read_parquet(f) for f in args.covariates])
         rs_cols = [c for c in cov.columns if c not in RS_SKIP
-                   and pd.api.types.is_numeric_dtype(cov[c])]
+                   and pd.api.types.is_numeric_dtype(cov[c])
+                   and (not args.features or c in args.features)]
         w = w.merge(cov[["segment_id"] + rs_cols], on="segment_id",
                     how="left").reset_index(drop=True)
         ARMS.update(RS_ARMS)
