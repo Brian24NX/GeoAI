@@ -55,17 +55,18 @@ search snippets and need checking when you read the paper.*
 - Mode calls were checked against the uploaders' own activity labels: 3% of
   "walk" traces are labeled bike or ski (`PROGRESS.md`).
 
-**What the data say so far** (12 regions, 237k walking segments, 1,503 walking outings;
-`travel-speed-gate1/results/t1_findings/`):
+**What the data say so far** (all 17 regions, 260k walking segments, 1,744
+walking outings; re-run 11 Oct, `travel-speed-gate1/results/t1_findings/`;
+the 12-region numbers were the same within rounding):
 
 | Finding | Number | Compared with |
 |---|---|---|
 | Peak walking speed | 4.0–4.4 km/h in every region | Tobler 6.0; Campbell 2022 ≈ 4.1 (verify) |
 | Curve shape | a rounded top (±11% grade) beats Tobler's sharp tent in cross-validation; Lorentz is close behind | Campbell uses Lorentz |
 | Slope sensitivity | ≈ 1.8 overall (tent fit); ≈ 2.5 beyond the rounded top; by region 1.1–2.4 | Tobler 3.5 |
-| Down/up speed ratio (same hiker, same trail) | 1.08 (3–10% grade) → 1.24 (> 30%) | Tobler 1.42 at every grade |
-| Variance after slope | 26% between outings (hiker, day), 74% within an outing (along the trail), 2% between regions | sets the ceiling for terrain models |
-| Fatigue | none detectable (−0.25% per hour) | |
+| Down/up speed ratio (same hiker, same trail; 2,413 pairs) | 1.07 (3–10% grade) → 1.24 (> 30%) | Tobler 1.42 at every grade |
+| Variance after slope | 26% between outings (hiker, day), 74% within an outing (along the trail), 2.4% between regions | sets the ceiling for terrain models |
+| Fatigue | none detectable (−0.2% per hour) | |
 
 **Two cautions already known.**
 - Olympic and the North Shore sit mostly on ~10 m elevation, not 1 m lidar.
@@ -87,7 +88,7 @@ against our refitted slope-only curve:
 | Slope curve (tent, rounded or Lorentz) | 0 (baseline) | 0 (baseline) |
 | + OSM tags, additive (Wood-style) | +1.1% | +0.2% |
 | + OSM tags, boosted trees | +1.0% | −0.9% |
-| Place memory: other hikers in the same 100 m cell (ceiling) | +1.4% | n/a |
+| Place memory: other hikers in the same 100 m cell (ceiling) | +1.3% | n/a |
 | Slope curve fitted on the region's own other hikers | n/a | +1.7% |
 | **Personal pace** (hiker's first km) | +7.9% | **+8.5%** |
 | Personal pace + tags | +9.1% | +9.1% |
@@ -174,8 +175,8 @@ unseen regions from airborne lidar and Earth-observation embeddings.*
 3. **Shape.** Tobler fails everywhere; a rounded (Lorentz-like) top fits
    better. This replicates Campbell, now across regions, and the curve
    parameters vary by region with terrain roughness (from T2).
-4. **Asymmetry.** On 2,200+ same-hiker pairs, the downhill advantage grows
-   from 8% to 24% with grade, never Tobler's constant 42%.
+4. **Asymmetry.** On 2,400+ same-hiker pairs, the downhill advantage grows
+   from 7% to 24% with grade, never Tobler's constant 42%.
 5. **(Stretch) Mode.** Bikes vs walkers: ~300 bike/ski traces, mostly in the
    Front Range, Tahoe and the Cascades.
 

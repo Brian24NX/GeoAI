@@ -114,7 +114,7 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
     their first km cuts whole-hike moving-time error from 13.7% to 9.9%
     (median) in unseen regions. 1 km stretch error drops from 17% to 14%.
   - The **ceiling** for place-based information (how fast *other* hikers
-    went in the same 100 m cell) is +1.4% within a region. Tags reach ~75%
+    went in the same 100 m cell) is +1.3% within a region. Tags reach ~75%
     of it there, but keep little of it in new regions. That gap is what
     remote sensing has to close.
   - Calibrated: 90% intervals cover 88% of held-out speeds.

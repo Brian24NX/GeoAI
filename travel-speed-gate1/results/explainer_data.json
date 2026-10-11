@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-11 13:53",
+ "generated_utc": "2026-10-11 14:54",
  "regions": [
   {
    "key": "wm",
@@ -4552,143 +4552,143 @@
  "findings": {
   "forms_cv": {
    "tobler": {
-    "rmse_log": 0.39246586130958055,
-    "mae_kmh": 1.0260353929247745,
+    "rmse_log": 0.3942072886695541,
+    "mae_kmh": 1.0399200642213482,
     "params_all": [
-     1.484115458810466,
-     1.963499991098501,
-     0.0403011137423806
+     1.492066576422938,
+     1.962773751979062,
+     0.0391825564677125
     ]
    },
    "smooth": {
-    "rmse_log": 0.3914529846058738,
-    "mae_kmh": 1.0211430301905684,
+    "rmse_log": 0.3931550315701665,
+    "mae_kmh": 1.0347908679443498,
     "params_all": [
-     1.4127025247589036,
-     2.5434517252680635,
-     0.041902234344269186,
-     0.10919489526687762
+     1.4207787454372023,
+     2.5709363718089455,
+     0.040989250726758436,
+     0.1116068359456662
     ]
    },
    "asym": {
-    "rmse_log": 0.3923697517614518,
-    "mae_kmh": 1.0253924017501255,
+    "rmse_log": 0.3940931107590928,
+    "mae_kmh": 1.0390300830900245,
     "params_all": [
-     1.4780387336378524,
-     2.080491144824522,
-     1.7472835990296134,
-     0.02784721078907542
+     1.4848492904556803,
+     2.100009709356786,
+     1.7136663549349211,
+     0.024654044200504655
     ]
    },
    "smooth_asym": {
-    "rmse_log": 0.39144105676707375,
-    "mae_kmh": 1.021077893164483,
+    "rmse_log": 0.393150200343751,
+    "mae_kmh": 1.0347337413667932,
     "params_all": [
-     1.412666284987584,
-     2.568601494356192,
-     2.4360478251108826,
-     0.03874930708153837,
-     0.10580146470992055
+     1.4207656534049786,
+     2.5991302677808865,
+     2.443483427415647,
+     0.03735690004510935,
+     0.10745534387110853
     ]
    },
    "lorentz": {
-    "rmse_log": 0.39188118473455447,
-    "mae_kmh": 1.0215116321280813,
+    "rmse_log": 0.3935562816769291,
+    "mae_kmh": 1.03518448378912,
     "params_all": [
-     1.396264473334607,
-     0.04320701920856578,
-     0.36102041982802163
+     1.4053118015245831,
+     0.04229844679561746,
+     0.35949324330002336
     ]
    }
   },
   "best_form": "smooth_asym",
   "variance_split_outing": {
-   "between_outings_var": 0.03904097598509089,
-   "within_outing_var": 0.11374325491618549,
-   "share_between_pct": 25.55301404784225,
-   "outings": 1503,
-   "segments": 237163
+   "between_outings_var": 0.04010102187126565,
+   "within_outing_var": 0.11403132341362997,
+   "share_between_pct": 26.017265744671306,
+   "outings": 1744,
+   "segments": 260282
   },
-  "variance_between_regions_pct_of_total": 1.9978934268966115,
+  "variance_between_regions_pct_of_total": 2.3534089659020836,
   "fatigue": {
-   "speed_change_pct_per_hour": -0.24526746683218859,
+   "speed_change_pct_per_hour": -0.21209068492402672,
    "by_hour": {
     "(0, 1]": [
-     62610,
-     3.2745126632137467
+     72524,
+     3.004780645088312
     ],
     "(1, 2]": [
-     38345,
-     -3.1126242976599827
+     43665,
+     -3.0554105301473955
     ],
     "(2, 3]": [
-     27018,
-     -2.247878097998479
+     30147,
+     -2.285702522697808
     ],
     "(3, 4]": [
-     21852,
-     -1.11019166981432
+     23751,
+     -0.9369444668645532
     ],
     "(4, 5]": [
-     17354,
-     0.7309737301458785
+     18513,
+     0.7659204553882804
     ],
     "(5, 6]": [
-     12626,
-     1.8795064022348429
+     13090,
+     2.0036692152471725
     ],
     "(6, 8]": [
-     13789,
-     -0.3499346459800434
+     14444,
+     -0.199772387440722
     ],
     "(8, 10]": [
-     5571,
-     0.14340351797363926
+     5781,
+     0.2724036134418073
     ]
    }
   },
   "asymmetry": {
-   "pairs": 2209,
-   "outings": 901,
+   "pairs": 2413,
+   "outings": 1009,
    "all": [
-    1.1242068863703225,
+    1.1230744844340363,
     [
-     1.1096503723683042,
-     1.1346645085523064
+     1.1084083765361032,
+     1.133043334186251
     ]
    ],
    "by_grade": {
     "0.03-0.10": [
-     1.0750837061213183,
+     1.072286600047167,
      [
-      1.0609459547898048,
-      1.087575708417449
+      1.0595498028770876,
+      1.082993410040741
      ],
-     1013
+     1127
     ],
     "0.10-0.20": [
-     1.1669879756723933,
+     1.1668335891774506,
      [
-      1.146229643069317,
-      1.1963540319592068
+      1.1415384689027428,
+      1.1970724118689775
      ],
-     892
+     971
     ],
     "0.20-0.30": [
-     1.1991250848071635,
+     1.2018600475052346,
      [
-      1.139321845900883,
-      1.2328549400990028
+      1.1446345474607909,
+      1.2374014416385037
      ],
-     228
+     237
     ],
     "0.30-1.00": [
      1.2422708408726568,
      [
-      1.1739746233575812,
-      1.2886194982553625
+      1.176378824333849,
+      1.2884887603915312
      ],
-     76
+     78
     ]
    },
    "by_region": {
@@ -4696,9 +4696,13 @@
      1.0824699018925714,
      142
     ],
+    "bayarea": [
+     1.1085408914633677,
+     64
+    ],
     "cascades": [
-     1.139454345049749,
-     889
+     1.1407825309118,
+     892
     ],
     "catskills": [
      1.0458772109733592,
@@ -4707,6 +4711,10 @@
     "frontrange": [
      1.1467908406245682,
      147
+    ],
+    "gorge": [
+     1.130630466650032,
+     23
     ],
     "greenmtn": [
      1.1101074433873879,
@@ -4720,9 +4728,17 @@
      1.07687493042158,
      115
     ],
+    "pisgah": [
+     1.0108072974051403,
+     50
+    ],
     "sangabriel": [
      1.1971534127821326,
      109
+    ],
+    "shenandoah": [
+     1.0657660954451038,
+     29
     ],
     "smokies": [
      1.044465287246742,
@@ -4731,6 +4747,10 @@
     "tahoe": [
      1.079227719299254,
      97
+    ],
+    "wasatch": [
+     1.2431189269703489,
+     35
     ],
     "wm": [
      1.15991164579966,
@@ -4742,19 +4762,24 @@
     ]
    }
   },
-  "walking_segments": 237163,
-  "walking_outings": 1503,
+  "walking_segments": 260282,
+  "walking_outings": 1744,
   "regions": [
    "adk",
+   "bayarea",
    "cascades",
    "catskills",
    "frontrange",
+   "gorge",
    "greenmtn",
    "northshore",
    "olympic",
+   "pisgah",
    "sangabriel",
+   "shenandoah",
    "smokies",
    "tahoe",
+   "wasatch",
    "wm",
    "yosemite"
   ]
@@ -4769,20 +4794,84 @@
    "median_resolution_m": 1.0
   },
   {
+   "region": "adk",
+   "segments_sampled": 300,
+   "share_1m_pct": 99.3,
+   "share_le_3m_pct": 99.3,
+   "share_10m_or_coarser_pct": 0.7,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "catskills",
+   "segments_sampled": 300,
+   "share_1m_pct": 100.0,
+   "share_le_3m_pct": 100.0,
+   "share_10m_or_coarser_pct": 0.0,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "greenmtn",
+   "segments_sampled": 300,
+   "share_1m_pct": 100.0,
+   "share_le_3m_pct": 100.0,
+   "share_10m_or_coarser_pct": 0.0,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "shenandoah",
+   "segments_sampled": 300,
+   "share_1m_pct": 100.0,
+   "share_le_3m_pct": 100.0,
+   "share_10m_or_coarser_pct": 0.0,
+   "median_resolution_m": 1.0
+  },
+  {
    "region": "smokies",
    "segments_sampled": 300,
-   "share_1m_pct": 94.0,
+   "share_1m_pct": 88.3,
    "share_le_3m_pct": 99.7,
    "share_10m_or_coarser_pct": 0.3,
    "median_resolution_m": 1.0
   },
   {
+   "region": "pisgah",
+   "segments_sampled": 300,
+   "share_1m_pct": 90.3,
+   "share_le_3m_pct": 100.0,
+   "share_10m_or_coarser_pct": 0.0,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "frontrange",
+   "segments_sampled": 300,
+   "share_1m_pct": 89.7,
+   "share_le_3m_pct": 89.7,
+   "share_10m_or_coarser_pct": 10.3,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "wasatch",
+   "segments_sampled": 300,
+   "share_1m_pct": 87.7,
+   "share_le_3m_pct": 87.7,
+   "share_10m_or_coarser_pct": 12.3,
+   "median_resolution_m": 1.0
+  },
+  {
    "region": "cascades",
    "segments_sampled": 300,
-   "share_1m_pct": 87.0,
+   "share_1m_pct": 83.0,
+   "share_le_3m_pct": 93.7,
+   "share_10m_or_coarser_pct": 6.3,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "gorge",
+   "segments_sampled": 300,
+   "share_1m_pct": 21.3,
    "share_le_3m_pct": 94.0,
    "share_10m_or_coarser_pct": 6.0,
-   "median_resolution_m": 1.0
+   "median_resolution_m": 3.4
   },
   {
    "region": "olympic",
@@ -4793,14 +4882,1005 @@
    "median_resolution_m": 10.3
   },
   {
-   "region": "tahoe",
+   "region": "bayarea",
    "segments_sampled": 300,
-   "share_1m_pct": 97.0,
+   "share_1m_pct": 97.7,
    "share_le_3m_pct": 100.0,
    "share_10m_or_coarser_pct": 0.0,
    "median_resolution_m": 1.0
+  },
+  {
+   "region": "sangabriel",
+   "segments_sampled": 300,
+   "share_1m_pct": 100.0,
+   "share_le_3m_pct": 100.0,
+   "share_10m_or_coarser_pct": 0.0,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "yosemite",
+   "segments_sampled": 300,
+   "share_1m_pct": 70.0,
+   "share_le_3m_pct": 70.0,
+   "share_10m_or_coarser_pct": 30.0,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "tahoe",
+   "segments_sampled": 300,
+   "share_1m_pct": 95.3,
+   "share_le_3m_pct": 100.0,
+   "share_10m_or_coarser_pct": 0.0,
+   "median_resolution_m": 1.0
+  },
+  {
+   "region": "northshore",
+   "segments_sampled": 300,
+   "share_1m_pct": 0.0,
+   "share_le_3m_pct": 0.0,
+   "share_10m_or_coarser_pct": 100.0,
+   "median_resolution_m": 10.3
   }
  ],
+ "harness": [
+  {
+   "split": "outing5",
+   "arm": "tobler",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": -0.0671,
+   "crps_log": 0.2389,
+   "crps_skill_vs_slope_pct": -13.814,
+   "cov50": 0.4827,
+   "cov90": 0.8793,
+   "stretch_ape_median": 0.1695,
+   "time_ape_median": 0.1453,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "tobler",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": -0.0267,
+   "crps_log": 0.2359,
+   "crps_skill_vs_slope_pct": -14.2408,
+   "cov50": 0.4833,
+   "cov90": 0.8818,
+   "stretch_ape_median": 0.1702,
+   "time_ape_median": 0.1461,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "tobler",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": -0.0594,
+   "crps_log": 0.2358,
+   "crps_skill_vs_slope_pct": -14.0058,
+   "cov50": 0.4859,
+   "cov90": 0.8836,
+   "stretch_ape_median": 0.1677,
+   "time_ape_median": 0.1422,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "tobler+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1279,
+   "crps_log": 0.2128,
+   "crps_skill_vs_slope_pct": -2.907,
+   "cov50": 0.4959,
+   "cov90": 0.8912,
+   "stretch_ape_median": 0.1573,
+   "time_ape_median": 0.1107,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "tobler_refit",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1691,
+   "crps_log": 0.2109,
+   "crps_skill_vs_slope_pct": -0.4535,
+   "cov50": 0.4761,
+   "cov90": 0.8796,
+   "stretch_ape_median": 0.1747,
+   "time_ape_median": 0.1357,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "tobler_refit",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2044,
+   "crps_log": 0.2075,
+   "crps_skill_vs_slope_pct": -0.5064,
+   "cov50": 0.4812,
+   "cov90": 0.8828,
+   "stretch_ape_median": 0.1772,
+   "time_ape_median": 0.1393,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "tobler_refit",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1783,
+   "crps_log": 0.2078,
+   "crps_skill_vs_slope_pct": -0.4555,
+   "cov50": 0.4804,
+   "cov90": 0.8835,
+   "stretch_ape_median": 0.1731,
+   "time_ape_median": 0.1391,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "tobler_refit+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.283,
+   "crps_log": 0.1917,
+   "crps_skill_vs_slope_pct": 7.2984,
+   "cov50": 0.4867,
+   "cov90": 0.8914,
+   "stretch_ape_median": 0.1414,
+   "time_ape_median": 0.099,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "slope_curve",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1735,
+   "crps_log": 0.2099,
+   "crps_skill_vs_slope_pct": 0.0,
+   "cov50": 0.4752,
+   "cov90": 0.8797,
+   "stretch_ape_median": 0.1728,
+   "time_ape_median": 0.1347,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "slope_curve",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2095,
+   "crps_log": 0.2065,
+   "crps_skill_vs_slope_pct": 0.0,
+   "cov50": 0.4817,
+   "cov90": 0.8826,
+   "stretch_ape_median": 0.1756,
+   "time_ape_median": 0.1398,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "slope_curve",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1828,
+   "crps_log": 0.2068,
+   "crps_skill_vs_slope_pct": 0.0,
+   "cov50": 0.4792,
+   "cov90": 0.8837,
+   "stretch_ape_median": 0.171,
+   "time_ape_median": 0.1361,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "slope_curve+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.2888,
+   "crps_log": 0.1904,
+   "crps_skill_vs_slope_pct": 7.9385,
+   "cov50": 0.4818,
+   "cov90": 0.8913,
+   "stretch_ape_median": 0.1396,
+   "time_ape_median": 0.0979,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "lorentz_refit",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1718,
+   "crps_log": 0.21,
+   "crps_skill_vs_slope_pct": -0.0593,
+   "cov50": 0.4766,
+   "cov90": 0.8798,
+   "stretch_ape_median": 0.1725,
+   "time_ape_median": 0.1352,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "lorentz_refit",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2076,
+   "crps_log": 0.2066,
+   "crps_skill_vs_slope_pct": -0.0628,
+   "cov50": 0.4828,
+   "cov90": 0.8826,
+   "stretch_ape_median": 0.175,
+   "time_ape_median": 0.1411,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "lorentz_refit",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1809,
+   "crps_log": 0.207,
+   "crps_skill_vs_slope_pct": -0.0621,
+   "cov50": 0.4804,
+   "cov90": 0.8839,
+   "stretch_ape_median": 0.1712,
+   "time_ape_median": 0.1357,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "lorentz_refit+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.2866,
+   "crps_log": 0.1906,
+   "crps_skill_vs_slope_pct": 7.862,
+   "cov50": 0.4807,
+   "cov90": 0.8913,
+   "stretch_ape_median": 0.1397,
+   "time_ape_median": 0.0962,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "lin_tags",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1916,
+   "crps_log": 0.2077,
+   "crps_skill_vs_slope_pct": 1.0562,
+   "cov50": 0.4806,
+   "cov90": 0.8806,
+   "stretch_ape_median": 0.168,
+   "time_ape_median": 0.135,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "lin_tags",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2323,
+   "crps_log": 0.2037,
+   "crps_skill_vs_slope_pct": 1.3169,
+   "cov50": 0.4886,
+   "cov90": 0.8832,
+   "stretch_ape_median": 0.1701,
+   "time_ape_median": 0.137,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "lin_tags",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.2012,
+   "crps_log": 0.2046,
+   "crps_skill_vs_slope_pct": 1.0634,
+   "cov50": 0.4842,
+   "cov90": 0.8845,
+   "stretch_ape_median": 0.1672,
+   "time_ape_median": 0.1384,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "lin_tags+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.3037,
+   "crps_log": 0.188,
+   "crps_skill_vs_slope_pct": 9.1213,
+   "cov50": 0.4832,
+   "cov90": 0.8912,
+   "stretch_ape_median": 0.1312,
+   "time_ape_median": 0.0947,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_slope",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1785,
+   "crps_log": 0.21,
+   "crps_skill_vs_slope_pct": -0.0469,
+   "cov50": 0.4757,
+   "cov90": 0.8787,
+   "stretch_ape_median": 0.1751,
+   "time_ape_median": 0.1347,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_slope",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2137,
+   "crps_log": 0.2066,
+   "crps_skill_vs_slope_pct": -0.081,
+   "cov50": 0.4816,
+   "cov90": 0.8818,
+   "stretch_ape_median": 0.1776,
+   "time_ape_median": 0.1423,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_slope",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.187,
+   "crps_log": 0.207,
+   "crps_skill_vs_slope_pct": -0.07,
+   "cov50": 0.4797,
+   "cov90": 0.8826,
+   "stretch_ape_median": 0.174,
+   "time_ape_median": 0.1393,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_slope+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.2905,
+   "crps_log": 0.1906,
+   "crps_skill_vs_slope_pct": 7.8336,
+   "cov50": 0.4792,
+   "cov90": 0.8907,
+   "stretch_ape_median": 0.1429,
+   "time_ape_median": 0.0996,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_tags",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1977,
+   "crps_log": 0.2078,
+   "crps_skill_vs_slope_pct": 0.9995,
+   "cov50": 0.4792,
+   "cov90": 0.8811,
+   "stretch_ape_median": 0.1723,
+   "time_ape_median": 0.1348,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_tags",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2372,
+   "crps_log": 0.204,
+   "crps_skill_vs_slope_pct": 1.204,
+   "cov50": 0.4853,
+   "cov90": 0.8839,
+   "stretch_ape_median": 0.1731,
+   "time_ape_median": 0.14,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_tags",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.2073,
+   "crps_log": 0.2047,
+   "crps_skill_vs_slope_pct": 1.0289,
+   "cov50": 0.4829,
+   "cov90": 0.8854,
+   "stretch_ape_median": 0.1719,
+   "time_ape_median": 0.1371,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "gbm_tags+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.3088,
+   "crps_log": 0.1881,
+   "crps_skill_vs_slope_pct": 9.0654,
+   "cov50": 0.4781,
+   "cov90": 0.8934,
+   "stretch_ape_median": 0.1354,
+   "time_ape_median": 0.0995,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "place_memory",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1945,
+   "crps_log": 0.2071,
+   "crps_skill_vs_slope_pct": 1.3395,
+   "cov50": 0.4762,
+   "cov90": 0.8804,
+   "stretch_ape_median": 0.1688,
+   "time_ape_median": 0.1323,
+   "hikes": 1391
+  },
+  {
+   "split": "outing5",
+   "arm": "place_memory",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2349,
+   "crps_log": 0.2026,
+   "crps_skill_vs_slope_pct": 1.8513,
+   "cov50": 0.4859,
+   "cov90": 0.8847,
+   "stretch_ape_median": 0.1691,
+   "time_ape_median": 0.1414,
+   "hikes": 739
+  },
+  {
+   "split": "outing5",
+   "arm": "place_memory",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.2051,
+   "crps_log": 0.204,
+   "crps_skill_vs_slope_pct": 1.3751,
+   "cov50": 0.4799,
+   "cov90": 0.8844,
+   "stretch_ape_median": 0.1676,
+   "time_ape_median": 0.1376,
+   "hikes": 1199
+  },
+  {
+   "split": "outing5",
+   "arm": "place_memory+me",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.317,
+   "crps_log": 0.1863,
+   "crps_skill_vs_slope_pct": 9.9263,
+   "cov50": 0.4811,
+   "cov90": 0.8907,
+   "stretch_ape_median": 0.1308,
+   "time_ape_median": 0.0954,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "tobler",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": -0.0671,
+   "crps_log": 0.2388,
+   "crps_skill_vs_slope_pct": -13.2184,
+   "cov50": 0.4771,
+   "cov90": 0.8803,
+   "stretch_ape_median": 0.169,
+   "time_ape_median": 0.1419,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "tobler",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": -0.0267,
+   "crps_log": 0.2358,
+   "crps_skill_vs_slope_pct": -13.8829,
+   "cov50": 0.4777,
+   "cov90": 0.8815,
+   "stretch_ape_median": 0.1705,
+   "time_ape_median": 0.1424,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "tobler",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": -0.0594,
+   "crps_log": 0.2357,
+   "crps_skill_vs_slope_pct": -13.3406,
+   "cov50": 0.4802,
+   "cov90": 0.8845,
+   "stretch_ape_median": 0.1672,
+   "time_ape_median": 0.14,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "tobler+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.1276,
+   "crps_log": 0.2122,
+   "crps_skill_vs_slope_pct": -2.0596,
+   "cov50": 0.4875,
+   "cov90": 0.8871,
+   "stretch_ape_median": 0.1568,
+   "time_ape_median": 0.1068,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "tobler_refit",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1655,
+   "crps_log": 0.2119,
+   "crps_skill_vs_slope_pct": -0.4783,
+   "cov50": 0.4805,
+   "cov90": 0.8769,
+   "stretch_ape_median": 0.175,
+   "time_ape_median": 0.1353,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "tobler_refit",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2015,
+   "crps_log": 0.2081,
+   "crps_skill_vs_slope_pct": -0.5193,
+   "cov50": 0.4847,
+   "cov90": 0.8805,
+   "stretch_ape_median": 0.1783,
+   "time_ape_median": 0.1433,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "tobler_refit",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1742,
+   "crps_log": 0.209,
+   "crps_skill_vs_slope_pct": -0.4918,
+   "cov50": 0.4841,
+   "cov90": 0.8802,
+   "stretch_ape_median": 0.1739,
+   "time_ape_median": 0.1374,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "tobler_refit+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.2799,
+   "crps_log": 0.1917,
+   "crps_skill_vs_slope_pct": 7.7927,
+   "cov50": 0.4901,
+   "cov90": 0.8849,
+   "stretch_ape_median": 0.1423,
+   "time_ape_median": 0.0987,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "slope_curve",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.17,
+   "crps_log": 0.2109,
+   "crps_skill_vs_slope_pct": 0.0,
+   "cov50": 0.479,
+   "cov90": 0.8766,
+   "stretch_ape_median": 0.1731,
+   "time_ape_median": 0.1359,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "slope_curve",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2066,
+   "crps_log": 0.207,
+   "crps_skill_vs_slope_pct": 0.0,
+   "cov50": 0.4836,
+   "cov90": 0.88,
+   "stretch_ape_median": 0.1766,
+   "time_ape_median": 0.1433,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "slope_curve",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1789,
+   "crps_log": 0.2079,
+   "crps_skill_vs_slope_pct": 0.0,
+   "cov50": 0.4827,
+   "cov90": 0.8801,
+   "stretch_ape_median": 0.1718,
+   "time_ape_median": 0.1368,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "slope_curve+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.2863,
+   "crps_log": 0.1903,
+   "crps_skill_vs_slope_pct": 8.4879,
+   "cov50": 0.489,
+   "cov90": 0.8847,
+   "stretch_ape_median": 0.1387,
+   "time_ape_median": 0.0988,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "lorentz_refit",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.169,
+   "crps_log": 0.2109,
+   "crps_skill_vs_slope_pct": 0.0258,
+   "cov50": 0.4792,
+   "cov90": 0.8767,
+   "stretch_ape_median": 0.1728,
+   "time_ape_median": 0.1362,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "lorentz_refit",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2054,
+   "crps_log": 0.207,
+   "crps_skill_vs_slope_pct": 0.0125,
+   "cov50": 0.4838,
+   "cov90": 0.88,
+   "stretch_ape_median": 0.176,
+   "time_ape_median": 0.1426,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "lorentz_refit",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1778,
+   "crps_log": 0.2079,
+   "crps_skill_vs_slope_pct": 0.0312,
+   "cov50": 0.4826,
+   "cov90": 0.8802,
+   "stretch_ape_median": 0.1713,
+   "time_ape_median": 0.1371,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "lorentz_refit+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.2846,
+   "crps_log": 0.1904,
+   "crps_skill_vs_slope_pct": 8.4373,
+   "cov50": 0.4876,
+   "cov90": 0.8846,
+   "stretch_ape_median": 0.1387,
+   "time_ape_median": 0.099,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "lin_tags",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1756,
+   "crps_log": 0.2105,
+   "crps_skill_vs_slope_pct": 0.2012,
+   "cov50": 0.4769,
+   "cov90": 0.8737,
+   "stretch_ape_median": 0.1704,
+   "time_ape_median": 0.1377,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "lin_tags",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.217,
+   "crps_log": 0.2059,
+   "crps_skill_vs_slope_pct": 0.5433,
+   "cov50": 0.4856,
+   "cov90": 0.8769,
+   "stretch_ape_median": 0.171,
+   "time_ape_median": 0.1413,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "lin_tags",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1845,
+   "crps_log": 0.2075,
+   "crps_skill_vs_slope_pct": 0.2026,
+   "cov50": 0.48,
+   "cov90": 0.8773,
+   "stretch_ape_median": 0.1698,
+   "time_ape_median": 0.1391,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "lin_tags+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.2948,
+   "crps_log": 0.189,
+   "crps_skill_vs_slope_pct": 9.1337,
+   "cov50": 0.4886,
+   "cov90": 0.883,
+   "stretch_ape_median": 0.1359,
+   "time_ape_median": 0.0974,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_slope",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1736,
+   "crps_log": 0.2111,
+   "crps_skill_vs_slope_pct": -0.0874,
+   "cov50": 0.479,
+   "cov90": 0.876,
+   "stretch_ape_median": 0.1759,
+   "time_ape_median": 0.1384,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_slope",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2098,
+   "crps_log": 0.2074,
+   "crps_skill_vs_slope_pct": -0.1509,
+   "cov50": 0.4835,
+   "cov90": 0.8799,
+   "stretch_ape_median": 0.1782,
+   "time_ape_median": 0.1441,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_slope",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1818,
+   "crps_log": 0.2082,
+   "crps_skill_vs_slope_pct": -0.1232,
+   "cov50": 0.4823,
+   "cov90": 0.8794,
+   "stretch_ape_median": 0.1747,
+   "time_ape_median": 0.1375,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_slope+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.2874,
+   "crps_log": 0.1906,
+   "crps_skill_vs_slope_pct": 8.3251,
+   "cov50": 0.488,
+   "cov90": 0.8849,
+   "stretch_ape_median": 0.1428,
+   "time_ape_median": 0.1006,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_tags",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1659,
+   "crps_log": 0.2127,
+   "crps_skill_vs_slope_pct": -0.8607,
+   "cov50": 0.4726,
+   "cov90": 0.8718,
+   "stretch_ape_median": 0.1804,
+   "time_ape_median": 0.1453,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_tags",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2015,
+   "crps_log": 0.2092,
+   "crps_skill_vs_slope_pct": -1.0435,
+   "cov50": 0.4774,
+   "cov90": 0.8732,
+   "stretch_ape_median": 0.1814,
+   "time_ape_median": 0.1466,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_tags",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1732,
+   "crps_log": 0.21,
+   "crps_skill_vs_slope_pct": -0.9642,
+   "cov50": 0.4752,
+   "cov90": 0.8752,
+   "stretch_ape_median": 0.1802,
+   "time_ape_median": 0.1439,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "gbm_tags+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.2888,
+   "crps_log": 0.1909,
+   "crps_skill_vs_slope_pct": 8.2196,
+   "cov50": 0.4831,
+   "cov90": 0.8809,
+   "stretch_ape_median": 0.1407,
+   "time_ape_median": 0.101,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "place_memory",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.17,
+   "crps_log": 0.2111,
+   "crps_skill_vs_slope_pct": -0.086,
+   "cov50": 0.468,
+   "cov90": 0.8729,
+   "stretch_ape_median": 0.1731,
+   "time_ape_median": 0.136,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "place_memory",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2066,
+   "crps_log": 0.2072,
+   "crps_skill_vs_slope_pct": -0.0606,
+   "cov50": 0.4731,
+   "cov90": 0.8766,
+   "stretch_ape_median": 0.1763,
+   "time_ape_median": 0.143,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "place_memory",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1789,
+   "crps_log": 0.2081,
+   "crps_skill_vs_slope_pct": -0.0789,
+   "cov50": 0.4715,
+   "cov90": 0.8764,
+   "stretch_ape_median": 0.172,
+   "time_ape_median": 0.1367,
+   "hikes": 1199
+  },
+  {
+   "split": "loro",
+   "arm": "place_memory+me",
+   "subset": "rest",
+   "segments": 223122,
+   "r2_log": 0.2837,
+   "crps_log": 0.1905,
+   "crps_skill_vs_slope_pct": 8.3762,
+   "cov50": 0.48,
+   "cov90": 0.8795,
+   "stretch_ape_median": 0.1344,
+   "time_ape_median": 0.0933,
+   "hikes": 1198
+  },
+  {
+   "split": "loro",
+   "arm": "slope_curve_local",
+   "subset": "all",
+   "segments": 260282,
+   "r2_log": 0.1869,
+   "crps_log": 0.2077,
+   "crps_skill_vs_slope_pct": 1.5175,
+   "cov50": 0.4852,
+   "cov90": 0.8873,
+   "stretch_ape_median": 0.1676,
+   "time_ape_median": 0.1306,
+   "hikes": 1391
+  },
+  {
+   "split": "loro",
+   "arm": "slope_curve_local",
+   "subset": "tagged",
+   "segments": 128445,
+   "r2_log": 0.2277,
+   "crps_log": 0.2039,
+   "crps_skill_vs_slope_pct": 1.5049,
+   "cov50": 0.494,
+   "cov90": 0.8888,
+   "stretch_ape_median": 0.1703,
+   "time_ape_median": 0.1377,
+   "hikes": 739
+  },
+  {
+   "split": "loro",
+   "arm": "slope_curve_local",
+   "subset": "rest",
+   "segments": 223164,
+   "r2_log": 0.1978,
+   "crps_log": 0.2045,
+   "crps_skill_vs_slope_pct": 1.6791,
+   "cov50": 0.4887,
+   "cov90": 0.8913,
+   "stretch_ape_median": 0.167,
+   "time_ape_median": 0.1317,
+   "hikes": 1199
+  }
+ ],
+ "mode_check": {
+  "hiking_traces_with_original_file": 1114,
+  "labeled": 246,
+  "labeled_by": {
+   "type": 175,
+   "name": 71
+  },
+  "labels": {
+   "hike": 122,
+   "bike": 80,
+   "run": 38,
+   "ski": 6
+  },
+  "hike_labels_called_walk_pct": 92.6,
+  "bike_labels_called_bike_ski_pct": 82.5,
+  "bike_labels_called_walk_pct": 3.8,
+  "called_walk_labeled_bike_or_ski_pct": 3.3,
+  "called_walk_n_labeled": 120
+ },
  "wm_stop_rules": [
   {
    "rule": "window60_10",

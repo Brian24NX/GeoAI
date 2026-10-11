@@ -95,6 +95,19 @@ def main():
     q = Path("results/t1_dem_quality.csv")
     if q.exists():
         out["dem_quality"] = pd.read_csv(q).round(1).to_dict("records")
+    h = Path("results/t3_harness/metrics.csv")
+    if h.exists():                       # the first test (t3_harness.py)
+        m = pd.read_csv(h)
+        m = m[m.split.isin(["outing5", "loro"])]
+        out["harness"] = m[["split", "arm", "subset", "segments", "r2_log",
+                            "crps_log", "crps_skill_vs_slope_pct", "cov50",
+                            "cov90", "stretch_ape_median",
+                            "time_ape_median", "hikes"]] \
+            .round(4).to_dict("records")
+    mc = Path("results/t1_mode_check/summary.json")
+    if mc.exists():
+        out["mode_check"] = {k: v for k, v in json.loads(mc.read_text())
+                             .items() if k != "strava_numeric_types_vs_names"}
     wm = regions.data_dir("wm")
     sens = wm / "stop_rule_sensitivity.csv"
     if sens.exists():

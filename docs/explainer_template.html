@@ -128,7 +128,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
 </header>
 
 <nav class="toc"><div class="wrap">
-  <a href="#tldr">1 · One minute</a><a href="#why">2 · Why it matters</a><a href="#basics">3 · The basics</a><a href="#design">4 · Research design</a><a href="#plan">5 · The plan</a><a href="#story">6 · What we did</a><a href="#pipeline">7 · The pipeline</a><a href="#dataset">8 · The dataset</a><a href="#findings">9 · Findings</a><a href="#fit">10 · Where we fit</a><a href="#next">11 · What's next</a><a href="#you">12 · Your to-do</a><a href="#glossary">13 · Glossary</a>
+  <a href="#tldr">1 · One minute</a><a href="#why">2 · Why it matters</a><a href="#basics">3 · The basics</a><a href="#design">4 · Research design</a><a href="#plan">5 · The plan</a><a href="#story">6 · What we did</a><a href="#pipeline">7 · The pipeline</a><a href="#dataset">8 · The dataset</a><a href="#findings">9 · Findings</a><a href="#test">10 · First test</a><a href="#fit">11 · Where we fit</a><a href="#next">12 · What's next</a><a href="#you">13 · Your to-do</a><a href="#glossary">14 · Glossary</a>
 </div></nav>
 
 <main class="wrap">
@@ -325,9 +325,9 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
   <h2>5 · The plan, and where we are on it</h2>
   <p class="sub">The semester plan defines four deliverables (T1–T4) and two "gates", checkpoints where the project can change course.</p>
   <div class="grid g4">
-    <div class="card"><span class="pill done">T1 · nearly done</span><h4 style="margin-top:6px">Trajectory dataset</h4><p>Clean, matched, segmented hikes with speed, slope, direction, mode, tags.</p></div>
+    <div class="card"><span class="pill done">T1 · done (17 regions)</span><h4 style="margin-top:6px">Trajectory dataset</h4><p>Clean, matched, segmented hikes with speed, slope, direction, mode, tags.</p></div>
     <div class="card"><span class="pill now">T2 · next</span><h4 style="margin-top:6px">Remote-sensing covariates</h4><p>For every segment: lidar terrain, roughness, vegetation, canopy, satellite embeddings.</p></div>
-    <div class="card"><span class="pill next">T3</span><h4 style="margin-top:6px">Four-arm comparison</h4><p>Tobler vs tags vs remote sensing vs both, tested on held-out regions. <b>The headline experiment.</b></p></div>
+    <div class="card"><span class="pill next">T3</span><h4 style="margin-top:6px">Four-arm comparison</h4><p>Tobler vs tags vs remote sensing vs both, tested on held-out regions. <b>The headline experiment.</b> Its test harness already runs (section 10).</p></div>
     <div class="card"><span class="pill next">T4</span><h4 style="margin-top:6px">Curves &amp; asymmetry</h4><p>Slope-speed curves, up vs down, by trail type and mode. First looks already done.</p></div>
   </div>
   <figure class="chart" style="margin-top:16px"><svg id="gantt" viewBox="0 0 960 330" width="100%" role="img" aria-label="Project timeline"></svg>
@@ -374,10 +374,12 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
   <div class="grid g3">
     <div class="card"><h4>✅ Map-matching</h4><p>~96% of GPS points match a trail; the 12 worst hikes were inspected by eye. Failures are correct non-matches.</p></div>
     <div class="card"><h4>✅ Stop rule</h4><p>Four different stop rules remove 21–30% of the time, yet the peak speed moves by only ~0.1 km/h.</p></div>
-    <div class="card"><h4>✅ Elevation</h4><p>1 m and 5 m elevation give the same slopes (median difference 0.3 points of grade). Most regions sit on 1 m lidar; Olympic and the North Shore don't (flagged).</p></div>
+    <div class="card"><h4>✅ Elevation</h4><p>1 m and 5 m elevation give the same slopes (median difference 0.3 points of grade). 1 m lidar lies under ≥ 83% of walked trail in 13 of 17 regions; Yosemite (70%), Olympic (29%), Columbia Gorge (21%, mostly 3 m) and the North Shore (0%) are flagged.</p></div>
+    <div class="card"><h4>✅ Travel mode</h4><p>Checked against 246 hikes whose own GPS app named the activity ("hiking", "Afternoon Ride"…): 93% of labeled hikes were called walking, and only 3% of our "walkers" were labeled bike or ski.</p></div>
     <div class="card"><h4>✅ Duplicates &amp; group hikes</h4><p>Re-uploads of the same hike are removed. Two phones on one hike count as one "outing", so we don't double-count people.</p></div>
     <div class="card"><h4>✅ Bad dates</h4><p>A GPS clock bug put one 2007 hike in 1987. Flagged, so seasons aren't mislabeled.</p></div>
-    <div class="card"><h4>⚠️ Known limits</h4><p>OSM uploaders are enthusiasts, not average hikers. Some regions use lab data only so far. The API can't reach uploads older than ~2009 in the busiest tiles.</p></div>
+    <div class="card"><h4>⚠️ Known limits</h4><p>OSM uploaders are enthusiasts, not average hikers. 5 city regions use lab data only until their full downloads land. The API can't reach the oldest uploads in the busiest tiles.</p></div>
+    <div class="card"><h4>📦 One combined dataset</h4><p>All regions in one table: 627k segments of hiking traces, of which 261k are walking trail segments (the analysis set), with a data card explaining every column. It stays on the lab cluster because it contains user names.</p></div>
   </div>
 </section>
 
@@ -399,7 +401,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
       </ul>
       Real hikers peak at about <b><span data-n="pooled.v0"></span> km/h</b> near −5%, not 6. The top of the curve is <b>rounded</b>, not a sharp point. On steep grades the data and Tobler roughly agree. Hover to read values.</figcaption>
   </figure>
-  <div class="callout warn"><b>Honest context:</b> Campbell et al. (2019, 2022) found the same thing with Strava and AllTrails data from Utah and California (~4.1 km/h, a rounded "Lorentz" curve). So Finding 1 <b>confirms</b> earlier work, now across many regions. It's supporting context, not the paper's main claim (section 10 explains).</div>
+  <div class="callout warn"><b>Honest context:</b> Campbell et al. (2019, 2022) found the same thing with Strava and AllTrails data from Utah and California (~4.1 km/h, a rounded "Lorentz" curve). So Finding 1 <b>confirms</b> earlier work, now across many regions. It's supporting context, not the paper's main claim (sections 10 and 11 explain).</div>
 
   <h3>Finding 2 · Regions differ, and that's what remote sensing has to explain</h3>
   <figure class="chart"><svg id="regionsFit" viewBox="0 0 960 520" width="100%" role="img" aria-label="Peak speed and slope sensitivity by region"></svg>
@@ -414,19 +416,55 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
     <div>
       <h3>Finding 4 · Who you are vs where you walk</h3>
       <figure class="chart"><svg id="variance" viewBox="0 0 460 320" width="100%" role="img" aria-label="Variance decomposition"></svg>
-      <figcaption>After accounting for slope, about <b>a quarter</b> of the remaining speed variation is the hiker and the day (fitness, pack, weather). <b>Three quarters</b> varies along the trail within a hike. That's the part terrain and vegetation data could explain. Only ~2% is "which region".</figcaption></figure>
+      <figcaption>After accounting for slope, about <b>a quarter</b> of the remaining speed variation is the hiker and the day (fitness, pack, weather). <b>Three quarters</b> varies along the trail within a hike. That is the most terrain and vegetation data could explain, and section 10 shows much of it is GPS noise and the moment, not the place. Only ~2% is "which region".</figcaption></figure>
     </div>
   </div>
   <div class="grid g3">
     <div class="card"><h4>Finding 5 · No fatigue signal</h4><p>Within a hike, speed (after slope) barely changes with hours walked: about −0.25% per hour.</p></div>
-    <div class="card"><h4>Finding 6 · Tags carry information</h4><p>White Mountains: "hiking"-grade trails are ~14% faster than "mountain_hiking" ones at the same slope; untagged trails ~11% slower. Remote sensing has to recover this.</p></div>
+    <div class="card"><h4>Finding 6 · Tags carry a little information</h4><p>At the same slope, easy "hiking"-grade trails are ~7% faster than untagged ones and alpine trails ~4% slower. Poor trail visibility costs up to ~10%; trails ≥ 2 m wide are ~5% faster. But these effects shrink in a region the model hasn't seen (section 10).</p></div>
     <div class="card"><h4>Finding 7 · Winter isn't slower (?)</h4><p>In the White Mountains, winter hikes weren't slower, maybe because packed snow covers the rocks. To test properly with satellite snow maps.</p></div>
   </div>
 </section>
 
 <!-- ============================================================ 10 -->
+<section id="test">
+  <h2>10 · The first test: what really predicts hiking speed?</h2>
+  <p class="sub">We built the "exam" the paper will use (the T3 evaluation harness) and ran it on the T1 data, before any remote sensing. Every model predicts a <b>range</b> of speeds for each 50 m of trail, and is graded only on data it never saw.</p>
+  <figure class="chart"><svg id="splits" viewBox="0 0 960 250" width="100%" role="img" aria-label="Three ways to hold data out"></svg>
+  <figcaption>Three ways to hide data from a model while it learns. The third, a whole region it has never seen, is the paper's headline test: it asks whether a model would work on a new mountain range.</figcaption></figure>
+
+  <h3>The scoreboard</h3>
+  <figure class="chart">
+    <svg id="score" viewBox="0 0 960 470" width="100%" role="img" aria-label="Prediction skill of each model"></svg>
+    <div class="legend" id="scoreLegend"></div>
+    <figcaption><b>How to read it:</b>
+      <ul>
+        <li>Each bar shows how much better (right) or worse (left) a model predicts than a plain slope-only curve fitted to our data.</li>
+        <li>The score is CRPS, which rewards predicted ranges that are both narrow and right.</li>
+        <li>Light bars: new hikers in regions the model trained on. Dark bars: a region it never saw.</li>
+        <li>"Personal pace" rows are scored on each hike after its first km.</li>
+      </ul>
+      Hover for numbers.</figcaption>
+  </figure>
+  <div class="grid g3">
+    <div class="stat"><div class="n"><span id="tHike0"></span> → <span id="tHike1"></span></div><div class="l">median error in whole-hike moving time, new region: slope curve → plus the hiker's own pace from their first km</div></div>
+    <div class="stat"><div class="n" id="tTags"></div><div class="l">what OSM trail tags add in a new region (CRPS skill); <span id="tTagsIn"></span> in regions the model trained on</div></div>
+    <div class="stat"><div class="n" id="tCov"></div><div class="l">of real speeds fall inside the predicted 90% range: the uncertainty is honest</div></div>
+  </div>
+  <div class="callout warn"><b>What it means:</b>
+    <ol>
+      <li><b>Tobler loses everywhere</b>: 13% worse than a curve refitted to real hikes.</li>
+      <li><b>The hiker matters far more than the map.</b> One km of a person's own pace is worth about 40× what trail tags add in a new region.</li>
+      <li><b>Tags help a little where they were learned</b>, but most of that is lost in a new region: people tag trails differently in different places.</li>
+      <li><b>There is a ceiling.</b> Even "place memory" (how fast other hikers went at the very same spot) adds only ~1.3%. That bounds what any terrain data can add at our data density.</li>
+    </ol>
+  </div>
+  <div class="callout good"><b>So remote sensing's job is specific.</b> Lidar roughness, canopy height and satellite embeddings mean the same thing in every region. If they keep their value in unseen regions, where tags don't, that is the paper. We'll report gains against the ceiling, and also with personal pace known, where terrain effects show more clearly.</div>
+</section>
+
+<!-- ============================================================ 11 -->
 <section id="fit">
-  <h2>10 · Where we fit in the research world</h2>
+  <h2>11 · Where we fit in the research world</h2>
   <p class="sub">A literature survey on 11 Oct changed the paper's focus. Earlier work covers pieces of this, but nobody has put all three together:</p>
   <figure class="chart"><svg id="venn" viewBox="0 0 960 430" width="100%" role="img" aria-label="Positioning against prior work"></svg></figure>
   <table>
@@ -443,9 +481,9 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
   <div class="callout good"><b>So the paper's lead claim becomes:</b> <i>"Do we need a trail map? Predicting hiking speed in regions the model has never seen, from airborne lidar and satellite embeddings."</i> The four arms are tested with leave-one-region-out, with Campbell, Wood and STRIDE as baselines next to Tobler, and with calibrated uncertainty.</div>
 </section>
 
-<!-- ============================================================ 11 -->
+<!-- ============================================================ 12 -->
 <section id="next">
-  <h2>11 · What's next</h2>
+  <h2>12 · What's next</h2>
   <h3>T2 · What remote sensing will add to every segment</h3>
   <div class="grid g3">
     <div class="card"><span class="pill now">tier 1</span><h4 style="margin-top:6px">⛰️ Terrain (1 m lidar DEM)</h4><p>Slope at 1 m, steepest pitch, <b>roughness</b> (rocks and roots: ground minus a 2 m-smoothed ground, STRIDE's definition).</p></div>
@@ -459,7 +497,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
   <div class="grid g3">
     <div class="card"><h4>Models</h4><p>Gradient-boosted trees (a strong, honest baseline), and Tobler's formula with its constants <b>learned from terrain</b>. That gives readable results like "k ≈ 2.4 on rocky trails, 1.7 on smooth ones".</p></div>
     <div class="card"><h4>Scores</h4><p>Speed errors per segment, whole-hike time errors, and <b>calibration</b>: does a predicted "80% range" really contain 80% of hikes?</p></div>
-    <div class="card"><h4>Gate 2 (~13 Nov)</h4><p>Does the remote-sensing arm get close to the tags arm in held-out regions? Either answer is publishable; the gap size is the finding.</p></div>
+    <div class="card"><h4>Gate 2 (~13 Nov)</h4><p>Tags lose ~80% of their small value in a new region (section 10). Do remote-sensing covariates <b>keep</b> theirs? Measured against the place-memory ceiling, with and without personal pace. Either answer is publishable.</p></div>
   </div>
   <h3>The paper: 4 pages, IEEE format</h3>
   <figure class="chart"><svg id="paper" viewBox="0 0 960 250" width="100%" role="img" aria-label="Paper layout"></svg>
@@ -476,9 +514,9 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
   </table>
 </section>
 
-<!-- ============================================================ 12 -->
+<!-- ============================================================ 13 -->
 <section id="you">
-  <h2>12 · Your to-do, and what to say in meetings</h2>
+  <h2>13 · Your to-do, and what to say in meetings</h2>
   <div class="twocol">
     <div>
       <h3>This week</h3>
@@ -493,8 +531,8 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
     <div>
       <h3>Questions for Danni &amp; Tianyi (16 Oct)</h3>
       <ol>
-        <li>T1 is done once the last regions land. <b>OK to start T2?</b></li>
-        <li>Lead the paper with leave-one-region-out "remote sensing vs tags", with Campbell / Wood / STRIDE baselines. <b>Agree?</b></li>
+        <li>T1 is done (17 regions; 5 city regions upgrading). <b>OK to start T2?</b></li>
+        <li>First test: tags add ~1% within a region and ~0.2% in a new one, while a hiker's own pace is worth ~8%. <b>Lead the paper with transfer</b> ("does remote sensing keep its value where tags don't?") plus the dataset/benchmark, with Campbell / Wood / STRIDE baselines. <b>Agree?</b></li>
         <li><b>Earth Engine / Google Cloud</b> for the satellite embeddings, or the free mirror? A lab-preferred model?</li>
         <li><b>Cluster account:</b> keep <span class="k">engr-class-any</span> (≤ 8 CPUs/job) or a lab account?</li>
         <li>Can we <b>release a derived dataset</b> (no usernames) with the paper?</li>
@@ -513,12 +551,15 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
     <p><b>"Aren't segments from one hike correlated?"</b> Yes. Every interval resamples whole outings, and every test holds out whole hikes, map squares or regions, never single points.</p>
     <p><b>"What's new compared with Campbell and Wood?"</b> Testing in unseen regions; remote sensing vs tags head-to-head; calibrated uncertainty; same-hiker asymmetry at scale.</p>
     <p><b>"Why so many regions?"</b> You asked for it, and it enables the leave-one-region-out test, the paper's strongest claim.</p>
+    <p><b>"Do OSM tags help?"</b> A little. +1% (CRPS) within a region, +0.2% in an unseen region; boosted trees on tags even get worse there. Tagging habits differ between regions.</p>
+    <p><b>"Then is remote sensing pointless?"</b> Not yet known; that's T2/T3. Remote-sensing variables mean the same thing everywhere, so they may transfer where tags don't. We also know the ceiling: "place memory" (other hikers at the same spot) adds +1.3%, so we judge gains against that, not against zero.</p>
+    <p><b>"What matters most, then?"</b> The hiker. Their pace from the first km cuts whole-hike time error from 13.7% to 9.9% in new regions.</p>
   </details>
 </section>
 
-<!-- ============================================================ 13 -->
+<!-- ============================================================ 14 -->
 <section id="glossary">
-  <h2>13 · Glossary</h2>
+  <h2>14 · Glossary</h2>
   <div class="controls"><input id="gsearch" type="search" placeholder="Search a term…" aria-label="search the glossary"></div>
   <dl class="gloss" id="gloss"></dl>
   <h3>Where everything lives</h3>
@@ -559,7 +600,7 @@ document.getElementById("gen").textContent = (D.generated_utc||"") + " UTC";
 const N = {"pooled.walking_segments": fmt(pooled.walking_segments), "nregions": regionsBuilt.length, "pooled.v0": fmt(pooled.v0,2)};
 document.querySelectorAll("[data-n]").forEach(e=>{e.textContent=N[e.dataset.n]??"–";});
 const short = {wm:"White Mtns",adk:"Adirondacks",catskills:"Catskills",greenmtn:"Green Mtns",acadia:"Acadia",shenandoah:"Shenandoah",smokies:"Smokies",pisgah:"Pisgah",frontrange:"Front Range",cosprings:"Colo. Springs",wasatch:"Wasatch",tetons:"Tetons",glacier:"Glacier",sedona:"Sedona",boise:"Boise",cascades:"Cascades",gorge:"Col. Gorge",olympic:"Olympic",bayarea:"Bay Area",sangabriel:"San Gabriels",yosemite:"Yosemite",tahoe:"Tahoe",northshore:"North Shore"};
-const inProgress = new Set(["shenandoah","pisgah","bayarea","wasatch"]);
+const inProgress = new Set();
 
 // ---------------------------------------------------------- privacy table
 (function(){
@@ -666,7 +707,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
   const svg=document.getElementById("gantt");
   const t0=Date.parse("2026-08-24"),t1=Date.parse("2027-01-15"),x=lin(t0,t1,170,945);
   const today=Date.parse("2026-10-11");
-  const rows=[["Gate 1: are traces usable?","2026-08-24","2026-10-02",1],["T1: dataset (17 regions)","2026-10-02","2026-10-16",0.85],["T2: remote-sensing covariates","2026-10-16","2026-11-01",0],["T3: four-arm comparison","2026-11-01","2026-11-13",0],["Gate 2: does RS close the gap?","2026-11-13","2026-11-14",0],["T4: curves, asymmetry, modes","2026-11-09","2026-11-20",0.2],["Full paper draft","2026-11-13","2026-11-27",0],["Review + polish","2026-11-30","2026-12-18",0],["Submit (deadline 11 Jan)","2026-12-21","2027-01-11",0]];
+  const rows=[["Gate 1: are traces usable?","2026-08-24","2026-10-02",1],["T1: dataset (17 regions)","2026-10-02","2026-10-16",0.95],["T2: remote-sensing covariates","2026-10-16","2026-11-01",0],["T3: four-arm comparison","2026-11-01","2026-11-13",0],["Gate 2: does RS close the gap?","2026-11-13","2026-11-14",0],["T4: curves, asymmetry, modes","2026-11-09","2026-11-20",0.2],["Full paper draft","2026-11-13","2026-11-27",0],["Review + polish","2026-11-30","2026-12-18",0],["Submit (deadline 11 Jan)","2026-12-21","2027-01-11",0]];
   // month grid
   ["2026-09-01","2026-10-01","2026-11-01","2026-12-01","2027-01-01"].forEach(m=>{const xx=x(Date.parse(m));S("line",{x1:xx,y1:16,x2:xx,y2:310,class:"gridline"},svg);S("text",{x:xx+4,y:14,class:"lbl"},svg,new Date(m+"T12:00:00").toLocaleString("en-US",{month:"short",year:"numeric"}));});
   rows.forEach((r,i)=>{const y=30+i*31,a=x(Date.parse(r[1])),b=Math.max(x(Date.parse(r[2])),a+6);
@@ -697,8 +738,10 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
    ["10 Oct","Moved to the lab cluster","The whole pipeline runs as cluster jobs; the laptop can sleep. Found the cluster limits (8 CPUs/job).",""],
    ["10 Oct","OSM API depth limit","OSM times out past ~4.5M points in one area; the busiest tiles are capped (pre-2009 uploads lost) and documented.","fix"],
    ["10 Oct","Corrupt GPX file","Raw receiver text where a coordinate should be crashed 5 builds; now skipped.","fix"],
-   ["10–11 Oct","10 → 14 regions built","Fast lab-only builds for city regions in parallel with full downloads (your idea).",""],
-   ["11 Oct","Findings, literature, GitHub, this page","Cross-region analyses; literature survey reframed the paper; repo Brian24NX/GeoAI with a daily log.",""]];
+   ["10–11 Oct","10 → 17 regions built","Fast lab-only builds for city regions in parallel with full downloads (your idea). All 17 planned regions built by 08:50 on 11 Oct.",""],
+   ["11 Oct","Findings, literature, GitHub, this page","Cross-region analyses; literature survey reframed the paper; repo Brian24NX/GeoAI with a daily log.",""],
+   ["11 Oct","T1 close-out","Elevation quality for every region, travel modes checked against the hikers' own app labels, one combined dataset with a data card.",""],
+   ["11 Oct","First test (T3 harness)","Every model scored on unseen hikes, places and regions. Tobler −13%; tags +0.2% in new regions; the hiker's own pace +8.5%.",""]];
   const box=document.getElementById("storyline");
   items.forEach(it=>{const d=document.createElement("div");d.className="tl-item"+(it[3]==="fix"?" fix":"");d.innerHTML=`<div class="tl-date">${it[0]}</div><h4>${it[1]}</h4><p>${it[2]}</p>`;box.appendChild(d);});
 })();
@@ -906,9 +949,92 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
     if(i===3){S("rect",{x:x+14,y:160,width:182,height:56,rx:6,fill:"var(--s2-soft)"},svg);S("text",{x:x+105,y:193,"text-anchor":"middle",class:"lbl-strong",fill:"var(--s2)"},svg,"curves + asymmetry");}});
 })();
 
+// ---------------------------------------------------------- first test
+(function(){
+  const H = D.harness || [];
+  const get = (arm, split, sub) => H.find(r => r.arm === arm && r.split === split && r.subset === (sub || "all"));
+  const pct = (x, d=1) => (x==null) ? "–" : (x>0?"+":"") + fmt(x, d) + "%";
+  // stat tiles
+  const s0 = get("slope_curve","loro","rest"), s1 = get("slope_curve+me","loro","rest");
+  document.getElementById("tHike0").textContent = s0 ? fmt(100*s0.time_ape_median,1)+"%" : "–";
+  document.getElementById("tHike1").textContent = s1 ? fmt(100*s1.time_ape_median,1)+"%" : "–";
+  const tl = get("lin_tags","loro"), ti = get("lin_tags","outing5");
+  document.getElementById("tTags").textContent = tl ? pct(tl.crps_skill_vs_slope_pct) : "–";
+  document.getElementById("tTagsIn").textContent = ti ? pct(ti.crps_skill_vs_slope_pct) : "–";
+  const cv = get("slope_curve","loro");
+  document.getElementById("tCov").textContent = cv ? fmt(100*cv.cov90,0)+"%" : "–";
+
+  // splits diagram
+  (function(){
+    const svg = document.getElementById("splits");
+    const panels = [["New hikers","5 folds of outings","some hikes in every region are hidden"],
+                    ["New places","5 folds of 10 km squares","whole map squares are hidden"],
+                    ["A new region","leave one region out (17 times)","a whole mountain range is hidden"]];
+    panels.forEach((pn, i) => {
+      const x0 = 12 + i*318;
+      S("rect",{x:x0,y:8,width:300,height:178,rx:12,fill:"var(--surface)",stroke:"var(--line)"},svg);
+      S("text",{x:x0+14,y:34,class:"lbl-strong"},svg,pn[0]);
+      S("text",{x:x0+14,y:52,class:"lbl"},svg,pn[1]);
+      const g = S("g",{},svg);
+      if (i === 0) {          // dots = hikes inside one region outline
+        S("rect",{x:x0+20,y:66,width:260,height:104,rx:10,fill:"none",stroke:"var(--text-3)","stroke-dasharray":"4 3"},g);
+        for (let k=0;k<40;k++){const cx=x0+36+(k%10)*25, cy=84+Math.floor(k/10)*24; const test=(k*7)%5===0;
+          S("circle",{cx:cx,cy:cy,r:6,fill:test?"var(--s2)":"var(--s1)",opacity:test?1:.75},g);}
+      } else if (i === 1) {   // squares = 10 km blocks
+        for (let a=0;a<4;a++) for (let b=0;b<10;b++){ const test=((a*10+b)*3)%5===1;
+          S("rect",{x:x0+22+b*26,y:66+a*26,width:22,height:22,rx:3,fill:test?"var(--s2)":"var(--s1)",opacity:test?1:.75},g);}
+      } else {                // region blobs
+        const pos=[[40,80],[100,72],[160,84],[220,74],[60,128],[125,124],[190,132],[250,122]];
+        pos.forEach(([dx,dy],k)=>S("ellipse",{cx:x0+dx,cy:dy+8,rx:24,ry:17,fill:k===5?"var(--s2)":"var(--s1)",opacity:k===5?1:.75},g));
+      }
+      S("text",{x:x0+14,y:208,class:"lbl"},svg,pn[2]);
+    });
+    S("circle",{cx:22,cy:236,r:6,fill:"var(--s1)",opacity:.75},svg);S("text",{x:34,y:240,class:"lbl"},svg,"used to fit the model");
+    S("circle",{cx:200,cy:236,r:6,fill:"var(--s2)"},svg);S("text",{x:212,y:240,class:"lbl"},svg,"hidden, used only to grade it");
+  })();
+
+  // scoreboard
+  (function(){
+    const svg = document.getElementById("score");
+    const rows = [
+      ["Tobler's formula (published)", "tobler", "all", "the 1993 constants, nothing learned"],
+      ["Slope curve, refitted (baseline)", "slope_curve", "all", "our rounded curve fitted to the data"],
+      ["Lorentz curve, refitted", "lorentz_refit", "all", "Campbell et al.'s curve shape"],
+      ["+ OSM tags (additive)", "lin_tags", "all", "slope curve + an offset per tag value"],
+      ["+ OSM tags (boosted trees)", "gbm_tags", "all", "a flexible machine-learning model"],
+      ["Place memory (the ceiling)", "place_memory", "all", "how fast other hikers went at the same 100 m spot; only exists where the model trained"],
+      ["The region's own other hikers", "slope_curve_local", "all", "slope curve fitted inside the held-out region: what local data buys"],
+      ["+ Personal pace (first km)", "slope_curve+me", "rest", "the hiker's pace over their first km"],
+      ["+ Personal pace + tags", "lin_tags+me", "rest", "both"]];
+    const x = lin(-15, 10, 380, 930), top = 26, rh = 46;
+    [-15,-10,-5,0,5,10].forEach(v => {S("line",{x1:x(v),y1:top-8,x2:x(v),y2:top+rows.length*rh,class:"gridline"},svg);
+      S("text",{x:x(v),y:top+rows.length*rh+18,"text-anchor":"middle",class:"lbl"},svg,(v>0?"+":"")+v+"%");});
+    S("line",{x1:x(0),y1:top-8,x2:x(0),y2:top+rows.length*rh,stroke:"var(--text-2)","stroke-width":1.5},svg);
+    S("text",{x:x(-15),y:12,class:"lbl"},svg,"← worse than the slope curve");
+    S("text",{x:x(10),y:12,"text-anchor":"end",class:"lbl"},svg,"better →");
+    rows.forEach((r, i) => {
+      const y = top + i*rh;
+      if (i === 7) S("line",{x1:6,y1:y-3,x2:930,y2:y-3,stroke:"var(--line)","stroke-dasharray":"4 3"},svg);
+      S("text",{x:6,y:y+17,class:"lbl-strong"},svg,r[0]);
+      [["outing5","var(--s1-soft)","within a region",0],["loro","var(--s1)","new region",1]].forEach(([sp,col,nm,j]) => {
+        const m = get(r[1], sp, r[2]); const yy = y + 4 + j*18;
+        const na = !m || m.crps_skill_vs_slope_pct == null || (r[1] === "place_memory" && sp === "loro");
+        if (na) {S("text",{x:x(0)+6,y:yy+12,class:"lbl"},svg,"n/a ("+nm+")");return;}
+        const v = Math.max(-15, Math.min(10, m.crps_skill_vs_slope_pct));
+        const a = Math.min(x(0), x(v)), w = Math.max(Math.abs(x(v)-x(0)), 2);
+        const bar = S("rect",{x:a,y:yy,width:w,height:15,rx:4,fill:col,stroke:"var(--s1)","stroke-width":j?0:1},svg);
+        S("text",{x:v>=0?a+w+5:a-5,y:yy+12,"text-anchor":v>=0?"start":"end",class:"lbl"},svg,pct(m.crps_skill_vs_slope_pct));
+        hover(bar, `<b>${r[0]}</b> · ${nm}<br>${r[3]}<br>CRPS skill: <b>${pct(m.crps_skill_vs_slope_pct)}</b><br>R² (log speed): ${fmt(m.r2_log,3)}<br>90% range holds: ${fmt(100*m.cov90,0)}%<br>whole-hike time error: ${fmt(100*m.time_ape_median,1)}%`);
+      });
+    });
+    const lg = document.getElementById("scoreLegend");
+    lg.innerHTML = '<span><i style="background:var(--s1-soft);border:1px solid var(--s1)"></i>new hikers, regions it trained on</span><span><i style="background:var(--s1)"></i>a region it never saw</span>';
+  })();
+})();
+
 // ---------------------------------------------------------- glossary
 (function(){
-  const G=[["OSM (OpenStreetMap)","Free, volunteer-made map of the world: the 'Wikipedia of maps'."],["GPS trace","A recording of positions with timestamps, e.g. every 5 s during a hike."],["Trackpoints API","OSM's service that hands out GPS points in a box, 5,000 per page."],["Identifiable / trackable / public / private","Privacy levels a trace uploader chooses; only some keep usable timestamps."],["Lab crawl","The lab's copy of 1.5M original OSM trace files (2016–2022), on the cluster drive."],["Car logger","Driver-assist software (sunnypilot, openpilot…) that uploads huge numbers of car traces; removed."],["Map-matching","Snapping noisy GPS points onto the trail network to know which trail someone was on."],["HMM","Hidden Markov model: picks the most likely sequence of trails for a whole track."],["Segment","A 50 m piece of trail walked by one trace, with one speed and one slope."],["Stop rule","How we decide someone was standing still (≥ 60 s within 10 m); that time is removed."],["Outing","One hike by one group on one day; two phones on the same hike = one outing."],["Travel mode","Walk, run, or bike/ski, inferred from speed patterns, anchored on foot-only trails."],["Slope / grade","Rise over run in percent, in the walking direction (uphill = +)."],["Tobler's hiking function","speed = 6·e^(−3.5·|slope+0.05|) km/h, from 1993, the standard in GIS."],["v0, k, s0","Peak speed, slope sensitivity, and the slope of the peak, the three numbers of a Tobler-type curve."],["Lorentz curve","A rounded bell-shaped curve Campbell et al. use instead of Tobler's sharp peak."],["Asymmetry","How much faster going down is than going up the same slope."],["Out-and-back","A hike that goes up a trail and returns the same way: same person, both directions."],["DEM","Digital elevation model: a grid of ground heights (we use 5 m and 1 m)."],["Lidar","Laser scanning from a plane; echoes from canopy, understory and ground give 3-D structure."],["3DEP","USGS's national lidar and elevation program (free data)."],["Roughness","Small bumps on the ground (rocks, roots): ground minus a smoothed ground."],["Understory density","Share of lidar echoes at 0.85–1.2 m height: bushes at knee-to-chest level."],["Canopy height","How tall the trees are above the ground."],["Remote sensing","Measuring the Earth from aircraft or satellites."],["Embedding (AlphaEarth)","A compact list of numbers summarizing what a satellite 'sees' at a place, learned by a big pretrained model."],["sac_scale","OSM's hiking-difficulty tag (hiking → mountain_hiking → demanding…)."],["Four arms","Tobler / Tags / Remote sensing / Both: four predictors that differ only in what they can see."],["Leave-one-region-out","Train on all regions but one, test on the left-out one, repeat; tests transfer to new places."],["10 km block","A 10 × 10 km map square; whole squares are held out to test geographic generalization."],["Bootstrap (by outing)","Re-draw whole hikes at random many times to get honest 95% intervals."],["CRPS / calibration","Scores for predicted ranges: are they sharp, and do they contain the truth as often as claimed?"],["Gate 1 / Gate 2","Plan checkpoints: are traces usable? (passed); does remote sensing close the gap to tags? (~13 Nov)"],["IGARSS","IEEE's International Geoscience and Remote Sensing Symposium, our target venue (4 pages)."],["Slurm","The cluster's job scheduler: we submit jobs; it runs them on compute nodes."],["ENGRFS","The engineering school's research drive where the lab data and our project copy live (not backed up)."]];
+  const G=[["OSM (OpenStreetMap)","Free, volunteer-made map of the world: the 'Wikipedia of maps'."],["GPS trace","A recording of positions with timestamps, e.g. every 5 s during a hike."],["Trackpoints API","OSM's service that hands out GPS points in a box, 5,000 per page."],["Identifiable / trackable / public / private","Privacy levels a trace uploader chooses; only some keep usable timestamps."],["Lab crawl","The lab's copy of 1.5M original OSM trace files (2016–2022), on the cluster drive."],["Car logger","Driver-assist software (sunnypilot, openpilot…) that uploads huge numbers of car traces; removed."],["Map-matching","Snapping noisy GPS points onto the trail network to know which trail someone was on."],["HMM","Hidden Markov model: picks the most likely sequence of trails for a whole track."],["Segment","A 50 m piece of trail walked by one trace, with one speed and one slope."],["Stop rule","How we decide someone was standing still (≥ 60 s within 10 m); that time is removed."],["Outing","One hike by one group on one day; two phones on the same hike = one outing."],["Travel mode","Walk, run, or bike/ski, inferred from speed patterns, anchored on foot-only trails."],["Slope / grade","Rise over run in percent, in the walking direction (uphill = +)."],["Tobler's hiking function","speed = 6·e^(−3.5·|slope+0.05|) km/h, from 1993, the standard in GIS."],["v0, k, s0","Peak speed, slope sensitivity, and the slope of the peak, the three numbers of a Tobler-type curve."],["Lorentz curve","A rounded bell-shaped curve Campbell et al. use instead of Tobler's sharp peak."],["Asymmetry","How much faster going down is than going up the same slope."],["Out-and-back","A hike that goes up a trail and returns the same way: same person, both directions."],["DEM","Digital elevation model: a grid of ground heights (we use 5 m and 1 m)."],["Lidar","Laser scanning from a plane; echoes from canopy, understory and ground give 3-D structure."],["3DEP","USGS's national lidar and elevation program (free data)."],["Roughness","Small bumps on the ground (rocks, roots): ground minus a smoothed ground."],["Understory density","Share of lidar echoes at 0.85–1.2 m height: bushes at knee-to-chest level."],["Canopy height","How tall the trees are above the ground."],["Remote sensing","Measuring the Earth from aircraft or satellites."],["Embedding (AlphaEarth)","A compact list of numbers summarizing what a satellite 'sees' at a place, learned by a big pretrained model."],["sac_scale","OSM's hiking-difficulty tag (hiking → mountain_hiking → demanding…)."],["Four arms","Tobler / Tags / Remote sensing / Both: four predictors that differ only in what they can see."],["Leave-one-region-out","Train on all regions but one, test on the left-out one, repeat; tests transfer to new places."],["10 km block","A 10 × 10 km map square; whole squares are held out to test geographic generalization."],["Bootstrap (by outing)","Re-draw whole hikes at random many times to get honest 95% intervals."],["CRPS / calibration","Scores for predicted ranges: are they sharp, and do they contain the truth as often as claimed?"],["Skill (vs slope-only)","How much lower a model's CRPS is than the slope-only curve's, in percent; negative = worse."],["Coverage","Share of real speeds inside the predicted range; a 90% range should hold ~90%."],["Place memory","How fast other hikers went in the same 100 m spot. Can't exist in a new region, so it marks the ceiling for anything place-based."],["Personal pace","The hiker's speed relative to the curve over the first km of their hike, used to predict the rest."],["Evaluation harness","The fixed 'exam' every model takes: same data, same held-out splits, same scores (t3_harness.py)."],["Gate 1 / Gate 2","Plan checkpoints: are traces usable? (passed); does remote sensing close the gap to tags? (~13 Nov)"],["IGARSS","IEEE's International Geoscience and Remote Sensing Symposium, our target venue (4 pages)."],["Slurm","The cluster's job scheduler: we submit jobs; it runs them on compute nodes."],["ENGRFS","The engineering school's research drive where the lab data and our project copy live (not backed up)."]];
   const dl=document.getElementById("gloss");
   function render(q){dl.innerHTML="";G.filter(g=>!q||(g[0]+" "+g[1]).toLowerCase().includes(q.toLowerCase())).forEach(g=>{const dt=document.createElement("dt");dt.textContent=g[0];const dd=document.createElement("dd");dd.textContent=g[1];dl.appendChild(dt);dl.appendChild(dd);});}
   document.getElementById("gsearch").addEventListener("input",e=>render(e.target.value));render("");
