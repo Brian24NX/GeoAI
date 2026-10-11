@@ -166,6 +166,9 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
 - ~60% of the gain is uneven grade inside the segment ("hidden climbing":
   a DEM sees it, an average slope or a tag can't); ~40% is difficulty
   beyond grade.
+- It isn't a proxy for "which region" (decision #86). Region offsets alone
+  add +0.3–0.7%; terrain still adds ~1.8 points on top of them. Nor is it
+  a hiker proxy: it adds ~1.8 points on top of personal pace.
 
 **Next:**
 - The 1 m elevation for all 16 US regions is downloading (decision #84,

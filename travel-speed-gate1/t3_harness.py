@@ -465,6 +465,10 @@ def main():
                     help="T2 covariate tables: segment_id + numeric columns")
     ap.add_argument("--features", nargs="*",
                     help="use only these covariate columns")
+    ap.add_argument("--region-fe", action="store_true",
+                    help="add arms with a shrunken offset per region (a "
+                         "check: does a covariate add more than the "
+                         "region's mean speed?)")
     ap.add_argument("--out", help="output folder (default results/t3_harness)")
     args = ap.parse_args()
     quick, splits = args.quick, args.splits
@@ -504,6 +508,12 @@ def main():
         print(f"remote-sensing covariates: {rs_cols}; present for "
               f"{w[rs_cols].notna().all(axis=1).mean():.0%} of segments",
               flush=True)
+    if args.region_fe:
+        blocks["region_1h"] = pd.get_dummies(w.region).to_numpy(float)
+        ARMS["lin_region"] = ("lin", ["region_1h"])
+        ARMS["lin_tags_region"] = ("lin", ["tags_1h", "region_1h"])
+        if rs_cols:
+            ARMS["lin_rs_region"] = ("lin", ["rs_1h", "region_1h"])
     blocks["cell"] = place_cells(w)
     blocks["outing"] = pd.factorize(w.outing_id)[0]
     blocks["trace"] = pd.factorize(w.trace_id)[0]

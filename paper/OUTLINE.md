@@ -121,7 +121,9 @@ value. A hiker's own pace still matters most.
 - **R3. Terrain transfers.** It beats tags in 15 of 17 held-out regions,
   and on tagged segments (+1.8% vs +0.5%). 95% intervals resampling whole
   regions: terrain +0.8 to +2.8% (additive), tags −0.5 to +1.0%;
-  terrain minus tags +0.7 to +2.4%. About 60% of the gain is
+  terrain minus tags +0.7 to +2.4%.
+  Robustness: it adds ~1.8 points on top of region offsets (not a region
+  proxy) and on top of personal pace (not a hiker proxy). About 60% of the gain is
   uneven grade inside the 50 m segment ("hidden climbing"); the rest is
   difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
   here.
