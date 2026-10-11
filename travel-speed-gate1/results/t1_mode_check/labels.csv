@@ -1,0 +1,247 @@
+region,trace_id,label,how,gpx_type,gpx_name,creator,mode,foot_anchor,v_med,v_p90,asym
+wm,osm12392244,hike,type,hiking,Mount Passaconaway and Mount Whiteface | via Blueberry Ledge-Diceys Mill Loop,Garmin Connect,walk,True,3.329726836543761,4.5532380450052425,0.2967006842031087
+wm,osm2513988,hike,type,trekking,Extended Pemi - Solo,Trails 3.02 - https://www.trails.io,walk,False,4.355027815248587,9.36621765789376,0.1786354606581769
+wm,osm3856011,hike,type,hiking,"Arethusa Falls with Megan, Linden, and Marble Hiking",Garmin Connect,walk,True,2.4387062849541943,3.377432266166856,0.0520403173706176
+wm,osm11262874,bike,name,,Jefferson Gravel/Unpaved Cycling | Jefferson Gravel/Unpaved Cycling,http://ridewithgps.com/,bike/ski,False,16.850212730462335,21.17491053782506,
+wm,osm2578722,hike,type,hiking,Jefferson Hiking,Garmin Connect,walk,False,3.6100108382019305,5.07438619968313,0.3064972612238947
+wm,osm3343940,hike,type,hiking,Goose Eye,Garmin Connect,walk,True,3.0492403585471988,4.114015648139908,-0.2185714448810252
+wm,osm2086351,bike,name,,Afternoon Ride,strava.com iPhone,bike/ski,False,17.053592755634853,22.631059021751703,0.3821544439646441
+wm,osm12468076,hike,type,hiking,Mt Hayes,StravaGPX,walk,False,3.8421781698159214,4.919565341197918,0.154280450918906
+adk,osm2547301,hike,type,walking,File with points/tracks from Locus Map/3.27.1 | 2017-10-01 09:17:26 | Slide Brook Lean-to to Trsilhead,"Locus Map, Android",walk,True,4.538039261895954,5.516116383033373,
+adk,osm2547300,hike,type,walking,"File with points/tracks from Locus Map/3.27.1 | 2017-09-30 09:01:16 | Macomb, South Dix, and Grace.","Locus Map, Android",walk,True,2.713908049688941,3.9039369613395016,-0.0655147749947539
+adk,osm2547297,hike,type,walking,File with points/tracks from Locus Map/3.27.1 | 2017-09-29 13:48:44 | Trailhead to Slide Brook Campsite.,"Locus Map, Android",walk,True,4.491060617180752,5.197882632764835,
+adk,osm1986663,hike,type,trekking,Haystack basin saddleback,Trails 1.14 - https://www.trails.io,walk,True,2.962822898135305,3.8977091320211534,0.1611073926917378
+catskills,osm4106318,hike,type,hiking,Balsam & Eagle Mtns,Garmin Connect,walk,True,4.828952796644006,5.839631532205426,0.203043269051694
+catskills,osm4106307,hike,type,hiking,Balsam Mountain,Garmin Connect,walk,True,4.824204730591272,6.15898043160665,0.4527398418732486
+catskills,osm1480240,hike,type,hiking,6/15/2013 09:29 Red Hill | 6/15/2013 09:29 Red Hill,Created by Google My Tracks on Android.,walk,True,3.579413739723981,5.4281265621644765,0.0695482537251238
+catskills,osm1534564,hike,type,hiking,8/20/2013 09:30 Slide | 8/20/2013 09:30 Slide,Created by Google My Tracks on Android.,walk,True,4.142138690568873,5.384208626011594,0.012524458407388
+catskills,osm1512700,hike,type,hiking,7/26/2013 10:04 Table & Peekamoose | 7/26/2013 10:04 Table & Peekamoose,Created by Google My Tracks on Android.,walk,True,3.564646386733371,5.3294690716561925,0.023685342258781
+catskills,osm1566940,hike,type,hiking,9/24/2013 10:14 Ashokan High Point | 9/24/2013 10:14 Ashokan High Point,Created by Google My Tracks on Android.,walk,True,4.136103640619303,5.450454575520544,-0.1161068414253025
+catskills,osm1734595,hike,type,hiking,6/27/2014 09:19 Long Path Wittenberg | 6/27/2014 09:19 Long Path Wittenberg,Created by Google My Tracks on Android,walk,True,3.719267329122225,4.72474212396827,0.0635313626998037
+greenmtn,osm4748433,bike,name,,Burlington Gravel/Unpaved Cycling | Burlington Gravel/Unpaved Cycling,http://ridewithgps.com/,fast,False,14.229360420032377,16.386559844303033,
+greenmtn,osm12464487,ski,type,AlpineSki,,GPX,unknown,False,3.4241678283244434,10.514461311769008,
+greenmtn,osm1878167,ski,name,,Cross-Country Skiing 2/6/15 12:39 pm,RunKeeper - http://www.runkeeper.com,bike/ski,False,4.7032571121306415,13.567437091405283,1.856472812685036
+greenmtn,osm1877045,ski,name,,Cross-Country Skiing 2/3/15 2:44 pm,RunKeeper - http://www.runkeeper.com,bike/ski,False,4.349092886387648,22.06654603039569,1.362363605722914
+greenmtn,osm1270002,bike,type,MOUNTAIN_BIKING,,Endomondo.com,bike/ski,False,9.632206517878869,18.11819936012588,1.4498523761110813
+greenmtn,osm1270001,bike,type,MOUNTAIN_BIKING,Trapps 8 Jul 12 Ride 3 | Out with Mark...needed a break-in ride before tomorrow.,Endomondo.com,bike/ski,False,11.090817356330332,18.31217385152196,0.8148697016666931
+greenmtn,osm12464202,hike,type,hiking,,GPX,walk,False,2.5341279126153045,4.344258955924589,0.0842823387396416
+greenmtn,osm1270004,bike,type,MOUNTAIN_BIKING,Trapps 10 Jul 12 Ride 1 | Morning warm up with Mark...before the girls headed to Yogurt.,Endomondo.com,bike/ski,False,12.667704235368362,26.4056243451574,1.1095578681845903
+greenmtn,osm1270003,bike,type,Mountain Biking,Trapps 9 Jul 12 | <br />,Trimble Outdoors - http://www.TrimbleOutdoors.com/,bike/ski,False,9.856312821583694,22.760990653600476,0.8038235674083668
+greenmtn,osm1269998,bike,type,MOUNTAIN_BIKING,,Endomondo.com,bike/ski,False,8.932654521473479,17.8371402740622,0.6692555504740548
+greenmtn,osm1270000,bike,type,MOUNTAIN_BIKING,,Endomondo.com,bike/ski,False,9.071704088172693,16.884436541006085,0.7124023133027276
+greenmtn,osm1269999,bike,type,MOUNTAIN_BIKING,,Endomondo.com,bike/ski,False,10.911519585486383,18.608935535973515,0.7558986789787114
+greenmtn,osm1270005,bike,type,MOUNTAIN_BIKING,"Trapps 10 Jul 12 Ride 2 | Started out with Anna and Mark, Anna opted out for short ride. I planned to bring Mark to Kimm",Endomondo.com,bike/ski,False,11.18000370808055,18.497857467403517,0.6981495742071103
+shenandoah,osm1991358,hike,name,,Hiking 7/9/15 11:31 am,RunKeeper - http://www.runkeeper.com,walk,False,3.519413079630786,4.972938248715582,-0.1042366447261017
+shenandoah,osm2714807,hike,name,,Conway River trail backpacking,StravaGPX,walk,True,3.793004580705824,4.288182414303402,0.1589433895675805
+shenandoah,osm2714806,hike,name,,Bearfence Mountain hike,StravaGPX,walk,True,4.27000375451414,4.890888137422574,0.0054592411875327
+shenandoah,osm2317576,run,name,,Hiking/Running Around John's Rest Cabin and up to AT,JOSM GPX export,bike/ski,False,7.694407946262338,12.378672503385522,0.7761562607484758
+shenandoah,osm2063160,bike,name,,March 2011 Ride with Nigel,StravaGPX,bike/ski,False,9.648271152008965,14.352033306337862,1.0598496476022254
+shenandoah,osm12464273,hike,type,hiking,,GPX,walk,True,3.9932727806187063,4.936703489029829,-0.1303299432244486
+shenandoah,osm890399,bike,name,,Kennedy to Habron | Casual pace ride to work on Pinky Ring route.,Garmin Connect,bike/ski,False,10.526363284565576,16.07937661732593,0.8905552637616626
+shenandoah,osm1602193,hike,name,,Export from GpsPrune | Hike to Compton Peak,JOSM GPX export,walk,True,2.5809950979711305,3.69744897997007,0.0835013398336216
+shenandoah,osm971271,run,name,,MMT Training run #3,Garmin Connect,unknown,False,8.295579368456867,9.0327713972444,
+smokies,osm8800678,hike,type,hiking,John Oliver Cabin Access Trail,Garmin Connect,unknown,False,4.7088478014423405,5.330209131911297,
+smokies,osm8800735,hike,type,hiking,Clingmans Dome Trail,Garmin Connect,walk,True,4.218384995172738,5.129722237778954,0.0497519832347183
+smokies,osm8331680,hike,name,,Walking at Clingmans Dome Observation Tower Trail | Walking at Clingmans Dome Observation Tower Trail,AllTrails.com,walk,True,4.37040617215266,5.059630521576568,-0.0236866908245768
+smokies,osm8331673,hike,name,,Hike - Forney Ridge Trail and Andrews Bald | Hike - Forney Ridge Trail and Andrews Bald,AllTrails.com,walk,False,3.489277554556413,4.024236252037025,-0.0549044806240669
+smokies,osm8800641,hike,type,hiking,Cove Mountain Trail and Cataract Falls,Garmin Connect,walk,True,3.967548281807512,5.227113253360877,0.1964924697654052
+smokies,osm8800662,hike,type,hiking,Laurel Falls Trail,Garmin Connect,walk,True,4.473418718951423,5.52834571185045,0.0161858723663209
+smokies,osm12053848,bike,name,,Alcoa Cycling | Alcoa Cycling,Garmin Connect,bike/ski,False,14.996836222394965,23.3793664662662,-0.2339396756295844
+smokies,osm8331678,hike,name,,Hike at Gabes Mountain Trail to Hen Wallow Falls | Hike at Gabes Mountain Trail to Hen Wallow Falls,AllTrails.com,walk,True,3.27636070728303,4.012190054270881,0.1260630634070189
+smokies,osm8800767,hike,type,hiking,Rainbow Falls Trail | Saw a bear eating a corpse of some animal,Garmin Connect,walk,True,3.5537879549876124,4.850118179445454,0.104337315158454
+smokies,osm8800752,hike,type,hiking,Alum Cave Trail,Garmin Connect,walk,True,3.673227651873951,4.476643823123768,-0.1269747317864707
+pisgah,osm3671676,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,15.548456437622011,27.798631664444017,0.8694238630989085
+pisgah,osm3682076,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,16.41725235016667,26.744333788498672,0.8612159831685273
+pisgah,osm3676228,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,19.583522275350525,26.54090742359216,1.35074944296315
+pisgah,osm3546430,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,21.14676674401162,27.373187254732954,
+pisgah,osm3535788,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,10.617005568450312,21.909603575306303,0.7362424621529384
+pisgah,osm3640467,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,17.31057072699353,25.75977703311106,0.9166630636767756
+pisgah,osm3502735,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,18.932931187266355,27.01114339549981,0.959160881880604
+pisgah,osm1614718,bike,type,biking,Brushy Creek - Red 2.26 Mi | Brushy Creek - Red 2.26 Mi,Created by Google My Tracks on Android.,bike/ski,False,4.248829099333295,7.76602314250643,0.9240434583075868
+pisgah,osm3328325,bike,type,road_biking,Henderson County Road Cycling,Garmin Connect,bike/ski,False,16.837459510376505,21.78858620928799,
+pisgah,osm3492996,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,14.451581599891966,24.46597409381829,1.2205589068657394
+pisgah,osm3467840,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,16.4890453554968,24.536002829763618,0.656856795933227
+pisgah,osm3358035,bike,type,cycling,Henderson County Cycling,Garmin Connect,run,False,12.917224364009456,18.3033404261892,0.2321375007705859
+pisgah,osm3818722,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,26.854084812942787,29.396644814094373,
+pisgah,osm3575344,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,24.434079085472327,27.86115700744905,
+pisgah,osm3587807,bike,type,cycling,Transylvania County Cycling,Garmin Connect,bike/ski,False,13.451722092981074,25.52562709092696,1.0283185714711822
+pisgah,osm3519423,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,11.54758815627408,23.242070943808475,0.668755624891328
+pisgah,osm3482708,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,13.80399274442331,24.766592749088574,0.7461885345271118
+pisgah,osm3465734,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,11.020971258809656,25.0251372324285,0.9074955502512704
+pisgah,osm3462215,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,12.33899136197514,24.753837667735898,0.8284985157937373
+pisgah,osm3460467,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,12.00537829455187,22.428042527192822,0.7853668631977818
+pisgah,osm3411454,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,20.811894817371044,28.310392558803105,
+pisgah,osm3185051,bike,name,,05/03/19 | 05/04/18 | 09/13/19 | 1/15/2017 11:08:07 AM | 1/15/2017 12:13:32 PM | 1/16/2017 11:45:55 AM | 10/12/19 | Bilt,Garmin Desktop App,run,False,10.930057827462225,16.982389966996568,0.0854808747124108
+pisgah,osm3358840,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,26.52490424834338,28.89297332861005,
+pisgah,osm3347381,bike,type,cycling,Henderson County Cycling,Garmin Connect,bike/ski,False,26.55980230419764,29.100578502760776,
+pisgah,osm4001694,hike,type,walking,Buncombe County Walking,Garmin Connect,walk,True,3.529353639600588,4.60119376155339,0.0153904884718524
+frontrange,osm3339744,hike,name,,Sunrise Hike with Felix | Hike | Strava,Exported from Strava via extension e-ivanov.ru,walk,False,3.1905489682433195,4.308619129091947,0.0923720567451135
+frontrange,osm2307024,bike,name,,300 Cell Tower | 300 hunt 1 | 300 hunt 2 | CCC ride | Evergreen Lake update | old camp to stands and out,MapSource 6.16.3,bike/ski,False,13.160242536562778,23.90034812716276,0.9110441265951786
+frontrange,osm4814494,bike,type,1,The Bikery Team Ride - Dedisse/Alderfer/Three Sisters,StravaGPX,bike/ski,False,12.462667163819445,25.98411949946712,1.0313089462221132
+frontrange,osm5216606,bike,type,mountain_biking,Willow Springs with Steve,Garmin Connect,bike/ski,False,13.275180390975072,24.78969292461751,1.12393706583971
+frontrange,osm5005995,bike,type,mountain_biking,Jefferson County Mountain Biking,Garmin Connect,bike/ski,False,19.79828866395633,27.124976362967715,0.870144280593598
+frontrange,osm4806649,bike,type,mountain_biking,Jefferson County Mountain Biking,Garmin Connect,bike/ski,False,14.674584449614622,26.537457140203752,0.85026029029464
+frontrange,osm4639004,bike,type,road_biking,Denver/Golden/Morrison Loop,Garmin Connect,bike/ski,False,23.668107738612107,29.117355192134724,-0.331341332912303
+frontrange,osm3119330,hike,name,,"Mount Evans | Měli jsme jen odpoledne, tak jsme si řekli že jako první hike ve Skalistých horách dáme něco nenároného na",,walk,False,2.356931039582779,3.641701946029684,0.2620614971903817
+frontrange,osm12039409,hike,name,,James Peak Summit,GaiaGPS,walk,False,2.65729260283093,4.191922460672584,0.4715911792166452
+frontrange,osm1795801,hike,name,,Crater Lake | Crater Lake Hike,Adze - http://kobotsw.com/apps/adze,walk,False,3.143167617405755,4.358617636925807,
+frontrange,osm12315597,hike,name,,"Apr 26, 2026 Skyryk Walk | Apr 26, 2026 Skyryk Walk",Trailforks.com,walk,False,4.781758879953867,7.390418087950986,0.1746203887630934
+frontrange,osm4806439,bike,type,1,Ken Caryl Climbing,StravaGPX,bike/ski,False,11.753710335538605,23.87722523882476,0.8972821594042816
+frontrange,osm4806435,bike,type,1,Lunch Loop,StravaGPX,bike/ski,False,14.659310743469648,25.263874892292485,0.89910011709728
+frontrange,osm1630950,ski,type,skiing,12/21/2013 Xc Ski | 12/21/2013 Xc Ski,Created by Google My Tracks on Android.,bike/ski,False,4.594922010550823,12.279447984831908,1.1073850007765045
+frontrange,osm4806782,bike,type,1,Maryland Mountain,StravaGPX,bike/ski,False,11.996419204384146,25.545354474793378,0.8656390275936345
+frontrange,osm12007407,bike,type,mountain_biking,Black Hawk Mountain Biking,Garmin Connect,bike/ski,False,9.688246695679304,25.05728030477927,1.045360840410093
+frontrange,osm4806848,bike,type,1,Maryland Mountain Laps,StravaGPX,bike/ski,False,12.960556790812628,22.215604766943397,0.7168423900489437
+frontrange,osm12081106,hike,name,,"Oct 2, 2025 Skyryk Hike | Oct 2, 2025 Skyryk Hike",Trailforks.com,bike/ski,True,5.318506825293506,7.756207647673524,0.6129612132772471
+frontrange,osm4814511,bike,type,1,"White Ranch, more like White Trash",StravaGPX,bike/ski,False,11.005583915298962,20.8718479189905,0.9557372386858456
+frontrange,osm11491274,hike,type,hiking,Friday Evening Hike | Friday Evening Hike,Apple Watch,walk,False,4.444345484778442,4.776024478137308,
+frontrange,osm3945697,hike,type,4,New Anemone Trail Hike,StravaGPX,walk,False,3.718062829545953,4.531226046062455,0.1311122674010132
+frontrange,osm4796349,bike,type,1,Thank Gravel It’s Friday - Far Out Gravel Adventure Series #2,StravaGPX,bike/ski,False,16.38057595343291,20.16053519547268,-0.002012179715193
+frontrange,osm2748946,hike,type,Hiking,2018-07-15 07:52 | 2018-07-15 07:52 | <p>Start time: 07/15/2018 07:52<br/>Finish time: 07/15/2018 12:41<br/>Distance: 3.,OruxMaps v.7.2.13 Donate,walk,True,2.6474680730253715,4.480479053694261,0.2276656985847908
+frontrange,osm12423816,bike,name,,"Jul 11, 2026 Skyryk Ride | Jul 11, 2026 Skyryk Ride",Trailforks.com,bike/ski,False,15.612988642221753,21.158087418322825,1.0178977614748863
+frontrange,osm2858443,run,type,9,That Middle Shanahan 👌,StravaGPX,run,False,9.013182790644285,13.114237755697342,0.4635510663360258
+frontrange,osm2536534,hike,name,,2010-03-22 Hike GGSP Jason Robyn Miriam Dan & Luka (Dog) | 2011-03-19 GGSP 02 Hike | 2011-03-19 GGSP 03 Hike | 2012-02-2,GPSBabel - http://www.gpsbabel.org,walk,False,3.846226971394082,4.971465224424442,0.1218082998242984
+cascades,osm12108900,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,True,2.466880671546204,3.492414668985922,0.2648853576655907
+cascades,osm12078755,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,False,2.930433403689672,4.350419214157829,0.1815880385470913
+cascades,osm12065853,hike,name,,Monday Lunch Hiking,GaiaGPS,walk,False,3.1751493752341764,3.9481509632684135,0.189533675258846
+cascades,osm12082819,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,False,3.0005664417720905,4.005749846936189,0.1899525211848551
+cascades,osm12000254,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,True,3.2609048122480657,4.037316902177408,0.1129089310689585
+cascades,osm11973185,hike,type,hiking,Franklin Falls Hike,StravaGPX,walk,True,3.597460272209179,5.090095763466078,0.3534464234977835
+cascades,osm3800610,bike,type,Cycling,track-82821-94201am,https://gpx.studio,walk,True,4.376186663586303,5.764560591464242,-0.1318139358501306
+cascades,osm688267,hike,name,,Bryant Peak Snowshoe Track,MapSource 6.14.1,walk,True,3.47177393494896,5.343638575232478,0.2443797506790305
+cascades,osm639205,hike,name,,"hike from ira spring trailhead | up and a little bit along trail to bandera mountain. snow up at elevation, made some fa",Garmin Connect,walk,True,4.196346111127282,5.393375291454829,0.3548778267990276
+cascades,osm3379271,hike,type,walking,File with points/tracks from Locus Map/3.47.2 | 2020-08-09 10:01:09 | Red Mountain,"Locus Map, Android",walk,False,2.80834596687966,4.296707910919273,-0.418664004681589
+cascades,osm3284657,hike,type,hiking,Mount Baldy (WA),Garmin Connect,walk,False,3.617579721573109,5.1345720368163965,0.2483078969192872
+cascades,osm11166716,hike,type,walking,Morning Walk,StravaGPX,walk,False,4.426137796411938,6.232517961404084,0.1993073926610769
+cascades,osm11166714,run,type,running,Morning Run,StravaGPX,run,False,10.629445888537504,12.40598172463074,0.3450637326956833
+cascades,osm11166713,run,type,running,Morning Run,StravaGPX,fast,False,11.116736500269669,13.602470042293346,
+cascades,osm11166710,run,type,running,Morning Run,StravaGPX,fast,False,10.875104252411294,12.886073074465328,
+cascades,osm11166709,run,type,running,Morning Run,StravaGPX,run,False,10.490930101921403,11.981854842061146,0.1823140725124917
+cascades,osm11166712,run,type,running,Morning Run,StravaGPX,walk,False,6.892631950349967,8.293033025174351,
+cascades,osm11166711,run,type,running,Morning Run,StravaGPX,fast,False,10.875036635379317,11.798232637011257,
+cascades,osm11166700,run,type,running,Morning Run,StravaGPX,run,False,9.27458050529818,12.587567596144456,0.4649858349841548
+cascades,osm11166699,run,type,running,Morning Run,StravaGPX,fast,False,12.683689673540671,14.724172799739744,
+cascades,osm11166702,run,type,running,Morning Run,StravaGPX,run,False,10.04641152751347,12.000955446254894,0.2446247833879841
+cascades,osm11166701,run,type,running,Morning Run,StravaGPX,fast,False,12.893421915593612,14.28118106982629,
+cascades,osm11166706,run,type,running,Morning Run,StravaGPX,fast,False,10.636821705054077,11.92371402881714,
+cascades,osm11166703,run,type,running,Morning Run,StravaGPX,run,False,8.9920877589913,11.126389822617348,0.1912190533178019
+cascades,osm11166698,run,type,running,Morning Run,StravaGPX,fast,False,11.073006116422228,12.519359418082097,
+cascades,osm11166697,run,type,running,Morning Run,StravaGPX,run,False,10.197010467903876,11.848500821368594,0.054840409872896
+cascades,osm11166693,run,type,running,Morning Run,StravaGPX,fast,False,11.594948262859358,13.428549982259398,
+cascades,osm11166692,run,type,running,Morning Run,StravaGPX,fast,False,10.917006238392975,12.08981597913198,
+cascades,osm11166708,run,type,running,Morning Run,StravaGPX,run,False,7.900089882432645,9.7982320487867,0.0723485740287455
+cascades,osm11166707,run,type,running,Morning Run,StravaGPX,fast,False,8.199488378729347,10.64647752718968,
+cascades,osm11166695,run,type,running,Morning Run,StravaGPX,run,False,8.854305908937558,11.1624582244995,0.2928450211537962
+cascades,osm11166694,run,type,running,Morning Run,StravaGPX,run,False,9.839273951317583,12.99305604057114,0.3155630425859344
+cascades,osm11166683,hike,type,walking,Lunch Walk,StravaGPX,walk,False,5.005608259905541,6.334365281967422,0.0725002564015905
+cascades,osm11166682,run,type,running,Lunch Run,StravaGPX,fast,False,11.073149666982674,13.292996249389482,
+cascades,osm11166686,bike,type,cycling,Morning Ride,StravaGPX,fast,False,7.41860218398082,9.848710761725114,
+cascades,osm11166691,run,type,running,Morning Run,StravaGPX,fast,False,11.690145039545683,13.35809727229806,
+cascades,osm11166689,bike,type,cycling,Morning Ride,StravaGPX,bike/ski,False,14.339380110346744,18.79706087608469,1.056853779716155
+cascades,osm11166676,hike,type,walking,Afternoon Walk,StravaGPX,unknown,False,4.169454116556981,5.054455722196591,
+cascades,osm11166674,run,type,running,Afternoon Run,StravaGPX,run,False,10.075630350883806,12.818454511167271,0.5001456263976042
+cascades,osm11166678,hike,type,walking,Afternoon Walk,StravaGPX,walk,False,5.121213993950311,6.704783203877769,
+cascades,osm11166677,hike,type,walking,Afternoon Walk,StravaGPX,walk,False,4.717651214302549,5.346798157633723,
+cascades,osm11166673,run,type,running,Afternoon Run,StravaGPX,run,False,10.500811652226693,12.836029555381486,0.0729831020147423
+cascades,osm11166680,bike,type,cycling,Lunch Ride,StravaGPX,fast,False,8.965949976927032,11.134892965019436,
+cascades,osm11166679,bike,type,cycling,Lunch Ride,StravaGPX,bike/ski,False,8.984772048741101,23.888335342632377,1.047656848171585
+cascades,osm11166671,bike,type,cycling,Afternoon Ride,StravaGPX,bike/ski,False,9.42618118528289,22.26437462498609,1.0556755267565616
+cascades,osm11166670,bike,type,cycling,Afternoon Ride,StravaGPX,fast,False,13.328689082759295,19.651314982151085,
+cascades,osm11166669,bike,type,cycling,Afternoon Ride,StravaGPX,run,False,7.299992397679066,10.38145408568206,0.293858117079392
+cascades,osm11166667,bike,type,cycling,Afternoon Ride,StravaGPX,fast,False,9.743820435483808,16.4038914815152,
+cascades,osm11166666,bike,type,cycling,Afternoon Ride,StravaGPX,bike/ski,False,10.911334308806037,25.497895066574088,1.1234629204002502
+cascades,osm11166665,bike,type,cycling,Afternoon Ride,StravaGPX,bike/ski,False,8.1301018660495,23.092742015230566,1.3630627242116815
+cascades,osm11166664,bike,type,cycling,Afternoon Ride,StravaGPX,fast,False,7.757129179984309,11.72012977192212,
+cascades,osm11166663,bike,type,cycling,Afternoon Ride,StravaGPX,walk,False,6.275644135869262,9.887557786823692,
+cascades,osm11166688,bike,type,cycling,Morning Ride,StravaGPX,bike/ski,False,8.088865202593658,18.600505038599916,0.8812183083218397
+cascades,osm11166687,bike,type,cycling,Morning Ride,StravaGPX,bike/ski,False,8.310026942152597,20.44409153732061,1.0207682870512482
+cascades,osm3220712,hike,type,hiking,Kittitas County Hiking,Garmin Connect,walk,False,2.9315392201930983,4.277181094599585,-0.0346552709425308
+cascades,osm12479263,hike,type,walking,Afternoon Walk,StravaGPX,walk,False,4.87351712714756,6.614398847629158,0.2443590380509187
+cascades,osm12475119,hike,type,walking,Evening Walk,StravaGPX,walk,False,2.793098588200672,4.558947098840683,
+cascades,osm12086937,hike,name,,Saturday Morning Hiking,GaiaGPS,walk,True,3.1153474472834866,4.674396416081604,0.2238196305685087
+cascades,osm12014794,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,True,3.848260918758744,4.457838859440921,0.0848491134055446
+cascades,osm12006531,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,False,3.62713758419752,4.359301523142954,0.1432442555131391
+cascades,osm12078760,hike,name,,Sunday Lunch Hiking,GaiaGPS,walk,True,2.817587586590204,4.243358773231247,0.427598546966759
+cascades,osm12078756,hike,name,,Sunday Lunch Hiking,GaiaGPS,walk,False,2.687638403948917,4.130486257204851,0.4450261764604505
+cascades,osm9590542,bike,type,cycling,Day 562 Seattle to Auburn,StravaGPX,bike/ski,False,16.789978583662492,21.654240276964387,
+cascades,osm11984001,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,True,3.385576272467301,4.941133118679197,0.2663832546145727
+cascades,osm3533883,hike,type,hiking,Squak Mountain (WA),Garmin Connect,walk,False,4.551460678097604,6.273975398810997,0.1998545467715034
+cascades,osm3379263,bike,type,1,.,StravaGPX iPhone,bike/ski,False,7.642478159337735,18.3927042226732,0.8457562592716803
+cascades,osm1890447,hike,name,,Hiking 1/25/14 1:10 pm,RunKeeper - http://www.runkeeper.com,walk,True,6.129381607591507,7.104191366005343,0.1377857818630164
+cascades,osm6179696,bike,type,Cycling,"trace4 | 7mi, 3x[5min @ 5k, 3min recovery]",StravaGPX,fast,False,11.741379505880817,13.605513989813598,
+cascades,osm919270,hike,name,,Tiger | Summit / poo poo / bootleg / artifacts,MotionX Live,bike/ski,True,10.95288020023768,21.21366294250892,0.2174907089889862
+cascades,osm1911612,bike,name,,"Loch Katrine | This alpine lake is pretty secluded and hard to reach. With a bike, you can do it!",GaiaGPS,unknown,False,2.141815305733972,11.94387191445768,
+cascades,osm11976326,hike,name,,Sunday Lunch Hiking,GaiaGPS,walk,True,3.498309657791516,4.700606474170003,0.2905919967063222
+cascades,osm11429719,hike,name,,Afternoon hike | Afternoon hike,AllTrails.com,walk,False,4.938921026687858,6.062454253487914,0.259959477415354
+cascades,osm954372,hike,name,,Mailbox Peak | Hiked with Chris and his dad.,Garmin Connect,walk,True,1.9314662340456348,3.820158189623684,0.1591930524030426
+cascades,osm954370,hike,name,,Little Si | Hiked with Natalie,Garmin Connect,walk,True,4.885747196114168,6.526688812898075,0.0604542888103884
+cascades,osm12419776,hike,name,,Afternoon hike | Afternoon hike,AllTrails.com,walk,False,2.712854104204176,4.3420218729716975,0.2534770959182802
+cascades,osm11203941,hike,name,,Morning hike at CCC Trail: North Section | Morning hike at CCC Trail: North Section,AllTrails.com,walk,False,4.18465658480081,5.3900405916609415,0.0483088421719375
+cascades,osm954364,hike,name,,Mount Si | Hiked with Chris and his dad.,Garmin Connect,walk,True,3.379525430917518,5.208379749477612,0.4892633513082768
+cascades,osm3800609,bike,type,Cycling,track-82821-94201am,https://gpx.studio,walk,True,4.36994404080662,5.877073441753213,-0.0178640054508978
+cascades,osm1974449,hike,name,,Skykomish Hiking,Garmin Connect,walk,False,2.3235671562596134,3.5249510013166754,0.4709447232115876
+cascades,osm1974448,hike,name,,Skykomish Hiking,Garmin Connect,walk,True,3.269863385884934,4.595268719445482,-0.0023526489289962
+cascades,osm11424693,hike,name,,Morning hike | Morning hike,AllTrails.com,walk,False,2.329227827667962,2.8319715982519376,
+cascades,osm11424692,hike,name,,Morning hike | Morning hike,AllTrails.com,walk,False,1.949424273526376,3.8532281855617,
+cascades,osm11424690,hike,name,,Morning hike | Morning hike,AllTrails.com,unknown,False,1.4742456740775194,1.8811910346343343,
+cascades,osm11424689,hike,name,,Afternoon hike | Afternoon hike,AllTrails.com,unknown,False,2.38463599939839,4.140080995050003,
+cascades,osm11424687,hike,name,,Afternoon hike | Afternoon hike,AllTrails.com,walk,False,2.136145093226322,3.536938932699538,0.2727921079767821
+cascades,osm1974450,hike,name,,Skykomish Hiking,Garmin Connect,walk,True,2.511486980200566,3.595093653385408,0.1426881533179274
+cascades,osm11973183,hike,type,hiking,Wallace Falls,StravaGPX,walk,True,3.841528610085594,5.215231954249897,0.214264435847771
+cascades,osm11973184,hike,type,hiking,Heybrook Lookout from Index,StravaGPX,walk,True,3.973663258897577,5.506991449864808,0.1935182035685845
+cascades,osm2781032,hike,type,walking,File with points/tracks from Locus Map/3.32.2 | 2018-08-19 14:04:27,"Locus Map, Android",walk,False,3.2768705725071285,5.313582272743282,
+cascades,osm3572435,hike,name,,Wenatchee Snowshoe,JOSM GPX export,walk,False,3.131845596650839,4.64737527075295,0.2201554224842394
+cascades,osm11722794,ski,name,,"January 6, 2025 - Stevens Pass Ski Area",Slopes for iOS - http://getslopes.com,bike/ski,False,16.13698349151091,26.03539299536392,0.0876517509881754
+olympic,osm5007790,hike,type,hiking,Humes Ranch to Dodger Point Campsite,Garmin Connect,walk,True,3.15673739754478,4.024884292982047,0.0147716941706252
+olympic,osm5007788,hike,type,hiking,Dodger Point Campsite to Dodger Point Lookout,Garmin Connect,walk,True,2.66869295019048,3.970969375819485,
+olympic,osm4223932,hike,type,hiking,Upper Dungeness River Trail  Return Trip | The return half of the hike.,Garmin Connect,walk,False,4.0973352355711485,5.263541362569195,
+olympic,osm8325511,hike,type,hiking,Dungeness Trail to Boulder Shelter | 45 minutes thunderstorm with 2mm hail.,Garmin Connect,walk,False,3.598205223701726,5.1886405610216215,0.2860806245109206
+olympic,osm4240285,hike,type,hiking,Lower Dungeness River Trail (top to bottom),Garmin Connect,walk,False,3.70555153860289,4.703714985916232,0.1422546306136993
+olympic,osm12386757,hike,name,,Hiking | Hiking 2025-06-23 17:54:18 +0000,WorkoutGPX,walk,True,2.6001591159682684,4.998255861565895,-0.0333798175737939
+olympic,osm4806219,hike,type,hiking,Happy Lake to Storm King Ranger Station,Garmin Connect,walk,True,3.3099300505429308,4.598242661127395,0.232368218751625
+olympic,osm4747300,hike,type,hiking,Dodger Peak Trail Bridge  and Lillian Camp,Garmin Connect,walk,True,3.836695263372404,4.998445500264112,0.0729920655959968
+olympic,osm5007791,hike,type,hiking,Madison Falls Trailhead to Humes Ranch via Goblin's Gate,Garmin Connect,walk,False,3.628701509425588,4.654499636201967,-0.1116498046915067
+olympic,osm3585753,ski,name,,Hurricane Ridge Skiing,GaiaGPS,walk,False,5.100641060874208,18.1077774362768,-0.7155068937679736
+olympic,osm4806220,hike,type,hiking,Storm King Ranger Station to Happy Lake,Garmin Connect,walk,True,3.0684460445122337,4.745850168054268,0.1344304088943057
+olympic,osm4747303,hike,type,hiking,Humes Ranch to Marion Falls Backpacking,Garmin Connect,walk,False,4.340462081611391,5.112161945379061,0.0893100040603693
+olympic,osm4747302,hike,type,hiking,Humes Ranch Backpacking,Garmin Connect,walk,False,3.860512118538046,4.933715660166922,0.0773291505556027
+olympic,osm4209424,hike,type,hiking,Port Angeles Hiking,Garmin Connect,walk,False,3.054464398025962,4.032024309051293,-0.1460165668689754
+olympic,osm4618281,hike,type,hiking,Grand Ridge Trail Deer Park to Maiden Peak,Garmin Connect,walk,True,3.926544442536975,4.700993185887634,0.1624508765965432
+olympic,osm4518050,hike,type,hiking,Lake Angeles and Klahhane  Ridge,Garmin Connect,walk,False,3.5369636134489784,4.334257359693757,0.1107290000564278
+olympic,osm4471046,hike,type,hiking,Deer Ridge Trail to Deer Park,Garmin Connect,walk,True,4.275981040327746,5.254099872000583,0.1580670585370692
+olympic,osm4350210,hike,type,hiking,Deer Ridge Trail,Garmin Connect,walk,True,3.128303044052326,4.447993134222506,0.2844351556761255
+olympic,osm4118193,hike,type,hiking,Lower Gray Wolf River Trail,Garmin Connect,walk,False,3.609061510206701,4.694831497712673,-0.0505557965787001
+yosemite,osm11982830,hike,type,walking,Afternoon Walk,StravaGPX,walk,False,3.7447470799440943,6.833977718700431,-0.142849540206233
+yosemite,osm11479058,hike,type,hiking,Mariposa County Hiking,Garmin Connect,unknown,False,3.3655626314392912,13.953483745236811,
+yosemite,osm2846355,hike,name,,Half Dome Hike,GPS Hiker For iOS,walk,False,3.1609457039995794,4.756095661170243,0.1503674451013703
+yosemite,osm2397738,hike,type,walking,Royal Arches | Royal Arches,Created by Google My Tracks on Android,walk,False,1.678026702482172,4.428368061238597,
+yosemite,osm11733048,hike,type,walking,Midnight Walk,StravaGPX,unknown,False,4.853167374370829,7.815645125565767,
+yosemite,osm11732724,hike,type,walking,Mariposa County Walking,Garmin Connect,walk,False,3.9028281911543625,5.066752052088022,0.141277698369194
+tahoe,osm2181501,bike,name,,AlpineQuest Track 06/08/2016 09:52:01 | bike ride,AlpineQuest 2.0.1b,bike/ski,False,14.682673765873762,20.607994814838985,
+tahoe,osm1990872,hike,name,,South Lake Tahoe Hiking,Garmin Connect,walk,False,3.291796604046519,3.918835746458393,
+tahoe,osm12398879,run,type,trail_running,Alpine County Trail Running,Garmin Connect,bike/ski,False,5.228512028627295,9.104778450410269,0.9501906310535626
+tahoe,osm10956285,bike,type,cycling,Day 615 Caples Lake to Lake Tahoe,StravaGPX,bike/ski,False,16.080536717590423,21.21231330543245,
+tahoe,osm12112727,run,type,running,Desolation 7 FKT,StravaGPX,walk,False,5.475462623954071,8.099440680659896,0.4447868956650584
+tahoe,osm2032667,hike,name,,"Job's, Job's sister, and Freel peaks loop hike",strava.com Android,walk,False,2.9492931047638407,4.082037805158696,0.2700727432410385
+tahoe,osm2480286,hike,name,,Spooner Summit to Kingsbury,GaiaGPS,walk,False,4.533299742441259,5.310474494024336,0.2096051301966806
+tahoe,osm12015457,run,type,running,Shirley Canyon to Granite Chief trail,StravaGPX,bike/ski,True,6.4364692667606525,8.746373081141462,0.6261717748829747
+tahoe,osm12015455,hike,type,hiking,Lunch Hike,StravaGPX,walk,False,2.9360527145469586,3.724498798857762,
+tahoe,osm12403579,bike,type,cycling,Gravel bike + Tahoe = true love 🥰,StravaGPX,bike/ski,False,17.155078438812637,24.36226497852885,0.6513769911302895
+tahoe,osm12370084,bike,type,mountain_biking,Placer County Mountain Biking,Garmin Connect,bike/ski,False,12.083304207208476,20.413638674689395,0.8684605678506427
+tahoe,osm11985883,bike,type,cycling,MTB date with Matt on brown pow,StravaGPX,bike/ski,False,11.466124391775466,18.402956704102685,0.869733676027886
+tahoe,osm11979077,bike,type,cycling,EZ Mountain Bike Ride w/ Bodie,StravaGPX,bike/ski,False,10.173284994125734,20.1199678215343,0.7185815141241504
+tahoe,osm10606560,run,type,running,Mile buildup repeats 🏃,StravaGPX,fast,False,8.593576213978414,10.18653402410243,
+tahoe,osm9918702,run,type,running,Zone 2 running in the rain,StravaGPX,fast,False,8.136522162221109,9.673092528809494,
+tahoe,osm12112753,hike,type,hiking,Palisades Hike and Made In Tahoe w/ Tyler,StravaGPX,walk,True,3.51462683392606,4.563740754082343,0.3272661979016922
+tahoe,osm12112715,run,type,running,"Long run in ""the backyard""",StravaGPX,bike/ski,False,7.038201993256271,9.84202532330109,0.6710873381092116
+tahoe,osm11978007,bike,type,cycling,Mountain Bike date with Matt 💕,StravaGPX,bike/ski,False,12.403778768899103,20.535144476097592,0.6555730813986487
+tahoe,osm11991494,run,type,running,Z2 long run,StravaGPX,walk,False,6.838988969375547,9.09564663345054,0.4938981300362571
+tahoe,osm11986484,bike,type,cycling,MTB date with Matt 💕 mapping unmapped trails,StravaGPX,bike/ski,False,12.971848135673648,19.266910947664336,0.7965867138459447
+tahoe,osm3501091,run,type,9,Backyard vert hunt during a snow/rain storm,StravaGPX,bike/ski,False,7.764265064171086,9.907593980909017,0.5544891785823216
+tahoe,osm1125372,hike,name,,Hike with Gregory,Garmin Connect,walk,False,4.190697003652623,4.871337769189581,0.2537496525381202
+tahoe,osm12370081,run,type,trail_running,Placer County Trail Running,Garmin Connect,bike/ski,False,7.187440075703327,9.15037565322578,0.531189059089644
+tahoe,osm12112783,run,type,running,Long run day • Berries and T-storms,StravaGPX,bike/ski,False,6.2442840239886905,9.078368125273824,0.6212313788121061
+tahoe,osm1889183,hike,name,,Ophir Creek Hike,GPSBabel - http://www.gpsbabel.org,walk,False,3.432936660839209,4.693158598006214,0.1176735626329069
+tahoe,osm1612152,hike,name,,Incline Ridge Snowshoe,strava.com Android,walk,False,2.8688371804801505,3.939510269486523,0.6941001428863055
+tahoe,osm12015474,run,type,running,Fun run! Vert Hunt • Tahoe Rim to Washoe from Mt Rose Hwy,StravaGPX,bike/ski,False,6.293855418230184,8.973223538170142,0.7790115990858766
+tahoe,osm1990874,hike,name,,Incline Village Hiking,Garmin Connect,unknown,False,2.761047121720736,3.672198835259276,

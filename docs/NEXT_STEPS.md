@@ -1,17 +1,18 @@
 # Next steps: from T1 to the IGARSS 2027 paper
 
 *Written 11 Oct 2026 (Sunday, week 7), after a literature and data-source
-survey. Plain-English summary first; details below. Citations with links
-are in "What the literature says". Items marked (verify) come from search
-snippets and need checking when you read the paper.*
+survey; **updated the same day (10:00 CDT) with the first evaluation
+results** (§1b). Plain-English summary first; details below. Citations with
+links are in "What the literature says". Items marked (verify) come from
+search snippets and need checking when you read the paper.*
 
 ---
 
 ## The short version
 
-1. **Where we are:** T1 (the dataset) is almost done: 12 of 17 regions are
-   built, the rest are downloading on the cluster. That is far more than the
-   plan's single region.
+1. **Where we are:** T1 (the dataset) is done in 17 regions, far more than
+   the plan's single region. 5 city regions are being upgraded from lab-only
+   to full downloads. The T3 evaluation harness runs on it (§1b).
 2. **What we learned from the literature:** our first results replicate
    Campbell et al. (2019, 2022). With Strava and AllTrails data from Utah and
    California, they also found hikers peak around 4.1 km/h (we get 4.25), with
@@ -24,7 +25,12 @@ snippets and need checking when you read the paper.*
      remote sensing instead of map tags (17 regions make this testable);
    - give **calibrated uncertainty**;
    - measure the **up/down asymmetry on same-hiker pairs** at scale.
-4. **The plan:**
+4. **First evaluation results (§1b)** sharpen this. Map tags improve
+   predictions by only ~1% within a region and ~0.2% in a new region, while
+   a hiker's own pace matters ~10× more. So the remote-sensing question is
+   about **transfer**: do physical covariates keep their value in new
+   regions, where tag effects don't?
+5. **The plan:**
    - finish T1 this week;
    - T2 covariates in weeks 9–10, reusing STRIDE's lidar definitions plus
      free foundation-model embeddings;
@@ -36,11 +42,18 @@ snippets and need checking when you read the paper.*
 
 ## 1. Where we are (11 Oct)
 
-**T1 status.** 10 regions are built from full downloads plus lab traces:
-White Mountains, Cascades, Front Range, Tahoe, Olympic, Smokies,
-Adirondacks, Catskills, Yosemite and Green Mountains. 2 more are built from
-lab traces only (North Shore, San Gabriels), and 5 are in progress
-(`PROGRESS.md`).
+**T1 status (updated 11 Oct, 10:00).** All 17 planned regions are built.
+- 12 are built from full downloads plus lab traces: White Mountains,
+  Cascades, Front Range, Tahoe, Olympic, Smokies, Adirondacks, Catskills,
+  Yosemite, Green Mountains, Shenandoah, Pisgah.
+- 5 city regions are built from lab traces only: North Shore, San Gabriels,
+  Columbia Gorge, Wasatch, Bay Area. Their full downloads run one at a time.
+- Combined, the dataset has 2,533 hiking traces, 1,745 walking outings and
+  4,227 walking hours, in one table with one data card
+  (`travel-speed-gate1/results/t1_all/DATA_CARD.md`; the data itself stays
+  on the cluster).
+- Mode calls were checked against the uploaders' own activity labels: 3% of
+  "walk" traces are labeled bike or ski (`PROGRESS.md`).
 
 **What the data say so far** (12 regions, 237k walking segments, 1,503 walking outings;
 `travel-speed-gate1/results/t1_findings/`):
@@ -60,6 +73,49 @@ lab traces only (North Shore, San Gabriels), and 5 are in progress
 - The lab-only regions lack anonymous traces.
 
 ---
+
+## 1b. First evaluation results (11 Oct; `t3_harness.py`, decision #82)
+
+Each model predicts a speed *distribution* for every 50 m walking trail
+segment (260k segments, 17 regions). It is scored on held-out outings,
+held-out 10 km blocks and **held-out regions**. CRPS skill is measured
+against our refitted slope-only curve:
+
+| Model | Within a region (outing folds) | Unseen region (leave one out) |
+|---|---|---|
+| Tobler as published | −13.8% | −13.2% |
+| Slope curve (tent, rounded or Lorentz) | 0 (baseline) | 0 (baseline) |
+| + OSM tags, additive (Wood-style) | +1.1% | +0.2% |
+| + OSM tags, boosted trees | +1.0% | −0.9% |
+| Place memory: other hikers in the same 100 m cell (ceiling) | +1.4% | n/a |
+| Slope curve fitted on the region's own other hikers | n/a | +1.7% |
+| **Personal pace** (hiker's first km) | +7.9% | **+8.5%** |
+| Personal pace + tags | +9.1% | +9.1% |
+
+In travel time (median error, unseen regions):
+- whole hikes: 13.7% (slope curve) → 9.9% (with personal pace);
+- 1 km stretches: 17.2% → 13.9%.
+
+90% intervals cover 88% of held-out speeds. Tag effects (fitted on all
+data):
+- easy trails (sac_scale T1) ~7% faster than untagged, T4 alpine ~4%
+  slower;
+- worse trail visibility up to ~10% slower;
+- trails ≥ 2 m wide ~5% faster.
+
+**What this means:**
+- Terrain beyond slope is a small signal next to who is hiking.
+- The place-memory row bounds what any place-based covariate (tags or
+  remote sensing) can add at our data density.
+- Tags capture ~75% of that bound within a region, but only ~20% of their
+  gain survives in a new region (tagging conventions differ).
+- That transfer gap is the remote-sensing opportunity: lidar roughness,
+  canopy and embeddings mean the same thing everywhere. The paper tests
+  exactly that, and it must report gains against the ceiling, not as
+  big-sounding raw numbers.
+- With personal pace known, tags add more (+0.6–1.2%). Terrain effects
+  show more clearly once the hiker is accounted for, so T3 should report
+  both.
 
 ## 2. What the literature says (and how we differ)
 
@@ -106,9 +162,11 @@ Methodologies" or SP.5 "Foundation Models and Embeddings for EO"
 unseen regions from airborne lidar and Earth-observation embeddings.*
 
 **Claims, in priority order:**
-1. **(Lead) Transfer.** Leave one region out across 17 regions. Remote-sensing
-   covariates recover X% of what OSM tags buy over a slope-only curve, with
-   calibrated uncertainty (CRPS, PIT).
+1. **(Lead) Transfer.** Leave one region out across 17 regions. Tag effects
+   barely transfer (+1.1% → +0.2%; §1b). Do remote-sensing covariates keep
+   their within-region gain in unseen regions, measured against the
+   place-memory ceiling and with calibrated uncertainty (CRPS, PIT)? Report
+   it with and without personal pace.
 2. **Dataset.** N traversals from ~1,600+ walking outings in 17 regions:
    - how it was built;
    - what share of OSM traces is usable;
@@ -204,8 +262,8 @@ which region it's in.
 |---|---|---|---|
 | 1 | GitHub repo + daily progress log | Claude | ✅ |
 | 2 | First multi-region findings (shape, variance, fatigue, asymmetry) | Claude | ✅ |
-| 3 | **T1 close-out:** combined all-region dataset + one data card; elevation-quality check for every region; spot-check mode calls with maps | Claude | next |
-| 4 | **Evaluation harness on T1 data**: Tobler / slope-only / Campbell / Tags arms; outing, block and leave-one-region-out splits; CRPS. Gives the first "Tags vs slope-only" numbers before T2, and the RS arm plugs straight in | Claude | next |
+| 3 | **T1 close-out:** combined all-region dataset + one data card; elevation-quality check for every region; mode calls checked against the uploaders' own activity labels | Claude | ✅ 11 Oct (re-run as the city regions upgrade) |
+| 4 | **Evaluation harness on T1 data**: Tobler / slope-only / Lorentz / Tags arms (+ place memory, personal pace); outing, block and leave-one-region-out splits; CRPS, coverage, stretch and hike time errors | Claude | ✅ 11 Oct (§1b). Next: Campbell's published constants, once read |
 | 5 | **Paper skeleton** in the IGARSS LaTeX template: storyline, figure slots, related-work paragraph (citations above), 4-page budget | Claude drafts, Brian edits | next |
 | 6 | T2 pilot on the White Mountains (1 m roughness, Meta canopy, AlphaEarth sample), ready to scale once Danni says go | Claude | after 16 Oct |
 | 7 | Stop-rule hand check: 20 cards in `stop_check/stop_check.html`, ~15 min | **Brian** | open |

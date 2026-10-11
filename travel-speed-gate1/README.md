@@ -235,6 +235,40 @@ each region's elevation and build jobs (`cluster/t1_region_job.sh`). Progress:
 `logs/t1_queue.log` on the cluster; `squeue -u zhou.n` for jobs. To bring
 results to the laptop: `rsync -a zhou.n@shell3.engr.wustl.edu:/engrfs/project/jacobsn/zhou.n/travel-speed/{data,results,logs} .`
 
+**Close-out and checks (11 Oct).** Run these on the cluster after the
+builds:
+
+| Script | What it does |
+|---|---|
+| `t1_findings.py` | Curve shape (cross-validated forms), who vs where (variance between and within outings), fatigue, up/down asymmetry, over all regions (`results/t1_findings/`) |
+| `t1_dem_quality.py` | Which elevation source (1 m lidar or coarser) sits under each region's walked trails (`results/t1_dem_quality.csv`) |
+| `t1_mode_check.py` | Mode calls vs the activity the uploader's own app wrote into the GPX file ("hiking", "Afternoon Ride" ...) (`results/t1_mode_check/`) |
+| `t1_combine.py` | One dataset for all regions: `data/t1_all/` (segments, traces, regions, `DATA_CARD.md`). It stays on the cluster (user names, size); the card and region table are copied to `results/t1_all/` |
+
+## T3: the evaluation harness (from 11 Oct 2026)
+
+`t3_harness.py` scores every model the same way.
+- **What each model predicts:** a speed distribution for each 50 m walking
+  trail segment.
+- **How it is tested:** never on the outings it was fitted on. Three splits:
+  5 folds of outings, 5 folds of 10 km blocks, and leave one region out.
+- **Models:**
+  - Tobler as published;
+  - refitted slope curves;
+  - OSM tags (additive and boosted trees);
+  - place memory (the ceiling for anything place-based);
+  - personal pace (the hiker's first km).
+- **Scores:** CRPS, interval coverage, and moving-time errors over 1 km
+  stretches and whole hikes.
+
+Run it on the cluster (8 CPUs, ~4 min) with `python t3_harness.py`. Two
+options:
+- `--quick`: a 15% smoke test;
+- `--figure`: only redraw the figure.
+
+Results go to `results/t3_harness/`. The remote-sensing arms plug into
+`ARMS` once T2's covariates exist.
+
 ## T2: remote-sensing covariates (from 9 Oct 2026)
 
 | Script | What it does |

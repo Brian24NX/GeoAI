@@ -3,28 +3,36 @@
 One entry per working day: what was done, the numbers, decisions, what's
 next. Details and reasons for every decision: `DECISIONS_LOG.md`.
 
-## Status (11 Oct 2026)
+## Status (11 Oct 2026, 10:00 CDT)
 
-**Stage: finishing T1** (the trajectory dataset), multi-region, on the lab
-cluster. T2 (remote-sensing covariates) is next, per Danni (9 Oct: "finish
-T1 completely, then T2 per the timeline").
+**Stage: closing T1** (the trajectory dataset; 17 regions built, on the lab
+cluster) and starting T3's evaluation harness on T1 data. T2 (remote-sensing
+covariates) follows, per Danni (9 Oct: "finish T1 completely, then T2 per
+the timeline").
 
-| Region | Data | Hiking traces | Walking hikes | Peak speed v0 (km/h) | Slope sensitivity k |
-|---|---|---|---|---|---|
-| White Mountains, NH | API + lab | 235 | 188 | 4.22 | 2.10 |
-| Cascades I-90 + Alpine Lakes, WA | API + lab | 684 | 528 | 4.37 | 1.72 |
-| Front Range (Boulder–Golden), CO | API + lab | 206 | 96 | 4.36 | 1.87 |
-| Lake Tahoe, CA/NV | API + lab | 230 | 94 | 4.17 | 1.67 |
-| Olympic NP, WA | API + lab | 175 | 163 | 4.08 | 1.10 (coarse DEM) |
-| Great Smoky Mountains, TN/NC | API + lab | 69 | 58 | 3.95 | 1.06 |
-| Adirondack High Peaks, NY | API + lab | 103 | 73 | 4.05 | 2.20 |
-| Catskills, NY | API + lab | 73 | 60 | 4.19 | 1.91 |
-| Yosemite, CA | API + lab | 92 | 86 | 4.17 | 1.88 |
-| Green Mountains, VT | API + lab | 56 | 24 | 4.43 | 2.39 |
-| North Shore, Vancouver BC | lab only (full download queued) | 91 | 65 | | |
-| San Gabriels, Columbia Gorge, Wasatch, Bay Area | lab-only builds running; full downloads queued | | | | |
-| Shenandoah, Pisgah | full downloads running | | | | |
-| **All built regions pooled (first 10)** | | **1,923** | **1,369** | **4.25** | **1.80** |
+| Region | Data | Hiking traces | Walking outings | Peak speed v0 (km/h) | Slope sensitivity k | 1 m lidar under trails |
+|---|---|---|---|---|---|---|
+| White Mountains, NH | API + lab | 235 | 188 | 4.22 | 2.10 | 100% |
+| Adirondack High Peaks, NY | API + lab | 103 | 73 | 4.05 | 2.20 | 99% |
+| Catskills, NY | API + lab | 73 | 60 | 4.19 | 1.91 | 100% |
+| Green Mountains, VT | API + lab | 56 | 25 | 4.52 | 2.46 | 100% |
+| Shenandoah, VA | API + lab | 83 | 41 | 4.57 | 1.14 | 100% |
+| Great Smoky Mountains, TN/NC | API + lab | 69 | 58 | 3.95 | 1.06 | 88% |
+| Asheville / Pisgah, NC | API + lab | 75 | 38 | 4.02 | 1.21 | 90% |
+| Colorado Front Range (Boulder–Golden) | API + lab | 206 | 96 | 4.36 | 1.87 | 90% |
+| Wasatch Front (Salt Lake City), UT | lab only* | 60 | 35 | 5.08 | 2.08 | 88% |
+| Cascades I-90 + Alpine Lakes, WA | API + lab | 684 | 528 | 4.37 | 1.72 | 83% |
+| Columbia River Gorge, OR/WA | lab only* | 43 | 24 | 4.43 | 1.58 | 21% (mostly 3 m) |
+| Olympic NP (north), WA | API + lab | 175 | 163 | 4.08 | 1.10 (coarse DEM) | 29% |
+| Bay Area hills, CA | lab only* | 177 | 102 | 4.42 | 1.37 | 98% |
+| San Gabriel Mountains (LA), CA | lab only* | 81 | 72 | 3.75 | 1.64 | 100% |
+| Yosemite Valley + High Sierra, CA | API + lab | 92 | 86 | 4.17 | 1.88 | 70% |
+| Lake Tahoe, CA/NV | API + lab | 230 | 94 | 4.17 | 1.67 | 95% |
+| North Shore Mountains (Vancouver), BC | lab only* | 91 | 62 | 4.64 | 1.44 (coarse DEM) | 0% |
+| **All 17 pooled** | | **2,533** | **1,745** | **4.27** | **1.78** | |
+
+\* Full OSM download running or queued (North Shore first); each region is
+rebuilt automatically when its download lands.
 
 Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
 
@@ -76,6 +84,40 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   bike/ski traces; pooled v0 4.27 [4.21, 4.33] km/h, k 1.78. Left for T1:
   upgrading the 5 lab-only city regions with their full downloads (North
   Shore running), plus the optional stop-rule hand check.
+- **T1 close-out** (morning):
+  - Elevation source under the trails, all 17 regions (decision #78): 1 m
+    lidar under ≥ 83% of walked trail in 13 regions; weak in Yosemite
+    (70%), Olympic (29%), the Columbia Gorge (21%, mostly 3 m) and the North
+    Shore (0%: USGS has only ~10 m in Canada).
+  - **Mode check** (decision #79): 246 hiking traces whose own GPS app
+    named the activity (Garmin "hiking", Strava "Afternoon Ride", ...). 93%
+    of labeled hikes were called walking; only 3% of the traces we call
+    walking were labeled bike or ski.
+  - **One combined dataset** (decision #80): `data/t1_all/` on the cluster.
+    It holds 627k segments of hiking traces, with the walking analysis set
+    flagged: 261k segments, 1,744 outings, 4,227 h, 13,054 km. One data
+    card explains every column (`results/t1_all/DATA_CARD.md`).
+- **T3 evaluation harness, first results** (`t3_harness.py`, decisions #81,
+  #82). Each model predicts a speed distribution for every 50 m walking
+  segment; scored on held-out outings, held-out 10 km blocks, and **held-out
+  regions** (leave one of 17 out):
+  - **Tobler as published is 13% worse** (CRPS) than a slope-only curve
+    refitted to our data, and explains none of the variance (R² −0.07 vs
+    0.17).
+  - Curve shape barely matters once refitted (tent, rounded, Lorentz:
+    within 0.5%).
+  - **OSM tags help little:**
+    - within a region: +1%;
+    - in an unseen region: +0.2% (additive model);
+    - boosted trees on tags get worse in unseen regions (−0.9%).
+  - **The hiker matters more than the map.** Knowing a hiker's pace from
+    their first km cuts whole-hike moving-time error from 13.7% to 9.9%
+    (median) in unseen regions. 1 km stretch error drops from 17% to 14%.
+  - The **ceiling** for place-based information (how fast *other* hikers
+    went in the same 100 m cell) is +1.4% within a region. Tags reach ~75%
+    of it there, but keep little of it in new regions. That gap is what
+    remote sensing has to close.
+  - Calibrated: 90% intervals cover 88% of held-out speeds.
 
 ## Sat 10 Oct 2026
 

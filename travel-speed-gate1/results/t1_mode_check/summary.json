@@ -1,0 +1,32 @@
+{
+ "hiking_traces_with_original_file": 1114,
+ "labeled": 246,
+ "labeled_by": {
+  "type": 175,
+  "name": 71
+ },
+ "labels": {
+  "hike": 122,
+  "bike": 80,
+  "run": 38,
+  "ski": 6
+ },
+ "hike_labels_called_walk_pct": 92.6,
+ "bike_labels_called_bike_ski_pct": 82.5,
+ "bike_labels_called_walk_pct": 3.8,
+ "called_walk_labeled_bike_or_ski_pct": 3.3,
+ "called_walk_n_labeled": 120,
+ "strava_numeric_types_vs_names": {
+  "1": {
+   "NaN": 6,
+   "bike": 2
+  },
+  "4": {
+   "hike": 1
+  },
+  "9": {
+   "null": 2
+  },
+  "10": {}
+ }
+}

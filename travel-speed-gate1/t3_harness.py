@@ -1,0 +1,651 @@
+#!/usr/bin/env python3
+"""
+The T3 evaluation harness, run on the T1 data now (plan sec. 10;
+docs/NEXT_STEPS.md sec. 5). Every arm predicts the DISTRIBUTION of log
+speed of a walking trail segment, and every arm is scored the same way on
+the same held-out segments.
+
+Arms (T1 features only for now; the remote-sensing arms plug into ARMS
+when T2's covariates exist):
+  tobler         Tobler 1993, published constants, nothing fitted
+  tobler_refit   Tobler's tent shape, refitted (= the T1 slope fit)
+  slope_curve    our rounded-top asymmetric curve (t1_findings
+                 smooth_asym), refitted: the slope-only baseline
+  lorentz_refit  a Lorentz-shaped curve (Campbell et al.), refitted
+  lin_tags       the slope curve + additive offsets per OSM tag value
+                 (ridge, penalty picked on held-out outings): the
+                 structured Tags arm, Wood et al. style
+  gbm_slope      gradient-boosted trees on slope alone
+  gbm_tags       gradient-boosted trees on slope + OSM trail tags: the
+                 Tags arm
+  place_memory   the slope curve + how much faster or slower OTHER hikers
+                 went in the same 100 m cell (outing-demeaned residuals,
+                 shrunk; penalty picked on held-out outings). Not a usable
+                 model in a new region (there it equals slope_curve); within
+                 a region it is the CEILING for anything place-based
+                 (tags, remote sensing)
+Reference (LORO only): slope_curve_local = the slope curve fitted on
+other outings of the SAME region: what local data would buy.
+
+Personal pace ("+me" rows, subset "rest"): for traces with >= 2 km of
+walking trail, the first 1 km (20 segments, in time order) tells the
+hiker's pace that day (median residual); the rest of the trace is then
+predicted with that offset. Shows how much is the hiker, not the trail.
+
+Splits (never by segment):
+  outing5   5 folds of outings, all regions pooled
+  block5    5 folds of 10 km blocks
+  loro      leave one region out (17 folds): the paper's headline
+
+Spread. Each arm's predictive distribution = its point prediction + the
+quantiles of its residuals on held-out outings of the TRAINING data
+(outings split 70 / 15 / 15: fit, early stopping, calibration), so every
+arm is calibrated the same honest way, and under LORO the calibration
+must transfer too.
+
+Subsets: all; tagged (sac_scale, visibility, smoothness or mtb_scale
+present); rest (segments after a trace's first km, where "+me" applies).
+Metrics (log speed unless noted): RMSE, MAE, MAE km/h, CRPS (log and
+km/h), coverage of the central 50% and 90% intervals, PIT histogram, and
+moving-time errors over 1 km stretches (20 consecutive segments of one
+trace) and whole hikes (traces with >= 2 km of walking trail segments).
+Single segments are noisy (GPS); stretch and hike times are what matters
+to a hiker.
+
+Output: results/t3_harness/ metrics.csv, loro_by_region.csv, pit.csv,
+        importance.csv (gbm_tags, LORO), tag_effects.csv (lin_tags on all
+        data), summary.json, fig_harness.png
+Run (cluster, 8 CPUs; after t1_combine.py):  python t3_harness.py
+     (python t3_harness.py --quick: 15% of outings, a smoke test)
+"""
+
+import argparse
+import json
+import re
+import time
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from pyproj import Transformer
+from sklearn.ensemble import HistGradientBoostingRegressor
+from sklearn.inspection import permutation_importance
+
+import regions
+import t1_findings as tf
+
+SEG = Path("data/t1_all/segments_L50.parquet")
+OUT = Path("results/t3_harness")
+SEED = 0
+QL = (np.arange(100) + 0.5) / 100           # residual quantile levels
+MIN_TRACE_KM = 2.0                          # whole-hike time error
+ME_SEGS = 20                 # personal pace from a trace's first 1 km
+PLACE_M = 100                # place-memory cell size (m, UTM grid)
+KAPPAS = [2, 5, 10, 20, 50, 100]   # place-memory shrinkage (segments)
+SPLITS = ["outing5", "block5", "loro"]
+
+# ------------------------------------------------------------ features
+SAC = {"strolling": 0, "hiking": 1, "mountain_hiking": 2,
+       "demanding_mountain_hiking": 3, "alpine_hiking": 4,
+       "demanding_alpine_hiking": 5, "difficult_alpine_hiking": 6}
+VIS = {"excellent": 1, "good": 2, "medium": 3, "intermediate": 3,
+       "intermittent": 4, "poor": 4, "bad": 4, "very_bad": 5,
+       "horrible": 5, "no": 6}
+SMOOTH = {"excellent": 1, "good": 2, "intermediate": 3, "bad": 4,
+          "very_bad": 5, "horrible": 6, "very_horrible": 7,
+          "impassable": 8}
+MIN_LEVEL = 200          # rarer category values are pooled into "other"
+
+
+def _first(col):
+    return col.astype("object").map(
+        lambda x: x.split(";")[0].strip() if isinstance(x, str) else None)
+
+
+def _num(x):
+    m = re.match(r"\s*([0-9]*\.?[0-9]+)", x) if isinstance(x, str) else None
+    return float(m.group(1)) if m else np.nan
+
+
+def _cat(col):
+    col = _first(col)
+    counts = col.value_counts()
+    keep = set(counts[counts >= MIN_LEVEL].index)
+    return pd.Categorical(col.map(lambda x: x if x is None or x in keep
+                                  else "other"))
+
+
+def tag_features(s):
+    """OSM tags as model inputs; missing stays missing (trees use it)."""
+    X = pd.DataFrame(index=s.index)
+    X["sac_scale"] = _first(s.tag_sac_scale).map(SAC).astype(float)
+    X["trail_visibility"] = _first(s.tag_trail_visibility).map(VIS) \
+        .astype(float)
+    X["smoothness"] = _first(s.tag_smoothness).map(SMOOTH).astype(float)
+    X["mtb_scale"] = _first(s.tag_mtb_scale).map(_num)
+    X["width_m"] = _first(s.tag_width).map(_num).clip(upper=10)
+    X["surface"] = _cat(s.tag_surface)
+    X["highway"] = _cat(s.tag_highway)
+    X["permission"] = _cat(s.permission)
+    return X
+
+
+def onehot(X):
+    """Tag frame -> 0/1 columns, one per value and one per "missing"
+    (width in bins), for the additive arms. Columns: (feature, value)."""
+    parts, keys = [], []
+    for c in X.columns:
+        col = X[c]
+        if c == "width_m":
+            col = pd.cut(col, [0, 0.5, 1.0, 2.0, np.inf], right=False)
+        col = col.astype("object").where(col.notna(), "missing")
+        d = pd.get_dummies(col.astype(str), dtype=float)
+        keys += [(c, v) for v in d.columns]
+        parts.append(d)
+    out = pd.concat(parts, axis=1)
+    out.columns = pd.MultiIndex.from_tuples(keys, names=["feature", "value"])
+    return out
+
+
+def ridge(Z, e, lam):
+    """Ridge regression with an unpenalized intercept: (coef, intercept)."""
+    mz, me = Z.mean(0), e.mean()
+    Zc = Z - mz
+    b = np.linalg.solve(Zc.T @ Zc + lam * np.eye(Z.shape[1]),
+                        Zc.T @ (e - me))
+    return b, me - mz @ b
+
+
+# ---------------------------------------------------------------- arms
+# kind: fixed (published), form (a t1_findings curve, refitted), lin (the
+# slope curve + additive offsets, ridge on one-hot features: the
+# structured, Wood-style model) or gbm (trees on the named feature
+# blocks). T2 adds e.g.
+#   "lin_rs":   ("lin", ["rs"]),       "gbm_rs":   ("gbm", ["slope", "rs"]),
+#   "lin_both": ("lin", ["tags_1h", "rs"]),  "gbm_both": (...)
+ARMS = {
+    "tobler": ("fixed", None),
+    "tobler_refit": ("form", "tobler"),
+    "slope_curve": ("form", "smooth_asym"),
+    "lorentz_refit": ("form", "lorentz"),
+    "lin_tags": ("lin", ["tags_1h"]),
+    "gbm_slope": ("gbm", ["slope"]),
+    "gbm_tags": ("gbm", ["slope", "tags"]),
+    "place_memory": ("place", None),
+}
+BASELINE = "slope_curve"
+LAMBDAS = [1e-4, 1e-3, 1e-2, 1e-1, 1.0]   # ridge penalty per segment
+
+
+def tobler(s):
+    return np.log(6.0) - 3.5 * np.abs(s + 0.05)
+
+
+def gbm():
+    return HistGradientBoostingRegressor(
+        learning_rate=0.05, max_iter=1000, max_leaf_nodes=31,
+        min_samples_leaf=200, l2_regularization=1.0, early_stopping=True,
+        n_iter_no_change=30, random_state=SEED)
+
+
+class Arm:
+    """Fit on (fit, stop) rows, residual quantiles on the cal rows."""
+
+    def __init__(self, name, blocks):
+        self.name = name
+        self.kind, self.spec = ARMS[name]
+        self.blocks = blocks
+
+    def X(self, idx):
+        return pd.concat([self.blocks[b].iloc[idx] for b in self.spec],
+                         axis=1)
+
+    def Z(self, idx):
+        return np.hstack([self.blocks[b][idx] for b in self.spec])
+
+    def fit(self, s, y, fit, stop, cal, lambdas=LAMBDAS):
+        if self.kind == "form":
+            both = np.r_[fit, stop]
+            self.p = tf.fit_form(self.spec, s[both], y[both])
+        elif self.kind == "lin":
+            curve = tf.FORMS["smooth_asym"][0]
+            both = np.r_[fit, stop]
+            self.p = tf.fit_form("smooth_asym", s[both], y[both])
+            ef, es = y[fit] - curve(self.p, s[fit]), \
+                y[stop] - curve(self.p, s[stop])
+            Zf, Zs = self.Z(fit), self.Z(stop)
+            mse = []
+            for lam in lambdas:
+                b, b0 = ridge(Zf, ef, lam * len(fit))
+                mse.append(np.mean((es - Zs @ b - b0) ** 2))
+            self.lam = lambdas[int(np.argmin(mse))]
+            self.b, self.b0 = ridge(np.vstack([Zf, Zs]), np.r_[ef, es],
+                                    self.lam * len(both))
+        elif self.kind == "place":
+            curve = tf.FORMS["smooth_asym"][0]
+            both = np.r_[fit, stop]
+            self.p = tf.fit_form("smooth_asym", s[both], y[both])
+            cell = self.blocks["cell"]
+            base = y[stop] - curve(self.p, s[stop])
+            mse = [np.mean((base - self._cells(s, y, fit, k)[cell[stop]])
+                           ** 2) for k in KAPPAS]
+            self.kappa = KAPPAS[int(np.argmin(mse))]
+            self.v = self._cells(s, y, both, self.kappa)
+        elif self.kind == "gbm":
+            self.m = gbm().fit(self.X(fit), y[fit], X_val=self.X(stop),
+                               y_val=y[stop])
+        self.r = np.quantile(y[cal] - self.predict(s, cal), QL)
+        if self.kind == "fixed":      # a published curve keeps its level:
+            self.r -= np.median(self.r)   # spread from data, no recentering
+        return self
+
+    def _cells(self, s, y, rows, kappa):
+        """Shrunken mean residual per cell, each outing's mean removed
+        first (so a cell walked by one fast hiker doesn't look fast)."""
+        cell, out = self.blocks["cell"], self.blocks["outing"]
+        e = y[rows] - tf.FORMS["smooth_asym"][0](self.p, s[rows])
+        o, c = out[rows], cell[rows]
+        n_o = np.bincount(o, minlength=out.max() + 1)
+        e = e - (np.bincount(o, e, minlength=len(n_o))
+                 / np.maximum(n_o, 1))[o]
+        m = cell.max() + 1
+        return np.bincount(c, e, minlength=m) / (
+            np.bincount(c, minlength=m) + kappa)
+
+    def predict(self, s, idx):
+        if self.kind == "fixed":
+            return tobler(s[idx])
+        if self.kind == "form":
+            return tf.FORMS[self.spec][0](self.p, s[idx])
+        if self.kind == "lin":
+            return (tf.FORMS["smooth_asym"][0](self.p, s[idx])
+                    + self.Z(idx) @ self.b + self.b0)
+        if self.kind == "place":
+            return (tf.FORMS["smooth_asym"][0](self.p, s[idx])
+                    + self.v[self.blocks["cell"][idx]])
+        return self.m.predict(self.X(idx))
+
+
+def first_km(arm, s, y, rows, blocks):
+    """The "rest" rows among `rows` and, for each, its trace's median
+    residual on the trace's first ME_SEGS segments (the hiker's pace)."""
+    calib, rest, trace = blocks["calib"], blocks["rest"], blocks["trace"]
+    c, r = rows[calib[rows]], rows[rest[rows]]
+    if not len(c) or not len(r):
+        return r, np.empty(0)
+    off = pd.Series(y[c] - arm.predict(s, c)).groupby(trace[c]).median()
+    off = off.reindex(trace[r]).to_numpy()
+    keep = ~np.isnan(off)            # first km in another fold (blocks)
+    return r[keep], off[keep]
+
+
+def personal(arm, s, y, cal, te, blocks):
+    """Personal-pace predictions for the test "rest" rows. The first-km
+    offset is noisy, so it is shrunk: rest-of-trace mean residual = a +
+    beta * offset, fitted on the calibration outings. Returns test rows,
+    predictions, residual quantiles, beta."""
+    rc, oc = first_km(arm, s, y, cal, blocks)
+    rt, ot = first_km(arm, s, y, te, blocks)
+    if len(rc) < 1000 or not len(rt):
+        return rt, None, None, None
+    pc = arm.predict(s, rc)
+    g = pd.DataFrame({"t": blocks["trace"][rc], "e": y[rc] - pc, "o": oc}) \
+        .groupby("t").mean()
+    beta, a = np.polyfit(g.o, g.e, 1)
+    r_me = np.quantile(y[rc] - (pc + a + beta * oc), QL)
+    return rt, arm.predict(s, rt) + a + beta * ot, r_me, beta
+
+
+# ------------------------------------------------------------- scoring
+def score_rows(pred, r, y):
+    """Per-segment CRPS (log, km/h), PIT and interval hits for the
+    predictive distribution pred + r (r = residual quantiles)."""
+    n = len(y)
+    crps_log, crps_kmh, pit = np.empty(n), np.empty(n), np.empty(n)
+    er = np.exp(r)
+    half_log = np.abs(r[:, None] - r[None, :]).mean() / 2
+    half_kmh = np.abs(er[:, None] - er[None, :]).mean() / 2
+    v = np.exp(y)
+    for a in range(0, n, 20000):
+        b = slice(a, a + 20000)
+        z = pred[b, None] + r[None, :]
+        crps_log[b] = np.abs(z - y[b, None]).mean(1) - half_log
+        ez = np.exp(pred[b])
+        crps_kmh[b] = (np.abs(ez[:, None] * er[None, :] - v[b, None])
+                       .mean(1) - ez * half_kmh)
+        pit[b] = (z <= y[b, None]).mean(1)
+    lo50, hi50, lo90, hi90 = np.quantile(r, [0.25, 0.75, 0.05, 0.95])
+    e = y - pred
+    return {"crps_log": crps_log, "crps_kmh": crps_kmh, "pit": pit,
+            "in50": (e >= lo50) & (e <= hi50),
+            "in90": (e >= lo90) & (e <= hi90),
+            "time_factor": np.full(n, np.mean(np.exp(-r)))}
+
+
+def summarize(d):
+    """Metrics of one arm on a set of scored segments (a DataFrame)."""
+    e = d.y - d.pred
+    out = {"segments": len(d),
+           "rmse_log": float(np.sqrt(np.mean(e ** 2))),
+           "mae_log": float(np.mean(np.abs(e))),
+           "mae_kmh": float(np.mean(np.abs(np.exp(d.pred) - np.exp(d.y)))),
+           "bias_log": float(np.mean(e)),
+           "r2_log": float(1 - np.mean(e ** 2) / np.var(d.y)),
+           "crps_log": float(d.crps_log.mean()),
+           "crps_kmh": float(d.crps_kmh.mean()),
+           "cov50": float(d.in50.mean()), "cov90": float(d.in90.mean())}
+    # whole-hike moving time on the trace's walking trail segments
+    t = d.assign(t_pred=3.6 * d.length_m * np.exp(-d.pred) * d.time_factor)
+    g = t.groupby("trace_id").agg(km=("length_m", "sum"),
+                                  t=("moving_s", "sum"),
+                                  t_pred=("t_pred", "sum"))
+    g = g[g.km >= MIN_TRACE_KM * 1000]
+    err = g.t_pred / g.t - 1
+    st = t.groupby("stretch").agg(n=("length_m", "size"),
+                                  t=("moving_s", "sum"),
+                                  t_pred=("t_pred", "sum"))
+    lr = np.log(st.t_pred / st.t)[st.n == ME_SEGS]
+    out.update({"stretches_1km": int(len(lr)),
+                "stretch_rmse_log": float(np.sqrt(np.mean(lr ** 2)))
+                if len(lr) else np.nan,
+                "stretch_ape_median": float(np.median(np.abs(np.expm1(lr))))
+                if len(lr) else np.nan})
+    out.update({"hikes": len(g),
+                "time_ape_median": float(np.median(np.abs(err)))
+                if len(g) else np.nan,
+                "time_err_median": float(np.median(err))
+                if len(g) else np.nan})
+    return out
+
+
+# -------------------------------------------------------------- splits
+def outer_folds(w, how, rng):
+    if how == "loro":
+        return w.region.to_numpy()
+    groups = w.outing_id if how == "outing5" else w.block_10km
+    u = rng.permutation(np.asarray(groups.unique(), dtype=object))
+    return groups.map({g: i % 5 for i, g in enumerate(u)}).to_numpy()
+
+
+def inner_split(outings, rng):
+    """Outings of the training rows -> fit / stop / cal masks (70/15/15)."""
+    u = rng.permutation(np.asarray(outings.unique(), dtype=object))
+    part = dict(zip(u, (np.arange(len(u)) * 20 // len(u))))
+    k = outings.map(part).to_numpy()
+    return k < 14, (k >= 14) & (k < 17), k >= 17
+
+
+def load():
+    cols = ["region", "trace_id", "outing_id", "block_10km", "slope",
+            "speed_kmh", "length_m", "moving_s", "permission",
+            "tag_surface", "tag_sac_scale", "tag_width",
+            "tag_trail_visibility", "tag_smoothness", "tag_mtb_scale",
+            "tag_highway", "analysis_walk", "lat0", "lon0", "lat1",
+            "lon1", "t_start"]
+    w = pd.read_parquet(SEG, columns=cols)
+    w = w[w.analysis_walk & (w.speed_kmh > 0)
+          & w.slope.between(-0.6, 0.6)].reset_index(drop=True)
+    w["y"] = np.log(w.speed_kmh)
+    w["tagged"] = w[["tag_sac_scale", "tag_trail_visibility",
+                     "tag_smoothness", "tag_mtb_scale"]].notna().any(axis=1)
+    return w
+
+
+def place_cells(w):
+    """Code of the PLACE_M x PLACE_M UTM cell holding each segment's
+    midpoint."""
+    cell = np.empty(len(w), dtype=object)
+    for key, idx in w.groupby("region").indices.items():
+        to_utm = Transformer.from_crs(4326, regions.utm_epsg(key),
+                                      always_xy=True)
+        x, yy = to_utm.transform(((w.lon0 + w.lon1) / 2).to_numpy()[idx],
+                                 ((w.lat0 + w.lat1) / 2).to_numpy()[idx])
+        cell[idx] = [f"{key}_{a}_{b}" for a, b in
+                     zip((x // PLACE_M).astype(int),
+                         (yy // PLACE_M).astype(int))]
+    return pd.factorize(cell)[0]
+
+
+def personal_flags(w):
+    """calib = a trace's first ME_SEGS segments in time order, rest = the
+    others; only traces with >= 2 * ME_SEGS segments."""
+    o = w.sort_values(["trace_id", "t_start"])
+    rank = o.groupby("trace_id").cumcount().to_numpy()
+    size = o.groupby("trace_id").trace_id.transform("size").to_numpy()
+    ok = size >= 2 * ME_SEGS
+    calib, rest = np.zeros(len(w), bool), np.zeros(len(w), bool)
+    calib[o.index[ok & (rank < ME_SEGS)]] = True
+    rest[o.index[ok & (rank >= ME_SEGS)]] = True
+    stretch = np.empty(len(w), dtype=np.int64)       # 1 km stretches
+    stretch[o.index] = pd.factorize(o.trace_id)[0] * 100000 + rank // ME_SEGS
+    return calib, rest, stretch
+
+
+# ---------------------------------------------------------------- main
+def main():
+    global OUT
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--figure", action="store_true",
+                    help="only redraw fig_harness.png from the CSVs")
+    args = ap.parse_args()
+    quick = args.quick
+    if args.figure:
+        met = pd.read_csv(OUT / "metrics.csv")
+        figure(met[~met.arm.str.endswith("+me")],
+               pd.read_csv(OUT / "loro_by_region.csv"))
+        return
+    t0 = time.time()
+    w = load()
+    rng = np.random.default_rng(SEED)
+    if quick:
+        keep = rng.permutation(np.asarray(w.outing_id.unique(), dtype=object))
+        keep = set(keep[:len(keep) * 15 // 100])
+        w = w[w.outing_id.isin(keep)].reset_index(drop=True)
+        OUT = OUT.with_name(OUT.name + "_quick")
+    OUT.mkdir(parents=True, exist_ok=True)
+    blocks = {"slope": w[["slope"]], "tags": tag_features(w)}
+    oh = onehot(blocks["tags"])
+    blocks["tags_1h"] = oh.to_numpy()
+    blocks["cell"] = place_cells(w)
+    blocks["outing"] = pd.factorize(w.outing_id)[0]
+    blocks["trace"] = pd.factorize(w.trace_id)[0]
+    blocks["calib"], blocks["rest"], w["stretch"] = personal_flags(w)
+    w["rest"] = blocks["rest"]
+    s, y = w.slope.to_numpy(), w.y.to_numpy()
+    print(f"{len(w):,} walking segments, {w.outing_id.nunique():,} outings,"
+          f" {w.region.nunique()} regions; tag share "
+          f"{w.tagged.mean():.0%} (sac_scale / visibility / smoothness / "
+          "mtb_scale)", flush=True)
+
+    scored, imp, lams, knobs = [], [], [], []
+    for split in SPLITS:
+        fold = outer_folds(w, split, rng)
+        for f in pd.unique(fold):
+            te = np.nonzero(fold == f)[0]
+            tr = np.nonzero(fold != f)[0]
+            fit_m, stop_m, cal_m = inner_split(w.outing_id.iloc[tr], rng)
+            fit, stop, cal = tr[fit_m], tr[stop_m], tr[cal_m]
+            for name in ARMS:
+                arm = Arm(name, blocks).fit(s, y, fit, stop, cal)
+                if arm.kind == "lin":
+                    lams.append(arm.lam)
+                pred = arm.predict(s, te)
+                sc = score_rows(pred, arm.r, y[te])
+                scored.append(pd.DataFrame({
+                    "split": split, "fold": str(f), "arm": name, "row": te,
+                    "pred": pred, **sc}))
+                rt, pt, r_me, beta = personal(arm, s, y, cal, te, blocks)
+                if pt is not None:
+                    knobs.append({"split": split, "fold": str(f),
+                                  "arm": name, "beta": beta,
+                                  "lam": getattr(arm, "lam", None),
+                                  "kappa": getattr(arm, "kappa", None)})
+                    scored.append(pd.DataFrame({
+                        "split": split, "fold": str(f), "arm": name + "+me",
+                        "row": rt, "pred": pt,
+                        **score_rows(pt, r_me, y[rt])}))
+                if split == "loro" and name == "gbm_tags":
+                    pi = permutation_importance(
+                        arm.m, arm.X(te), y[te], n_repeats=3,
+                        random_state=SEED, scoring="neg_mean_squared_error",
+                        max_samples=min(len(te), 20000))
+                    imp.append(pd.DataFrame({
+                        "region": f, "feature": arm.X(te[:1]).columns,
+                        "mse_increase": pi.importances_mean}))
+            if split == "loro":    # reference: other outings, same region
+                ofold = outer_folds(w.iloc[te], "outing5", rng)
+                curve = tf.FORMS["smooth_asym"][0]
+                for k in range(5):
+                    a, b = te[ofold != k], te[ofold == k]
+                    p = tf.fit_form("smooth_asym", s[a], y[a])
+                    r = np.quantile(y[a] - curve(p, s[a]), QL)
+                    pred = curve(p, s[b])
+                    scored.append(pd.DataFrame({
+                        "split": split, "fold": str(f),
+                        "arm": "slope_curve_local", "row": b, "pred": pred,
+                        **score_rows(pred, r, y[b])}))
+            print(f"  {split} fold {f}: {time.time() - t0:.0f} s",
+                  flush=True)
+
+    tag_effects(s, y, blocks, oh.columns, float(np.median(lams)))
+    knobs = pd.DataFrame(knobs)
+    knobs.to_csv(OUT / "knobs.csv", index=False)
+    sc = pd.concat(scored, ignore_index=True)
+    base = w[["region", "trace_id", "length_m", "moving_s", "y",
+              "tagged", "rest", "stretch"]].reset_index(names="row")
+    sc = sc.merge(base, on="row")
+
+    rows = []
+    for (split, arm), d in sc.groupby(["split", "arm"], sort=False):
+        subsets = (["rest"] if arm.endswith("+me")
+                   else ["all", "tagged", "rest"])
+        for sub in subsets:
+            dd = d if sub == "all" else d[d[sub]]
+            rows.append({"split": split, "arm": arm, "subset": sub,
+                         **summarize(dd)})
+    met = pd.DataFrame(rows)
+    ref = met.loc[met.arm == BASELINE, ["split", "subset", "crps_log"]]
+    met = met.merge(ref.rename(columns={"crps_log": "ref"}),
+                    on=["split", "subset"], how="left")
+    met["crps_skill_vs_slope_pct"] = 100 * (1 - met.crps_log / met.ref)
+    met = met.drop(columns="ref")
+    met.to_csv(OUT / "metrics.csv", index=False)
+
+    lo = sc[(sc.split == "loro") & ~sc.arm.str.endswith("+me")]
+    by = pd.DataFrame([{"region": reg, "arm": arm, **summarize(d)}
+                       for (reg, arm), d in lo.groupby(["region", "arm"])])
+    bref = by[by.arm == BASELINE].set_index("region").crps_log
+    by["crps_skill_vs_slope_pct"] = 100 * (1 - by.crps_log
+                                           / by.region.map(bref))
+    by.to_csv(OUT / "loro_by_region.csv", index=False)
+
+    edges = np.linspace(0, 1, 11)
+    pit = pd.DataFrame({arm: np.histogram(d.pit, edges)[0] / len(d)
+                        for arm, d in lo.groupby("arm")},
+                       index=[f"{a:.1f}-{b:.1f}" for a, b in
+                              zip(edges[:-1], edges[1:])])
+    pit.to_csv(OUT / "pit.csv")
+    if imp:
+        imp = pd.concat(imp)
+        imp.to_csv(OUT / "importance.csv", index=False)
+
+    summary = {
+        "walking_segments": len(w), "outings": int(w.outing_id.nunique()),
+        "regions": int(w.region.nunique()),
+        "tagged_share": round(float(w.tagged.mean()), 3),
+        "minutes": round((time.time() - t0) / 60, 1),
+        "personal_beta_median": round(float(knobs.beta.median()), 3),
+        "place_kappa_median": float(knobs.kappa.dropna().median()),
+        "ridge_lambda_median": float(np.median(lams)),
+        "metrics": met.round(4).to_dict("records"),
+        "loro_macro": by.groupby("arm")[["crps_log", "rmse_log",
+                                         "time_ape_median",
+                                         "crps_skill_vs_slope_pct"]]
+        .mean().round(4).to_dict("index")}
+    (OUT / "summary.json").write_text(json.dumps(summary, indent=1))
+    figure(met[~met.arm.str.endswith("+me")], by)
+    show = met[met.subset == "all"][["split", "arm", "rmse_log", "crps_log",
+                                     "crps_kmh", "cov50", "cov90",
+                                     "stretch_ape_median", "time_ape_median",
+                                     "crps_skill_vs_slope_pct"]]
+    print(show.round(4).to_string(index=False))
+    rest = met[(met.subset == "rest") & (met.split != "block5")]
+    print("\nafter each trace's first km (subset rest; +me = personal pace):")
+    print(rest[["split", "arm", "rmse_log", "crps_log", "cov90",
+                "stretch_ape_median", "time_ape_median",
+                "crps_skill_vs_slope_pct"]]
+          .round(4).to_string(index=False))
+    print(f"done in {(time.time() - t0) / 60:.1f} min")
+
+
+def tag_effects(s, y, blocks, names, lam):
+    """The additive tags model fitted on ALL walking segments (penalty =
+    the median chosen in the folds): each tag value's effect on speed,
+    relative to that tag being missing."""
+    every = np.arange(len(y))
+    arm = Arm("lin_tags", blocks).fit(s, y, every, every, every,
+                                      lambdas=[lam])
+    b = pd.Series(arm.b, index=names)
+    n = blocks["tags_1h"].sum(0)
+    rows = []
+    for (feat, value), coef in b.items():
+        rel = coef - b.get((feat, "missing"), 0.0)
+        rows.append({"feature": feat, "value": value,
+                     "segments": int(n[list(names).index((feat, value))]),
+                     "speed_effect_pct": round(100 * (np.exp(rel) - 1), 1)})
+    pd.DataFrame(rows).to_csv(OUT / "tag_effects.csv", index=False)
+    print(f"tag effects written (ridge penalty {lam:g} per segment)")
+
+
+def figure(met, by):
+    """Left: CRPS skill vs the slope-only curve, per split. Right: LORO
+    skill per region."""
+    BLUE, ORANGE, AQUA, GRAY = "#2a78d6", "#eb6834", "#1baf7a", "#9a9893"
+    arms = [a for a in ARMS if a != BASELINE] + ["slope_curve_local"]
+    colors = {"tobler": GRAY, "gbm_tags": ORANGE, "gbm_slope": BLUE,
+              "lin_tags": "#e87ba4", "slope_curve_local": AQUA}
+    fig, ax = plt.subplots(1, 2, figsize=(12, 5.2),
+                           gridspec_kw={"width_ratios": [1, 1.4]})
+    m = met[met.subset == "all"]
+    for i, split in enumerate(SPLITS):
+        d = m[m.split == split].set_index("arm")
+        for j, arm in enumerate(arms):
+            if arm in d.index:
+                ax[0].scatter(d.loc[arm, "crps_skill_vs_slope_pct"],
+                              j + (i - 1) * 0.22, s=36,
+                              color=["#9ec5f0", "#4f97e3", "#1b4f8f"][i],
+                              label=split if j == 0 else None, zorder=3)
+    ax[0].set_yticks(range(len(arms)), arms)
+    ax[0].axvline(0, color="#52514e", lw=1)
+    ax[0].set_xlabel("CRPS skill vs slope-only curve (%)")
+    ax[0].set_title("All splits", fontsize=11)
+    ax[0].legend(frameon=False, fontsize=9)
+    regs = by[by.arm == "lin_tags"].sort_values(
+        "crps_skill_vs_slope_pct").region.tolist()
+    for arm in ["tobler", "gbm_slope", "lin_tags", "gbm_tags",
+                "slope_curve_local"]:
+        d = by[by.arm == arm].set_index("region").reindex(regs)
+        ax[1].scatter(d.crps_skill_vs_slope_pct, range(len(regs)), s=30,
+                      color=colors[arm], label=arm, zorder=3)
+    ax[1].set_yticks(range(len(regs)), regs)
+    ax[1].axvline(0, color="#52514e", lw=1)
+    ax[1].set_xlabel("CRPS skill vs slope-only curve (%), region held out")
+    ax[1].set_title("Leave one region out, per region", fontsize=11)
+    ax[1].legend(frameon=False, fontsize=9, loc="upper center",
+                 bbox_to_anchor=(0.5, -0.12), ncol=5)
+    for a in ax:
+        a.grid(axis="x", color="#e4e3df")
+        a.spines[["top", "right"]].set_visible(False)
+    lo = min(-30, float(by.crps_skill_vs_slope_pct.min()) - 2)
+    ax[1].set_xlim(left=lo)
+    fig.tight_layout()
+    fig.savefig(OUT / "fig_harness.png", dpi=150)
+
+
+if __name__ == "__main__":
+    main()
