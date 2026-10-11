@@ -62,9 +62,10 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   (basics, design, plan, story, pipeline, dataset map, findings, literature,
   next steps, glossary), drawn from the real numbers. Rebuild with
   `make_explainer_data.py` (cluster) + `make_explainer.py`.
-- Lab-only builds finished for North Shore, San Gabriels, Columbia Gorge,
-  Wasatch: **14 regions built**, 2,198 hiking traces, 1,564 walking outings,
-  12,224 km, 3,992 h; pooled v0 4.25 [4.18, 4.35] km/h, k 1.78.
+- All 5 lab-only builds finished (North Shore, San Gabriels, Columbia Gorge,
+  Wasatch, Bay Area): **15 regions built**, 2,375 hiking traces, 1,666
+  walking outings, ~4,100 walking hours, 387 bike/ski traces; pooled walking
+  curve v0 4.27 km/h, k 1.78. Full downloads continue (Shenandoah now).
 
 ## Sat 10 Oct 2026
 
