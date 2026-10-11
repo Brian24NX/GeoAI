@@ -65,7 +65,11 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
 - All 5 lab-only builds finished (North Shore, San Gabriels, Columbia Gorge,
   Wasatch, Bay Area): **15 regions built**, 2,375 hiking traces, 1,666
   walking outings, ~4,100 walking hours, 387 bike/ski traces; pooled walking
-  curve v0 4.27 km/h, k 1.78. Full downloads continue (Shenandoah now).
+  curve v0 4.27 km/h, k 1.78. Full downloads continue.
+- **Shenandoah built** (full download, 05:50): 83 hiking traces, 41 walking
+  outings; one tile capped by the API's time limit (reaches back only to May
+  2023; decision #77). **16 regions built**: 2,458 hiking traces, 1,707
+  walking outings, 4,172 h; pooled v0 4.28 km/h, k 1.78.
 
 ## Sat 10 Oct 2026
 

@@ -129,6 +129,8 @@ under `"settings"`.
 
 | 76 | API time limit in busy areas | The trackpoints query can time out (503) well before page ~906 in dense areas: Shenandoah's Big Meadows tile timed out at pages 116, 158, 186, 301, 302, 310 and 318 over 6 passes. Rule: retry stopped tiles (up to 6 passes, 5 min apart); after that, a tile still stopped at page ≥ 250 counts as **capped** (newest uploads in, oldest out of reach; on the data card), one stopped below 250 as incomplete. | 11 Oct |
 
+| 77 | Capped tiles that reach back only a few years | Shenandoah's Big Meadows tile capped at page 523 reaches uploads back to only **May 2023**: car loggers on Skyline Drive fill the API's page budget, so older anonymous hikes in that tile are lost (the lab crawl still covers 2016–2022 public uploads). Fix if it matters: split such tiles into 4 sub-tiles, each with fewer car points, so older uploads come within reach. Deferred: Shenandoah is a low-yield region (41 walking outings). | open, 11 Oct |
+
 ## T2 (from 9 Oct 2026)
 
 | # | Decision | Value | Status |
