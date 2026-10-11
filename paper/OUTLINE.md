@@ -157,9 +157,9 @@ value. A hiker's own pace still matters most.
 ## Figures and tables to make (Claude can produce drafts)
 
 - [ ] Fig. 1: region map (from the explainer's map) + one region inset.
-- [ ] Fig. 2: skill bars by model × split.
+- [x] Fig. 2 draft: `paper/figures/fig_skill.png` (skill by model, new hikers vs unseen region, 95% CIs), from `travel-speed-gate1/make_paper_figures.py`.
 - [ ] Table 1 as above, final numbers.
-- [ ] Fig. 3: per-region terrain vs tags, or the steppiness quintiles.
+- [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 15 of 17).
 
 ## References to verify before citing (from `docs/NEXT_STEPS.md` §2)
 
