@@ -113,11 +113,25 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   - **The hiker matters more than the map.** Knowing a hiker's pace from
     their first km cuts whole-hike moving-time error from 13.7% to 9.9%
     (median) in unseen regions. 1 km stretch error drops from 17% to 14%.
-  - The **ceiling** for place-based information (how fast *other* hikers
-    went in the same 100 m cell) is +1.3% within a region. Tags reach ~75%
-    of it there, but keep little of it in new regions. That gap is what
-    remote sensing has to close.
+  - **Place memory** (how fast *other* hikers went in the same 100 m
+    cell) adds +1.3% within a region. Tags reach ~75% of that there, but
+    keep little of it in new regions. That gap is what remote sensing has
+    to close.
   - Calibrated: 90% intervals cover 88% of held-out speeds.
+- **First remote-sensing result** (White Mountains pilot, decision #83):
+  - Terrain from the 1 m lidar DEM along each segment's path: roughness,
+    "steppiness" of the profile, side slope.
+  - Raw pattern: the smoothest fifth of segments is ~14% faster than the
+    slope curve says; the steppiest fifth ~11% slower.
+  - CRPS skill, new hikers: **lidar +3.8%**, tags +1.7%, place memory
+    +1.5%.
+  - New 10 km squares: **lidar +3.1%**, tags +0.7%.
+  - So lidar beats tags 2–4× in this region and holds up in unseen map
+    squares.
+- **1 m elevation for all 16 US regions downloading** on the cluster
+  (decision #84): ~12.5 GB from USGS 3DEP, ~9 h, in parallel with the OSM
+  queue. It feeds the leave-one-region-out test of lidar vs tags, the
+  paper's lead.
 
 ## Sat 10 Oct 2026
 

@@ -57,6 +57,9 @@ Output: results/t3_harness/ metrics.csv, loro_by_region.csv, pit.csv,
         data), summary.json, fig_harness.png
 Run (cluster, 8 CPUs; after t1_combine.py):  python t3_harness.py
      (python t3_harness.py --quick: 15% of outings, a smoke test)
+T2 covariates: --covariates file.parquet ... (segment_id + numeric
+columns) adds the remote-sensing arms lin_rs, lin_both, gbm_rs, gbm_both.
+Pilot in one region: --regions wm --splits outing5 block5 --out <dir>
 """
 
 import argparse
@@ -151,6 +154,21 @@ def onehot(X):
     return out
 
 
+def varying(X):
+    """Drop columns with fewer than 2 distinct values (e.g. a tag nobody
+    uses in the regions kept): trees can't bin them."""
+    return X[[c for c in X.columns if X[c].nunique(dropna=True) >= 2]]
+
+
+def binned(X, q=10):
+    """Continuous covariates -> decile bins (missing stays missing), so
+    the additive arms can learn any shape."""
+    out = pd.DataFrame(index=X.index)
+    for c in X.columns:
+        out[c] = pd.qcut(X[c], q, duplicates="drop")
+    return out
+
+
 def ridge(Z, e, lam):
     """Ridge regression with an unpenalized intercept: (coef, intercept)."""
     mz, me = Z.mean(0), e.mean()
@@ -178,6 +196,14 @@ ARMS = {
     "place_memory": ("place", None),
 }
 BASELINE = "slope_curve"
+RS_ARMS = {                      # added when --covariates are given
+    "lin_rs": ("lin", ["rs_1h"]),
+    "lin_both": ("lin", ["tags_1h", "rs_1h"]),
+    "gbm_rs": ("gbm", ["slope", "rs"]),
+    "gbm_both": ("gbm", ["slope", "tags", "rs"]),
+}
+RS_SKIP = {"segment_id", "dem1m_cover", "slope_1m"}   # not terrain beyond
+                                                      # slope
 LAMBDAS = [1e-4, 1e-3, 1e-2, 1e-1, 1.0]   # ridge penalty per segment
 
 
@@ -380,7 +406,8 @@ def inner_split(outings, rng):
 
 
 def load():
-    cols = ["region", "trace_id", "outing_id", "block_10km", "slope",
+    cols = ["region", "segment_id", "trace_id", "outing_id", "block_10km",
+            "slope",
             "speed_kmh", "length_m", "moving_s", "permission",
             "tag_surface", "tag_sac_scale", "tag_width",
             "tag_trail_visibility", "tag_smoothness", "tag_mtb_scale",
@@ -432,15 +459,32 @@ def main():
     ap.add_argument("--quick", action="store_true")
     ap.add_argument("--figure", action="store_true",
                     help="only redraw fig_harness.png from the CSVs")
+    ap.add_argument("--regions", nargs="*", help="only these regions")
+    ap.add_argument("--splits", nargs="*", default=SPLITS, choices=SPLITS)
+    ap.add_argument("--covariates", nargs="*", default=[],
+                    help="T2 covariate tables: segment_id + numeric columns")
+    ap.add_argument("--out", help="output folder (default results/t3_harness)")
     args = ap.parse_args()
-    quick = args.quick
+    quick, splits = args.quick, args.splits
+    if args.out:
+        OUT = Path(args.out)
     if args.figure:
         met = pd.read_csv(OUT / "metrics.csv")
         figure(met[~met.arm.str.endswith("+me")],
-               pd.read_csv(OUT / "loro_by_region.csv"))
+               pd.read_csv(OUT / "loro_by_region.csv"), SPLITS)
         return
     t0 = time.time()
     w = load()
+    if args.regions:
+        w = w[w.region.isin(args.regions)].reset_index(drop=True)
+    rs_cols = []
+    if args.covariates:
+        cov = pd.concat([pd.read_parquet(f) for f in args.covariates])
+        rs_cols = [c for c in cov.columns if c not in RS_SKIP
+                   and pd.api.types.is_numeric_dtype(cov[c])]
+        w = w.merge(cov[["segment_id"] + rs_cols], on="segment_id",
+                    how="left").reset_index(drop=True)
+        ARMS.update(RS_ARMS)
     rng = np.random.default_rng(SEED)
     if quick:
         keep = rng.permutation(np.asarray(w.outing_id.unique(), dtype=object))
@@ -448,9 +492,15 @@ def main():
         w = w[w.outing_id.isin(keep)].reset_index(drop=True)
         OUT = OUT.with_name(OUT.name + "_quick")
     OUT.mkdir(parents=True, exist_ok=True)
-    blocks = {"slope": w[["slope"]], "tags": tag_features(w)}
+    blocks = {"slope": w[["slope"]], "tags": varying(tag_features(w))}
     oh = onehot(blocks["tags"])
     blocks["tags_1h"] = oh.to_numpy()
+    if rs_cols:
+        blocks["rs"] = varying(w[rs_cols])
+        blocks["rs_1h"] = onehot(binned(w[rs_cols])).to_numpy()
+        print(f"remote-sensing covariates: {rs_cols}; present for "
+              f"{w[rs_cols].notna().all(axis=1).mean():.0%} of segments",
+              flush=True)
     blocks["cell"] = place_cells(w)
     blocks["outing"] = pd.factorize(w.outing_id)[0]
     blocks["trace"] = pd.factorize(w.trace_id)[0]
@@ -463,7 +513,7 @@ def main():
           "mtb_scale)", flush=True)
 
     scored, imp, lams, knobs = [], [], [], []
-    for split in SPLITS:
+    for split in splits:
         fold = outer_folds(w, split, rng)
         for f in pd.unique(fold):
             te = np.nonzero(fold == f)[0]
@@ -539,14 +589,17 @@ def main():
     lo = sc[(sc.split == "loro") & ~sc.arm.str.endswith("+me")]
     by = pd.DataFrame([{"region": reg, "arm": arm, **summarize(d)}
                        for (reg, arm), d in lo.groupby(["region", "arm"])])
-    bref = by[by.arm == BASELINE].set_index("region").crps_log
-    by["crps_skill_vs_slope_pct"] = 100 * (1 - by.crps_log
-                                           / by.region.map(bref))
-    by.to_csv(OUT / "loro_by_region.csv", index=False)
+    if len(by):
+        bref = by[by.arm == BASELINE].set_index("region").crps_log
+        by["crps_skill_vs_slope_pct"] = 100 * (1 - by.crps_log
+                                               / by.region.map(bref))
+        by.to_csv(OUT / "loro_by_region.csv", index=False)
 
     edges = np.linspace(0, 1, 11)
+    ref_split = "loro" if "loro" in splits else splits[0]
     pit = pd.DataFrame({arm: np.histogram(d.pit, edges)[0] / len(d)
-                        for arm, d in lo.groupby("arm")},
+                        for arm, d in sc[sc.split == ref_split]
+                        .groupby("arm")},
                        index=[f"{a:.1f}-{b:.1f}" for a, b in
                               zip(edges[:-1], edges[1:])])
     pit.to_csv(OUT / "pit.csv")
@@ -566,9 +619,10 @@ def main():
         "loro_macro": by.groupby("arm")[["crps_log", "rmse_log",
                                          "time_ape_median",
                                          "crps_skill_vs_slope_pct"]]
-        .mean().round(4).to_dict("index")}
+        .mean().round(4).to_dict("index") if len(by) else {},
+        "remote_sensing_covariates": rs_cols}
     (OUT / "summary.json").write_text(json.dumps(summary, indent=1))
-    figure(met[~met.arm.str.endswith("+me")], by)
+    figure(met[~met.arm.str.endswith("+me")], by, splits)
     show = met[met.subset == "all"][["split", "arm", "rmse_log", "crps_log",
                                      "crps_kmh", "cov50", "cov90",
                                      "stretch_ape_median", "time_ape_median",
@@ -602,17 +656,22 @@ def tag_effects(s, y, blocks, names, lam):
     print(f"tag effects written (ridge penalty {lam:g} per segment)")
 
 
-def figure(met, by):
+def figure(met, by, splits):
     """Left: CRPS skill vs the slope-only curve, per split. Right: LORO
-    skill per region."""
+    skill per region (when LORO ran)."""
     BLUE, ORANGE, AQUA, GRAY = "#2a78d6", "#eb6834", "#1baf7a", "#9a9893"
     arms = [a for a in ARMS if a != BASELINE] + ["slope_curve_local"]
+    arms = [a for a in arms if a in set(met.arm)]
     colors = {"tobler": GRAY, "gbm_tags": ORANGE, "gbm_slope": BLUE,
               "lin_tags": "#e87ba4", "slope_curve_local": AQUA}
-    fig, ax = plt.subplots(1, 2, figsize=(12, 5.2),
-                           gridspec_kw={"width_ratios": [1, 1.4]})
+    if not len(by):
+        fig, a0 = plt.subplots(figsize=(6.5, 5.2))
+        ax = [a0]
+    else:
+        fig, ax = plt.subplots(1, 2, figsize=(12, 5.2),
+                               gridspec_kw={"width_ratios": [1, 1.4]})
     m = met[met.subset == "all"]
-    for i, split in enumerate(SPLITS):
+    for i, split in enumerate(splits):
         d = m[m.split == split].set_index("arm")
         for j, arm in enumerate(arms):
             if arm in d.index:
@@ -625,6 +684,12 @@ def figure(met, by):
     ax[0].set_xlabel("CRPS skill vs slope-only curve (%)")
     ax[0].set_title("All splits", fontsize=11)
     ax[0].legend(frameon=False, fontsize=9)
+    if not len(by):
+        ax[0].grid(axis="x", color="#e4e3df")
+        ax[0].spines[["top", "right"]].set_visible(False)
+        fig.tight_layout()
+        fig.savefig(OUT / "fig_harness.png", dpi=150)
+        return
     regs = by[by.arm == "lin_tags"].sort_values(
         "crps_skill_vs_slope_pct").region.tolist()
     for arm in ["tobler", "gbm_slope", "lin_tags", "gbm_tags",

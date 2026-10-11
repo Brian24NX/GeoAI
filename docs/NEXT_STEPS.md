@@ -88,7 +88,7 @@ against our refitted slope-only curve:
 | Slope curve (tent, rounded or Lorentz) | 0 (baseline) | 0 (baseline) |
 | + OSM tags, additive (Wood-style) | +1.1% | +0.2% |
 | + OSM tags, boosted trees | +1.0% | −0.9% |
-| Place memory: other hikers in the same 100 m cell (ceiling) | +1.3% | n/a |
+| Place memory: other hikers in the same 100 m cell (a reference) | +1.3% | n/a |
 | Slope curve fitted on the region's own other hikers | n/a | +1.7% |
 | **Personal pace** (hiker's first km) | +7.9% | **+8.5%** |
 | Personal pace + tags | +9.1% | +9.1% |
@@ -106,17 +106,50 @@ data):
 
 **What this means:**
 - Terrain beyond slope is a small signal next to who is hiking.
-- The place-memory row bounds what any place-based covariate (tags or
-  remote sensing) can add at our data density.
-- Tags capture ~75% of that bound within a region, but only ~20% of their
-  gain survives in a new region (tagging conventions differ).
+- The place-memory row is a reference for place-based information: what
+  other hikers' speeds at the same spot tell you. It is limited by how
+  many hikers passed each 100 m cell, so it is not a hard ceiling (§1c:
+  lidar beat it).
+- Tags reach ~75% of it within a region, but only ~20% of their gain
+  survives in a new region (tagging conventions differ).
 - That transfer gap is the remote-sensing opportunity: lidar roughness,
   canopy and embeddings mean the same thing everywhere. The paper tests
-  exactly that, and it must report gains against the ceiling, not as
+  exactly that, reporting gains next to tags and place memory, not as
   big-sounding raw numbers.
 - With personal pace known, tags add more (+0.6–1.2%). Terrain effects
   show more clearly once the hiker is accounted for, so T3 should report
   both.
+
+## 1c. First remote-sensing result: 1 m lidar terrain, White Mountains (11 Oct, decision #83)
+
+**What was measured.** Along each walking segment's matched path, every
+1 m, from the 1 m lidar DEM:
+- roughness as STRIDE defines it;
+- relief along the line of travel;
+- the steepest 5 m pitch and the spread of 5 m pitches;
+- side slope.
+
+**Raw pattern.** After the slope curve, the smoothest fifth of segments
+is ~14% faster and the "steppiest" fifth ~11% slower.
+
+**CRPS skill vs the slope curve:**
+
+| | New hikers (outing folds) | New 10 km squares (block folds) |
+|---|---|---|
+| OSM tags (additive) | +1.7% | +0.7% |
+| Place memory | +1.5% | n/a |
+| **1 m lidar terrain (additive)** | **+3.8%** | **+3.1%** |
+| Lidar + tags (trees) | +3.9% | +4.2% |
+
+**What it shows (one region so far):**
+- Lidar beats tags 2–4×, and keeps most of its value in map squares it
+  never saw, where tags keep little.
+- It also beats place memory, because it measures every spot, including
+  ones few hikers walked.
+
+**Next:** the 1 m elevation for all 16 US regions is downloading (decision
+#84, ~12.5 GB, ~9 h). Then `t2_terrain1m.py --all` and the harness with
+`--covariates`, under **leave one region out**: the paper's lead test.
 
 ## 2. What the literature says (and how we differ)
 
@@ -164,10 +197,11 @@ unseen regions from airborne lidar and Earth-observation embeddings.*
 
 **Claims, in priority order:**
 1. **(Lead) Transfer.** Leave one region out across 17 regions. Tag effects
-   barely transfer (+1.1% → +0.2%; §1b). Do remote-sensing covariates keep
-   their within-region gain in unseen regions, measured against the
-   place-memory ceiling and with calibrated uncertainty (CRPS, PIT)? Report
-   it with and without personal pace.
+   barely transfer (+1.1% → +0.2%; §1b). In the White Mountains, 1 m lidar
+   terrain already beats tags 2–4× and holds up in unseen 10 km squares
+   (§1c). Does it keep its gain in unseen regions? Report it next to tags
+   and place memory, with calibrated uncertainty (CRPS, PIT), and with and
+   without personal pace.
 2. **Dataset.** N traversals from ~1,600+ walking outings in 17 regions:
    - how it was built;
    - what share of OSM traces is usable;
@@ -266,7 +300,7 @@ which region it's in.
 | 3 | **T1 close-out:** combined all-region dataset + one data card; elevation-quality check for every region; mode calls checked against the uploaders' own activity labels | Claude | ✅ 11 Oct (re-run as the city regions upgrade) |
 | 4 | **Evaluation harness on T1 data**: Tobler / slope-only / Lorentz / Tags arms (+ place memory, personal pace); outing, block and leave-one-region-out splits; CRPS, coverage, stretch and hike time errors | Claude | ✅ 11 Oct (§1b). Next: Campbell's published constants, once read |
 | 5 | **Paper skeleton** in the IGARSS LaTeX template: storyline, figure slots, related-work paragraph (citations above), 4-page budget | Claude drafts, Brian edits | next |
-| 6 | T2 pilot on the White Mountains (1 m roughness, Meta canopy, AlphaEarth sample), ready to scale once Danni says go | Claude | after 16 Oct |
+| 6 | T2 pilot on the White Mountains: 1 m lidar terrain | Claude | ✅ 11 Oct (§1c). Scaling: 1 m elevation for all US regions downloading (#84); Meta canopy and AlphaEarth next |
 | 7 | Stop-rule hand check: 20 cards in `stop_check/stop_check.html`, ~15 min | **Brian** | open |
 | 8 | Read: Campbell 2019 & 2022, **Wood 2023**, **STRIDE 2024**, HikingTTE, RasterNet | **Brian** | open |
 
