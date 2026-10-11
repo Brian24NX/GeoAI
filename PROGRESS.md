@@ -158,6 +158,14 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   - side slope doesn't matter.
 - Draft paper figures: `paper/figures/fig_skill.png` (skill by model with
   CIs) and `fig_regions.png` (terrain vs tags per held-out region).
+- **San Gabriels rebuilt from its full download** (13:55): 141 hiking traces
+  (was 81 lab-only), 116 walking outings, v0 4.08 km/h. One LA-side tile is
+  capped by the API's time limit and reaches back only to July 2023 (like
+  Shenandoah, decision #77). All 17 pooled: 2,744 hiking traces, 1,892
+  walking outings, 4,481 h, v0 4.28 [4.21, 4.36] km/h. Columbia Gorge
+  downloading next (≤ 3,076 pages).
+- The 1 m elevation download is slower than estimated: the Cascades alone
+  have 2,766 cells (~3.5 h). ETA for all regions ~21:00 CDT.
 
 ## Sat 10 Oct 2026
 
