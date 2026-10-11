@@ -41,7 +41,23 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   traces, 65 walking hikes.
 - The size probe now counts tiles that hit the API's depth limit as capped
   instead of skipping the whole region.
-- GitHub repo created (private) with this daily log.
+- GitHub repo created (private): the whole GeoAI folder except `.venv/` and
+  the 12 GB download cache; renamed to **GeoAI** to match the folder.
+- **First multi-region findings** (12 regions, 237k walking segments, 1,503
+  outings; `results/t1_findings/`):
+  - a rounded-top curve beats Tobler's sharp peak;
+  - downhill advantage grows 1.08 → 1.24 with grade (Tobler: 1.42);
+  - variance after slope: 26% hiker/day, 74% along the trail, 2% region;
+  - no fatigue effect.
+- **Literature + data survey** (research agent). Our peak speed and rounded
+  curve replicate Campbell et al. 2019/2022; Wood et al. 2023 (UK, OSM +
+  lidar) is the closest analog; STRIDE (2024) is the lidar baseline. No
+  prior work tests transfer to unseen regions, so the paper should lead
+  with that: remote sensing vs map tags under leave-one-region-out. Free
+  data: AlphaEarth embeddings (Source Cooperative mirror), Meta 1 m canopy
+  height (AWS), 3DEP point clouds (AWS), MODIS/SNODAS snow. IGARSS: deadline
+  11 Jan 2027 confirmed, portal opens 10 Nov.
+- Plan to the paper written: **`docs/NEXT_STEPS.md`**.
 
 ## Sat 10 Oct 2026
 
