@@ -132,6 +132,23 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   (decision #84): ~12.5 GB from USGS 3DEP, ~9 h, in parallel with the OSM
   queue. It feeds the leave-one-region-out test of lidar vs tags, the
   paper's lead.
+- **The lead result, all 17 regions** (decision #85):
+  - The same terrain profile, read from the 5 m elevation T1 already had (in
+    the White Mountains 5 m ≈ 1 m).
+  - **In regions the model never saw:** terrain +1.6% (additive) / +2.2%
+    (trees) CRPS skill; tags +0.2% / −0.9%.
+  - **Terrain beats tags in 15 of 17 held-out regions**; the other two are
+    ties.
+  - Control: ~60% of the gain is uneven grade *inside* the 50 m segment,
+    which a DEM sees and an average slope or a tag can't; ~40% is
+    difficulty beyond grade.
+  - With the hiker's own pace: +10.3–11.0%, and whole-hike time error
+    13.7% → 9.4%.
+- **North Shore rebuilt from its full download** (10:53): 242 hiking traces
+  (was 91 lab-only), 165 walking outings, v0 4.38 km/h. All 17 pooled:
+  2,684 hiking traces, 1,848 walking outings, 4,374 h, v0 4.27 km/h. San
+  Gabriels downloading next (≤ 2,307 pages).
+- Paper outline: `paper/OUTLINE.md` (4-page budget, Table 1, figures).
 
 ## Sat 10 Oct 2026
 

@@ -109,17 +109,20 @@ value. A hiker's own pace still matters most.
 |---|---|---|---|
 | Tobler (published) | −13.8% | −13.7% | −13.2% |
 | + OSM tags (additive / trees) | +1.1 / +1.0 | +0.9 / +0.6 | **+0.2 / −0.9** |
-| + DEM terrain (additive / trees) | +2.0 / +2.7 | +2.0 / +2.6 | **+1.5 / +2.2** |
-| + both | +2.7 / +3.4 | +2.3 / +2.9 | +1.5 / +1.4 |
-| + personal pace (then + terrain) | +7.9 (+9.7) | | +8.5 (+10.2) |
+| + DEM terrain (additive / trees) | +2.0 / +2.7 | +2.1 / +2.6 | **+1.6 / +2.2** |
+| control: "hidden climbing" only | +1.2 / +1.5 | +1.2 / +1.5 | +1.0 / +1.2 |
+| + both | +2.8 / +3.4 | +2.4 / +2.8 | +1.6 / +1.3 |
+| + personal pace (then + terrain) | +7.9 (+9.8) | | +8.5 (+10.3) |
 
 - **R1. Tobler fails everywhere:** −13% CRPS, R² < 0. The peak is 4.27
   km/h at −4.5% grade, not 6. This replicates Campbell, across 17 regions.
 - **R2. Tags don't transfer.** They help a little within a region and
   barely in a new one. Trees on tags overfit regional tagging habits.
-- **R3. Terrain transfers.** It beats tags in 15 of 17 held-out regions, and
-  even on tagged segments (+1.6% vs +0.5%). (*) The control and 1 m
-  roughness go here.
+- **R3. Terrain transfers.** It beats tags in 15 of 17 held-out regions,
+  and on tagged segments (+1.8% vs +0.5%). About 60% of the gain is
+  uneven grade inside the 50 m segment ("hidden climbing"); the rest is
+  difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
+  here.
 - **R4. The hiker dominates.** Personal pace from the first km cuts
   whole-hike moving-time error from 13.7% to 9.9%; terrain on top takes it
   to ~9.5%.

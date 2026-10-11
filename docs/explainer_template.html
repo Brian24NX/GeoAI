@@ -435,7 +435,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
 
   <h3>The scoreboard</h3>
   <figure class="chart">
-    <svg id="score" viewBox="0 0 960 470" width="100%" role="img" aria-label="Prediction skill of each model"></svg>
+    <svg id="score" viewBox="0 0 960 620" width="100%" role="img" aria-label="Prediction skill of each model"></svg>
     <div class="legend" id="scoreLegend"></div>
     <figcaption><b>How to read it:</b>
       <ul>
@@ -446,9 +446,10 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
       </ul>
       Hover for numbers.</figcaption>
   </figure>
-  <div class="grid g3">
+  <div class="grid g4">
     <div class="stat"><div class="n"><span id="tHike0"></span> → <span id="tHike1"></span></div><div class="l">median error in whole-hike moving time, new region: slope curve → plus the hiker's own pace from their first km</div></div>
     <div class="stat"><div class="n" id="tTags"></div><div class="l">what OSM trail tags add in a new region (CRPS skill); <span id="tTagsIn"></span> in regions the model trained on</div></div>
+    <div class="stat"><div class="n" id="tTerr"></div><div class="l">what terrain from elevation data adds in a new region (CRPS skill); it beats tags in <span id="tWins"></span> of 17 held-out regions</div></div>
     <div class="stat"><div class="n" id="tCov"></div><div class="l">of real speeds fall inside the predicted 90% range: the uncertainty is honest</div></div>
   </div>
   <div class="callout warn"><b>What it means:</b>
@@ -459,7 +460,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
       <li><b>A reference point:</b> "place memory" (how fast other hikers went at the very same spot) adds ~1.3%. It is limited by how many hikers passed each spot, so it isn't a hard ceiling. The lidar pilot below beats it.</li>
     </ol>
   </div>
-  <div class="callout good"><b>So remote sensing's job is specific.</b> Lidar roughness, canopy height and satellite embeddings mean the same thing in every region. If they keep their value in unseen regions, where tags don't, that is the paper. We'll report gains next to tags and place memory, and also with personal pace known, where terrain effects show more clearly.</div>
+  <div class="callout good"><b>And the first answer is yes.</b> Terrain read from elevation data (how steppy the trail's profile is, plus the side slope) <b>keeps its value in regions the model never saw</b>: +1.6% (additive model) and +2.2% (trees), against +0.2% and −0.9% for tags. It beats tags in <b>15 of 17</b> held-out regions; the other two are ties. A control shows about 60% of the gain is uneven grade inside each 50 m piece, which the elevation data sees and an average slope or a tag can't. The rest is difficulty beyond grade. Elevation data is remote sensing (mostly airborne lidar), so this is the paper's lead result. Canopy height, 1 m roughness and satellite embeddings come next.</div>
 
   <h3>First remote-sensing result: 1 m lidar in the White Mountains</h3>
   <p class="sub">A pilot in one region, run the same day. Along every walked 50 m of trail we read the 1 m lidar elevation every metre. From it we measured how rough the ground is, how "steppy" the trail profile is (short steep pitches, rock steps), and how steep the hillside is across the trail.</p>
@@ -469,7 +470,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
     <figure class="chart"><svg id="pilotS" viewBox="0 0 460 300" width="100%" role="img" aria-label="Lidar vs tags skill in the White Mountains"></svg>
     <figcaption>CRPS skill vs the slope-only curve in the White Mountains. Light bars: new hikers. Dark bars: new 10 km map squares.</figcaption></figure>
   </div>
-  <div class="callout good"><b>Lidar beats map tags 2–4× here.</b> It also keeps most of its value in map squares it never saw, where tags keep little. One region isn't the paper yet: the 1 m elevation for all 16 US regions is downloading now (~12.5 GB, ~9 h), and then the real test runs, <b>leave one region out</b>.</div>
+  <div class="callout good"><b>Lidar beats map tags 2–4× here.</b> It also keeps most of its value in map squares it never saw, where tags keep little. The same profile from the 5 m elevation (itself mostly resampled lidar) does just as well, which is how the 17-region test above could run the same day. The 1 m elevation for all 16 US regions is downloading (~12.5 GB, ~9 h) to add 1 m roughness.</div>
 </section>
 
 <!-- ============================================================ 11 -->
@@ -973,6 +974,9 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
   document.getElementById("tTagsIn").textContent = ti ? pct(ti.crps_skill_vs_slope_pct) : "–";
   const cv = get("slope_curve","loro");
   document.getElementById("tCov").textContent = cv ? fmt(100*cv.cov90,0)+"%" : "–";
+  const tr = get("lin_rs","loro");
+  document.getElementById("tTerr").textContent = tr ? pct(tr.crps_skill_vs_slope_pct) : "n/a";
+  document.getElementById("tWins").textContent = (D.terrain_wins!=null) ? D.terrain_wins : "–";
 
   // splits diagram
   (function(){
@@ -1012,25 +1016,28 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
       ["Lorentz curve, refitted", "lorentz_refit", "all", "Campbell et al.'s curve shape"],
       ["+ OSM tags (additive)", "lin_tags", "all", "slope curve + an offset per tag value"],
       ["+ OSM tags (boosted trees)", "gbm_tags", "all", "a flexible machine-learning model"],
-      ["Place memory (the ceiling)", "place_memory", "all", "how fast other hikers went at the same 100 m spot; only exists where the model trained"],
+      ["+ Terrain from elevation data (additive)", "lin_rs", "all", "how steppy the trail's elevation profile is, and the side slope, from USGS elevation (mostly lidar)"],
+      ["+ Terrain (boosted trees)", "gbm_rs", "all", "the same terrain, flexible model"],
+      ["Place memory (a reference)", "place_memory", "all", "how fast other hikers went at the same 100 m spot; only exists where the model trained"],
       ["The region's own other hikers", "slope_curve_local", "all", "slope curve fitted inside the held-out region: what local data buys"],
       ["+ Personal pace (first km)", "slope_curve+me", "rest", "the hiker's pace over their first km"],
-      ["+ Personal pace + tags", "lin_tags+me", "rest", "both"]];
-    const x = lin(-15, 10, 380, 930), top = 26, rh = 46;
+      ["+ Personal pace + tags", "lin_tags+me", "rest", "both"],
+      ["+ Personal pace + terrain", "lin_rs+me", "rest", "both"]];
+    const x = lin(-15, 12.5, 380, 920), top = 26, rh = 46;
     [-15,-10,-5,0,5,10].forEach(v => {S("line",{x1:x(v),y1:top-8,x2:x(v),y2:top+rows.length*rh,class:"gridline"},svg);
       S("text",{x:x(v),y:top+rows.length*rh+18,"text-anchor":"middle",class:"lbl"},svg,(v>0?"+":"")+v+"%");});
     S("line",{x1:x(0),y1:top-8,x2:x(0),y2:top+rows.length*rh,stroke:"var(--text-2)","stroke-width":1.5},svg);
     S("text",{x:x(-15),y:12,class:"lbl"},svg,"← worse than the slope curve");
-    S("text",{x:x(10),y:12,"text-anchor":"end",class:"lbl"},svg,"better →");
+    S("text",{x:x(12.5),y:12,"text-anchor":"end",class:"lbl"},svg,"better →");
     rows.forEach((r, i) => {
       const y = top + i*rh;
-      if (i === 7) S("line",{x1:6,y1:y-3,x2:930,y2:y-3,stroke:"var(--line)","stroke-dasharray":"4 3"},svg);
+      if (i === 9) S("line",{x1:6,y1:y-3,x2:930,y2:y-3,stroke:"var(--line)","stroke-dasharray":"4 3"},svg);
       S("text",{x:6,y:y+17,class:"lbl-strong"},svg,r[0]);
       [["outing5","var(--s1-soft)","within a region",0],["loro","var(--s1)","new region",1]].forEach(([sp,col,nm,j]) => {
         const m = get(r[1], sp, r[2]); const yy = y + 4 + j*18;
         const na = !m || m.crps_skill_vs_slope_pct == null || (r[1] === "place_memory" && sp === "loro");
         if (na) {S("text",{x:x(0)+6,y:yy+12,class:"lbl"},svg,"n/a ("+nm+")");return;}
-        const v = Math.max(-15, Math.min(10, m.crps_skill_vs_slope_pct));
+        const v = Math.max(-15, Math.min(12.5, m.crps_skill_vs_slope_pct));
         const a = Math.min(x(0), x(v)), w = Math.max(Math.abs(x(v)-x(0)), 2);
         const bar = S("rect",{x:a,y:yy,width:w,height:15,rx:4,fill:col,stroke:"var(--s1)","stroke-width":j?0:1},svg);
         S("text",{x:v>=0?a+w+5:a-5,y:yy+12,"text-anchor":v>=0?"start":"end",class:"lbl"},svg,pct(m.crps_skill_vs_slope_pct));

@@ -147,9 +147,27 @@ is ~14% faster and the "steppiest" fifth ~11% slower.
 - It also beats place memory, because it measures every spot, including
   ones few hikers walked.
 
-**Next:** the 1 m elevation for all 16 US regions is downloading (decision
-#84, ~12.5 GB, ~9 h). Then `t2_terrain1m.py --all` and the harness with
-`--covariates`, under **leave one region out**: the paper's lead test.
+**All 17 regions, leave one region out (decision #85).** The same profile
+from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
+
+| | New hikers | New 10 km squares | **Unseen region** |
+|---|---|---|---|
+| OSM tags (additive / trees) | +1.1 / +1.0 | +0.9 / +0.6 | **+0.2 / −0.9** |
+| DEM terrain (additive / trees) | +2.0 / +2.7 | +2.1 / +2.6 | **+1.6 / +2.2** |
+| "Hidden climbing" alone (control) | +1.2 / +1.5 | +1.2 / +1.5 | +1.0 / +1.2 |
+| Personal pace, then + terrain | +7.9 → +9.8 | | +8.5 → +10.3 / +11.0 |
+
+- Terrain beats tags in **15 of 17** held-out regions (the other two tie),
+  and on tagged segments (+1.8% vs +0.5%).
+- ~60% of the gain is uneven grade inside the segment ("hidden climbing":
+  a DEM sees it, an average slope or a tag can't); ~40% is difficulty
+  beyond grade.
+
+**Next:**
+- The 1 m elevation for all 16 US regions is downloading (decision #84,
+  ~12.5 GB, ~9 h). Then `t2_terrain1m.py --all` adds STRIDE roughness.
+- Canopy height and embeddings follow.
+- Re-run once the city regions are rebuilt.
 
 ## 2. What the literature says (and how we differ)
 
@@ -196,12 +214,12 @@ Methodologies" or SP.5 "Foundation Models and Embeddings for EO"
 unseen regions from airborne lidar and Earth-observation embeddings.*
 
 **Claims, in priority order:**
-1. **(Lead) Transfer.** Leave one region out across 17 regions. Tag effects
-   barely transfer (+1.1% → +0.2%; §1b). In the White Mountains, 1 m lidar
-   terrain already beats tags 2–4× and holds up in unseen 10 km squares
-   (§1c). Does it keep its gain in unseen regions? Report it next to tags
-   and place memory, with calibrated uncertainty (CRPS, PIT), and with and
-   without personal pace.
+1. **(Lead) Transfer.** Leave one region out across 17 regions:
+   - tag effects barely transfer (+1.1% → +0.2%);
+   - terrain from elevation data does (+2.0% → +1.6%; trees +2.2%), and
+     beats tags in 15 of 17 regions (§1c).
+   Report it with calibrated uncertainty (CRPS, PIT), with and without
+   personal pace, and with the hidden-climbing control.
 2. **Dataset.** N traversals from ~1,600+ walking outings in 17 regions:
    - how it was built;
    - what share of OSM traces is usable;
