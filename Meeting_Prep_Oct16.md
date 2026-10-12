@@ -76,6 +76,9 @@ then T2". **T1 is complete and T2 tier 1 is done.**
   known.
 - **Newer hikes:** trained on hikes up to 2019 and tested on 2020–2026,
   terrain still adds +2.2% (tags +0.9%). No drift over time.
+- **Where it helps:** most on descents and level trail (+2.3% to +2.8%),
+  least on steep climbs (+0.8%). Footing limits you going down; effort
+  limits you going up.
 - **GPS quality:** the same gain on traces recorded every ≤ 2 s, 2–10 s
   and > 10 s (+1.7%, +2.4%, +1.9%), so it is not an artifact of sparse
   GPS points. Side finding: sparse traces read ~10% slow, probably

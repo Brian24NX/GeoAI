@@ -112,6 +112,18 @@ km.
     because short stops hide between points.
 - Paper outline R1–R3c refreshed to the final numbers (some were first-pass:
   "15 of 17", Campbell "−10% in the Adirondacks", embeddings "+0.7%").
+- **Paper Fig. 2, speed vs slope** (`paper/figures/fig_curve.png`; the
+  plan's claims 2 and 4, missing from the skeleton until now):
+  - real hikers peak near 4.2 km/h on level to gently descending trail;
+    Tobler is ~20% too fast on gentle grades and ~18% too slow on climbs
+    steeper than 25%; Campbell's curve is ~20% too fast on steep climbs;
+  - same hiker, same trail (2,763 out-and-back pairs): down/up 1.08 at
+    3–10% grade, 1.23 above 30% (Tobler 1.42). Our pooled curve implies
+    the same ratios.
+  - Added as slide 4; the brief's script now has 14 slides.
+- **Where terrain helps** (decision #102): most on descents and level
+  trail (+2.3% to +2.8%, additive), least on steep climbs (+0.8%). Footing
+  limits descents; effort limits climbs. Tags add ≤ 1.4% at every slope.
 
 ## Sun 11 Oct 2026
 

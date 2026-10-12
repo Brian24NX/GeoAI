@@ -145,7 +145,10 @@ value. A hiker's own pace still matters most.
   proxy) and ~2.3 on top of personal pace (not a hiker proxy). It holds
   for newer hikes (trained up to 2019, tested on 2020+: +2.2% / +2.9%;
   tags +0.9% / +0.9%) and at every GPS recording rate (unseen regions,
-  traces every ≤ 2 s / 2–10 s / > 10 s: +1.7 / +2.4 / +1.9%).
+  traces every ≤ 2 s / 2–10 s / > 10 s: +1.7 / +2.4 / +1.9%). By slope,
+  it is largest on descents and level trail (+2.3 to +2.8%, additive) and
+  smallest on steep climbs (+0.8%): footing limits descents, effort limits
+  climbs.
   Vegetation from 30 m maps (NLCD canopy, land cover) adds nothing, alone
   or with terrain: the remote-sensing signal is in the elevation data.
   1 m lidar ≈ 5 m for this profile; STRIDE's roughness adds ~nothing on

@@ -62,8 +62,10 @@ must transfer too.
 Subsets: all; tagged (sac_scale, visibility, smoothness or mtb_scale
 present); rest (segments after a trace's first km, where "+me" applies);
 gps_le2 / gps_2to10 / gps_gt10 (the trace's recording interval in s: is a
-gain still there where speeds are measured best?). skill_ci_gps.csv has
-their bootstrap intervals.
+gain still there where speeds are measured best?); down_steep / down /
+level / up / up_steep (slope in the walking direction: < -15%, -15 to
+-5%, -5 to 5%, 5 to 15%, >= 15%). skill_ci_subsets.csv has their
+bootstrap intervals.
 Metrics (log speed unless noted): RMSE, MAE, MAE km/h, CRPS (log and
 km/h), coverage of the central 50% and 90% intervals, PIT histogram, and
 moving-time errors over 1 km stretches (20 consecutive segments of one
@@ -112,6 +114,10 @@ SPLITS = ["outing5", "block5", "loro"]
 TIME_CUT, TIME_TEST = 2019, "after"      # time split: test = after 2019
 GPS_SUBSETS = {"gps_le2": (0, 2), "gps_2to10": (2, 10),
                "gps_gt10": (10, np.inf)}  # recording interval (s], per trace
+SLOPE_SUBSETS = {"down_steep": (-1, -0.15), "down": (-0.15, -0.05),
+                 "level": (-0.05, 0.05), "up": (0.05, 0.15),
+                 "up_steep": (0.15, 1)}   # slope [lo, hi), walking direction
+EXTRA_SUBSETS = [*GPS_SUBSETS, *SLOPE_SUBSETS]
 
 # ------------------------------------------------------------ features
 SAC = {"strolling": 0, "hiking": 1, "mountain_hiking": 2,
@@ -534,6 +540,8 @@ def load():
     w["y"] = np.log(w.speed_kmh)
     for name, (lo, hi) in GPS_SUBSETS.items():
         w[name] = (w.native_interval_s > lo) & (w.native_interval_s <= hi)
+    for name, (lo, hi) in SLOPE_SUBSETS.items():
+        w[name] = (w.slope >= lo) & (w.slope < hi)
     w["tagged"] = w[["tag_sac_scale", "tag_trail_visibility",
                      "tag_smoothness", "tag_mtb_scale"]].notna().any(axis=1)
     return w
@@ -724,14 +732,14 @@ def main():
     knobs.to_csv(OUT / "knobs.csv", index=False)
     sc = pd.concat(scored, ignore_index=True)
     base = w[["region", "trace_id", "outing_id", "length_m", "moving_s", "y",
-              "tagged", "rest", "stretch", *GPS_SUBSETS]
+              "tagged", "rest", "stretch", *EXTRA_SUBSETS]
              ].reset_index(names="row")
     sc = sc.merge(base, on="row")
 
     rows = []
     for (split, arm), d in sc.groupby(["split", "arm"], sort=False):
         subsets = (["rest"] if arm.endswith("+me")
-                   else ["all", "tagged", "rest", *GPS_SUBSETS])
+                   else ["all", "tagged", "rest", *EXTRA_SUBSETS])
         for sub in subsets:
             dd = d if sub == "all" else d[d[sub]]
             rows.append({"split": split, "arm": arm, "subset": sub,
@@ -748,8 +756,8 @@ def main():
     ci.to_csv(OUT / "skill_ci.csv", index=False)
     print(ci.round(2).to_string(index=False))
     pd.concat([skill_intervals(sc, splits, subset=k).assign(subset=k)
-               for k in GPS_SUBSETS], ignore_index=True
-              ).to_csv(OUT / "skill_ci_gps.csv", index=False)
+               for k in EXTRA_SUBSETS], ignore_index=True
+              ).to_csv(OUT / "skill_ci_subsets.csv", index=False)
 
     lo = sc[(sc.split == "loro") & ~sc.arm.str.endswith("+me")]
     by = pd.DataFrame([{"region": reg, "arm": arm, **summarize(d)}

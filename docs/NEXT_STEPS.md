@@ -116,7 +116,13 @@ which are kept below as the record.
     rate;
   - side finding: sparse traces (> 10 s) read ~10% slow on flat ground,
     probably because short stops hide between points (a per-trace
-    offset).
+    offset);
+  - by slope (unseen regions, additive / trees): terrain +2.4 / +3.2 on
+    steep descents (< −15%), +2.3 / +2.8 on descents, +2.8 / +3.3 on level
+    trail, +1.8 / +1.8 on climbs (5–15%), +0.8 / +2.6 on steep climbs;
+    tags ≤ +1.4 everywhere. Terrain minus tags is above zero in every draw
+    on descents and level trail, not on climbs: footing limits descents,
+    effort limits climbs.
 - **Whole-hike moving time** (1,354 hikes in unseen regions, after the
   first km; median error):
   - Tobler 13.7% (runs 5% fast), Campbell 14.3%;

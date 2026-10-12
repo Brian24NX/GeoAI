@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Two robustness checks on the final harness run (results/t3_harness_robust,
-= the terrain15m run plus a time split and GPS-rate subsets):
+Robustness checks on the final harness run (results/t3_harness_robust,
+= the terrain15m run plus a time split and extra scoring subsets):
 
-  time  train on outings up to 2019, test on 2020 and later (all regions
-        pooled), next to random new hikers (outing folds);
-  gps   unseen-region skill on traces recorded every <= 2 s, 2-10 s and
-        > 10 s (models trained on everything; only the scoring differs).
+  time   train on outings up to 2019, test on 2020 and later (all regions
+         pooled), next to random new hikers (outing folds);
+  gps    unseen-region skill on traces recorded every <= 2 s, 2-10 s and
+         > 10 s (models trained on everything; only the scoring differs);
+  slope  unseen-region skill by slope bin in the walking direction (where
+         does terrain help: climbs, descents, the flat?).
 
 Also checks that the run reproduces the terrain15m numbers (same seed).
 Output: results/t3_harness_robust/robust_summary.md
@@ -26,6 +28,8 @@ ARMS = {"tobler": "Tobler 1993", "campbell": "Campbell 2022",
         "gbm_both": "Terrain + tags, trees",
         "terrain_curve": "Terrain formula (5 numbers)"}
 GPS = {"gps_le2": "<= 2 s", "gps_2to10": "2-10 s", "gps_gt10": "> 10 s"}
+SLOPE = {"down_steep": "< -15%", "down": "-15 to -5%", "level": "-5 to 5%",
+         "up": "5 to 15%", "up_steep": ">= 15%"}
 
 
 def cell(m, ci, split, arm, subset="all"):
@@ -41,10 +45,36 @@ def cell(m, ci, split, arm, subset="all"):
     return s
 
 
+def subset_table(m, ci, cg, title, groups):
+    """Unseen-region skill per arm on each scoring subset, with the
+    terrain-minus-tags interval per subset."""
+    out = ["", f"## {title}", ""]
+    segs = m[(m.split == "loro") & (m.arm == "slope_curve")].set_index(
+        "subset").segments
+    hdr = " | ".join(f"{groups[g]} ({segs.get(g, 0):,} segments)"
+                     for g in groups)
+    out += [f"| Model | All | {hdr} |", "|---|---|" + "---|" * len(groups)]
+    for a, name in ARMS.items():
+        if a in set(m.arm):
+            row = [cell(m, ci, "loro", a)] + [cell(m, cg, "loro", a, g)
+                                              for g in groups]
+            out.append(f"| {name} | " + " | ".join(row) + " |")
+    out.append("")
+    for g in groups:
+        d = cg[(cg.split == "loro") & (cg.subset == g)
+               & (cg.arm == "lin_rs - lin_tags")]
+        if len(d):
+            x = d.iloc[0]
+            out.append(f"- {groups[g]}: terrain minus tags (additive) "
+                       f"[{x.skill_lo:.1f}, {x.skill_hi:.1f}], "
+                       f"{x.share_draws_above_0:.0%} of draws above 0.")
+    return out
+
+
 def main():
     m = pd.read_csv(RES / "metrics.csv")
     ci = pd.read_csv(RES / "skill_ci.csv")
-    cg = pd.read_csv(RES / "skill_ci_gps.csv")
+    cg = pd.read_csv(RES / "skill_ci_subsets.csv")
     out = ["# Robustness checks (`t3_robust_summary.py`)", "",
            "CRPS skill (%) vs the refitted slope curve, 95% intervals "
            "(outings resampled for outing and time splits, regions for "
@@ -75,26 +105,8 @@ def main():
                    f"{x.skill_hi:.1f}], {x.share_draws_above_0:.0%} of "
                    "draws above 0.")
 
-    out += ["", "## GPS recording rate: unseen regions, by trace interval",
-            ""]
-    segs = m[(m.split == "loro") & (m.arm == "slope_curve")].set_index(
-        "subset").segments
-    hdr = " | ".join(f"{GPS[g]} ({segs.get(g, 0):,} segments)" for g in GPS)
-    out += [f"| Model | All | {hdr} |", "|---|---|" + "---|" * len(GPS)]
-    for a, name in ARMS.items():
-        if a in set(m.arm):
-            row = [cell(m, ci, "loro", a)] + [cell(m, cg, "loro", a, g)
-                                              for g in GPS]
-            out.append(f"| {name} | " + " | ".join(row) + " |")
-    out.append("")
-    for g in GPS:
-        d = cg[(cg.split == "loro") & (cg.subset == g)
-               & (cg.arm == "lin_rs - lin_tags")]
-        if len(d):
-            x = d.iloc[0]
-            out.append(f"- {GPS[g]}: terrain minus tags (additive) "
-                       f"[{x.skill_lo:.1f}, {x.skill_hi:.1f}], "
-                       f"{x.share_draws_above_0:.0%} of draws above 0.")
+    out += subset_table(m, ci, cg, "GPS recording rate: unseen regions, "
+                        "by trace interval", GPS)
     cov = m[(m.split == "loro") & (m.arm.isin(["slope_curve", "lin_rs"]))
             & m.subset.isin(GPS)]
     out += ["", "Unseen regions by interval: coverage of 90% ranges, bias "
@@ -105,6 +117,8 @@ def main():
             f"| {x.bias_log:+.3f} | {100 * x.time_ape_median:.1f}% |"
             for x in cov.itertuples()]
     out.append("")
+    out += subset_table(m, ci, cg, "Slope in the walking direction: unseen "
+                        "regions", SLOPE)
     (RES / "robust_summary.md").write_text("\n".join(out))
     print("\n".join(out))
 
