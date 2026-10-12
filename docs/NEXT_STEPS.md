@@ -152,6 +152,7 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
 
 | | New hikers | New 10 km squares | **Unseen region** |
 |---|---|---|---|
+| Campbell 2022, published curve | −1.1 | | −0.6 |
 | OSM tags (additive / trees) | +1.1 / +1.0 | +0.9 / +0.6 | **+0.2 / −0.9** |
 | DEM terrain (additive / trees) | +2.0 / +2.7 | +2.1 / +2.6 | **+1.6 / +2.2** |
 | "Hidden climbing" alone (control) | +1.2 / +1.5 | +1.2 / +1.5 | +1.0 / +1.2 |

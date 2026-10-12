@@ -108,6 +108,7 @@ value. A hiker's own pace still matters most.
 | Model | Outing folds | Block folds | **Unseen region** |
 |---|---|---|---|
 | Tobler (published) | −13.8% | −13.7% | −13.2% |
+| Campbell et al. 2022 (published median) | −1.1% | | −0.6% |
 | + OSM tags (additive / trees) | +1.1 / +1.0 | +0.9 / +0.6 | **+0.2 / −0.9** |
 | + DEM terrain (additive / trees) | +2.0 / +2.7 | +2.1 / +2.6 | **+1.6 / +2.2** |
 | control: "hidden climbing" only | +1.2 / +1.5 | +1.2 / +1.5 | +1.0 / +1.2 |
@@ -115,7 +116,9 @@ value. A hiker's own pace still matters most.
 | + personal pace (then + terrain) | +7.9 (+9.8) | | +8.5 (+10.3) |
 
 - **R1. Tobler fails everywhere:** −13% CRPS, R² < 0. The peak is 4.27
-  km/h at −4.5% grade, not 6. This replicates Campbell, across 17 regions.
+  km/h at −4.5% grade, not 6. Campbell's published median curve (Utah and
+  California) is as good as our refit on average (−0.6%, n.s.) but
+  region-dependent: −10% in the Adirondacks, +4% on the North Shore.
 - **R2. Tags don't transfer.** They help a little within a region and
   barely in a new one. Trees on tags overfit regional tagging habits.
 - **R3. Terrain transfers.** It beats tags in 15 of 17 held-out regions,

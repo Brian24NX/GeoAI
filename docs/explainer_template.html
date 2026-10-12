@@ -435,7 +435,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
 
   <h3>The scoreboard</h3>
   <figure class="chart">
-    <svg id="score" viewBox="0 0 960 620" width="100%" role="img" aria-label="Prediction skill of each model"></svg>
+    <svg id="score" viewBox="0 0 960 666" width="100%" role="img" aria-label="Prediction skill of each model"></svg>
     <div class="legend" id="scoreLegend"></div>
     <figcaption><b>How to read it:</b>
       <ul>
@@ -1012,6 +1012,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
     const svg = document.getElementById("score");
     const rows = [
       ["Tobler's formula (published)", "tobler", "all", "the 1993 constants, nothing learned"],
+      ["Campbell 2022 (published)", "campbell", "all", "crowdsourced AllTrails hikes in Utah and California; nothing fitted on our data"],
       ["Slope curve, refitted (baseline)", "slope_curve", "all", "our rounded curve fitted to the data"],
       ["Lorentz curve, refitted", "lorentz_refit", "all", "Campbell et al.'s curve shape"],
       ["+ OSM tags (additive)", "lin_tags", "all", "slope curve + an offset per tag value"],
@@ -1031,7 +1032,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
     S("text",{x:x(12.5),y:12,"text-anchor":"end",class:"lbl"},svg,"better →");
     rows.forEach((r, i) => {
       const y = top + i*rh;
-      if (i === 9) S("line",{x1:6,y1:y-3,x2:930,y2:y-3,stroke:"var(--line)","stroke-dasharray":"4 3"},svg);
+      if (i === 10) S("line",{x1:6,y1:y-3,x2:930,y2:y-3,stroke:"var(--line)","stroke-dasharray":"4 3"},svg);
       S("text",{x:6,y:y+17,class:"lbl-strong"},svg,r[0]);
       [["outing5","var(--s1-soft)","within a region",0],["loro","var(--s1)","new region",1]].forEach(([sp,col,nm,j]) => {
         const m = get(r[1], sp, r[2]); const yy = y + 4 + j*18;

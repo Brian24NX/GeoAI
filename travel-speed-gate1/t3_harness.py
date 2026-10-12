@@ -8,6 +8,15 @@ the same held-out segments.
 Arms (T1 features only for now; the remote-sensing arms plug into ARMS
 when T2's covariates exist):
   tobler         Tobler 1993, published constants, nothing fitted
+  campbell       Campbell, Dennison & Thompson 2022 (CEUS 97:101866), the
+                 published median (50th percentile) Lorentz curve from
+                 ~2,000 AllTrails hikes in Utah and California (Table A3)
+  stride         STRIDE (Campbell, Cutler & Dennison 2024; R package
+                 `stride`, bld_tm): Lorentz(slope) / (1 + 15.265 density +
+                 16.505 roughness), m/s, from field walks; needs the 1 m
+                 covariate rough_stride; no lidar vegetation density yet
+                 (density = 0). stride_refit: the same form fitted to our
+                 hikes
   tobler_refit   Tobler's tent shape, refitted (= the T1 slope fit)
   slope_curve    our rounded-top asymmetric curve (t1_findings
                  smooth_asym), refitted: the slope-only baseline
@@ -186,7 +195,8 @@ def ridge(Z, e, lam):
 #   "lin_rs":   ("lin", ["rs"]),       "gbm_rs":   ("gbm", ["slope", "rs"]),
 #   "lin_both": ("lin", ["tags_1h", "rs"]),  "gbm_both": (...)
 ARMS = {
-    "tobler": ("fixed", None),
+    "tobler": ("fixed", "tobler"),
+    "campbell": ("fixed", "campbell"),
     "tobler_refit": ("form", "tobler"),
     "slope_curve": ("form", "smooth_asym"),
     "lorentz_refit": ("form", "lorentz"),
@@ -209,6 +219,28 @@ LAMBDAS = [1e-4, 1e-3, 1e-2, 1e-1, 1.0]   # ridge penalty per segment
 
 def tobler(s):
     return np.log(6.0) - 3.5 * np.abs(s + 0.05)
+
+
+def campbell(s):
+    """ln km/h of Campbell et al. 2022's 50th percentile model:
+    r = c / (pi b (1 + ((S - a) / b)^2)) + d + e S, r in m/s, S = slope in
+    degrees (Table A3: a -1.4579, b 22.0787, c 76.3271, d 0.0525,
+    e -3.2002e-4). Peak 1.15 m/s (4.15 km/h) near -1.5 degrees."""
+    a, b, c, d, e = -1.4579, 22.0787, 76.3271, 0.0525, -3.2002e-4
+    deg = np.degrees(np.arctan(s))
+    r = c / (np.pi * b * (1 + ((deg - a) / b) ** 2)) + d + e * deg
+    return np.log(3.6 * np.clip(r, 0.05, None))
+
+
+FIXED = {"tobler": tobler, "campbell": campbell}
+STRIDE = (-2.320, 26.315, 147.362, 16.505)   # a, b, c, e (bld_tm.R)
+
+
+def stride(s, rgh, a, b, c, e):
+    """ln km/h of the STRIDE form, slope s as rise/run, roughness rgh in m."""
+    deg = np.degrees(np.arctan(s))
+    r = c / (np.pi * b * (1 + ((deg - a) / b) ** 2)) / (1 + e * rgh)
+    return np.log(3.6 * np.clip(r, 1e-3, None))
 
 
 def gbm():
@@ -261,11 +293,25 @@ class Arm:
                            ** 2) for k in KAPPAS]
             self.kappa = KAPPAS[int(np.argmin(mse))]
             self.v = self._cells(s, y, both, self.kappa)
+        elif self.kind == "stride":
+            rgh = self.blocks["stride_rgh"]
+            if self.spec == "published":
+                self.p = STRIDE
+            else:
+                from scipy.optimize import least_squares
+                both = np.r_[fit, stop]
+                res = least_squares(
+                    lambda q: stride(s[both], rgh[both], *q) - y[both],
+                    x0=list(STRIDE), loss="soft_l1", f_scale=0.3,
+                    bounds=([-15, 5, 1, 0], [15, 80, 2000, 200]))
+                self.p = tuple(res.x)
         elif self.kind == "gbm":
             self.m = gbm().fit(self.X(fit), y[fit], X_val=self.X(stop),
                                y_val=y[stop])
         self.r = np.quantile(y[cal] - self.predict(s, cal), QL)
-        if self.kind == "fixed":      # a published curve keeps its level:
+        if self.kind == "fixed" or (self.kind == "stride"
+                                    and self.spec == "published"):
+            # a published curve keeps its level:
             self.r -= np.median(self.r)   # spread from data, no recentering
         return self
 
@@ -284,7 +330,9 @@ class Arm:
 
     def predict(self, s, idx):
         if self.kind == "fixed":
-            return tobler(s[idx])
+            return FIXED[self.spec](s[idx])
+        if self.kind == "stride":
+            return stride(s[idx], self.blocks["stride_rgh"][idx], *self.p)
         if self.kind == "form":
             return tf.FORMS[self.spec][0](self.p, s[idx])
         if self.kind == "lin":
@@ -510,6 +558,11 @@ def main():
     blocks = {"slope": w[["slope"]], "tags": varying(tag_features(w))}
     oh = onehot(blocks["tags"])
     blocks["tags_1h"] = oh.to_numpy()
+    if "rough_stride" in rs_cols:            # STRIDE needs its roughness
+        r = w["rough_stride"]
+        blocks["stride_rgh"] = r.fillna(r.median()).to_numpy()
+        ARMS["stride"] = ("stride", "published")
+        ARMS["stride_refit"] = ("stride", "refit")
     if rs_cols:
         blocks["rs"] = varying(w[rs_cols])
         blocks["rs_1h"] = onehot(binned(w[rs_cols])).to_numpy()

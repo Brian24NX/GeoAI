@@ -11,8 +11,12 @@ Each segment's path is resampled every 1 m and the 1 m DEM is read there
   pitch_sd     spread of the 5 m pitches (steps, short steep bits)
   relief_sd    SD of the profile around its 11 m moving average: rock
                steps, roots and water bars felt along the line of travel
-  rough_mad    STRIDE's roughness (Campbell et al. 2024: DTM minus a 2 m
-               smoothed DTM): mean |residual| on the path
+  rough_mad    roughness: mean |DTM - DTM smoothed with a 2 m Gaussian| on
+               the path
+  rough_stride STRIDE's exact definition (Campbell, Cutler & Dennison
+               2024; R package `stride`, gen_rgh): mean |DTM - DTM smoothed
+               with a circular mean filter of 2 m radius|, here on the path
+               (STRIDE averages it over 10 m pixels)
   cross_slope  mean side slope across the path (sidehill trails), from
                the smoothed DEM's gradient
   dem1m_cover  share of the path's points with 1 m data
@@ -35,7 +39,7 @@ import numpy as np
 import pandas as pd
 import tifffile
 from pyproj import Transformer
-from scipy.ndimage import gaussian_filter, map_coordinates
+from scipy.ndimage import convolve, gaussian_filter, map_coordinates
 
 import regions
 
@@ -45,7 +49,10 @@ OUT = Path("data/t2")
 CELL = 500
 SIGMA_M = 2.0                      # STRIDE: 2 m smoothing
 NODATA_BELOW = -1000.0
-CACHE_CELLS = 150                  # ~4 MB each in memory
+CACHE_CELLS = 150                  # ~10 MB each in memory
+_yy, _xx = np.mgrid[-2:3, -2:3]
+DISK = ((_xx ** 2 + _yy ** 2) <= 4).astype(float)    # 2 m radius, 13 px
+DISK /= DISK.sum()
 logging.getLogger("tifffile").setLevel(logging.ERROR)
 
 
@@ -70,7 +77,8 @@ class Cells:
             filled = np.where(np.isnan(z), np.nanmean(z), z)
             sm = gaussian_filter(filled, SIGMA_M, mode="nearest")
             gy, gx = np.gradient(sm)          # per pixel = per meter
-            val = {"z": z, "res": z - sm, "gx": gx, "gy": -gy}  # north = up
+            val = {"z": z, "res": z - sm, "gx": gx, "gy": -gy,  # north = up
+                   "resc": z - convolve(filled, DISK, mode="nearest")}
         self.cache[key] = val
         if len(self.cache) > CACHE_CELLS:
             self.cache.popitem(last=False)
@@ -157,6 +165,8 @@ def run(key):
                 row.update(profile_metrics(zz.to_numpy(), L))
                 row["rough_mad"] = float(np.nanmean(np.abs(
                     cells.sample(x, y, "res"))))
+                row["rough_stride"] = float(np.nanmean(np.abs(
+                    cells.sample(x, y, "resc"))))
                 gx, gy = cells.sample(x, y, "gx"), cells.sample(x, y, "gy")
                 tx, ty = np.gradient(x), np.gradient(y)
                 norm = np.hypot(tx, ty)

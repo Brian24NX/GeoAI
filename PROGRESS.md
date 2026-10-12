@@ -172,6 +172,19 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   canopy cover and land cover (NLCD 2021) give +0.0% in unseen regions,
   alone or with terrain. The remote-sensing signal is in the elevation
   data; fine-scale understory from lidar points is the last vegetation test.
+- **Published baselines added** (decision #88):
+  - Campbell et al. 2022's median curve (Utah and California AllTrails
+    hikes, nothing fitted on our data) ties our refitted slope curve in
+    unseen regions (−0.6%, interval includes 0), against Tobler's −13%.
+  - It is region-dependent: −10% in the Adirondacks, +4% on the North Shore.
+  - STRIDE (lidar model, coefficients from its R package) enters with the
+    1 m roughness run tonight.
+- **Columbia Gorge rebuilt from its full download** (20:23): 104 hiking
+  traces (was 43 lab-only), 67 walking outings, v0 4.63 km/h. All 17
+  pooled: 2,805 hiking traces, 1,935 walking outings, 4,597 h, v0 4.29
+  km/h. Wasatch downloading (≤ 2,436 pages), then the Bay Area.
+- The 1 m elevation download finished (~20:20, 12,499 cells); 1 m terrain
+  and STRIDE roughness are being computed for all regions.
 
 ## Sat 10 Oct 2026
 

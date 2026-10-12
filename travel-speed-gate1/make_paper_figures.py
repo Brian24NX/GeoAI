@@ -33,6 +33,7 @@ plt.rcParams.update({"font.size": 7.5, "axes.titlesize": 8,
                      "font.family": "DejaVu Sans"})
 
 ROWS = [("Tobler (published)", "tobler"),
+        ("Campbell 2022 (published)", "campbell"),
         ("Tags, additive", "lin_tags"),
         ("Tags, trees", "gbm_tags"),
         ("Terrain, additive", "lin_rs"),
