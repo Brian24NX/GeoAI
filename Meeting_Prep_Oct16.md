@@ -97,7 +97,10 @@ then T2". **T1 is complete and T2 tier 1 is done.**
    - A small pilot has too few hikes (43) to test.
    - Worth doing it for 1–3 regions, given that 30 m canopy showed
      nothing?
-4. **Data release** with the paper (segments without user names)?
+4. **Data release** with the paper? A de-identified copy is ready on the
+   cluster (`data/t1_release/`: no user names, hashed ids, month/hour
+   only). It needs a license decision (OSM-derived data falls under the
+   ODbL) and the lab's data policy.
 5. **Slurm account:** keep `engr-class-any` (≤ 8 CPUs/job) or the lab's?
 
 ---

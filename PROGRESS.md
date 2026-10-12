@@ -77,6 +77,12 @@ km.
     walked.
   - Median 15.2 min/km vs Tobler's 12.8.
   - Tobler is too fast on gentle trails and too slow on steep ones.
+- **Paper skeleton** (`paper/main.tex`, compiles to 4 pages): IEEE two-column
+  stand-in template, section files with the points to make (TODO notes),
+  Table I with the final numbers, the figures, checked references. The
+  prose is Brian's.
+- **De-identified copy of the dataset** ready on the cluster (decision #100;
+  not published; needs the mentors' license decision).
 
 ## Sun 11 Oct 2026
 
