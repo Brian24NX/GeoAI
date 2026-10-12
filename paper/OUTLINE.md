@@ -109,6 +109,7 @@ value. A hiker's own pace still matters most.
 |---|---|---|---|
 | Tobler (published) | −13.8% | −13.7% | −13.2% |
 | Campbell et al. 2022 (published median) | −1.1% | | −0.6% |
+| STRIDE 2024 (published / form refitted) | −18.0 / +0.3 | | −17.7 / +0.1 |
 | + OSM tags (additive / trees) | +1.1 / +1.0 | +0.9 / +0.6 | **+0.2 / −0.9** |
 | + DEM terrain (additive / trees) | +2.0 / +2.7 | +2.1 / +2.6 | **+1.6 / +2.2** |
 | control: "hidden climbing" only | +1.2 / +1.5 | +1.2 / +1.5 | +1.0 / +1.2 |
@@ -128,7 +129,10 @@ value. A hiker's own pace still matters most.
   Robustness: it adds ~1.8 points on top of region offsets (not a region
   proxy) and on top of personal pace (not a hiker proxy).
   Vegetation from 30 m maps (NLCD canopy, land cover) adds nothing, alone
-  or with terrain: the remote-sensing signal is in the elevation data. About 60% of the gain is
+  or with terrain: the remote-sensing signal is in the elevation data.
+  1 m lidar ≈ 5 m for this profile; STRIDE's roughness adds ~nothing on
+  trails (published STRIDE −18%). Embeddings (*) pending the all-region
+  test. About 60% of the gain is
   uneven grade inside the 50 m segment ("hidden climbing"); the rest is
   difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
   here.

@@ -533,16 +533,13 @@ def main():
         w = w[w.region.isin(args.regions)].reset_index(drop=True)
     rs_cols = []
     if args.covariates:
-        groups = {}                  # per-region files of one kind stack;
-        for f in args.covariates:    # different kinds join on segment_id
-            d = pd.read_parquet(f)
-            groups.setdefault(tuple(sorted(d.columns)), []).append(d)
-        cov = None
-        for parts in groups.values():
-            g = pd.concat(parts, ignore_index=True)
-            cov = g if cov is None else cov.merge(g, on="segment_id",
-                                                  how="outer")
+        # stack every file (columns may differ: kinds, or a region with
+        # no data), then one row per segment, first non-missing value
+        cov = pd.concat([pd.read_parquet(f) for f in args.covariates],
+                        ignore_index=True)
+        cov = cov.groupby("segment_id", sort=False).first().reset_index()
         rs_cols = [c for c in cov.columns if c not in RS_SKIP
+                   and not c.startswith("dem1m_cover")
                    and pd.api.types.is_numeric_dtype(cov[c])
                    and (not args.features or c in args.features)]
         w = w.merge(cov[["segment_id"] + rs_cols], on="segment_id",

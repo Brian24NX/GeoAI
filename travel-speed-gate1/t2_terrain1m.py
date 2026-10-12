@@ -178,6 +178,11 @@ def run(key):
         if n % 20000 == 0:
             print(f"  {key}: {n:,} / {len(seg):,}", flush=True)
     out = pd.DataFrame(rows)
+    for col in ("dem1m_cover", "slope_1m", "pitch_max", "pitch_sd",
+                "relief_sd", "hidden_grade", "rough_mad", "rough_stride",
+                "cross_slope"):           # same columns in every region
+        if col not in out:
+            out[col] = np.nan
     OUT.mkdir(parents=True, exist_ok=True)
     f = OUT / f"terrain1m_{key}.parquet"
     out.to_parquet(f, index=False)

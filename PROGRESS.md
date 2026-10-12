@@ -185,6 +185,19 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   km/h. Wasatch downloading (≤ 2,436 pages), then the Bay Area.
 - The 1 m elevation download finished (~20:20, 12,499 cells); 1 m terrain
   and STRIDE roughness are being computed for all regions.
+- **1 m lidar results** (decision #89):
+  - 1 m terrain ≈ 5 m terrain in unseen regions (+1.5–2.4%); terrain beats
+    tags in 16 of 17 regions.
+  - STRIDE as published −17.7% (worse than Tobler: its roughness term
+    over-penalizes trails); refitted +0.1%.
+  - The trail's elevation profile carries the signal, not micro-roughness.
+- **Satellite embeddings pilot** (decision #90; AlphaEarth 2022 from the
+  free Source Cooperative mirror, CC-BY):
+  - White Mountains: +2.6–3.3% alone, +4.6–4.9% with terrain
+    (complementary).
+  - Running for all 17 regions overnight (~10–15 GB) for the unseen-region
+    test.
+- Draft meeting brief for 16 Oct: `Meeting_Prep_Oct16.md`.
 
 ## Sat 10 Oct 2026
 

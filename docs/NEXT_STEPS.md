@@ -174,6 +174,15 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
   canopy cover and land cover give +0.0% in unseen regions, alone or on
   top of terrain. Fine-scale understory (lidar points, tier 2) is the only
   vegetation test left.
+- **1 m lidar ≈ 5 m** (decision #89): 1 m terrain gives +1.5% / +2.3% in
+  unseen regions; with 5 m +1.6% / +2.4%, beating tags in 16 of 17
+  regions.
+- **STRIDE:** as published −17.7% (its roughness term over-penalizes
+  trails); its form refitted +0.1%. The along-path profile, not STRIDE
+  roughness, carries the signal.
+- **Satellite embeddings** (decision #90): in the White Mountains, +2.6% /
+  +3.3% alone and +4.6% / +4.9% with terrain, so they are complementary.
+  Running for all regions for the unseen-region test.
 
 **Next:**
 - The 1 m elevation for all 16 US regions is downloading (decision #84,
