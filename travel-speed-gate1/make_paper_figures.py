@@ -23,6 +23,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
@@ -149,8 +150,122 @@ def fig_hike():
     fig.savefig(OUT / "fig_hike_time.png", dpi=300)
 
 
+NE = HERE / "cache" / "naturalearth"     # Natural Earth 1:110m GeoJSON
+LABELS = {  # region: (short name, label offset in points, alignment)
+    "northshore": ("North Shore", (-7, 0), "right"),
+    "olympic": ("Olympic", (-6, -1), "right"),
+    "cascades": ("Cascades", (7, 2), "left"),
+    "gorge": ("Col. Gorge", (-6, -3), "right"),
+    "bayarea": ("Bay Area", (-6, 0), "right"),
+    "tahoe": ("Tahoe", (6, 2), "left"),
+    "yosemite": ("Yosemite", (6, -4), "left"),
+    "sangabriel": ("San Gabriels", (-4, -7), "right"),
+    "wasatch": ("Wasatch", (6, 0), "left"),
+    "frontrange": ("Front Range", (6, 0), "left"),
+    "smokies": ("Smokies", (-2, 7), "center"),
+    "pisgah": ("Pisgah", (6, -5), "left"),
+    "shenandoah": ("Shenandoah", (6, -2), "left"),
+    "catskills": ("Catskills", (5, -6), "left"),
+    "adk": ("Adirondacks", (-6, 2), "right"),
+    "greenmtn": ("Green Mtns", (-3, 7), "right"),
+    "wm": ("White Mtns", (6, 1), "left"),
+}
+
+
+def fig_map():
+    """Fig. 1: the 17 regions (circle area = walking hours) and an inset
+    of the White Mountains' walking segments colored by speed. Needs the
+    Natural Earth files in cache/naturalearth/ (ne_110m_admin_0_countries,
+    ne_110m_admin_1_states_provinces_lines; public domain)."""
+    import json
+    import sys
+    from matplotlib.collections import LineCollection
+    from matplotlib.patches import Polygon as MPoly
+    from pyproj import Transformer
+    sys.path.insert(0, str(HERE))
+    import regions
+    to = Transformer.from_crs(4326, 5070, always_xy=True)   # CONUS Albers
+    corners = [(-130.0, 32.0), (-130.0, 50.3), (-66.0, 47.5), (-66.0, 30.0),
+               (-96, 50.5), (-96, 26.5)]
+    cx, cy = to.transform(*zip(*corners))
+    xr, yr = (min(cx), max(cx)), (min(cy), max(cy))
+    fig = plt.figure(figsize=(3.5, 3.5 * (yr[1] - yr[0]) / (xr[1] - xr[0])))
+    ax = fig.add_axes([0, 0, 1, 1])
+    cs = json.loads((NE / "ne_110m_admin_0_countries.geojson").read_text())
+    for f in cs["features"]:
+        if f["properties"].get("ADM0_A3") not in ("USA", "CAN", "MEX"):
+            continue
+        g = f["geometry"]
+        polys = [g["coordinates"]] if g["type"] == "Polygon" \
+            else g["coordinates"]
+        for poly in polys:
+            ring = np.array(poly[0])
+            x, y = to.transform(ring[:, 0], ring[:, 1])
+            ax.add_patch(MPoly(np.c_[x, y], closed=True, fc="#eeede9",
+                               ec="#b5b3ad", lw=0.4, zorder=1))
+    sl = json.loads((NE / "ne_110m_admin_1_states_provinces_lines.geojson")
+                    .read_text())
+    segs = []
+    for f in sl["features"]:
+        g = f["geometry"]
+        lines = [g["coordinates"]] if g["type"] == "LineString" \
+            else g["coordinates"]
+        for ln in lines:
+            a = np.array(ln)
+            x, y = to.transform(a[:, 0], a[:, 1])
+            segs.append(np.c_[x, y])
+    ax.add_collection(LineCollection(segs, colors="white", lw=0.4,
+                                     zorder=2))
+    r = pd.read_csv(HERE / "results/t1_summary/regions.csv") \
+        .set_index("region").drop("ALL", errors="ignore")
+    hmax = r.walking_hours.max()
+    for key, row in r.sort_values("walking_hours",
+                                  ascending=False).iterrows():
+        w, s_, e, n = regions.CANDIDATES[key][1]
+        x, y = to.transform((w + e) / 2, (s_ + n) / 2)
+        col = ORANGE if row.sources == "lab only" else BLUE
+        ax.scatter(x, y, s=8 + 260 * row.walking_hours / hmax, color=col,
+                   alpha=0.85, edgecolor="white", lw=0.6, zorder=3)
+        name, off, ha = LABELS.get(key, (key, (5, 0), "left"))
+        ax.annotate(name, (x, y), xytext=off, textcoords="offset points",
+                    fontsize=5.3, ha=ha, va="center", color="#333", zorder=4)
+    ax.set_xlim(*xr)
+    ax.set_ylim(*yr)
+    ax.set_aspect("equal")
+    ax.axis("off")
+    for c, lab in [(BLUE, "full download + lab"), (ORANGE, "lab only")]:
+        ax.scatter([], [], s=25, color=c, label=lab)
+    ax.legend(loc="lower left", frameon=False, fontsize=5.3,
+              title="circle area = walking hours", title_fontsize=5.3,
+              handletextpad=0.2, borderaxespad=0.2)
+    # inset: the White Mountains' walking segments by speed
+    seg = pd.read_parquet(HERE / "results/fig1_wm_segments.parquet")
+    ia = fig.add_axes([0.40, 0.03, 0.24, 0.34])
+    lines = np.stack([np.c_[seg.lon0, seg.lat0], np.c_[seg.lon1, seg.lat1]],
+                     axis=1)
+    lc = LineCollection(lines, array=seg.speed_kmh.clip(1, 6).to_numpy(),
+                        cmap="viridis", lw=0.5)
+    lc.set_clim(1, 6)
+    ia.add_collection(lc)
+    ia.autoscale()
+    ia.set_aspect(1 / np.cos(np.radians(44.15)))
+    ia.set_xticks([])
+    ia.set_yticks([])
+    for sp in ia.spines.values():
+        sp.set_color("#b5b3ad")
+        sp.set_linewidth(0.5)
+    ia.set_title("White Mtns (inset)", fontsize=5.3, pad=1.5)
+    cb = fig.colorbar(lc, ax=ia, orientation="vertical", fraction=0.07,
+                      pad=0.03)
+    cb.set_label("km/h", fontsize=5, labelpad=1)
+    cb.ax.tick_params(labelsize=4.5, length=1.5, pad=1)
+    fig.savefig(OUT / "fig_map.png", dpi=300)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    if (NE / "ne_110m_admin_0_countries.geojson").exists():
+        fig_map()
     fig_skill()
     fig_regions()
     if (RES / "hike_times.csv").exists():
