@@ -206,6 +206,12 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
 - **Whole-hike times** (decision #92, 1,199 hikes in unseen regions): median
   error Tobler 14.0%, slope curve 13.7%, + terrain 13.0%, + personal pace
   + terrain 9.5% (52% of hikes within ±10%).
+- **Satellite embeddings, all 17 regions** (decision #93):
+  - Within regions they're strong (+2.9% with trees; +4.5% with terrain).
+  - In unseen regions they're unreliable: +0.7% / −0.1%, ranging from +5%
+    to −5% by region.
+  - Terrain from elevation data is what transfers.
+  - Paper angle: "embeddings help locally, lidar terrain transfers".
 
 ## Sat 10 Oct 2026
 

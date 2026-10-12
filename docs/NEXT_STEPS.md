@@ -180,9 +180,14 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
 - **STRIDE:** as published −17.7% (its roughness term over-penalizes
   trails); its form refitted +0.1%. The along-path profile, not STRIDE
   roughness, carries the signal.
-- **Satellite embeddings** (decision #90): in the White Mountains, +2.6% /
-  +3.3% alone and +4.6% / +4.9% with terrain, so they are complementary.
-  Running for all regions for the unseen-region test.
+- **Satellite embeddings** (decisions #90, #93), AlphaEarth 2022, all 17
+  regions:
+  - strong within regions: +1.4% / +2.9% alone, +3.0% / +4.5% with
+    terrain;
+  - unreliable in unseen regions: +0.7% / −0.1% alone (+5% in some
+    regions, −3 to −5% in others);
+  - with terrain: +1.9% (additive).
+  - Physical terrain transfers; embeddings know places.
 - **A terrain-adjusted Tobler formula** (decision #91): one DEM-derived
   input (steppiness):
   - smooth trails peak at 4.56 km/h, steppy ones at 3.82;

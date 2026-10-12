@@ -114,6 +114,8 @@ value. A hiker's own pace still matters most.
 | + DEM terrain (additive / trees) | +2.0 / +2.7 | +2.1 / +2.6 | **+1.6 / +2.2** |
 | control: "hidden climbing" only | +1.2 / +1.5 | +1.2 / +1.5 | +1.0 / +1.2 |
 | + both | +2.8 / +3.4 | +2.4 / +2.8 | +1.6 / +1.3 |
+| + AlphaEarth embeddings (additive / trees) | +1.4 / +2.9 | +1.0 / +1.7 | **+0.7 / −0.1** |
+| + embeddings + terrain | +3.0 / +4.5 | +2.8 / +3.5 | +1.9 / +1.6 |
 | + personal pace (then + terrain) | +7.9 (+9.8) | | +8.5 (+10.3) |
 
 - **R1. Tobler fails everywhere:** −13% CRPS, R² < 0. The peak is 4.27
@@ -131,8 +133,11 @@ value. A hiker's own pace still matters most.
   Vegetation from 30 m maps (NLCD canopy, land cover) adds nothing, alone
   or with terrain: the remote-sensing signal is in the elevation data.
   1 m lidar ≈ 5 m for this profile; STRIDE's roughness adds ~nothing on
-  trails (published STRIDE −18%). Embeddings (*) pending the all-region
-  test. About 60% of the gain is
+  trails (published STRIDE −18%).
+- **R3c. Foundation-model embeddings** (AlphaEarth) are strong within
+  regions but transfer poorly (+0.7% / −0.1% in unseen regions; +5% to
+  −5% by region). Physical terrain transfers; embeddings know places.
+  Combined additively: +1.9%. About 60% of the gain is
   uneven grade inside the 50 m segment ("hidden climbing"); the rest is
   difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
   here.

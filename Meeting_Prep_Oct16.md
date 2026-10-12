@@ -76,8 +76,11 @@ then T2". Both are done or well underway.
 1. **Paper framing:** lead with "terrain from remote sensing transfers to
    new regions; map tags don't", with Tobler, Campbell and STRIDE as
    baselines. Agree?
-2. **Satellite embeddings:** use the free AlphaEarth mirror (pilot running)
-   or a lab Earth Engine project? Any preferred embedding model?
+2. **Satellite embeddings:** AlphaEarth (free mirror, all 17 regions done)
+   is strong within regions but doesn't transfer reliably to new ones
+   (+0.7%; +5% to −5% by region), while terrain does. Present it as "helps
+   locally, transfers poorly"? Try another embedding (e.g. TESSERA), or
+   ways to make embeddings region-robust?
 3. **Vegetation:** worth processing lidar point clouds for understory
    density (STRIDE's 0.85–1.2 m band), given that 30 m canopy showed
    nothing?
