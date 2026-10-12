@@ -58,6 +58,12 @@ km.
   +1.0% in unseen regions with 5 numbers.
 - Paper figures, explainer, outline and the 16 Oct brief now use these
   numbers.
+- **Speed by travel mode** (T4, decision #96):
+  - walking 4.31 km/h, running 10.8, bike/ski 18.0 (peak speeds);
+  - bikes are much more slope-sensitive (k 4.6 vs 1.8);
+  - the bike-to-walk ratio falls from ~4× on descents to ~1.6× on climbs,
+    so a constant mode multiplier (Tobler's approach) fails for bikes;
+    runners stay ~2.5×.
 
 ## Sun 11 Oct 2026
 

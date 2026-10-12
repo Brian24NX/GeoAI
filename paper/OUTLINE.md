@@ -175,6 +175,10 @@ value. A hiker's own pace still matters most.
 
 ---
 
+**Mode (stretch, T4):** bike/ski-to-walk ratio ~4× on descents → ~1.6× on
+climbs (constant multipliers fail); runners ~2.5× throughout
+(`travel-speed-gate1/results/t4_mode_curves/fig_modes.png`).
+
 ## Figures and tables to make (Claude can produce drafts)
 
 - [ ] Fig. 1: region map (from the explainer's map) + one region inset.

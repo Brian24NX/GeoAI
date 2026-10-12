@@ -121,6 +121,11 @@ which are kept below as the record.
 - **Findings unchanged:** 26% of the variance after slope is between
   outings and 1.8% between regions; no fatigue; down/up ratio 1.08 → 1.23
   with grade (2,763 pairs).
+- **Modes (T4, decision #96):** bikes/skis peak at 18 km/h (k 4.6),
+  runners at 10.8 (k 2.0), walkers at 4.3 (k 1.8). The bike-to-walk ratio
+  falls from ~4× on descents to ~1.6× on climbs, so Tobler-style constant
+  mode multipliers fail for bikes. Runners stay at a roughly constant
+  2.4–2.7×.
 
 ## 1b. First pass: evaluation results (11 Oct; `t3_harness.py`, decision #82)
 
