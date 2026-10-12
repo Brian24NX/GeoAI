@@ -102,21 +102,22 @@ value. A hiker's own pace still matters most.
 
 ## 4. Results (~1.25 pages)
 
-**Table 1** (CRPS skill vs the refitted slope curve; numbers from
-`results/t3_harness_terrain5m/`):
+**Table 1** (CRPS skill vs the refitted slope curve; final numbers, 12 Oct;
+`travel-speed-gate1/results/t3_harness_*`; `docs/NEXT_STEPS.md` §1a):
 
-| Model | Outing folds | Block folds | **Unseen region** |
+| Model | New hikers | New 10 km squares | **Unseen region** [95% CI] |
 |---|---|---|---|
-| Tobler (published) | −13.8% | −13.7% | −13.2% |
-| Campbell et al. 2022 (published median) | −1.1% | | −0.6% |
-| STRIDE 2024 (published / form refitted) | −18.0 / +0.3 | | −17.7 / +0.1 |
-| + OSM tags (additive / trees) | +1.1 / +1.0 | +0.9 / +0.6 | **+0.2 / −0.9** |
-| + DEM terrain (additive / trees) | +2.0 / +2.7 | +2.1 / +2.6 | **+1.6 / +2.2** |
-| control: "hidden climbing" only | +1.2 / +1.5 | +1.2 / +1.5 | +1.0 / +1.2 |
-| + both | +2.8 / +3.4 | +2.4 / +2.8 | +1.6 / +1.3 |
-| + AlphaEarth embeddings (additive / trees) | +1.4 / +2.9 | +1.0 / +1.7 | **+0.7 / −0.1** |
-| + embeddings + terrain | +3.0 / +4.5 | +2.8 / +3.5 | +1.9 / +1.6 |
-| + personal pace (then + terrain) | +7.9 (+9.8) | | +8.5 (+10.3) |
+| Tobler (published) | −12.8 | −12.7 | −12.5 |
+| Campbell et al. 2022 (published median) | −0.9 | −0.9 | −0.5 [−1.8, 0.7] |
+| STRIDE 2024 (published / refitted) | −17.2 / +0.2 | −17.3 / +0.2 | −16.8 / +0.2 |
+| + OSM tags (additive / trees) | +1.3 / +1.5 | +1.1 / +1.5 | +0.9 [0.1, 1.7] / +0.4 |
+| + vegetation, 30 m | +0.0 / +0.1 | −0.0 / −0.1 | −0.1 / −0.8 |
+| + AlphaEarth embeddings | +1.4 / +2.6 | +1.4 / +1.9 | +1.1 [0.1, 2.6] / +1.1 |
+| **+ terrain (1 m + 5 m elevation)** | +2.2 / +3.2 | +2.1 / +2.8 | **+2.1 [1.5, 3.1] / +2.8 [1.8, 4.1]** |
+| + terrain + embeddings | +2.9 / +4.3 | +3.0 / +3.6 | +2.6 / +2.8 |
+| + terrain + embeddings + tags | +3.7 / +5.1 | +3.8 / +5.1 | +3.0 / +3.9 [2.7, 5.7] |
+| terrain-adjusted Tobler formula | +1.0 | +1.0 | +1.0 [0.6, 1.5] |
+| + personal pace → + terrain | | | +8.4 → +10.7 / +11.6 |
 
 - **R1. Tobler fails everywhere:** −13% CRPS, R² < 0. The peak is 4.27
   km/h at −4.5% grade, not 6. Campbell's published median curve (Utah and

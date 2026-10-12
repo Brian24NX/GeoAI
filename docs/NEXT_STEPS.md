@@ -25,11 +25,11 @@ search snippets and need checking when you read the paper.*
      remote sensing instead of map tags (17 regions make this testable);
    - give **calibrated uncertainty**;
    - measure the **up/down asymmetry on same-hiker pairs** at scale.
-4. **First evaluation results (§1b)** sharpen this. Map tags improve
-   predictions by only ~1% within a region and ~0.2% in a new region, while
-   a hiker's own pace matters ~10× more. So the remote-sensing question is
-   about **transfer**: do physical covariates keep their value in new
-   regions, where tag effects don't?
+4. **The answer (§1a, final numbers):** terrain from elevation data (mostly
+   lidar) keeps its value in regions the model never saw: +2.1% / +2.8%,
+   against +0.9% / +0.4% for map tags. It beats tags in 16 of 17 regions.
+   Satellite embeddings help within regions but transfer less reliably.
+   A hiker's own pace still matters most.
 5. **The plan:**
    - finish T1 this week;
    - T2 covariates in weeks 9–10, reusing STRIDE's lidar definitions plus
@@ -75,7 +75,54 @@ the 12-region numbers were the same within rounding):
 
 ---
 
-## 1b. First evaluation results (11 Oct; `t3_harness.py`, decision #82)
+## 1a. FINAL numbers on the complete T1 (12 Oct 02:34; decision #95)
+
+These are from the overnight refresh: 17 regions (16 full downloads + the
+Bay Area from lab data), **290,640 walking segments, 1,992 outings, 4,702
+moving hours**. They supersede the 11 Oct first-pass numbers in §1b–1c,
+which are kept below as the record.
+
+| Model (CRPS skill vs our refitted slope curve, %) | New hikers | New 10 km squares | **Unseen region** [95% CI, regions resampled] |
+|---|---|---|---|
+| Tobler 1993 (published) | −12.8 | −12.7 | −12.5 |
+| Campbell et al. 2022 (published median curve) | −0.9 | −0.9 | −0.5 [−1.8, 0.7] |
+| STRIDE 2024 (published / form refitted) | −17.2 / +0.2 | −17.3 / +0.2 | −16.8 / +0.2 |
+| OSM tags (additive / trees) | +1.3 / +1.5 | +1.1 / +1.5 | +0.9 [0.1, 1.7] / +0.4 [−1.1, 1.6] |
+| Vegetation, 30 m NLCD (additive / trees) | +0.0 / +0.1 | −0.0 / −0.1 | −0.1 / −0.8 |
+| Satellite embeddings, AlphaEarth (additive / trees) | +1.4 / +2.6 | +1.4 / +1.9 | +1.1 [0.1, 2.6] / +1.1 [−0.2, 2.8] |
+| **Terrain from elevation, 1 m + 5 m (additive / trees)** | +2.2 / +3.2 | +2.1 / +2.8 | **+2.1 [1.5, 3.1] / +2.8 [1.8, 4.1]** |
+| Terrain + embeddings (additive / trees) | +2.9 / +4.3 | +3.0 / +3.6 | +2.6 [1.3, 4.3] / +2.8 [1.4, 4.7] |
+| Terrain + embeddings + tags (additive / trees) | +3.7 / +5.1 | +3.8 / +5.1 | +3.0 [1.6, 4.8] / +3.9 [2.7, 5.7] |
+| Terrain-adjusted Tobler formula (5 numbers) | +1.0 | +1.0 | +1.0 [0.6, 1.5] |
+| Region's own other hikers (local refit; reference) | | | +1.2 |
+| Personal pace (first km) → + terrain | | | +8.4 → +10.7 / +11.6 |
+
+- **Terrain beats tags in 16 of 17 unseen regions.** Terrain minus tags:
+  +0.7 to +2.2 points (95%), above zero in every bootstrap draw. On
+  tagged segments, tags' best case: terrain +2.2% vs tags +0.9%.
+- **Control:** "hidden climbing" alone (uneven grade inside the 50 m
+  segment) gives +1.2% / +1.6%, about 60% of the terrain gain. The rest
+  is difficulty beyond grade.
+- **Not a proxy:** region offsets alone add +0.2–0.4%, and terrain adds
+  ~1.8–2.0 points on top of them. On top of personal pace it adds
+  ~2.3 points.
+- **Whole-hike moving time** (1,354 hikes in unseen regions, after the
+  first km; median error):
+  - Tobler 13.7% (runs 5% fast), Campbell 14.3%;
+  - slope curve 13.6%, + terrain 13.2%;
+  - **+ personal pace 10.0%, + pace + terrain 9.5–9.7%** (about half of
+    hikes within ±10%); with embeddings too, 9.1%.
+- **Terrain-adjusted formula:**
+  v = exp(1.598 − 0.173 z) · exp(−(2.152 − 0.392 z)·|s + 0.043|) km/h,
+  z = SD of 5 m pitches / 0.10. Steppiness terciles: smooth 4.60
+  [4.51, 4.69] km/h, medium 4.37, steppy 3.84 [3.76, 3.92].
+- **Mode check, 327 labeled traces:** 93% of labeled hikes called
+  walking; 5% of our "walkers" are labeled bike or ski.
+- **Findings unchanged:** 26% of the variance after slope is between
+  outings and 1.8% between regions; no fatigue; down/up ratio 1.08 → 1.23
+  with grade (2,763 pairs).
+
+## 1b. First pass: evaluation results (11 Oct; `t3_harness.py`, decision #82)
 
 Each model predicts a speed *distribution* for every 50 m walking trail
 segment (260k segments, 17 regions). It is scored on held-out outings,
@@ -120,7 +167,7 @@ data):
   show more clearly once the hiker is accounted for, so T3 should report
   both.
 
-## 1c. First remote-sensing result: 1 m lidar terrain, White Mountains (11 Oct, decision #83)
+## 1c. First pass: remote-sensing results (11 Oct, decisions #83–93)
 
 **What was measured.** Along each walking segment's matched path, every
 1 m, from the 1 m lidar DEM:
@@ -247,10 +294,11 @@ Methodologies" or SP.5 "Foundation Models and Embeddings for EO"
 unseen regions from airborne lidar and Earth-observation embeddings.*
 
 **Claims, in priority order:**
-1. **(Lead) Transfer.** Leave one region out across 17 regions:
-   - tag effects barely transfer (+1.1% → +0.2%);
-   - terrain from elevation data does (+2.0% → +1.6%; trees +2.2%), and
-     beats tags in 15 of 17 regions (§1c).
+1. **(Lead) Transfer.** Leave one region out across 17 regions (§1a):
+   - tag effects mostly don't transfer (+1.3% → +0.9%; trees +1.5% →
+     +0.4%);
+   - terrain from elevation data does (+2.2% → +2.1%; trees +2.8%), and
+     beats tags in 16 of 17 regions.
    Report it with calibrated uncertainty (CRPS, PIT), with and without
    personal pace, and with the hidden-climbing control.
 2. **Dataset.** N traversals from ~1,600+ walking outings in 17 regions:

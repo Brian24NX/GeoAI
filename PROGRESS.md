@@ -3,40 +3,61 @@
 One entry per working day: what was done, the numbers, decisions, what's
 next. Details and reasons for every decision: `DECISIONS_LOG.md`.
 
-## Status (11 Oct 2026, 10:00 CDT)
+## Status (12 Oct 2026, 03:00 CDT)
 
-**Stage: closing T1** (the trajectory dataset; 17 regions built, on the lab
-cluster) and starting T3's evaluation harness on T1 data. T2 (remote-sensing
-covariates) follows, per Danni (9 Oct: "finish T1 completely, then T2 per
-the timeline").
+**Stage: T1 complete; T2 tier 1 done; T3 harness running on everything.**
+- **T1:** 17 regions, 16 from full OSM downloads plus the lab crawl, and the
+  Bay Area from the lab crawl only.
+- **T2:** elevation terrain at 5 m and 1 m, vegetation, satellite
+  embeddings.
+- **Lead result:** terrain from elevation data beats OSM tags in unseen
+  regions (`docs/NEXT_STEPS.md` §1a).
 
 | Region | Data | Hiking traces | Walking outings | Peak speed v0 (km/h) | Slope sensitivity k | 1 m lidar under trails |
 |---|---|---|---|---|---|---|
-| White Mountains, NH | API + lab | 235 | 188 | 4.22 | 2.10 | 100% |
-| Adirondack High Peaks, NY | API + lab | 103 | 73 | 4.05 | 2.20 | 99% |
+| White Mountains, NH | API + lab | 235 | 189 | 4.23 | 2.10 | 100% |
+| Adirondack High Peaks, NY | API + lab | 103 | 74 | 4.06 | 2.21 | 99% |
 | Catskills, NY | API + lab | 73 | 60 | 4.19 | 1.91 | 100% |
 | Green Mountains, VT | API + lab | 56 | 25 | 4.52 | 2.46 | 100% |
 | Shenandoah, VA | API + lab | 83 | 41 | 4.57 | 1.14 | 100% |
 | Great Smoky Mountains, TN/NC | API + lab | 69 | 58 | 3.95 | 1.06 | 88% |
 | Asheville / Pisgah, NC | API + lab | 75 | 38 | 4.02 | 1.21 | 90% |
-| Colorado Front Range (Boulder–Golden) | API + lab | 206 | 96 | 4.36 | 1.87 | 90% |
-| Wasatch Front (Salt Lake City), UT | lab only* | 60 | 35 | 5.08 | 2.08 | 88% |
+| Colorado Front Range (Boulder–Golden) | API + lab | 206 | 97 | 4.46 | 1.94 | 96% |
+| Wasatch Front (Salt Lake City), UT | API + lab | 131 | 91 | 4.80 | 2.06 | 92% |
 | Cascades I-90 + Alpine Lakes, WA | API + lab | 684 | 528 | 4.37 | 1.72 | 83% |
-| Columbia River Gorge, OR/WA | lab only* | 43 | 24 | 4.43 | 1.58 | 21% (mostly 3 m) |
-| Olympic NP (north), WA | API + lab | 175 | 163 | 4.08 | 1.10 (coarse DEM) | 29% |
-| Bay Area hills, CA | lab only* | 177 | 102 | 4.42 | 1.37 | 98% |
-| San Gabriel Mountains (LA), CA | lab only* | 81 | 72 | 3.75 | 1.64 | 100% |
+| Columbia River Gorge, OR/WA | API + lab | 104 | 67 | 4.63 | 1.55 | 27% (mostly 3 m) |
+| Olympic NP (north), WA | API + lab | 175 | 163 | 4.08 | 1.10 (coarse DEM) | 34% |
+| Bay Area hills, CA | lab only | 177 | 102 | 4.42 | 1.37 | 98% |
+| San Gabriel Mountains (LA), CA | API + lab | 141 | 116 | 4.08 | 1.93 | 100% |
 | Yosemite Valley + High Sierra, CA | API + lab | 92 | 86 | 4.17 | 1.88 | 70% |
 | Lake Tahoe, CA/NV | API + lab | 230 | 94 | 4.17 | 1.67 | 95% |
-| North Shore Mountains (Vancouver), BC | lab only* | 91 | 62 | 4.64 | 1.44 (coarse DEM) | 0% |
-| **All 17 pooled** | | **2,533** | **1,745** | **4.27** | **1.78** | |
+| North Shore Mountains (Vancouver), BC | API + lab | 242 | 165 | 4.38 | 1.64 (coarse DEM) | 0% |
+| **All 17 pooled** | | **2,876** | **1,994** | **4.31** | **1.80** | |
 
-\* Full OSM download running or queued (North Shore first); each region is
-rebuilt automatically when its download lands.
-
-Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
+Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%. Walking analysis
+set: 290,640 segments of 50 m, 1,992 outings, 4,702 moving hours, 14,532
+km.
 
 ---
+
+## Mon 12 Oct 2026
+
+- **Overnight refresh on the complete T1** (00:00–02:34, decision #95):
+  rebuilt the combined dataset, checks, all covariates and all 8 harness
+  runs.
+- **Final unseen-region scores** (CRPS skill vs our refitted slope curve):
+  - Tobler −12.5%; Campbell −0.5%; STRIDE −16.8%.
+  - Tags +0.9% / +0.4%.
+  - **Terrain +2.1% / +2.8%**, beating tags in 16 of 17 regions.
+  - Embeddings +1.1%; terrain + embeddings +2.6% / +2.8%; with tags too,
+    up to +3.9%.
+  - Personal pace + terrain +10.7% / +11.6%.
+- **Whole-hike time** (median error): 13.6% (slope) → 13.2% (+ terrain) →
+  9.5% (+ personal pace + terrain).
+- **Terrain formula:** smooth trails 4.60 km/h, steppy ones 3.84 km/h;
+  +1.0% in unseen regions with 5 numbers.
+- Paper figures, explainer, outline and the 16 Oct brief now use these
+  numbers.
 
 ## Sun 11 Oct 2026
 

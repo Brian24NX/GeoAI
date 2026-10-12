@@ -101,6 +101,18 @@ frontrange,osm2748946,hike,type,Hiking,2018-07-15 07:52 | 2018-07-15 07:52 | <p>
 frontrange,osm12423816,bike,name,,"Jul 11, 2026 Skyryk Ride | Jul 11, 2026 Skyryk Ride",Trailforks.com,bike/ski,False,15.612988642221753,21.158087418322825,1.0178977614748863
 frontrange,osm2858443,run,type,9,That Middle Shanahan 👌,StravaGPX,run,False,9.013182790644285,13.114237755697342,0.4635510663360258
 frontrange,osm2536534,hike,name,,2010-03-22 Hike GGSP Jason Robyn Miriam Dan & Luka (Dog) | 2011-03-19 GGSP 02 Hike | 2011-03-19 GGSP 03 Hike | 2012-02-2,GPSBabel - http://www.gpsbabel.org,walk,False,3.846226971394082,4.971465224424442,0.1218082998242984
+wasatch,osm11996645,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,True,2.8340942672650145,4.040003919181678,0.0803071070284746
+wasatch,osm2834414,bike,name,,Little Cottonwood Creek Trail to Tanner Flat | Well defined trail that see's mountain bike use. Very pleasant hike.,AllTrails.com,walk,False,3.5689945253127084,4.8300356661135,0.2112168318201913
+wasatch,osm11373814,hike,name,,"2024-06-10_20-07-51 | osmtracker | SLC to donut falls to SLC, and hike | Tracked with OSMTracker for Android™",OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,True,4.2494255603475946,6.521364209507206,0.1920777288661048
+wasatch,osm12464340,ski,type,AlpineSki,,GPX,bike/ski,False,14.858609533636564,25.125577840731093,0.0007400803875619
+wasatch,osm2834418,bike,name,,White Pine-Snowbird Connector | This trail connects the White Pine trail to Snowbird. The lower 2/3's of the trail is ve,AllTrails.com,walk,False,4.5995102784837245,5.77894161098022,0.0606963639015508
+wasatch,osm12464344,ski,type,AlpineSki,,GPX,bike/ski,False,15.513809329335622,26.763765965077763,1.2582173530502705
+wasatch,osm12464342,ski,type,AlpineSki,,GPX,bike/ski,False,15.855207309204882,26.353521936301554,0.1688506937229084
+wasatch,osm2832882,hike,name,,Kessler Peak Loop | Great loop hike. Once you get to the top of Kessler Peak you need to backtrack a few hundred feet an,AllTrails.com,walk,True,1.90985465732301,3.2541509293459976,-0.0461850841305002
+wasatch,osm5176996,bike,name,,North Salt Lake Cycling | North Salt Lake Cycling,AllTrails.com,fast,False,13.309378818025491,16.695719270791542,
+wasatch,osm5176991,bike,name,,Morning ride | Morning ride,AllTrails.com,bike/ski,False,16.192273460651755,23.63548998351729,0.5048666466097645
+wasatch,osm2830330,run,type,trail_running,BST,Garmin Connect,walk,False,6.284400224855614,11.515649142976883,0.5118071049897586
+wasatch,osm2830331,run,type,running,BST,Garmin Connect,run,False,9.82944090380681,13.286134689345085,0.5161057495928824
 cascades,osm12108900,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,True,2.466880671546204,3.492414668985922,0.2648853576655907
 cascades,osm12078755,hike,name,,Sunday Morning Hiking,GaiaGPS,walk,False,2.930433403689672,4.350419214157829,0.1815880385470913
 cascades,osm12065853,hike,name,,Monday Lunch Hiking,GaiaGPS,walk,False,3.1751493752341764,3.9481509632684135,0.189533675258846
@@ -192,6 +204,16 @@ cascades,osm11973184,hike,type,hiking,Heybrook Lookout from Index,StravaGPX,walk
 cascades,osm2781032,hike,type,walking,File with points/tracks from Locus Map/3.32.2 | 2018-08-19 14:04:27,"Locus Map, Android",walk,False,3.2768705725071285,5.313582272743282,
 cascades,osm3572435,hike,name,,Wenatchee Snowshoe,JOSM GPX export,walk,False,3.131845596650839,4.64737527075295,0.2201554224842394
 cascades,osm11722794,ski,name,,"January 6, 2025 - Stevens Pass Ski Area",Slopes for iOS - http://getslopes.com,bike/ski,False,16.13698349151091,26.03539299536392,0.0876517509881754
+gorge,osm3749343,bike,type,mountain_biking,Tarbell,Garmin Connect,bike/ski,False,9.052535086122353,18.09204658303249,0.843678083362052
+gorge,osm3790102,hike,type,walking,Punch Bowl Falls Park | Punch Bowl Falls Park,Created by Google My Tracks on Android,walk,False,2.433806692923077,3.625346379258803,
+gorge,osm4852274,hike,type,walking,Indian Creek Trail - New Section | Indian Creek Trail - New Section,Created by Google My Tracks on Android,walk,True,3.4909462526912995,3.935949883374309,-0.1851606374573592
+gorge,osm3517525,hike,type,walking,Indian Creek Trail Section 2 | Indian Creek Trail Section 2,Created by Google My Tracks on Android,walk,True,4.38034630465422,4.837319348043491,
+gorge,osm955979,hike,type,Hiking,2011-02-12 Beacon Rock | 2011-02-12 Beacon Rock,OruxMaps,walk,False,4.659188274505682,5.342974905368237,-0.0390175611265303
+gorge,osm4256560,hike,type,walking,Spring Creek Hatchery | Spring Creek Hatchery,Created by Google My Tracks on Android,walk,True,3.7211215574471255,5.554617005155179,
+gorge,osm3672213,bike,type,mountain_biking,Surveyor's Ridge,Garmin Connect,bike/ski,False,9.509954719569883,19.77127454006699,1.0517470043715875
+gorge,osm11390948,bike,type,mountain_biking,Post Canyon,Garmin Connect,bike/ski,False,10.179059561759193,20.505031376041792,0.7390333949849146
+gorge,osm11261357,hike,type,hiking,Historic Columbia River Highway State Trail - Viento To Mitchell Point | Historic Columbia River Highway State Trail - V,Created by Google My Tracks on Android,walk,False,4.090442363135239,4.796875459245054,0.0199460888803344
+gorge,osm12478639,bike,type,mountain_biking,Post Canyon,Garmin Connect,bike/ski,False,10.222505065267717,18.74008662206246,0.6841795847932546
 olympic,osm5007790,hike,type,hiking,Humes Ranch to Dodger Point Campsite,Garmin Connect,walk,True,3.15673739754478,4.024884292982047,0.0147716941706252
 olympic,osm5007788,hike,type,hiking,Dodger Point Campsite to Dodger Point Lookout,Garmin Connect,walk,True,2.66869295019048,3.970969375819485,
 olympic,osm4223932,hike,type,hiking,Upper Dungeness River Trail  Return Trip | The return half of the hike.,Garmin Connect,walk,False,4.0973352355711485,5.263541362569195,
@@ -211,6 +233,33 @@ olympic,osm4518050,hike,type,hiking,Lake Angeles and Klahhane  Ridge,Garmin Con
 olympic,osm4471046,hike,type,hiking,Deer Ridge Trail to Deer Park,Garmin Connect,walk,True,4.275981040327746,5.254099872000583,0.1580670585370692
 olympic,osm4350210,hike,type,hiking,Deer Ridge Trail,Garmin Connect,walk,True,3.128303044052326,4.447993134222506,0.2844351556761255
 olympic,osm4118193,hike,type,hiking,Lower Gray Wolf River Trail,Garmin Connect,walk,False,3.609061510206701,4.694831497712673,-0.0505557965787001
+sangabriel,osm11997390,hike,type,hiking,Lunch Hike,StravaGPX,walk,False,3.6306518944513857,5.126389727528686,0.4723358554861494
+sangabriel,osm11990385,hike,type,walking,Afternoon Walk,StravaGPX,walk,False,4.684269076882201,6.268924141042602,
+sangabriel,osm12414451,hike,type,hiking,Evening Hike,StravaGPX,walk,False,4.1713431243377865,5.496292816061744,0.0597459464064642
+sangabriel,osm12201426,hike,name,,"Hike Mt Lukens From Deukmejian Wilderness Park | The hike to Mt Lukens, the highest point in the city of LA at 5,066 ft,",Adze - http://kobotsw.com/apps/adze,run,False,9.810255774628908,10.606117875958306,-0.013866412420616
+sangabriel,osm11960643,hike,type,walking,Evening Walk,StravaGPX,unknown,False,2.1919762333362955,3.9245597920187656,
+sangabriel,osm11785125,hike,type,hiking,Afternoon Hike,StravaGPX,walk,False,3.6669778191277462,6.572313569357688,0.3672865839243251
+sangabriel,osm11973191,bike,type,cycling,Afternoon Ride,StravaGPX,fast,False,7.555537268244881,13.314371925199968,
+sangabriel,osm11782014,hike,type,hiking,Morning Hike,StravaGPX,unknown,False,5.749074829665927,7.147576220154013,
+sangabriel,osm11286805,hike,type,hiking,Lunch Hike,StravaGPX,walk,False,3.0800732749831767,5.223971512628191,0.1238004273195718
+sangabriel,osm11285295,run,type,running,Afternoon Run,StravaGPX,fast,False,9.29934741330704,10.502842469786623,
+sangabriel,osm12034720,hike,type,hiking,Evening Hike,StravaGPX,walk,False,2.4398892082702224,3.671652199944092,
+sangabriel,osm11311974,hike,type,hiking,Lunch Hike,StravaGPX,walk,False,2.856918566883441,4.205844757024511,0.2864632377463897
+sangabriel,osm11303184,bike,type,cycling,Afternoon Ride,StravaGPX,bike/ski,False,22.22570205307858,27.192514000244717,
+sangabriel,osm11261481,hike,type,hiking,Afternoon Hike,StravaGPX,walk,False,3.073029868360233,4.195208720326298,0.1521672296501014
+sangabriel,osm11256156,hike,type,hiking,Afternoon Hike,StravaGPX,walk,False,2.3352998514736147,3.682119739503628,0.4486610819271074
+sangabriel,osm11297033,run,type,running,Afternoon Run,StravaGPX,fast,False,9.579677976504648,11.34171685698294,
+sangabriel,osm11291082,hike,type,hiking,Verdugo Hills Full Ridge,StravaGPX,walk,False,3.0770387075268983,4.065086959243432,0.0762249148144928
+sangabriel,osm12070421,bike,name,,Afternoon bike tour | Afternoon bike tour,AllTrails.com,walk,False,3.308790281074371,4.073087320722264,-0.1017498168955096
+sangabriel,osm11424328,hike,name,,Afternoon hike at Winston Peak | Afternoon hike at Winston Peak,AllTrails.com,walk,False,3.587029065814587,4.605827365926915,0.1518655118579386
+sangabriel,osm3643462,run,type,9,Scouting the closed Garcia Trail,StravaGPX,run,False,11.484994115267654,14.988658789992542,0.4726010041196122
+sangabriel,osm4332903,run,type,9,Church trail,StravaGPX,walk,False,6.98663618775424,11.270459726159768,0.343279305235752
+sangabriel,osm4244673,hike,type,4,Lunch Hike,StravaGPX,walk,False,3.8165670243391614,4.398179371489743,0.1482353471351362
+sangabriel,osm1456669,hike,type,Hiking,"Hiking Mt. Wilson via Santa Anita Ridge 2012-11-10 | <br /> | Mt. Wilson via Santa Anita Ridge | Nov 10, 2012  8:16 am",Trimble Outdoors - http://www.TrimbleOutdoors.com/,walk,False,3.350755973984488,4.894008630837437,0.4786405119853102
+sangabriel,osm2979484,bike,type,gravel_cycling,39-West Fork- Redbox- Lowe | All G+ ride. Descent down Lowe has rough rocks that cut my sidewalls but still doable with ,Garmin Connect,bike/ski,False,20.608847432952093,24.127550159447228,-0.6547347595798837
+sangabriel,osm4267380,hike,type,4,Still plenty of snow out here,StravaGPX,walk,False,3.608598345516792,5.493745775553595,0.4089950197610585
+sangabriel,osm11185523,hike,type,hiking,Afternoon Hike,StravaGPX,walk,False,2.803714584889356,4.827047206043144,0.4332830128117958
+sangabriel,osm2041019,hike,name,,Mt Baldy Hike Fixed 1,myTracks,walk,False,2.4039717077066003,3.974657773191169,0.8527492762557548
 yosemite,osm11982830,hike,type,walking,Afternoon Walk,StravaGPX,walk,False,3.7447470799440943,6.833977718700431,-0.142849540206233
 yosemite,osm11479058,hike,type,hiking,Mariposa County Hiking,Garmin Connect,unknown,False,3.3655626314392912,13.953483745236811,
 yosemite,osm2846355,hike,name,,Half Dome Hike,GPS Hiker For iOS,walk,False,3.1609457039995794,4.756095661170243,0.1503674451013703
@@ -245,3 +294,35 @@ tahoe,osm1889183,hike,name,,Ophir Creek Hike,GPSBabel - http://www.gpsbabel.org,
 tahoe,osm1612152,hike,name,,Incline Ridge Snowshoe,strava.com Android,walk,False,2.8688371804801505,3.939510269486523,0.6941001428863055
 tahoe,osm12015474,run,type,running,Fun run! Vert Hunt • Tahoe Rim to Washoe from Mt Rose Hwy,StravaGPX,bike/ski,False,6.293855418230184,8.973223538170142,0.7790115990858766
 tahoe,osm1990874,hike,name,,Incline Village Hiking,Garmin Connect,unknown,False,2.761047121720736,3.672198835259276,
+northshore,osm11180748,hike,type,walking,Sightseeing around Stanley Park,Garmin Connect,walk,True,3.9785682276289744,4.637759117795288,-0.1063665012917054
+northshore,osm3151311,hike,name,,Walking 9/15/19 8:58 am,Runkeeper - http://www.runkeeper.com,walk,False,3.46654249998232,4.49961882468207,0.0527310597265068
+northshore,osm3688500,hike,type,4,An Unexpected Pathway,StravaGPX,walk,False,2.8389681630959798,3.792565600948143,-0.0117814535275434
+northshore,osm4105045,ski,name,7|7,Afternoon Ski | The Right Loop,StravaGPX,bike/ski,False,7.032120255611773,17.998025986611886,1.252343237076594
+northshore,osm2109178,hike,name,,Morning Hike,strava.com Android,walk,True,2.4703399357576004,3.78578915897212,-0.3488668694612701
+northshore,osm1667884,hike,name,,Stanley park walk,JOSM GPX export,walk,False,4.282778562766319,5.251442990328079,0.0390451871506358
+northshore,osm1526172,bike,name,Track,Track 2013-07-14 11:57 | Vancouver_Marathon.gpx | Vancouver Marathon 2011 Course | 2012_07_25_08_04_55.gpx | Downtown Va,JOSM GPX export,walk,False,3.947870077964168,5.141844139661507,0.7190232425952475
+northshore,osm1932524,hike,name,,Hike St. Martin's Peak 2013-08-05 13:01,GPS Visualizer http://www.gpsvisualizer.com/,walk,False,3.784532058958056,6.043944675257394,-0.0916455011602063
+northshore,osm12478529,hike,name,,dog walk 2026-09-26_11-40-34 | osmtracker | dog walk | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,unknown,False,5.190932497228831,5.295954716885761,
+northshore,osm12474971,hike,name,,dog walk 2026-09-19_13-59-04 | osmtracker | dog walk | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,3.6686423356580353,4.298704658897147,
+northshore,osm12332275,hike,type,hiking,arc-timeline-daily.2026-05-04 | arc-timeline-daily.2026-05-04,Arc App,walk,False,3.704119499506544,4.280059171088721,
+northshore,osm12470840,hike,name,,dog walk 2026-09-12_08-36-38 | osmtracker | dog walk with lots of OSM points and notes | Tracked with OSMTracker for And,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,2.6164649522099057,4.014813936762127,-0.2056342854098537
+northshore,osm12467495,hike,name,,Dog Walk 2026-09-06_13-28-00 | osmtracker | dog walk with unmapped trails | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,3.6339911171973056,4.5131776346830925,
+northshore,osm12483681,hike,name,,dog walk 2026-10-04_12-34-38 | osmtracker | long dog walk | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,3.302073056313233,4.141275481316833,0.1775790656375988
+northshore,osm11718746,hike,type,walking,2025-01-11_17-00_Sat Mahon Park Recce,OsmAnd 4.9.7,walk,True,5.830490590150122,10.960510724978803,-0.6800168178200283
+northshore,osm891616,run,name,,"10-02-02 Diez Hike | Paul and willie | 10-02-23 Diez Hike | Paul and rob | 10-03-09 Diez Hike | Paul, willi, and rob | 1",My Tracks for the G1 running Android,walk,False,3.876342715147312,7.260089879089373,0.2003291700119267
+northshore,osm9554125,hike,name,,walk 2023-08-19_08-43-51 | osmtracker | walk | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,4.264140313973609,5.060995109192397,0.0183175714436486
+northshore,osm8384606,hike,name,,walk 2023-06-28_15-37-14 | osmtracker | walk | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,3.3819334209184437,5.37478672834693,0.0325141412491796
+northshore,osm8366637,hike,name,,walk 2023-06-27_15-20-17 | osmtracker | walk hike | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,4.662157809559781,5.373571839742176,0.0482915186470813
+northshore,osm8628435,hike,name,,2023-07-04_11-29-22 walk round golf course | osmtracker | walk round golf course | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,4.579294065592887,5.277049412489224,-0.0893225963278219
+northshore,osm8400864,hike,name,,walk 2023-06-29_13-24-05 | osmtracker | walk | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,4.795770657621649,5.9918904384752905,0.223381287287319
+northshore,osm11414203,hike,type,hiking,North Vancouver District Hiking,Garmin Connect,walk,False,3.257929427299208,4.392306500045459,-0.0236815761912295
+northshore,osm6181283,hike,name,,Dog Mountain via Winter Access Route 2023-02-05_09-48-52 | osmtracker | Snowshoeing | Tracked with OSMTracker for Androi,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,True,3.451920994904414,4.96403547184,0.1227435854374392
+northshore,osm8324935,hike,name,,walk 2023-06-25_11-02-16 | osmtracker | walk | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,4.429830640656845,5.561357058183367,0.0643304185061376
+northshore,osm8085914,hike,name,,Walk round golf course 2023-06-13_10-03-18 | osmtracker | Walk round golf course | Tracked with OSMTracker for Android™,OSMTracker for Android™ - https://github.com/labexp/osmtrack,walk,False,4.255735334757963,5.692310243190107,0.2093856667763445
+northshore,osm1932525,run,name,,Run And Trail Run Lynn Valley Then Hastings Creek 2013-08-12 17:35 | Call to change destination half way through,GPS Visualizer http://www.gpsvisualizer.com/,run,False,8.81725328529748,13.597601555765022,-0.0832284727542657
+northshore,osm1690004,hike,name,,18-APR-14 SEY HIKE,JOSM GPX export,walk,False,4.334193726617976,5.369809141651782,0.0242598260336252
+northshore,osm1525035,hike,name,,Lynn Headwaters hike,JOSM GPX export,walk,True,2.7954720095342758,4.017792691780772,-0.0197955524788471
+northshore,osm719678,run,name,,2010-05-23T00:48:03Z | TrailRunner Route export | ACTIVE LOG162816,TrailRunner http://www.TrailRunnerx.com,run,False,8.780106966448127,12.949712559283252,0.390871761170349
+northshore,osm676242,bike,name,,April 18th Ride,BaseCamp 2.1.2,walk,False,5.257184218600257,12.542430815999955,0.4308992762773564
+northshore,osm720788,run,name,,2010-05-23T21:58:02Z | TrailRunner Route export | ACTIVE LOG093801,TrailRunner http://www.TrailRunnerx.com,bike/ski,False,11.073971953274782,20.97987241690883,0.380464378637255
+northshore,osm1271322,hike,name,,20120712 Hike to Mt Seymour,Garmin Connect,walk,False,2.674457309821124,4.323652932421881,0.2478852987586335

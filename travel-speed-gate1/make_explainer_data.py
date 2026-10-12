@@ -95,7 +95,8 @@ def main():
     q = Path("results/t1_dem_quality.csv")
     if q.exists():
         out["dem_quality"] = pd.read_csv(q).round(1).to_dict("records")
-    h = next((d / "metrics.csv" for d in (Path("results/t3_harness_terrain5m"),
+    h = next((d / "metrics.csv" for d in (Path("results/t3_harness_terrain15m"),
+                                          Path("results/t3_harness_terrain5m"),
                                           Path("results/t3_harness"))
               if (d / "metrics.csv").exists()), Path("none"))
     if h.exists():      # the first test (t3_harness.py, with terrain if run)

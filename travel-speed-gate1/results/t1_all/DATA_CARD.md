@@ -1,44 +1,45 @@
 # T1 dataset: hiking speeds on trails in 17 North American regions
 
-*Combined data card, built 2026-10-11 14:13 UTC by `t1_combine.py`. Each region also has its own card: `data/t1_<region>/data_card.md`.*
+*Combined data card, built 2026-10-12 05:24 UTC by `t1_combine.py`. Each region also has its own card: `data/t1_<region>/data_card.md`.*
 
 ## What it is
 
 Public GPS traces uploaded to OpenStreetMap (OSM). Each trace is map-matched to OSM trails, cut into 50 m segments, and joined with elevation, slope, OSM trail tags, local time, travel mode and grouping keys. **One row = one traversal of one 50 m segment by one trace.** The target is `speed_kmh` (moving speed).
 
-- Regions: 17 (12 from full OSM downloads plus the lab crawl, 5 from the lab crawl only so far)
-- Segments of hiking traces: 627,454 (64% on trails)
-- Walking analysis set (`analysis_walk`): 261,088 segments, 1,793 traces, 1,744 outings, 4,227 moving hours, 13,054 km
-- Hiking traces: 2,533; bike/ski traces: 446
-- Pooled walking curve (ln v = ln v0 - k |s + s0|): v0 4.27 [4.21, 4.33] km/h, k 1.78 [1.70, 1.84], fastest at -4.5% grade (Tobler 1993: 6.0 km/h, 3.5, -5%)
+- Regions: 17 (16 from full OSM downloads plus the lab crawl, 1 from the lab crawl only so far)
+- Segments of hiking traces: 709,935 (62% on trails)
+- Walking analysis set (`analysis_walk`): 290,640 segments, 2,046 traces, 1,992 outings, 4,702 moving hours, 14,532 km
+- Hiking traces: 2,876; bike/ski traces: 490
+- Pooled walking curve (ln v = ln v0 - k |s + s0|): v0 4.31 [4.23, 4.37] km/h, k 1.80 [1.74, 1.86], fastest at -4.5% grade (Tobler 1993: 6.0 km/h, 3.5, -5%)
 
 ## Regions
 
 | Region | Data | Hiking traces | Walking outings | Walking h | v0 km/h [95%] | k | 1 m lidar under trails | Capped tiles |
 |---|---|---|---|---|---|---|---|---|
-| White Mountains, NH | API + lab | 235 | 188 | 624 | 4.22 [4.01, 4.43] | 2.10 | 100% | none |
-| Adirondack High Peaks, NY | API + lab | 103 | 73 | 258 | 4.05 [3.89, 4.25] | 2.20 | 99% | none |
-| Catskills, NY | API + lab | 73 | 60 | 151 | 4.19 [3.97, 4.48] | 1.91 | 100% | none |
+| White Mountains, NH | API + lab | 235 | 189 | 624 | 4.23 [4.01, 4.46] | 2.10 | 100% | none |
+| Adirondack High Peaks, NY | API + lab | 103 | 74 | 258 | 4.06 [3.85, 4.24] | 2.21 | 99% | none |
+| Catskills, NY | API + lab | 73 | 60 | 151 | 4.19 [3.97, 4.47] | 1.91 | 100% | none |
 | Green Mountains, VT | API + lab | 56 | 25 | 78 | 4.52 [3.72, 5.02] | 2.46 | 100% | none |
-| Shenandoah, VA | API + lab | 83 | 41 | 63 | 4.57 [4.07, 5.08] | 1.14 | 100% | 1 |
-| Great Smoky Mountains, TN/NC | API + lab | 69 | 58 | 130 | 3.95 [3.72, 4.21] | 1.06 | 88% | none |
-| Asheville / Pisgah, NC | API + lab | 75 | 38 | 55 | 4.02 [3.68, 4.32] | 1.21 | 90% | none |
-| Colorado Front Range (Boulder-Golden) | API + lab | 206 | 96 | 199 | 4.36 [4.24, 4.50] | 1.87 | 90% | 1 |
-| Wasatch Front (Salt Lake City), UT | lab only | 60 | 35 | 52 | 5.08 [4.61, 5.56] | 2.08 | 88% | none |
+| Shenandoah, VA | API + lab | 83 | 41 | 63 | 4.57 [4.05, 5.06] | 1.14 | 100% | 1 |
+| Great Smoky Mountains, TN/NC | API + lab | 69 | 58 | 130 | 3.95 [3.76, 4.17] | 1.06 | 88% | none |
+| Asheville / Pisgah, NC | API + lab | 75 | 38 | 55 | 4.02 [3.68, 4.33] | 1.21 | 90% | none |
+| Colorado Front Range (Boulder-Golden) | API + lab | 206 | 97 | 203 | 4.46 [4.26, 4.76] | 1.94 | 96% | 1 |
+| Wasatch Front (Salt Lake City), UT | API + lab | 131 | 91 | 153 | 4.80 [4.55, 5.08] | 2.06 | 92% | none |
 | Cascades I-90 + Alpine Lakes, WA | API + lab | 684 | 528 | 1,295 | 4.37 [4.22, 4.50] | 1.72 | 83% | 1 |
-| Columbia River Gorge, OR/WA | lab only | 43 | 24 | 40 | 4.43 [4.17, 4.75] | 1.58 | 21% | none |
-| Olympic NP (north), WA | API + lab | 175 | 163 | 376 | 4.08 [3.96, 4.22] | 1.10 | 29% | none |
-| Bay Area hills (Marin, East Bay, Peninsula), CA | lab only | 177 | 102 | 117 | 4.42 [4.21, 4.62] | 1.37 | 98% | none |
-| San Gabriel Mountains (LA), CA | lab only | 81 | 72 | 194 | 3.75 [3.53, 3.94] | 1.64 | 100% | none |
-| Yosemite Valley + High Sierra, CA | API + lab | 92 | 86 | 238 | 4.17 [4.00, 4.41] | 1.88 | 70% | none |
-| Lake Tahoe, CA/NV | API + lab | 230 | 94 | 260 | 4.17 [3.79, 4.57] | 1.67 | 95% | none |
-| North Shore Mountains (Vancouver), BC | lab only | 91 | 62 | 97 | 4.64 [4.13, 5.19] | 1.44 | 0% | none |
+| Columbia River Gorge, OR/WA | API + lab | 104 | 67 | 156 | 4.63 [4.13, 5.15] | 1.55 | 27% | none |
+| Olympic NP (north), WA | API + lab | 175 | 163 | 376 | 4.08 [3.94, 4.24] | 1.10 | 34% | none |
+| Bay Area hills (Marin, East Bay, Peninsula), CA | lab only | 177 | 102 | 117 | 4.42 [4.18, 4.59] | 1.37 | 98% | none |
+| San Gabriel Mountains (LA), CA | API + lab | 141 | 116 | 302 | 4.08 [3.75, 4.44] | 1.93 | 100% | 1 |
+| Yosemite Valley + High Sierra, CA | API + lab | 92 | 86 | 238 | 4.17 [4.00, 4.38] | 1.88 | 70% | none |
+| Lake Tahoe, CA/NV | API + lab | 230 | 94 | 260 | 4.17 [3.84, 4.60] | 1.67 | 95% | none |
+| North Shore Mountains (Vancouver), BC | API + lab | 242 | 165 | 244 | 4.38 [4.12, 4.68] | 1.64 | 0% | none |
 
 Capped tiles (the OSM API times out past ~4.5M points of one area, so the oldest uploads there are out of reach):
 
 - Shenandoah, VA: shenandoah_r1_c1 (cut at page 523; reaches uploads back to ~2023-05)
 - Colorado Front Range (Boulder-Golden): frontrange_r2_c2 (cut at page 931; reaches uploads back to ~2009-08)
 - Cascades I-90 + Alpine Lakes, WA: cascades_r1_c0 (cut at page 907; reaches uploads back to ~2009-10)
+- San Gabriel Mountains (LA), CA: sangabriel_r0_c0 (cut at page 533; reaches uploads back to ~2023-07)
 
 ## How it was built
 
@@ -48,10 +49,10 @@ Capped tiles (the OSM API times out past ~4.5M points of one area, so the oldest
 4. **Group and classify** (`t1_modes.py`, `t1_finalize.py`): outings, travel mode anchored on foot-only trails, trail networks, 10 km blocks.
 5. **Checks**: map-match QA, 1 m vs 5 m slope, 25 m vs 50 m segments, stop-rule sensitivity, GPS sampling interval strata, elevation source under the trails (`t1_dem_quality.py`), mode calls vs the uploaders' own activity labels (`t1_mode_check.py`).
 
-**Mode check against the uploaders' own labels** (246 hiking traces whose original file names the activity):
+**Mode check against the uploaders' own labels** (327 hiking traces whose original file names the activity):
 - labeled hike/walk, called walk: 92.6%
-- labeled bike, called bike/ski: 82.5% (called walk: 3.8%)
-- called walk but labeled bike or ski: 3.3% of 120
+- labeled bike, called bike/ski: 77.7% (called walk: 8.5%)
+- called walk but labeled bike or ski: 5.1% of 177
 
 ## Files
 

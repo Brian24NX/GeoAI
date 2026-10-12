@@ -11,7 +11,8 @@ Draft figures for the IGARSS paper (paper/OUTLINE.md), IEEE column width
   fig_hike_time.png error in predicted moving time per hike, in held-out
                    regions (after each hike's first km), by model
 
-Input:  results/t3_harness_terrain5m/{metrics,skill_ci,loro_by_region}.csv
+Input:  results/t3_harness_terrain15m/ (terrain from 1 m + 5 m elevation):
+        metrics, skill_ci, loro_by_region, hike_times
 Output: ../paper/figures/
 Run:    python make_paper_figures.py
 """
@@ -25,7 +26,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 HERE = Path(__file__).resolve().parent
-RES = HERE / "results" / "t3_harness_terrain5m"
+RES = HERE / "results" / "t3_harness_terrain15m"   # terrain = 1 m + 5 m
 OUT = HERE.parent / "paper" / "figures"
 BLUE, LIGHT, ORANGE, AQUA, GRAY = ("#2a78d6", "#9ec5f0", "#eb6834",
                                    "#1baf7a", "#9a9893")
@@ -36,6 +37,7 @@ plt.rcParams.update({"font.size": 7.5, "axes.titlesize": 8,
 
 ROWS = [("Tobler (published)", "tobler"),
         ("Campbell 2022 (published)", "campbell"),
+        ("STRIDE 2024 (published)", "stride"),
         ("Tags, additive", "lin_tags"),
         ("Tags, trees", "gbm_tags"),
         ("Terrain, additive", "lin_rs"),
@@ -47,7 +49,7 @@ ROWS = [("Tobler (published)", "tobler"),
 def fig_skill():
     m = pd.read_csv(RES / "metrics.csv")
     ci = pd.read_csv(RES / "skill_ci.csv")
-    fig, ax = plt.subplots(figsize=(3.5, 2.6))
+    fig, ax = plt.subplots(figsize=(3.5, 2.9))
     for j, (split, col, name) in enumerate(
             [("outing5", LIGHT, "new hikers"),
              ("loro", BLUE, "unseen region")]):
@@ -69,10 +71,12 @@ def fig_skill():
     ax.set_yticks(range(len(ROWS)), [r[0] for r in ROWS])
     ax.invert_yaxis()
     ax.set_xlim(-4.6, 5.5)
-    ax.set_xlabel("CRPS skill vs slope curve (%), with 95% CI")
+    ax.set_xlabel("CRPS skill vs slope curve (%)")
     ax.grid(axis="x", color="#e4e3df", zorder=0)
     ax.spines[["top", "right"]].set_visible(False)
-    ax.legend(frameon=False, loc="upper right")
+    ax.legend(frameon=False, loc="lower center", ncol=2,
+              bbox_to_anchor=(0.45, 1.0), title="95% CI as lines",
+              title_fontsize=6.5)
     fig.tight_layout()
     fig.savefig(OUT / "fig_skill.png", dpi=300)
 
