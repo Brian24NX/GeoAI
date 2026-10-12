@@ -26,10 +26,20 @@ Eq.~(1), one input & $+1.0$ & $+1.0$ & $+1.0$ \\
 \end{tabular}
 \end{table}
 
-\todo{R1: Tobler fails everywhere (Table~\ref{tab:skill}): $-12.5\%$, peak
-4.31~km/h at $-4.5\%$ grade, not 6. Campbell's published curve ties our
-refit on average but is region-dependent ($-3.8\%$ in the White Mountains
-to $+5.8\%$ in Shenandoah).}
+\todo{R1 (Fig.~\ref{fig:curve}a, Table~\ref{tab:skill}): Tobler fails
+everywhere ($-12.5\%$). Walking speed peaks near 4.2~km/h on level to
+gently descending trail, not 6: Tobler is $\sim$20\% too fast within
+$\pm$10\% grade and $\sim$18\% too slow on climbs steeper than 25\%.
+Campbell's published median curve matches near level but is $\sim$20\% too
+fast on climbs steeper than 25\%; it ties our refit on average, ranging by
+region from $-3.8\%$ (White Mountains) to $+5.8\%$ (Shenandoah).}
+
+\todo{R1b, asymmetry (Fig.~\ref{fig:curve}b): on 2,763 out-and-back pairs
+(same hiker, same trail; 1,145 outings) descending is 8\% faster than
+climbing at 3--10\% grade, 22--23\% above 20\%; Tobler implies 42\% at
+every grade above 5\%. Our pooled curve implies nearly the same ratios as
+the pairs, so its asymmetry is not a sampling artifact; Campbell's curve
+implies less (2--16\%).}
 
 \todo{R2: tags do not transfer: $+1.3\%$ within regions, $+0.9\%$ / $+0.4\%$
 in unseen ones.}
@@ -50,6 +60,19 @@ $>$10~s: $+1.7$, $+2.4$, $+1.9\%$).}
 \todo{R4: the hiker dominates whole-hike time (Fig.~\ref{fig:hike}):
 median error 13.6\% (slope) $\to$ 13.0\% (+ terrain); the hiker's first
 km brings it to 10.0\%, and 9.6\% with terrain.}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_curve}
+\caption{(a) Walking speed vs slope in the walking direction, 17 regions:
+median per 2\% bin (dots) and the middle 50\% of segments (gray), our
+refitted curve, Campbell et al.'s published median
+curve~\cite{campbell2022variability} and Tobler's
+function~\cite{tobler1993}. (b) Speed down / speed up on out-and-back pairs
+(same hiker, same trail; grade bins 3--10, 10--20, 20--30, $\ge$30\%), 95\%
+intervals resampling outings, and the ratio each curve implies.}
+\label{fig:curve}
+\end{figure}
 
 \begin{figure}[t]
 \centering

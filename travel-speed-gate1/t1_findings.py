@@ -25,8 +25,9 @@ the paper says and what T2 has to explain.
    95% intervals resampling outings. Tobler predicts 1.42 at >= 5% grade.
 
 Input: every built region (data/t1_<key>/ with modes.csv).
-Output: results/t1_findings/numbers.json, fig_forms.png, fig_fatigue.png,
-        fig_asymmetry.png
+Output: results/t1_findings/numbers.json, slope_bins.csv (speed quartiles
+        per 2% slope bin, for the paper's curve figure), fig_forms.png,
+        fig_fatigue.png, fig_asymmetry.png
 Run:   python t1_findings.py
 """
 
@@ -182,6 +183,13 @@ def main():
     edges = np.arange(-0.45, 0.4501, 0.02)
     b = pd.cut(w.slope, edges)
     med = w.groupby(b, observed=False).speed_kmh.median().to_numpy()
+    gb = w.groupby(b, observed=False)
+    pd.DataFrame({"slope_mid": edges[:-1] + 0.01, "segments": gb.size(),
+                  "outings": gb.outing_id.nunique(),
+                  "q25_kmh": gb.speed_kmh.quantile(0.25),
+                  "median_kmh": med,
+                  "q75_kmh": gb.speed_kmh.quantile(0.75)}
+                 ).to_csv(OUT / "slope_bins.csv", index=False)
     ax.plot(100 * (edges[:-1] + 0.01), med, "o", color="#9a9893", ms=4,
             label="median per 2% slope bin (all walkers)")
     ax.plot(100 * grid, 6 * np.exp(-3.5 * np.abs(grid + 0.05)), "--",

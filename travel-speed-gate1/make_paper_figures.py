@@ -10,6 +10,9 @@ Draft figures for the IGARSS paper (paper/OUTLINE.md), IEEE column width
                    sorted, with the count of regions where terrain wins
   fig_hike_time.png error in predicted moving time per hike, in held-out
                    regions (after each hike's first km), by model
+  fig_curve.png    (T4) speed vs slope in 17 regions vs Tobler and Campbell,
+                   and the down/up ratio on same-hiker out-and-back pairs
+                   (results/t1_findings: numbers.json, slope_bins.csv)
 
 Input:  results/t3_harness_terrain15m/ (terrain from 1 m + 5 m elevation):
         metrics, skill_ci, loro_by_region, hike_times
@@ -150,6 +153,89 @@ def fig_hike():
     fig.savefig(OUT / "fig_hike_time.png", dpi=300)
 
 
+FIND = HERE / "results" / "t1_findings"
+
+
+def _curve(p, s):
+    """ln km/h of the refitted rounded asymmetric curve (t1_findings
+    smooth_asym): a - k (sqrt(x^2 + e^2) - e), x = s + s0, k = ku uphill of
+    the peak and kd below it."""
+    a, ku, kd, s0, e = p
+    x, e = s + s0, abs(e)
+    return a - np.where(x >= 0, ku, kd) * (np.sqrt(x ** 2 + e ** 2) - e)
+
+
+def _campbell(s):
+    """ln km/h of Campbell et al. 2022's median curve (t3_harness.campbell)."""
+    a, b, c, d, e = -1.4579, 22.0787, 76.3271, 0.0525, -3.2002e-4
+    deg = np.degrees(np.arctan(s))
+    r = c / (np.pi * b * (1 + ((deg - a) / b) ** 2)) + d + e * deg
+    return np.log(3.6 * np.clip(r, 0.05, None))
+
+
+def _tobler(s):
+    return np.log(6.0) - 3.5 * np.abs(s + 0.05)
+
+
+def fig_curve():
+    """Fig. 2 (T4): (a) walking speed vs slope in 17 regions: median and
+    quartiles per 2% bin, the refitted curve, Tobler and Campbell's
+    published median; (b) speed down / speed up on out-and-back pairs (same
+    hiker, same trail), with what each curve implies."""
+    import json
+    nums = json.loads((FIND / "numbers.json").read_text())
+    bins = pd.read_csv(FIND / "slope_bins.csv")
+    p = nums["forms_cv"]["smooth_asym"]["params_all"]
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(3.5, 3.6),
+                                 gridspec_kw={"height_ratios": [1.55, 1]})
+    x = 100 * bins.slope_mid
+    a1.fill_between(x, bins.q25_kmh, bins.q75_kmh, color="#e4e3df", lw=0)
+    a1.plot(x, bins.median_kmh, "o", color=GRAY, ms=2.2)
+    s = np.linspace(-0.45, 0.45, 361)
+    curves = [("ours (refitted)", np.exp(_curve(p, s)), BLUE, "-"),
+              ("Campbell 2022", np.exp(_campbell(s)), ORANGE, "-"),
+              ("Tobler 1993", np.exp(_tobler(s)), "#333", "--")]
+    for lab, v, col, ls in curves:
+        a1.plot(100 * s, v, ls, color=col, lw=1.2, label=lab)
+    a1.set_xlim(-45, 45)
+    a1.set_ylim(0, 6.4)
+    a1.set_xlabel("slope in the walking direction (%)", labelpad=1)
+    a1.set_ylabel("walking speed (km/h)")
+    a1.legend(frameon=False, loc="upper right", fontsize=6,
+              handlelength=1.6, borderaxespad=0.1)
+    a1.set_title(f"(a) {nums['walking_outings']:,} walking outings, "
+                 f"{len(nums['regions'])} regions", loc="left", fontsize=7)
+    asym = nums["asymmetry"]
+    mids = {"0.03-0.10": 6.5, "0.10-0.20": 15, "0.20-0.30": 25,
+            "0.30-1.00": 35}
+    for i, (k, (m, (lo, hi), n)) in enumerate(asym["by_grade"].items()):
+        a2.errorbar(mids[k], m, yerr=[[m - lo], [hi - m]], fmt="o",
+                    color="#333", ms=3.5, capsize=2, lw=1, zorder=4,
+                    label="same hiker, same trail (95% CI)" if i == 0
+                    else None)
+    g = np.linspace(0.03, 0.40, 75)
+    for lab, f, col, ls in [
+            ("ours", lambda s: _curve(p, s), BLUE, "-"),
+            ("Campbell", _campbell, ORANGE, "-"),
+            ("Tobler", _tobler, "#333", "--")]:
+        a2.plot(100 * g, np.exp(f(-g) - f(g)), ls, color=col, lw=1.2,
+                label=f"{lab}, implied")
+    a2.axhline(1, color="#e4e3df", lw=0.8, zorder=0)
+    a2.set_xlim(0, 42)
+    a2.set_ylim(0.95, 1.64)
+    a2.set_xlabel("trail grade (%)", labelpad=1)
+    a2.set_ylabel("speed down / speed up")
+    a2.legend(frameon=False, loc="upper center", fontsize=5.6, ncol=2,
+              handlelength=1.6, columnspacing=0.8, borderaxespad=0.1)
+    a2.set_title(f"(b) out-and-back pairs: {asym['pairs']:,} from "
+                 f"{asym['outings']:,} outings", loc="left", fontsize=7)
+    for ax in (a1, a2):
+        ax.grid(color="#e4e3df", lw=0.5, zorder=0)
+        ax.spines[["top", "right"]].set_visible(False)
+    fig.tight_layout(h_pad=0.6)
+    fig.savefig(OUT / "fig_curve.png", dpi=300)
+
+
 NE = HERE / "cache" / "naturalearth"     # Natural Earth 1:110m GeoJSON
 LABELS = {  # region: (short name, label offset in points, alignment)
     "northshore": ("North Shore", (-7, 0), "right"),
@@ -270,7 +356,10 @@ def main():
     fig_regions()
     if (RES / "hike_times.csv").exists():
         fig_hike()
-    print(f"wrote {OUT}/fig_skill.png, fig_regions.png, fig_hike_time.png")
+    if (FIND / "slope_bins.csv").exists():
+        fig_curve()
+    print(f"wrote {OUT}/fig_skill.png, fig_regions.png, fig_hike_time.png, "
+          "fig_curve.png")
 
 
 if __name__ == "__main__":

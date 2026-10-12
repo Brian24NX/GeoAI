@@ -50,6 +50,16 @@ then T2". **T1 is complete and T2 tier 1 is done.**
 - **Embeddings** are strong within regions but less reliable in new ones
   (−5.6% to +8.3% by region). Physical terrain is what transfers.
 
+**Speed vs slope** (the plan's claims 2 and 4; `paper/figures/fig_curve.png`):
+- Real hikers peak near 4.2 km/h on level to gently descending trail;
+  Tobler says 6.
+- Tobler is ~20% too fast on gentle grades and ~18% too slow on climbs
+  steeper than 25%. Campbell's curve is right near level but ~20% too
+  fast on steep climbs.
+- **Same hiker, same trail** (2,763 out-and-back pairs): going down is 8%
+  faster than going up at 3–10% grade and 22–23% faster above 20%.
+  Tobler says 42% at every grade.
+
 **Two practical outputs:**
 - A **terrain-adjusted Tobler formula** with one DEM input (steppiness).
   Smooth trails peak at 4.60 km/h, steppy ones at 3.84 (Tobler: 6.0). It
@@ -113,7 +123,7 @@ then T2". **T1 is complete and T2 tier 1 is done.**
 
 ## 2. A 10-minute script
 
-Slides: `meeting_plots/oct16/slides.pdf` (13 slides; the numbers match
+Slides: `meeting_plots/oct16/slides.pdf` (14 slides; the numbers match
 `docs/NEXT_STEPS.md` §1a).
 
 1. **Status (slides 1–2, 1 min).** "T1 is done in 17 regions. I built the
@@ -124,33 +134,38 @@ Slides: `meeting_plots/oct16/slides.pdf` (13 slides; the numbers match
    290k walking segments. Each segment has a speed, a slope, OSM tags,
    travel mode, outing and 10 km block for the splits."
 
-3. **How we test (slide 4, 1 min).** "New hikers, new 10 km squares, and a
+3. **Speed vs slope (slide 4, 1 min).** "Real hikers peak near 4.2 km/h,
+   not Tobler's 6. Tobler is too fast on gentle grades and too slow on
+   steep climbs. On the same trail, the same hiker goes down only 8–22%
+   faster than up; Tobler says 42%."
+
+4. **How we test (slide 5, 1 min).** "New hikers, new 10 km squares, and a
    whole region the model never saw. The third one is the headline. Scores
    are CRPS, which grades the predicted *range*, plus whole-hike time
    error."
 
-4. **The scoreboard (slide 5, 2 min).**
+5. **The scoreboard (slide 6, 2 min).**
    - "Tobler is 13% worse than a curve refitted to our data. Campbell's
      2022 curve ties it. STRIDE's published curve is 17% worse."
    - "Tags help a bit in regions they were learned on, but not in new
      ones."
    - "Terrain from elevation data keeps its value in new regions."
 
-5. **Per region (slide 6, 30 s).** "Terrain beats tags in 16 of 17
+6. **Per region (slide 7, 30 s).** "Terrain beats tags in 16 of 17
    held-out regions. The exception is Yosemite."
 
-6. **What terrain means (slide 7, 1 min).** "Steppier trail profiles are
+7. **What terrain means (slide 8, 1 min).** "Steppier trail profiles are
    slower in every region, about 17 points from the smoothest fifth to the
    steppiest."
 
-7. **Checks (slide 8, 1 min).** Region proxy, hiker proxy, the
-   hidden-climbing control, vegetation null.
+8. **Checks (slide 9, 1 min).** Region proxy, hiker proxy, newer hikes,
+   GPS rate, the hidden-climbing control, vegetation null.
 
-8. **Practical results (slides 9–12, 2 min; shorten if time is tight).**
-   The formula with one DEM number, pace on every White Mountains trail,
+9. **Practical results (slides 10–13, 1 min; skip if time is tight).** The
+   formula with one DEM number, pace on every White Mountains trail,
    travel modes, whole-hike time.
 
-9. **Questions (slide 13, 1 min).** The list in Part 1.
+10. **Questions (slide 14, 1 min).** The list in Part 1.
 
 ---
 

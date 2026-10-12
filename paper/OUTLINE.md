@@ -119,10 +119,21 @@ value. A hiker's own pace still matters most.
 | terrain-adjusted Tobler formula | +1.0 | +1.0 | +1.0 [0.6, 1.5] |
 | + personal pace → + terrain | | | +8.4 → +10.7 / +11.6 |
 
-- **R1. Tobler fails everywhere:** −12.5% CRPS, R² < 0. The peak is 4.31
-  km/h at −4.5% grade, not 6. Campbell's published median curve (Utah and
-  California) is as good as our refit on average (−0.5% [−1.8, 0.7]) but
-  region-dependent: −3.8% in the White Mountains to +5.8% in Shenandoah.
+- **R1. Tobler fails everywhere** (`paper/figures/fig_curve.png` a):
+  −12.5% CRPS, R² < 0. Speed peaks near 4.2 km/h on level to gently
+  descending trail, not 6. Against the median per 2% bin, Tobler is ~20%
+  too fast within ±10% grade (up to 37% near its peak) and ~18% too slow
+  on climbs > 25%. Campbell's published median curve (Utah and California)
+  matches near level but is ~20% too fast on climbs > 25% (~10% on
+  descents < −25%); as good as our refit on average (−0.5% [−1.8, 0.7]),
+  but region-dependent: −3.8% in the White Mountains to +5.8% in
+  Shenandoah.
+- **R1b. Asymmetry, same hiker, same trail** (plan claim 4;
+  `fig_curve.png` b): 2,763 out-and-back pairs from 1,145 outings. Down /
+  up speed ratio 1.08 at 3–10% grade, 1.17 at 10–20%, 1.22 at 20–30%, 1.23
+  above 30%; Tobler implies 1.42 at every grade above 5%. Our pooled curve
+  implies nearly the same ratios, so its asymmetry is not a sampling
+  artifact; Campbell's implies 1.02–1.16.
 - **R2. Tags don't transfer.** They help a little within a region and
   barely in a new one. Trees on tags overfit regional tagging habits.
 - **R3. Terrain transfers.** It beats tags in 16 of 17 held-out regions
@@ -188,7 +199,15 @@ climbs (constant multipliers fail); runners ~2.5× throughout
 
 ## Figures and tables to make (Claude can produce drafts)
 
+**Budget.** Four pages fit Table I plus about three single-column figures.
+The skeleton now has six (map, curve, skill, regions, hike time, trail
+map), so at least two become text or go. A suggestion to discuss: keep
+Fig. 1 map, the curve (claims 2 and 4), the skill bars (claim 3); turn
+per-region and hike-time results into one sentence each; drop the trail
+map or crop it to one column.
+
 - [x] Fig. 1: `paper/figures/fig_map.png` (17 regions, circle area = walking hours, White Mountains inset).
+- [x] Fig. (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.
 - [x] Fig. 2 draft: `paper/figures/fig_skill.png` (skill by model, new hikers vs unseen region, 95% CIs), from `travel-speed-gate1/make_paper_figures.py`.
 - [ ] Table 1 as above, final numbers.
 - [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 15 of 17).
