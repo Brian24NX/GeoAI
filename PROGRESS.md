@@ -198,6 +198,14 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
   - Running for all 17 regions overnight (~10–15 GB) for the unseen-region
     test.
 - Draft meeting brief for 16 Oct: `Meeting_Prep_Oct16.md`.
+- **A terrain-adjusted hiking function** (T4, decision #91): Tobler's
+  formula with peak speed and slope sensitivity depending on trail
+  steppiness, one number from any DEM.
+  - Smooth trails peak at 4.56 km/h, steppy ones at 3.82.
+  - +0.65% in unseen regions; beats tags in 11 of 17 regions.
+- **Whole-hike times** (decision #92, 1,199 hikes in unseen regions): median
+  error Tobler 14.0%, slope curve 13.7%, + terrain 13.0%, + personal pace
+  + terrain 9.5% (52% of hikes within ±10%).
 
 ## Sat 10 Oct 2026
 

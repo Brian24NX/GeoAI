@@ -8,6 +8,8 @@ Draft figures for the IGARSS paper (paper/OUTLINE.md), IEEE column width
                    region out), with 95% bootstrap intervals
   fig_regions.png  per held-out region: terrain vs tags (additive arms),
                    sorted, with the count of regions where terrain wins
+  fig_hike_time.png error in predicted moving time per hike, in held-out
+                   regions (after each hike's first km), by model
 
 Input:  results/t3_harness_terrain5m/{metrics,skill_ci,loro_by_region}.csv
 Output: ../paper/figures/
@@ -106,11 +108,50 @@ def fig_regions():
     fig.savefig(OUT / "fig_regions.png", dpi=300)
 
 
+HIKE = [("Tobler (published)", "tobler"),
+        ("Campbell 2022 (published)", "campbell"),
+        ("Slope curve, refitted", "slope_curve"),
+        ("+ OSM tags", "lin_tags"),
+        ("+ terrain", "lin_rs"),
+        ("Terrain-adjusted curve", "terrain_curve"),
+        ("+ personal pace", "slope_curve+me"),
+        ("+ personal pace + terrain", "lin_rs+me")]
+
+
+def fig_hike():
+    h = pd.read_csv(RES / "hike_times.csv")
+    rows = [(n, a) for n, a in HIKE if a in set(h.arm)]
+    fig, ax = plt.subplots(figsize=(3.5, 2.8))
+    data = [h[h.arm == a].err_pct for _, a in rows]
+    bp = ax.boxplot(data, orientation="horizontal", whis=(5, 95), showfliers=False,
+                    widths=0.55, patch_artist=True,
+                    medianprops={"color": ORANGE, "lw": 1.5})
+    for i, (patch, (_, a)) in enumerate(zip(bp["boxes"], rows)):
+        patch.set_facecolor(LIGHT if not a.endswith("+me") else BLUE)
+        patch.set_edgecolor("#52514e")
+        ape = h[h.arm == a].err_pct.abs().median()
+        ax.text(1.02, i + 1, f"{ape:.1f}%", va="center", fontsize=6.5,
+                transform=ax.get_yaxis_transform())
+    ax.text(1.02, 0.45, "median\n|error|", fontsize=6.5,
+            va="bottom", transform=ax.get_yaxis_transform())
+    ax.axvline(0, color="#333", lw=0.8)
+    ax.set_yticks(range(1, len(rows) + 1), [n for n, _ in rows])
+    ax.invert_yaxis()
+    ax.set_xlim(-60, 80)
+    ax.set_xlabel("predicted vs actual moving time per hike (%)")
+    ax.grid(axis="x", color="#e4e3df")
+    ax.spines[["top", "right"]].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(OUT / "fig_hike_time.png", dpi=300)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     fig_skill()
     fig_regions()
-    print(f"wrote {OUT}/fig_skill.png, fig_regions.png")
+    if (RES / "hike_times.csv").exists():
+        fig_hike()
+    print(f"wrote {OUT}/fig_skill.png, fig_regions.png, fig_hike_time.png")
 
 
 if __name__ == "__main__":

@@ -183,6 +183,13 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
 - **Satellite embeddings** (decision #90): in the White Mountains, +2.6% /
   +3.3% alone and +4.6% / +4.9% with terrain, so they are complementary.
   Running for all regions for the unseen-region test.
+- **A terrain-adjusted Tobler formula** (decision #91): one DEM-derived
+  input (steppiness):
+  - smooth trails peak at 4.56 km/h, steppy ones at 3.82;
+  - +0.65% in unseen regions, beating tags in 11 of 17;
+  - a practical drop-in for GIS.
+- **Whole-hike time** (decision #92): median error 13.7% (slope curve) →
+  13.0% (+ terrain) → 9.5% (+ personal pace + terrain).
 
 **Next:**
 - The 1 m elevation for all 16 US regions is downloading (decision #84,

@@ -17,6 +17,10 @@ when T2's covariates exist):
                  covariate rough_stride; no lidar vegetation density yet
                  (density = 0). stride_refit: the same form fitted to our
                  hikes
+  terrain_curve  Tobler's form with peak speed and slope sensitivity
+                 linear in steppiness (SD of 5 m pitches, pitch_sd_5m):
+                 ln v = a0 + a1 z - (k0 + k1 z)|s + s0|, z = steppiness /
+                 0.10 (t4_terrain_curve.py); 5 numbers, a drop-in Tobler
   tobler_refit   Tobler's tent shape, refitted (= the T1 slope fit)
   slope_curve    our rounded-top asymmetric curve (t1_findings
                  smooth_asym), refitted: the slope-only baseline
@@ -236,6 +240,10 @@ FIXED = {"tobler": tobler, "campbell": campbell}
 STRIDE = (-2.320, 26.315, 147.362, 16.505)   # a, b, c, e (bld_tm.R)
 
 
+def terrain_curve(s, z, a0, a1, k0, k1, s0):
+    return a0 + a1 * z - (k0 + k1 * z) * np.abs(s + s0)
+
+
 def stride(s, rgh, a, b, c, e):
     """ln km/h of the STRIDE form, slope s as rise/run, roughness rgh in m."""
     deg = np.degrees(np.arctan(s))
@@ -305,6 +313,13 @@ class Arm:
                     x0=list(STRIDE), loss="soft_l1", f_scale=0.3,
                     bounds=([-15, 5, 1, 0], [15, 80, 2000, 200]))
                 self.p = tuple(res.x)
+        elif self.kind == "tcurve":
+            from scipy.optimize import least_squares
+            z, both = self.blocks["steppy"], np.r_[fit, stop]
+            self.p = tuple(least_squares(
+                lambda q: terrain_curve(s[both], z[both], *q) - y[both],
+                [1.45, -0.1, 1.8, 0.2, 0.05], loss="soft_l1",
+                f_scale=0.3).x)
         elif self.kind == "gbm":
             self.m = gbm().fit(self.X(fit), y[fit], X_val=self.X(stop),
                                y_val=y[stop])
@@ -333,6 +348,9 @@ class Arm:
             return FIXED[self.spec](s[idx])
         if self.kind == "stride":
             return stride(s[idx], self.blocks["stride_rgh"][idx], *self.p)
+        if self.kind == "tcurve":
+            return terrain_curve(s[idx], self.blocks["steppy"][idx],
+                                 *self.p)
         if self.kind == "form":
             return tf.FORMS[self.spec][0](self.p, s[idx])
         if self.kind == "lin":
@@ -555,6 +573,10 @@ def main():
     blocks = {"slope": w[["slope"]], "tags": varying(tag_features(w))}
     oh = onehot(blocks["tags"])
     blocks["tags_1h"] = oh.to_numpy()
+    if "pitch_sd_5m" in rs_cols:             # the terrain-adjusted curve
+        z = w["pitch_sd_5m"] / 0.10
+        blocks["steppy"] = z.fillna(z.median()).to_numpy()
+        ARMS["terrain_curve"] = ("tcurve", None)
     if "rough_stride" in rs_cols:            # STRIDE needs its roughness
         r = w["rough_stride"]
         blocks["stride_rgh"] = r.fillna(r.median()).to_numpy()
@@ -656,6 +678,7 @@ def main():
     met["crps_skill_vs_slope_pct"] = 100 * (1 - met.crps_log / met.ref)
     met = met.drop(columns="ref")
     met.to_csv(OUT / "metrics.csv", index=False)
+    hike_times(sc).to_csv(OUT / "hike_times.csv", index=False)
     ci = skill_intervals(sc, splits)
     ci.to_csv(OUT / "skill_ci.csv", index=False)
     print(ci.round(2).to_string(index=False))
@@ -710,6 +733,28 @@ def main():
                 "crps_skill_vs_slope_pct"]]
           .round(4).to_string(index=False))
     print(f"done in {(time.time() - t0) / 60:.1f} min")
+
+
+HIKE_ARMS = ["tobler", "campbell", "slope_curve", "lin_tags", "lin_rs",
+             "gbm_rs", "terrain_curve", "slope_curve+me", "lin_rs+me",
+             "gbm_rs+me"]
+
+
+def hike_times(sc):
+    """Predicted vs actual moving time per hike (trace) in held-out regions,
+    on the segments after each trace's first km (so the personal-pace rows
+    are comparable): one row per trace x arm."""
+    d = sc[(sc.split == "loro") & sc.rest & sc.arm.isin(HIKE_ARMS)]
+    d = d.assign(t_pred=3.6 * d.length_m * np.exp(-d.pred) * d.time_factor)
+    g = d.groupby(["arm", "region", "trace_id"]).agg(
+        km=("length_m", "sum"), t_h=("moving_s", "sum"),
+        t_pred_h=("t_pred", "sum")).reset_index()
+    g["km"] /= 1000
+    g["t_h"] /= 3600
+    g["t_pred_h"] /= 3600
+    g = g[g.km >= MIN_TRACE_KM]
+    g["err_pct"] = 100 * (g.t_pred_h / g.t_h - 1)
+    return g
 
 
 def skill_intervals(sc, splits, B=2000):

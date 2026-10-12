@@ -136,6 +136,10 @@ value. A hiker's own pace still matters most.
   uneven grade inside the 50 m segment ("hidden climbing"); the rest is
   difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
   here.
+- **R3b. A terrain-adjusted Tobler function** (T4): v0 and k as linear
+  functions of one DEM measure (steppiness). Steppy trails peak at 3.82
+  km/h vs 4.56 on smooth ones; +0.65% in unseen regions with 5 numbers.
+  Fig. candidate: `results/t4_terrain_curve/fig_curves.png`.
 - **R4. The hiker dominates.** Personal pace from the first km cuts
   whole-hike moving-time error from 13.7% to 9.9%; terrain on top takes it
   to ~9.5%.
@@ -171,6 +175,8 @@ value. A hiker's own pace still matters most.
 - [x] Fig. 2 draft: `paper/figures/fig_skill.png` (skill by model, new hikers vs unseen region, 95% CIs), from `travel-speed-gate1/make_paper_figures.py`.
 - [ ] Table 1 as above, final numbers.
 - [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 15 of 17).
+- [x] Fig. 4 candidate: `paper/figures/fig_hike_time.png` (whole-hike moving-time error by model, 1,199 hikes in held-out regions).
+- [x] Fig. 5 candidate: `travel-speed-gate1/results/t4_terrain_curve/fig_curves.png` (speed vs slope by steppiness, with Tobler).
 
 ## References to verify before citing (from `docs/NEXT_STEPS.md` §2)
 

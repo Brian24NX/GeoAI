@@ -44,6 +44,13 @@ then T2". Both are done or well underway.
 - **Whole-hike time error:** 13.7% with slope alone → 9.4% with the
   hiker's pace plus terrain.
 
+**Two practical outputs:**
+- A **terrain-adjusted Tobler formula** with one DEM input (steppiness):
+  smooth trails peak at 4.56 km/h, steppy ones at 3.82. It beats tags in
+  unseen regions with 5 numbers (`results/t4_terrain_curve/fig_curves.png`).
+- **Whole-hike time error** (`paper/figures/fig_hike_time.png`): Tobler
+  14.0%, terrain 13.0%, the hiker's own pace + terrain 9.5%.
+
 **Checks a reviewer will ask about (all done):**
 - Terrain isn't a proxy for the region. It still adds ~1.8 points after
   each region's own speed offset.
