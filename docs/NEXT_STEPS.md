@@ -106,6 +106,16 @@ which are kept below as the record.
 - **Not a proxy:** region offsets alone add +0.2–0.4%, and terrain adds
   ~1.8–2.0 points on top of them. On top of personal pace it adds
   ~2.3 points.
+- **Robustness** (decision #101,
+  `travel-speed-gate1/results/t3_harness_robust/robust_summary.md`):
+  - newer hikes (trained up to 2019, tested on 2020+): terrain +2.2% /
+    +2.9%, tags +0.9% / +0.9%; no drift;
+  - GPS recording rate, unseen regions: traces every ≤ 2 s +1.7% / +2.5%,
+    2–10 s +2.4% / +2.9%, > 10 s +1.9% / +2.8%; tags ≤ +1.1% at every
+    rate;
+  - side finding: sparse traces (> 10 s) read ~10% slow on flat ground,
+    probably because short stops hide between points (a per-trace
+    offset).
 - **Whole-hike moving time** (1,354 hikes in unseen regions, after the
   first km; median error):
   - Tobler 13.7% (runs 5% fast), Campbell 14.3%;

@@ -19,6 +19,8 @@ case "$1" in
   landcover)  $H --covariates $LC --out results/t3_harness_landcover ;;
   aef)        $H --covariates $AE --out results/t3_harness_aef ;;
   aefterrain) $H --covariates $AE $T5 --out results/t3_harness_aef_terrain ;;
+  robust)     $H --covariates $T5 $T1 --splits outing5 block5 loro time \
+                 --out results/t3_harness_robust ;;
   regionfe)   $H --covariates $T5 --region-fe --splits outing5 block5 \
                  --out results/t3_harness_regionfe ;;
   *) echo "unknown run $1"; exit 2 ;;

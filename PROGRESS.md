@@ -94,6 +94,24 @@ km.
   - plan status, timeline (through 12 Oct), questions for Danni and the
     glossary refreshed;
   - first-pass numbers corrected to the final ones.
+- **Slides for 16 Oct** (`meeting_plots/oct16/slides.pdf`, 13 slides,
+  beamer): status, dataset map, how we test, the scoreboard, per region,
+  what terrain means, checks, the formula, the every-trail map, modes,
+  whole hikes, questions. The 10-minute script in `Meeting_Prep_Oct16.md`
+  now follows them.
+- Whole-hike numbers in the paper notes and the brief had mixed in the 5 m
+  run; now all from the final run (13.0% terrain, 10.0% pace, 9.6% both).
+- **Two robustness checks** (decision #101,
+  `results/t3_harness_robust/robust_summary.md`):
+  - **Newer hikes:** trained on hikes up to 2019, tested on 2020–2026:
+    terrain +2.2% / +2.9%, tags +0.9%. Same as random new hikers.
+  - **GPS recording rate:** in unseen regions the terrain gain is the same
+    for traces recorded every ≤ 2 s, 2–10 s and > 10 s (+1.7%, +2.4%,
+    +1.9%). Not an artifact of sparse GPS points.
+  - Side finding: sparse traces read ~10% slow on flat ground, probably
+    because short stops hide between points.
+- Paper outline R1–R3c refreshed to the final numbers (some were first-pass:
+  "15 of 17", Campbell "−10% in the Adirondacks", embeddings "+0.7%").
 
 ## Sun 11 Oct 2026
 

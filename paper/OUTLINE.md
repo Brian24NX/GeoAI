@@ -119,32 +119,35 @@ value. A hiker's own pace still matters most.
 | terrain-adjusted Tobler formula | +1.0 | +1.0 | +1.0 [0.6, 1.5] |
 | + personal pace → + terrain | | | +8.4 → +10.7 / +11.6 |
 
-- **R1. Tobler fails everywhere:** −13% CRPS, R² < 0. The peak is 4.27
+- **R1. Tobler fails everywhere:** −12.5% CRPS, R² < 0. The peak is 4.31
   km/h at −4.5% grade, not 6. Campbell's published median curve (Utah and
-  California) is as good as our refit on average (−0.6%, n.s.) but
-  region-dependent: −10% in the Adirondacks, +4% on the North Shore.
+  California) is as good as our refit on average (−0.5% [−1.8, 0.7]) but
+  region-dependent: −3.8% in the White Mountains to +5.8% in Shenandoah.
 - **R2. Tags don't transfer.** They help a little within a region and
   barely in a new one. Trees on tags overfit regional tagging habits.
-- **R3. Terrain transfers.** It beats tags in 15 of 17 held-out regions,
-  and on tagged segments (+1.8% vs +0.5%). 95% intervals resampling whole
-  regions: terrain +0.8 to +2.8% (additive), tags −0.5 to +1.0%;
-  terrain minus tags +0.7 to +2.4%.
-  Robustness: it adds ~1.8 points on top of region offsets (not a region
-  proxy) and on top of personal pace (not a hiker proxy).
+- **R3. Terrain transfers.** It beats tags in 16 of 17 held-out regions
+  (the exception: Yosemite), and on tagged segments (+2.2% vs +0.9%). 95%
+  intervals resampling whole regions: terrain +1.5 to +3.1% (additive),
+  tags +0.1 to +1.7%; terrain minus tags +0.7 to +2.2%, above zero in
+  every draw.
+  Robustness: it adds ~1.9 points on top of region offsets (not a region
+  proxy) and ~2.3 on top of personal pace (not a hiker proxy). It holds
+  for newer hikes (trained up to 2019, tested on 2020+: +2.2% / +2.9%;
+  tags +0.9% / +0.9%) and at every GPS recording rate (unseen regions,
+  traces every ≤ 2 s / 2–10 s / > 10 s: +1.7 / +2.4 / +1.9%).
   Vegetation from 30 m maps (NLCD canopy, land cover) adds nothing, alone
   or with terrain: the remote-sensing signal is in the elevation data.
   1 m lidar ≈ 5 m for this profile; STRIDE's roughness adds ~nothing on
-  trails (published STRIDE −18%).
+  trails (published STRIDE −16.8%).
 - **R3c. Foundation-model embeddings** (AlphaEarth) are strong within
-  regions but transfer poorly (+0.7% / −0.1% in unseen regions; +5% to
-  −5% by region). Physical terrain transfers; embeddings know places.
-  Combined additively: +1.9%. About 60% of the gain is
-  uneven grade inside the 50 m segment ("hidden climbing"); the rest is
-  difficulty beyond grade. (*) 1 m roughness, canopy and embeddings go
-  here.
+  regions (+1.4% / +2.6%) but transfer less reliably (+1.1% / +1.1% in
+  unseen regions; −5.6% to +8.3% by region). Physical terrain transfers;
+  embeddings know places. Terrain + embeddings: +2.6% / +2.8%. About 60%
+  of the terrain gain is uneven grade inside the 50 m segment ("hidden
+  climbing"); the rest is difficulty beyond grade.
 - **R3b. A terrain-adjusted Tobler function** (T4): v0 and k as linear
-  functions of one DEM measure (steppiness). Steppy trails peak at 3.82
-  km/h vs 4.56 on smooth ones; +0.65% in unseen regions with 5 numbers.
+  functions of one DEM measure (steppiness). Steppy trails peak at 3.84
+  km/h vs 4.60 on smooth ones; +1.0% in unseen regions with 5 numbers.
   Fig. candidate: `results/t4_terrain_curve/fig_curves.png`.
 - **R4. The hiker dominates.** Personal pace from the first km cuts
   whole-hike moving-time error from 13.6% to 10.0%; terrain on top takes it
@@ -167,7 +170,11 @@ value. A hiker's own pace still matters most.
   - lab-only regions (*);
   - API depth limit;
   - coarse DEM in Olympic and BC;
-  - segment noise (GPS).
+  - segment noise (GPS);
+  - sparse traces (> 10 s between points) read ~10% slow on flat ground,
+    probably because short stops hide between points: a per-trace offset
+    (personal pace absorbs it);
+    terrain's gain is the same at every recording rate.
 - **Release:** the derived segment table without user names, if mentors
   agree.
 - **Conclusion:** a 3-sentence restatement plus one line of future work
@@ -181,7 +188,7 @@ climbs (constant multipliers fail); runners ~2.5× throughout
 
 ## Figures and tables to make (Claude can produce drafts)
 
-- [ ] Fig. 1: region map (from the explainer's map) + one region inset.
+- [x] Fig. 1: `paper/figures/fig_map.png` (17 regions, circle area = walking hours, White Mountains inset).
 - [x] Fig. 2 draft: `paper/figures/fig_skill.png` (skill by model, new hikers vs unseen region, 95% CIs), from `travel-speed-gate1/make_paper_figures.py`.
 - [ ] Table 1 as above, final numbers.
 - [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 15 of 17).

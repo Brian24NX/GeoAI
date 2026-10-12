@@ -124,11 +124,17 @@ vs slope alone.
 \end{frame}
 
 \begin{frame}{Checks}
-\begin{itemize}\setlength\itemsep{5pt}
+\small
+\begin{itemize}\setlength\itemsep{3pt}
 \item \textbf{Not a region proxy}: terrain still adds $\sim$1.9 points over
   each region's own speed offset.
 \item \textbf{Not a hiker proxy}: still $\sim$2.3 points once the hiker's
   pace is known.
+\item \textbf{Newer hikes}: trained up to 2019, tested on 2020--2026:
+  terrain $+2.2\%$, tags $+0.9\%$. No drift.
+\item \textbf{GPS rate}: the same gain for traces recorded every $\le$2 s,
+  2--10 s, $>$10 s ($+1.7$, $+2.4$, $+1.9\%$). Sparse traces read
+  $\sim$10\% slow (probably short stops hidden between points).
 \item \textbf{Hidden climbing}: $\sim$60\% of the gain is uneven grade inside
   the 50 m segment; the rest is difficulty beyond grade.
 \item \textbf{1 m lidar $\approx$ 5 m} for this signal; STRIDE's roughness adds

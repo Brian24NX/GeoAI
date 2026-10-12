@@ -49,6 +49,9 @@ Splits (never by segment):
   outing5   5 folds of outings, all regions pooled
   block5    5 folds of 10 km blocks
   loro      leave one region out (17 folds): the paper's headline
+  time      (on request) train on outings up to TIME_CUT, test on the later
+            ones: does a model from older hikes hold for newer ones?
+            Outings with a doubtful date are in neither part.
 
 Spread. Each arm's predictive distribution = its point prediction + the
 quantiles of its residuals on held-out outings of the TRAINING data
@@ -57,7 +60,10 @@ arm is calibrated the same honest way, and under LORO the calibration
 must transfer too.
 
 Subsets: all; tagged (sac_scale, visibility, smoothness or mtb_scale
-present); rest (segments after a trace's first km, where "+me" applies).
+present); rest (segments after a trace's first km, where "+me" applies);
+gps_le2 / gps_2to10 / gps_gt10 (the trace's recording interval in s: is a
+gain still there where speeds are measured best?). skill_ci_gps.csv has
+their bootstrap intervals.
 Metrics (log speed unless noted): RMSE, MAE, MAE km/h, CRPS (log and
 km/h), coverage of the central 50% and 90% intervals, PIT histogram, and
 moving-time errors over 1 km stretches (20 consecutive segments of one
@@ -103,6 +109,9 @@ ME_SEGS = 20                 # personal pace from a trace's first 1 km
 PLACE_M = 100                # place-memory cell size (m, UTM grid)
 KAPPAS = [2, 5, 10, 20, 50, 100]   # place-memory shrinkage (segments)
 SPLITS = ["outing5", "block5", "loro"]
+TIME_CUT, TIME_TEST = 2019, "after"      # time split: test = after 2019
+GPS_SUBSETS = {"gps_le2": (0, 2), "gps_2to10": (2, 10),
+               "gps_gt10": (10, np.inf)}  # recording interval (s], per trace
 
 # ------------------------------------------------------------ features
 SAC = {"strolling": 0, "hiking": 1, "mountain_hiking": 2,
@@ -493,6 +502,11 @@ def summarize(d):
 def outer_folds(w, how, rng):
     if how == "loro":
         return w.region.to_numpy()
+    if how == "time":            # None = doubtful date: in neither part
+        o = w.groupby("outing_id")
+        later = o.year.transform("min").to_numpy() > TIME_CUT
+        bad = o.date_suspect.transform("max").to_numpy(bool)
+        return np.where(bad, None, np.where(later, TIME_TEST, "until"))
     groups = w.outing_id if how == "outing5" else w.block_10km
     u = rng.permutation(np.asarray(groups.unique(), dtype=object))
     return groups.map({g: i % 5 for i, g in enumerate(u)}).to_numpy()
@@ -513,11 +527,13 @@ def load():
             "tag_surface", "tag_sac_scale", "tag_width",
             "tag_trail_visibility", "tag_smoothness", "tag_mtb_scale",
             "tag_highway", "analysis_walk", "lat0", "lon0", "lat1",
-            "lon1", "t_start"]
+            "lon1", "t_start", "year", "date_suspect", "native_interval_s"]
     w = pd.read_parquet(SEG, columns=cols)
     w = w[w.analysis_walk & (w.speed_kmh > 0)
           & w.slope.between(-0.6, 0.6)].reset_index(drop=True)
     w["y"] = np.log(w.speed_kmh)
+    for name, (lo, hi) in GPS_SUBSETS.items():
+        w[name] = (w.native_interval_s > lo) & (w.native_interval_s <= hi)
     w["tagged"] = w[["tag_sac_scale", "tag_trail_visibility",
                      "tag_smoothness", "tag_mtb_scale"]].notna().any(axis=1)
     return w
@@ -561,7 +577,8 @@ def main():
     ap.add_argument("--figure", action="store_true",
                     help="only redraw fig_harness.png from the CSVs")
     ap.add_argument("--regions", nargs="*", help="only these regions")
-    ap.add_argument("--splits", nargs="*", default=SPLITS, choices=SPLITS)
+    ap.add_argument("--splits", nargs="*", default=SPLITS,
+                    choices=SPLITS + ["time"])
     ap.add_argument("--covariates", nargs="*", default=[],
                     help="T2 covariate tables: segment_id + numeric columns")
     ap.add_argument("--features", nargs="*",
@@ -647,9 +664,10 @@ def main():
     het_rng = np.random.default_rng(SEED + 1)   # keeps the other arms' folds
     for split in splits:
         fold = outer_folds(w, split, rng)
-        for f in pd.unique(fold):
+        tests = [TIME_TEST] if split == "time" else pd.unique(fold)
+        for f in tests:
             te = np.nonzero(fold == f)[0]
-            tr = np.nonzero(fold != f)[0]
+            tr = np.nonzero(pd.notna(fold) & (fold != f))[0]
             fit_m, stop_m, cal_m = inner_split(w.outing_id.iloc[tr], rng)
             fit, stop, cal = tr[fit_m], tr[stop_m], tr[cal_m]
             for name in ARMS:
@@ -706,13 +724,14 @@ def main():
     knobs.to_csv(OUT / "knobs.csv", index=False)
     sc = pd.concat(scored, ignore_index=True)
     base = w[["region", "trace_id", "outing_id", "length_m", "moving_s", "y",
-              "tagged", "rest", "stretch"]].reset_index(names="row")
+              "tagged", "rest", "stretch", *GPS_SUBSETS]
+             ].reset_index(names="row")
     sc = sc.merge(base, on="row")
 
     rows = []
     for (split, arm), d in sc.groupby(["split", "arm"], sort=False):
         subsets = (["rest"] if arm.endswith("+me")
-                   else ["all", "tagged", "rest"])
+                   else ["all", "tagged", "rest", *GPS_SUBSETS])
         for sub in subsets:
             dd = d if sub == "all" else d[d[sub]]
             rows.append({"split": split, "arm": arm, "subset": sub,
@@ -728,6 +747,9 @@ def main():
     ci = skill_intervals(sc, splits)
     ci.to_csv(OUT / "skill_ci.csv", index=False)
     print(ci.round(2).to_string(index=False))
+    pd.concat([skill_intervals(sc, splits, subset=k).assign(subset=k)
+               for k in GPS_SUBSETS], ignore_index=True
+              ).to_csv(OUT / "skill_ci_gps.csv", index=False)
 
     lo = sc[(sc.split == "loro") & ~sc.arm.str.endswith("+me")]
     by = pd.DataFrame([{"region": reg, "arm": arm, **summarize(d)}
@@ -803,11 +825,12 @@ def hike_times(sc):
     return g
 
 
-def skill_intervals(sc, splits, B=2000):
+def skill_intervals(sc, splits, B=2000, subset=None):
     """95% bootstrap intervals of each arm's CRPS skill vs the baseline,
-    resampling outings (outing and block folds) or whole regions (leave one
-    region out: the honest unit for a transfer claim), plus paired
-    intervals for the remote-sensing arms minus the matching tags arm."""
+    resampling outings (outing, block and time folds) or whole regions
+    (leave one region out: the honest unit for a transfer claim), plus
+    paired intervals for the remote-sensing arms minus the matching tags
+    arm. subset: only the scored rows flagged in that column."""
     rng = np.random.default_rng(SEED)
     pairs = [("lin_rs", "lin_tags"), ("gbm_rs", "gbm_tags"),
              ("lin_both", "lin_tags"), ("gbm_both", "gbm_tags")]
@@ -816,6 +839,8 @@ def skill_intervals(sc, splits, B=2000):
         unit = "region" if split == "loro" else "outing_id"
         d = sc[(sc.split == split) & ~sc.arm.str.endswith("+me")
                & (sc.arm != "slope_curve_local")]
+        if subset:
+            d = d[d[subset]]
         g = d.groupby([unit, "arm"]).crps_log.sum().unstack("arm")
         if BASELINE not in g:
             continue
@@ -877,8 +902,9 @@ def figure(met, by, splits):
         for j, arm in enumerate(arms):
             if arm in d.index:
                 ax[0].scatter(d.loc[arm, "crps_skill_vs_slope_pct"],
-                              j + (i - 1) * 0.22, s=36,
-                              color=["#9ec5f0", "#4f97e3", "#1b4f8f"][i],
+                              j + (i - (len(splits) - 1) / 2) * 0.2, s=36,
+                              color=["#9ec5f0", "#4f97e3", "#1b4f8f",
+                                     "#0d2a4f"][i],
                               label=split if j == 0 else None, zorder=3)
     ax[0].set_yticks(range(len(arms)), arms)
     ax[0].axvline(0, color="#52514e", lw=1)
