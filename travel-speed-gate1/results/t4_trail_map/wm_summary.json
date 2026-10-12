@@ -1,0 +1,19 @@
+{
+ "trail_km": 3368.6,
+ "walked_km": 784.3,
+ "walked_share": 0.233,
+ "pace_terrain_median": 15.2,
+ "pace_tobler_median": 12.8,
+ "pace_terrain_p10_p90": [
+  13.7,
+  20.7
+ ],
+ "fitted_on_segments": 256028,
+ "params": [
+  1.5903,
+  -0.1607,
+  2.0536,
+  -0.3604,
+  0.0427
+ ]
+}

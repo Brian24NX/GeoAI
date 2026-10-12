@@ -187,6 +187,7 @@ climbs (constant multipliers fail); runners ~2.5× throughout
 - [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 15 of 17).
 - [x] Fig. 4 candidate: `paper/figures/fig_hike_time.png` (whole-hike moving-time error by model, 1,199 hikes in held-out regions).
 - [x] Fig. 5 candidate: `travel-speed-gate1/results/t4_terrain_curve/fig_curves.png` (speed vs slope by steppiness, with Tobler).
+- [x] Fig. 6 candidate (application, strong for IGARSS): `travel-speed-gate1/results/t4_trail_map/fig_wm_pace.png`. Pace on every White Mountains trail from the function fitted on the other 16 regions, vs Tobler. 77% of the trail km have no traces.
 
 ## References to verify before citing (from `docs/NEXT_STEPS.md` §2)
 

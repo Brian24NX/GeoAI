@@ -70,6 +70,13 @@ km.
 - **Lidar understory pilot sized, not run** (decision #97): reader built
   for USGS point clouds on AWS. The White Mountains alone needs ~12 GB,
   and a small pilot has too few hikes. Question for Danni on 16 Oct.
+- **Pace on every trail** (decision #99,
+  `results/t4_trail_map/fig_wm_pace.png`):
+  - The terrain function, trained on the other 16 regions, predicts pace on
+    all 3,369 km of White Mountains trail, 77% of which nobody in our data
+    walked.
+  - Median 15.2 min/km vs Tobler's 12.8.
+  - Tobler is too fast on gentle trails and too slow on steep ones.
 
 ## Sun 11 Oct 2026
 
