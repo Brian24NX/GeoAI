@@ -126,6 +126,12 @@ which are kept below as the record.
   falls from ~4× on descents to ~1.6× on climbs, so Tobler-style constant
   mode multipliers fail for bikes. Runners stay at a roughly constant
   2.4–2.7×.
+- **Uncertainty (decision #98):** a spread that depends on slope or
+  terrain doesn't beat a fixed spread in log speed (90% ranges hold
+  ~89% either way). Keep it simple.
+- **Lidar understory from point clouds (decision #97):** reader built.
+  The White Mountains alone is ~12 GB (1.3 billion points); deferred to
+  Danni.
 
 ## 1b. First pass: evaluation results (11 Oct; `t3_harness.py`, decision #82)
 

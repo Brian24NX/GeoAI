@@ -362,6 +362,35 @@ class Arm:
         return self.m.predict(self.X(idx))
 
 
+HET_ARMS = ["slope_curve", "lin_tags", "lin_rs", "gbm_rs"]
+
+
+def heteroscedastic(arm, s, y, cal, te, blocks, rng):
+    """A spread that depends on the segment: log |residual| modeled by
+    small trees on slope (+ the arm's own tag / remote-sensing features)
+    on half of the calibration outings; the residuals standardized by it
+    on the other half give the quantiles. Returns (scale on te, quantiles)."""
+    names = ["slope"] + (["tags"] if "tags" in str(arm.spec) else []) \
+        + (["rs"] if "rs" in str(arm.spec) and "rs" in blocks else [])
+    X = pd.concat([blocks[b] for b in names], axis=1)
+    out = blocks["outing"]
+    u = rng.permutation(np.unique(out[cal]))
+    a_ = np.isin(out[cal], u[: len(u) // 2])
+    ca, cb = cal[a_], cal[~a_]
+    ea = np.abs(y[ca] - arm.predict(s, ca)) + 1e-3
+    m = HistGradientBoostingRegressor(learning_rate=0.05, max_iter=200,
+                                      max_leaf_nodes=15, min_samples_leaf=500,
+                                      l2_regularization=1.0,
+                                      random_state=SEED)
+    m.fit(X.iloc[ca], np.log(ea))
+    sb = np.exp(m.predict(X.iloc[cb]))
+    sb /= np.median(sb)
+    r = np.quantile((y[cb] - arm.predict(s, cb)) / sb, QL)
+    st = np.exp(m.predict(X.iloc[te])) / np.median(np.exp(m.predict(
+        X.iloc[cb])))
+    return st, r
+
+
 def first_km(arm, s, y, rows, blocks):
     """The "rest" rows among `rows` and, for each, its trace's median
     residual on the trace's first ME_SEGS segments (the hiker's pace)."""
@@ -393,29 +422,35 @@ def personal(arm, s, y, cal, te, blocks):
 
 
 # ------------------------------------------------------------- scoring
-def score_rows(pred, r, y):
+def score_rows(pred, r, y, scale=None):
     """Per-segment CRPS (log, km/h), PIT and interval hits for the
-    predictive distribution pred + r (r = residual quantiles)."""
-    n = len(y)
+    predictive distribution pred + scale * r (r = residual quantiles;
+    scale = 1 everywhere unless a per-segment spread is given)."""
+    n, M = len(y), len(r)
+    r = np.sort(r)
+    sc = np.ones(n) if scale is None else np.asarray(scale, float)
     crps_log, crps_kmh, pit = np.empty(n), np.empty(n), np.empty(n)
-    er = np.exp(r)
-    half_log = np.abs(r[:, None] - r[None, :]).mean() / 2
-    half_kmh = np.abs(er[:, None] - er[None, :]).mean() / 2
+    tf_ = np.empty(n)
+    w = (2 * np.arange(1, M + 1) - M - 1) / M ** 2   # E|X - X'| / 2 for
+    half_r = float(r @ w)                            # sorted samples
     v = np.exp(y)
     for a in range(0, n, 20000):
         b = slice(a, a + 20000)
-        z = pred[b, None] + r[None, :]
-        crps_log[b] = np.abs(z - y[b, None]).mean(1) - half_log
+        q = sc[b, None] * r[None, :]                  # per-row quantiles
+        z = pred[b, None] + q
+        crps_log[b] = np.abs(z - y[b, None]).mean(1) - sc[b] * half_r
+        eq = np.exp(q)                                # sorted per row
         ez = np.exp(pred[b])
-        crps_kmh[b] = (np.abs(ez[:, None] * er[None, :] - v[b, None])
-                       .mean(1) - ez * half_kmh)
+        crps_kmh[b] = (np.abs(ez[:, None] * eq - v[b, None]).mean(1)
+                       - ez * (eq @ w))
         pit[b] = (z <= y[b, None]).mean(1)
+        tf_[b] = np.exp(-q).mean(1)
     lo50, hi50, lo90, hi90 = np.quantile(r, [0.25, 0.75, 0.05, 0.95])
-    e = y - pred
+    e = (y - pred) / sc
     return {"crps_log": crps_log, "crps_kmh": crps_kmh, "pit": pit,
             "in50": (e >= lo50) & (e <= hi50),
             "in90": (e >= lo90) & (e <= hi90),
-            "time_factor": np.full(n, np.mean(np.exp(-r)))}
+            "time_factor": tf_}
 
 
 def summarize(d):
@@ -531,6 +566,9 @@ def main():
                     help="T2 covariate tables: segment_id + numeric columns")
     ap.add_argument("--features", nargs="*",
                     help="use only these covariate columns")
+    ap.add_argument("--hetero", action="store_true",
+                    help="add +het arms: a spread that depends on the "
+                         "segment (slope, tags, remote sensing)")
     ap.add_argument("--region-fe", action="store_true",
                     help="add arms with a shrunken offset per region (a "
                          "check: does a covariate add more than the "
@@ -606,6 +644,7 @@ def main():
           "mtb_scale)", flush=True)
 
     scored, imp, lams, knobs = [], [], [], []
+    het_rng = np.random.default_rng(SEED + 1)   # keeps the other arms' folds
     for split in splits:
         fold = outer_folds(w, split, rng)
         for f in pd.unique(fold):
@@ -622,6 +661,13 @@ def main():
                 scored.append(pd.DataFrame({
                     "split": split, "fold": str(f), "arm": name, "row": te,
                     "pred": pred, **sc}))
+                if args.hetero and name in HET_ARMS:
+                    st, rh = heteroscedastic(arm, s, y, cal, te, blocks,
+                                             het_rng)
+                    scored.append(pd.DataFrame({
+                        "split": split, "fold": str(f), "arm": name + "+het",
+                        "row": te, "pred": pred,
+                        **score_rows(pred, rh, y[te], scale=st)}))
                 rt, pt, r_me, beta = personal(arm, s, y, cal, te, blocks)
                 if pt is not None:
                     knobs.append({"split": split, "fold": str(f),

@@ -64,6 +64,12 @@ km.
   - the bike-to-walk ratio falls from ~4× on descents to ~1.6× on climbs,
     so a constant mode multiplier (Tobler's approach) fails for bikes;
     runners stay ~2.5×.
+- **Uncertainty that depends on terrain** (decision #98): no gain over a
+  fixed spread in log speed; ranges are already honest (~89% in 90%
+  ranges).
+- **Lidar understory pilot sized, not run** (decision #97): reader built
+  for USGS point clouds on AWS. The White Mountains alone needs ~12 GB,
+  and a small pilot has too few hikes. Question for Danni on 16 Oct.
 
 ## Sun 11 Oct 2026
 
