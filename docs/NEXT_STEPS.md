@@ -114,9 +114,12 @@ which are kept below as the record.
   - GPS recording rate, unseen regions: traces every ≤ 2 s +1.7% / +2.5%,
     2–10 s +2.4% / +2.9%, > 10 s +1.9% / +2.8%; tags ≤ +1.1% at every
     rate;
-  - side finding: sparse traces (> 10 s) read ~10% slow on flat ground,
-    probably because short stops hide between points (a per-trace
-    offset);
+  - side finding, explained (decision #104): sparse traces read slow
+    because of how speed is measured. Thinning 1,020 dense walks to 30 s
+    between points cuts measured speed by 11% (−6% distance: straight
+    lines cut corners; +8% moving time: short stops between points count
+    as moving), and real sparse traces show the same pattern. Without
+    traces logged every > 10 s the curve peaks at 4.28 km/h, not 4.17;
   - by slope (unseen regions, additive / trees): terrain +2.4 / +3.2 on
     steep descents (< −15%), +2.3 / +2.8 on descents, +2.8 / +3.3 on level
     trail, +1.8 / +1.8 on climbs (5–15%), +0.8 / +2.6 on steep climbs;
@@ -133,6 +136,11 @@ which are kept below as the record.
   v = exp(1.598 − 0.173 z) · exp(−(2.152 − 0.392 z)·|s + 0.043|) km/h,
   z = SD of 5 m pitches / 0.10. Steppiness terciles: smooth 4.60
   [4.51, 4.69] km/h, medium 4.37, steppy 3.84 [3.76, 3.92].
+- **Mode as a multiplier** (plan question 4, decision #103): one shared
+  curve times a per-mode multiplier vs a curve per mode, on held-out
+  outings. Runners: the multiplier (×2.5) is enough (own curve +0.1%
+  [−0.5, 0.5]). Bikes/skis: their own curve is 3.8% better [2.9, 4.8]; a
+  ×3.2 multiplier is 15% too slow downhill and 35% too fast uphill.
 - **Mode check, 327 labeled traces:** 93% of labeled hikes called
   walking; 5% of our "walkers" are labeled bike or ski.
 - **Findings unchanged:** 26% of the variance after slope is between

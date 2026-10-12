@@ -124,6 +124,18 @@ km.
 - **Where terrain helps** (decision #102): most on descents and level
   trail (+2.3% to +2.8%, additive), least on steep climbs (+0.8%). Footing
   limits descents; effort limits climbs. Tags add ≤ 1.4% at every slope.
+- **Travel mode, the plan's test** (decision #103): one shared curve times
+  a per-mode multiplier vs a curve per mode, scored on held-out outings.
+  Runners: the multiplier (×2.5) is enough. Bikes/skis: their own curve
+  predicts 3.8% better; a ×3.2 multiplier is 15% too slow on descents and
+  35% too fast on climbs.
+- **Sparse traces explained** (decision #104, `t1_sampling_check.py`):
+  thinning 1,020 dense walking traces to 30 s between points lowers
+  measured speed by 11% (cut corners: −6% distance; hidden stops: +8%
+  moving time). Real sparse traces show the same pattern, so it is how we
+  measure, not slower hikers. Without traces logged every > 10 s the
+  curve peaks at 4.28 km/h (vs 4.17). Data card updated; a T1 v2 fix is a
+  question for the mentors.
 
 ## Sun 11 Oct 2026
 

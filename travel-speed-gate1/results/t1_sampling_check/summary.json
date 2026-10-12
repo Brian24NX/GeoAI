@@ -1,0 +1,119 @@
+{
+ "traces": 1020,
+ "regions": 17,
+ "km_at_5s": 8963.9,
+ "rates": {
+  "5": {
+   "speed_ratio": 1.0,
+   "speed_ratio_ci": [
+    1.0,
+    1.0
+   ],
+   "speed_ratio_median_trace": 1.0,
+   "distance_ratio": 1.0,
+   "moving_time_ratio": 1.0,
+   "stopped_share": 0.2636
+  },
+  "10": {
+   "speed_ratio": 0.9709,
+   "speed_ratio_ci": [
+    0.9689,
+    0.9728
+   ],
+   "speed_ratio_median_trace": 0.9799,
+   "distance_ratio": 0.9852,
+   "moving_time_ratio": 1.0229,
+   "stopped_share": 0.2465
+  },
+  "20": {
+   "speed_ratio": 0.9254,
+   "speed_ratio_ci": [
+    0.9208,
+    0.9297
+   ],
+   "speed_ratio_median_trace": 0.9448,
+   "distance_ratio": 0.962,
+   "moving_time_ratio": 1.0567,
+   "stopped_share": 0.2211
+  },
+  "30": {
+   "speed_ratio": 0.8927,
+   "speed_ratio_ci": [
+    0.8861,
+    0.8989
+   ],
+   "speed_ratio_median_trace": 0.9178,
+   "distance_ratio": 0.9425,
+   "moving_time_ratio": 1.0778,
+   "stopped_share": 0.2051
+  }
+ },
+ "observed": [
+  {
+   "interval_bin_s": "(0.0, 5.0]",
+   "median_interval_s": 2.5532,
+   "regions": 17,
+   "traces": 1044,
+   "flat_segments": 35951,
+   "flat_speed_ratio": 1.0
+  },
+  {
+   "interval_bin_s": "(5.0, 10.0]",
+   "median_interval_s": 7.7963,
+   "regions": 17,
+   "traces": 627,
+   "flat_segments": 24964,
+   "flat_speed_ratio": 1.0174
+  },
+  {
+   "interval_bin_s": "(10.0, 15.0]",
+   "median_interval_s": 12.6093,
+   "regions": 17,
+   "traces": 294,
+   "flat_segments": 10711,
+   "flat_speed_ratio": 0.9715
+  },
+  {
+   "interval_bin_s": "(15.0, 25.0]",
+   "median_interval_s": 17.6156,
+   "regions": 17,
+   "traces": 204,
+   "flat_segments": 6575,
+   "flat_speed_ratio": 0.9183
+  },
+  {
+   "interval_bin_s": "(25.0, 40.0]",
+   "median_interval_s": 30.0758,
+   "regions": 14,
+   "traces": 85,
+   "flat_segments": 2773,
+   "flat_speed_ratio": 0.9211
+  },
+  {
+   "interval_bin_s": "(40.0, inf]",
+   "median_interval_s": 71.3355,
+   "regions": 15,
+   "traces": 55,
+   "flat_segments": 3361,
+   "flat_speed_ratio": 0.8228
+  }
+ ],
+ "curve": {
+  "all": {
+   "segments": 289679,
+   "peak_kmh": 4.16979741141827,
+   "peak_slope_pct": -3.715815119931804,
+   "k_up": 2.620804599433258,
+   "k_down": 2.448146925544303,
+   "flat_median_kmh": 4.161096069608491
+  },
+  "interval_le10s": {
+   "segments": 210677,
+   "peak_kmh": 4.28354432307054,
+   "peak_slope_pct": -3.789542218059637,
+   "k_up": 2.53211910511258,
+   "k_down": 2.446247346052602,
+   "flat_median_kmh": 4.2733396953570155
+  }
+ }
+}

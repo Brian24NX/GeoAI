@@ -12,12 +12,19 @@ regions, by the trace's travel mode from t1_modes.py: walk, run, bike/ski.
      resampling outings.
   2. Median speed per mode in 2% slope bins, and the ratio to walking in
      each bin, with 95% intervals resampling outings.
+  3. The plan's test (sec. 9): one tent curve shared by all modes with a
+     per-mode multiplier (M0) vs a tent curve per mode (M1), 5-fold
+     cross-validation over outings, held-out RMSE of log speed per mode
+     with 95% intervals resampling outings; and where M0 misses (its mean
+     error on descents, level trail and climbs).
 
 Output: results/t4_mode_curves/ curves.csv, ratio_by_slope.csv,
-        fig_modes.png
-Run (cluster): python t4_mode_curves.py
+        multiplier_test.csv, multiplier_fit.json, fig_modes.png
+Run (cluster): python t4_mode_curves.py      (--test-only: part 3 only)
 """
 
+import argparse
+import json
 from pathlib import Path
 
 import matplotlib
@@ -51,13 +58,92 @@ def binned_medians(s):
         .unstack("mode")
 
 
+S0_GRID = np.arange(-0.10, 0.20001, 0.005)        # as t1_variants.fit
+
+
+def fit_tent(x, y, groups=None, n_groups=1):
+    """ln v = a_g - k |s + s0| by least squares, s0 on a grid: one
+    intercept per group (the per-mode multiplier), k and s0 shared."""
+    groups = np.zeros(len(x), int) if groups is None else groups
+    G = np.eye(n_groups)[groups]
+    best = None
+    for s0 in S0_GRID:
+        A = np.c_[G, -np.abs(x + s0)]
+        coef, *_ = np.linalg.lstsq(A, y, rcond=None)
+        sse = float(np.sum((A @ coef - y) ** 2))
+        if best is None or sse < best[0]:
+            best = (sse, s0, coef)
+    _, s0, coef = best
+    return coef[:-1], float(coef[-1]), float(s0)
+
+
+def multiplier_test(s, rng, folds=5):
+    """M0 (shared curve x per-mode multiplier) vs M1 (curve per mode)."""
+    x, y = s.slope.to_numpy(), np.log(s.speed_kmh.to_numpy())
+    mi = s["mode"].map({m: i for i, m in enumerate(MODES)}).to_numpy()
+    outs = s.outing_id.unique().copy()
+    rng.shuffle(outs)
+    fold = s.outing_id.map({o: i % folds for i, o in
+                            enumerate(outs)}).to_numpy()
+    p0, p1 = np.empty_like(y), np.empty_like(y)
+    for f in range(folds):
+        tr, te = fold != f, fold == f
+        a, k, s0 = fit_tent(x[tr], y[tr], mi[tr], len(MODES))
+        p0[te] = a[mi[te]] - k * np.abs(x[te] + s0)
+        for j in range(len(MODES)):
+            aj, kj, s0j = fit_tent(x[tr & (mi == j)], y[tr & (mi == j)])
+            q = te & (mi == j)
+            p1[q] = aj[0] - kj * np.abs(x[q] + s0j)
+    d = pd.DataFrame({"mode": s["mode"], "outing_id": s.outing_id,
+                      "slope": x, "e0": y - p0, "e1": y - p1})
+    rows = []
+    for m in MODES:
+        dm = d[d["mode"] == m]
+        g = dm.groupby("outing_id").agg(n=("e0", "size"),
+                                        s0=("e0", lambda e: (e ** 2).sum()),
+                                        s1=("e1", lambda e: (e ** 2).sum()))
+        idx = rng.integers(0, len(g), (B * 5, len(g)))
+        n, a0, a1 = (g[c].to_numpy()[idx].sum(1) for c in ("n", "s0", "s1"))
+        gain = 100 * (1 - np.sqrt(a1 / n) / np.sqrt(a0 / n))
+        r0 = float(np.sqrt(g.s0.sum() / g.n.sum()))
+        r1 = float(np.sqrt(g.s1.sum() / g.n.sum()))
+        row = {"mode": m, "segments": len(dm), "outings": len(g),
+               "rmse_log_multiplier": r0, "rmse_log_own_curve": r1,
+               "gain_pct": 100 * (1 - r1 / r0),
+               "gain_lo": float(np.percentile(gain, 2.5)),
+               "gain_hi": float(np.percentile(gain, 97.5))}
+        for name, lo, hi in [("descents", -1, -0.10), ("level", -0.10, 0.10),
+                             ("climbs", 0.10, 1)]:
+            e = dm.e0[(dm.slope >= lo) & (dm.slope < hi)]
+            row[f"multiplier_error_{name}_pct"] = float(
+                100 * (np.exp(e.mean()) - 1))
+        rows.append(row)
+    res = pd.DataFrame(rows)
+    res.to_csv(OUT / "multiplier_test.csv", index=False)
+    a, k, s0 = fit_tent(x, y, mi, len(MODES))
+    fit = {"shared_k": k, "shared_peak_slope_pct": -100 * s0,
+           "multiplier_vs_walk": {m: float(np.exp(a[j] - a[0]))
+                                  for j, m in enumerate(MODES)},
+           "v0_kmh": {m: float(np.exp(a[j])) for j, m in enumerate(MODES)}}
+    (OUT / "multiplier_fit.json").write_text(json.dumps(fit, indent=1))
+    print(res.round(3).to_string(index=False))
+    print(json.dumps(fit, indent=1))
+
+
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--test-only", action="store_true",
+                    help="only part 3, the multiplier test")
+    args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     rng = np.random.default_rng(0)
     s = load()
     print(s.groupby("mode").agg(segments=("slope", "size"),
                                 traces=("trace_id", "nunique"),
                                 outings=("outing_id", "nunique")).to_string())
+    if args.test_only:
+        multiplier_test(s, np.random.default_rng(1))
+        return
     rows = []
     for m in MODES:
         d = s[s["mode"] == m]
@@ -129,6 +215,7 @@ def main():
         a.legend(frameon=False, fontsize=8)
     fig.tight_layout()
     fig.savefig(OUT / "fig_modes.png", dpi=150)
+    multiplier_test(s, np.random.default_rng(1))
 
 
 if __name__ == "__main__":

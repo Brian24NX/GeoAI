@@ -285,6 +285,13 @@ def write_card(seg, reg, summ):
         "- **Stops.** The window rule is a draft until the hand-labeled "
         "sheet (`stop_check/`) is scored; the curve barely moves across 4 "
         "rules.",
+        "- **Recording interval.** Speeds of traces logged every > 10 s "
+        "read low: straight lines between sparse points cut corners, and "
+        "short stops between points count as moving. Thinning dense walks "
+        "shows -3% at 10 s, -7.5% at 20 s, -11% at 30 s "
+        "(`t1_sampling_check.py`). Filter or correct with "
+        "`native_interval_s`; the walking curve without > 10 s traces "
+        "peaks 3% higher.",
         "- **Mode** is inferred, not reported by the hiker "
         "(`mode_conf`).",
         "- **Map matching.** OSM trails are often traced from these same "

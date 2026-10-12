@@ -156,7 +156,8 @@ limits descents, effort limits climbs.
   terrain $+2.2\%$, tags $+0.9\%$. No drift.
 \item \textbf{GPS rate}: the same gain for traces recorded every $\le$2 s,
   2--10 s, $>$10 s ($+1.7$, $+2.4$, $+1.9\%$). Sparse traces read
-  $\sim$10\% slow (probably short stops hidden between points).
+  $\sim$10\% slow; thinning dense walks reproduces it (cut corners, hidden
+  stops).
 \item \textbf{Hidden climbing}: $\sim$60\% of the gain is uneven grade inside
   the 50 m segment; the rest is difficulty beyond grade.
 \item \textbf{1 m lidar $\approx$ 5 m} for this signal; STRIDE's roughness adds
@@ -199,7 +200,9 @@ Tobler.
 \includegraphics[width=0.92\textwidth]{fig_modes}\\[4pt]
 \raggedright\small Bike/ski $\approx 4\times$ walking on descents but
 $\approx 1.6\times$ on climbs, so a constant mode multiplier fails.
-Runners $\approx 2.5\times$.
+Runners $\approx 2.5\times$. On held-out hikes, a constant $\times$2.5 is as
+good as a runner curve of its own; bikes and skis need their own (3.8\%
+better).
 \end{frame}
 
 \begin{frame}{Whole hikes: the hiker matters most}
@@ -231,6 +234,9 @@ error):
 \item \textbf{Data release}: a de-identified copy is ready; license (ODbL)
   and lab policy?
 \item \textbf{Cluster account}: \texttt{engr-class-any} or the lab's?
+\item \textbf{Sparse GPS traces} read up to 11\% slow (how we measure).
+  Fix in a T1 v2, use only traces logged every $\le$10 s for absolute
+  speeds, or report it?
 \end{enumerate}
 \vspace{6pt}
 \small Next: paper draft (skeleton with table and figures exists; full

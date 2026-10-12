@@ -81,8 +81,13 @@ then T2". **T1 is complete and T2 tier 1 is done.**
   limits you going up.
 - **GPS quality:** the same gain on traces recorded every ≤ 2 s, 2–10 s
   and > 10 s (+1.7%, +2.4%, +1.9%), so it is not an artifact of sparse
-  GPS points. Side finding: sparse traces read ~10% slow, probably
-  because short stops hide between points.
+  GPS points. Side finding: sparse traces read ~10% slow. Thinning dense
+  walks to 30 s between points reproduces it (straight lines cut corners,
+  short stops hide between points), so it is how we measure, not slower
+  hikers.
+- **Travel mode** (plan question 4): on held-out hikes, a constant ×2.5
+  is as good as a curve of their own for runners; bikes and skis need
+  their own curve (3.8% better).
 - **Uneven grade:** about 60% of the gain is uneven grade *inside* the 50 m
   segment, which an average slope or a tag can't see; the rest is
   difficulty beyond grade.
@@ -121,6 +126,10 @@ then T2". **T1 is complete and T2 tier 1 is done.**
    only). It needs a license decision (OSM-derived data falls under the
    ODbL) and the lab's data policy.
 5. **Slurm account:** keep `engr-class-any` (≤ 8 CPUs/job) or the lab's?
+6. **Sparse GPS traces** read up to ~11% slow (a measurement effect; up
+   to 27% of segments). Fix it in a T1 v2 (distance along the trail
+   between matched points, plus an interval correction), use only traces
+   logged every ≤ 10 s for absolute speeds, or just report it?
 
 ---
 

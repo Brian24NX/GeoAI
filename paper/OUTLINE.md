@@ -185,9 +185,10 @@ value. A hiker's own pace still matters most.
   - API depth limit;
   - coarse DEM in Olympic and BC;
   - segment noise (GPS);
-  - sparse traces (> 10 s between points) read ~10% slow on flat ground,
-    probably because short stops hide between points: a per-trace offset
-    (personal pace absorbs it);
+  - sparse traces read slow, a measurement effect (decision #104):
+    thinning dense walks to 30 s between points lowers measured speed by
+    11% (straight lines cut corners; short stops count as moving). The
+    curve without traces logged every > 10 s peaks at 4.28 km/h vs 4.17;
     terrain's gain is the same at every recording rate.
 - **Release:** the derived segment table without user names, if mentors
   agree.
@@ -198,7 +199,12 @@ value. A hiker's own pace still matters most.
 
 **Mode (stretch, T4):** bike/ski-to-walk ratio ~4× on descents → ~1.6× on
 climbs (constant multipliers fail); runners ~2.5× throughout
-(`travel-speed-gate1/results/t4_mode_curves/fig_modes.png`).
+(`travel-speed-gate1/results/t4_mode_curves/fig_modes.png`). The plan's
+test (decision #103; claim 5): one shared curve times a per-mode
+multiplier vs a curve per mode, on held-out outings. Runners: ×2.48 is
+enough (own curve +0.1% [−0.5, 0.5]). Bikes/skis: own curve +3.8% [2.9,
+4.8]; the ×3.16 multiplier is 15% too slow downhill and 35% too fast
+uphill.
 
 ## Figures and tables to make (Claude can produce drafts)
 
