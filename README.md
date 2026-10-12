@@ -13,10 +13,10 @@ that maps usually don't have?**
 
 | Deliverable | What | Status |
 |---|---|---|
-| T1 | Trajectory dataset: cleaned, stop-filtered, map-matched OSM traces cut into 50 m segments with speed, signed slope, direction, travel mode, tags | 11 of 17 regions built (see `PROGRESS.md`) |
-| T2 | Remote-sensing covariates per segment (1 m LiDAR terrain, vegetation structure, canopy, imagery) | next |
-| T3 | Four-arm comparison: Tobler / OSM tags / remote sensing / both, on held-out hikes and regions | planned |
-| T4 | Slope-speed curves and up/down asymmetry (out-and-back pairs) | first looks done |
+| T1 | Trajectory dataset: cleaned, stop-filtered, map-matched OSM traces cut into 50 m segments with speed, signed slope, direction, travel mode, tags | **Done**: 17 regions, 290,640 walking segments (12 Oct) |
+| T2 | Remote-sensing covariates per segment (1 m LiDAR terrain, vegetation structure, canopy, imagery) | Tier 1 done (terrain 1 m + 5 m, 30 m land cover, AlphaEarth embeddings); lidar understory sized, waiting on the mentors |
+| T3 | Four-arm comparison: Tobler / OSM tags / remote sensing / both, on held-out hikes and regions | Harness built and run; lead result: terrain transfers to unseen regions, tags don't |
+| T4 | Slope-speed curves and up/down asymmetry (out-and-back pairs) | Curves, same-hiker asymmetry, travel modes, a terrain-adjusted formula |
 
 ## Where things are
 
@@ -24,7 +24,9 @@ that maps usually don't have?**
 |---|---|
 | `PROGRESS.md` | **Daily progress log** (what was done, numbers, decisions, next) |
 | `DECISIONS_LOG.md` | Every analysis decision with its reason and status |
-| `travel-speed-gate1/` | The pipeline (Python): download, build, analyses. Its `README.md` explains every script and the run order |
+| `travel-speed-gate1/` | The pipeline (Python): download, build, analyses. **`PIPELINE.md` is the guide to re-running everything**; its `README.md` is the history of each stage |
+| `paper/` | The IGARSS paper skeleton (LaTeX), figures and outline |
+| `docs/NEXT_STEPS.md` | The plan and every final number (§1a) |
 | `travel-speed-gate1/cluster/` | Scripts that run on the lab cluster (Slurm jobs, the lab-crawl index) |
 | `travel-speed-gate1/results/` | Small summaries and figures (no per-trace data) |
 | `meeting_plots/`, `Meeting_Notes_*.md`, `Meeting_Prep_*.md` | Weekly meeting material |
@@ -45,9 +47,9 @@ and the personal documents.
 
 ## Running it
 
-Python 3.12; packages in `travel-speed-gate1/requirements.txt` (and the
-cluster env `/engrfs/project/jacobsn/zhou.n/envs/t1`). See
-`travel-speed-gate1/README.md` → "T1 for many regions".
+Python 3.12; packages in `travel-speed-gate1/requirements-pipeline.txt`
+(the cluster env `/engrfs/project/jacobsn/zhou.n/envs/t1`). Step by step,
+with commands and run times: **`travel-speed-gate1/PIPELINE.md`**.
 
 AI assistance: Claude (Anthropic) helped write and run the code and draft
 the documents; Brian reviews the work and is responsible for it.

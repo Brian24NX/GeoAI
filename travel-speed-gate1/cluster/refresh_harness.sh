@@ -21,6 +21,7 @@ case "$1" in
   aefterrain) $H --covariates $AE $T5 --out results/t3_harness_aef_terrain ;;
   robust)     $H --covariates $T5 $T1 --splits outing5 block5 loro time \
                  --out results/t3_harness_robust ;;
+  hetero)     $H --covariates $T5 $T1 --hetero --out results/t3_harness_hetero ;;
   regionfe)   $H --covariates $T5 --region-fe --splits outing5 block5 \
                  --out results/t3_harness_regionfe ;;
   *) echo "unknown run $1"; exit 2 ;;

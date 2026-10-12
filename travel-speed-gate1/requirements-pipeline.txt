@@ -1,0 +1,18 @@
+# Everything the full pipeline needs (T1-T4, figures), pinned to the versions
+# in the cluster env /engrfs/project/jacobsn/zhou.n/envs/t1 (Python 3.12).
+# Gate 1 alone needs only requirements.txt. Build the cluster env with
+# cluster/make_env.sh; on a laptop: pip install -r requirements-pipeline.txt
+numpy==2.5.3
+pandas==3.0.6
+pyarrow==25.0.1
+scipy==1.18.1
+matplotlib==3.11.2
+requests==2.34.2
+tifffile==2026.9.20
+pyproj==3.8.0
+rtree==1.4.1
+leuvenmapmatching==1.1.4   # HMM map matching (t1_build_dataset.py)
+scikit-learn==1.9.1        # boosted trees in the harness (t3_harness.py)
+rasterio==1.5.2            # AlphaEarth tiles (t2_embed.py); bundles GDAL
+laspy==2.7.0               # lidar point clouds (t2_lidarveg.py)
+lazrs==0.8.2               #   LAZ decompression for laspy

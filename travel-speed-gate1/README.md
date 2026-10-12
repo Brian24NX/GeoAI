@@ -1,5 +1,9 @@
 # Gate 1 kit — travel speed project
 
+> **To re-run the whole pipeline, read [`PIPELINE.md`](PIPELINE.md)** (12 Oct
+> 2026): every step in order, with commands, outputs and run times. This
+> README is the history: Gate 1 first, then each stage as it was added.
+
 This folder answers the first big question of the project:
 **are the GPS hiking tracks on OpenStreetMap actually usable?**
 
