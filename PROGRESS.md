@@ -212,6 +212,16 @@ Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%.
     to −5% by region.
   - Terrain from elevation data is what transfers.
   - Paper angle: "embeddings help locally, lidar terrain transfers".
+- **T1 complete** (23:59):
+  - Wasatch rebuilt from its full download: 131 hiking traces (was 60
+    lab-only), 91 walking outings, v0 4.80 km/h.
+  - The Bay Area stays lab-only: the API times out on its freeway-dense
+    tiles (decision #94).
+  - Final T1: 17 regions (16 full + 1 lab-only), 2,876 hiking traces,
+    1,994 walking outings, 4,702 walking hours, 490 bike/ski traces; pooled
+    v0 4.31 [4.23, 4.37] km/h, k 1.80.
+  - An overnight refresh (`cluster/refresh_all.sh`) rebuilds the combined
+    dataset, checks, covariates and every harness run on the final T1.
 
 ## Sat 10 Oct 2026
 
