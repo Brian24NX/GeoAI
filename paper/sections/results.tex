@@ -1,0 +1,80 @@
+\section{Results}
+\label{sec:results}
+
+% ~1.25 pages. Final numbers: docs/NEXT_STEPS.md section 1a (12 Oct).
+\begin{table}[t]
+\centering
+\caption{CRPS skill (\%) vs the refitted slope curve. Additive / trees;
+95\% intervals for unseen regions resample whole regions.}
+\label{tab:skill}
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Model & New hikers & New 10 km & \textbf{Unseen region} \\
+\midrule
+Tobler 1993 & $-12.8$ & $-12.7$ & $-12.5$ \\
+Campbell 2022 & $-0.9$ & $-0.9$ & $-0.5$ \\
+STRIDE 2024 (refit) & $-17.2$ ($+0.2$) & $-17.3$ ($+0.2$) & $-16.8$ ($+0.2$) \\
+OSM tags & $+1.3$ / $+1.5$ & $+1.1$ / $+1.5$ & $+0.9$ / $+0.4$ \\
+30 m vegetation & $+0.0$ / $+0.1$ & $-0.0$ / $-0.1$ & $-0.1$ / $-0.8$ \\
+Embeddings & $+1.4$ / $+2.6$ & $+1.4$ / $+1.9$ & $+1.1$ / $+1.1$ \\
+\textbf{Terrain} & $+2.2$ / $+3.2$ & $+2.1$ / $+2.8$ & $\mathbf{+2.1}$ / $\mathbf{+2.8}$ \\
+Terrain + emb.\ + tags & $+3.7$ / $+5.1$ & $+3.8$ / $+5.1$ & $+3.0$ / $+3.9$ \\
+Eq.~(1), one input & $+1.0$ & $+1.0$ & $+1.0$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\todo{R1: Tobler fails everywhere (Table~\ref{tab:skill}): $-12.5\%$, peak
+4.31~km/h at $-4.5\%$ grade, not 6. Campbell's published curve ties our
+refit on average but is region-dependent ($-10\%$ in the Adirondacks).}
+
+\todo{R2: tags do not transfer: $+1.3\%$ within regions, $+0.9\%$ / $+0.4\%$
+in unseen ones.}
+
+\todo{R3: terrain transfers: $+2.1\%$ / $+2.8\%$ in unseen regions, beating
+tags in 16 of 17 (Fig.~\ref{fig:regions}); terrain minus tags $+0.7$ to
+$+2.2$, above zero in every bootstrap draw. About 60\% of the gain is
+uneven grade inside the segment. Not a region proxy (adds $\sim$1.9 points
+over region offsets), not a hiker proxy. 1~m lidar $\approx$ 5~m; STRIDE's
+roughness adds nothing on trails; 30~m vegetation adds nothing; embeddings
+help within regions but transfer less reliably.}
+
+\todo{R4: the hiker dominates whole-hike time (Fig.~\ref{fig:hike}):
+median error 13.6\% (slope) $\to$ 13.2\% (terrain) $\to$ 9.5\% (plus the
+hiker's first km).}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_skill}
+\caption{CRPS skill vs the refitted slope curve for new hikers in known
+regions (light) and in regions the model never saw (dark), with 95\%
+intervals.}
+\label{fig:skill}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_regions}
+\caption{Per held-out region: terrain vs OSM tags (additive models).}
+\label{fig:regions}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_hike_time}
+\caption{Error in predicted moving time per hike, 1,354 hikes in held-out
+regions.}
+\label{fig:hike}
+\end{figure}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_wm_pace}
+\caption{Walking pace on every OSM trail of the White Mountains (3,369~km,
+77\% never walked in our data) from Eq.~(1) fitted on the other 16
+regions, vs Tobler. \todo{Keep only if space allows; a two-panel crop may
+fit one column.}}
+\label{fig:trailmap}
+\end{figure*}

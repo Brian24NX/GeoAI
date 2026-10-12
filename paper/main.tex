@@ -1,0 +1,54 @@
+% IGARSS 2027 paper skeleton (12 Oct 2026).
+% Uses IEEEtran (conference) as a stand-in until the official IGARSS 2027
+% author kit is posted (portal opens 10 Nov 2026); the section files in
+% sections/ move over unchanged. 4 pages + references (check the 2027 rule).
+% Compile:  tectonic main.tex
+% AI assistance: Claude (Anthropic) set up this skeleton, the tables and the
+% figures; the prose is Brian's. Disclose as IGARSS and CSE 5999 require.
+\documentclass[conference]{IEEEtran}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{cite}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{figures/}{../travel-speed-gate1/results/t4_terrain_curve/}{../travel-speed-gate1/results/t4_trail_map/}{../travel-speed-gate1/results/t4_mode_curves/}}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\begin{document}
+
+\title{Does Remote Sensing Beat the Trail Map? Predicting Hiking Speed in
+Unseen Regions from Lidar Terrain and OpenStreetMap Tags}
+
+\author{\IEEEauthorblockN{Brian Zhou \todo{author list and order: ask
+Danni, Tianyi and Prof.\ Jacobs}}
+\IEEEauthorblockA{Department of Computer Science and Engineering,
+Washington University in St.\ Louis}}
+
+\maketitle
+
+\begin{abstract}
+\todo{150--200 words, written last. Problem: travel time on foot; Tobler.
+Data: 17 regions, 290k walking segments from public OSM GPS traces. Test:
+leave one region out, calibrated predictive distributions (CRPS). Result:
+terrain from airborne-lidar elevation transfers to unseen regions (+2.1 to
++2.8\% CRPS skill over a refitted slope curve), map tags barely do (+0.4 to
++0.9\%), satellite embeddings help within regions but transfer less
+reliably; Tobler is 12.5\% worse. A terrain-adjusted hiking function needs
+one DEM-derived input.}
+\end{abstract}
+
+\begin{IEEEkeywords}
+hiking speed, lidar, OpenStreetMap, GPS trajectories, transfer, calibration
+\end{IEEEkeywords}
+
+\input{sections/introduction}
+\input{sections/data}
+\input{sections/methods}
+\input{sections/results}
+\input{sections/discussion}
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+\end{document}

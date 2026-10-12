@@ -1,0 +1,27 @@
+\section{Introduction}
+\label{sec:intro}
+
+% ~0.5 page. Notes from OUTLINE.md; turn them into prose.
+\todo{Paragraph 1, why travel time on foot matters: search and rescue,
+wildfire escape routes, trail apps, accessibility maps. GIS still uses
+Tobler's 1993 hiking function~\cite{tobler1993},
+$v = 6\exp(-3.5\,|s + 0.05|)$ km/h, and fixed multipliers for other
+modes.}
+
+\todo{Paragraph 2, what is known: crowdsourced GPS shows Tobler is too fast
+and too peaked~\cite{campbell2019crowdsourced,campbell2022variability};
+Wood et al.~\cite{wood2023hiking} combine OSM terrain classes with lidar;
+STRIDE~\cite{campbell2024stride} models walking speed from lidar slope,
+understory density~\cite{campbell2018understory} and roughness, calibrated
+on field walks; RasterNet~\cite{hadzic2020rasternet} learns road speed
+from lidar and imagery.}
+
+\todo{Paragraph 3, the gap: no work tests whether terrain covariates
+transfer to regions a model has never seen, against the map tags used
+today, with calibrated uncertainty.}
+
+\todo{Paragraph 4, contributions (three bullets): (1) a 17-region dataset of
+walking traversals of 50~m trail segments from public OSM traces; (2) an
+evaluation protocol (leave one region out, CRPS, coverage) with published
+baselines; (3) the finding that elevation-derived terrain transfers and map
+tags do not, plus a one-input terrain-adjusted hiking function.}

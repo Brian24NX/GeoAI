@@ -1,0 +1,32 @@
+\section{Data}
+\label{sec:data}
+
+% ~0.75 page with Fig. 1. Numbers: docs/NEXT_STEPS.md section 1a,
+% travel-speed-gate1/results/t1_all/DATA_CARD.md.
+\todo{Sources: OSM GPS traces~\cite{osm} from the trackpoints API (5,000
+points a page), the original files of named uploads, and a lab crawl of
+1.5M original files (2016--2022). 17 regions in the US and Canada (Fig.~1);
+16 from full downloads, the Bay Area from the crawl only.}
+
+\todo{Pipeline in one paragraph: duplicates and group hikes merged into
+outings; stops removed (60~s / 10~m window); hidden-Markov map matching to
+OSM trails~\cite{newson2009hidden} (97\% of points matched); 50~m segments
+along the matched path; slope from USGS 3DEP~\cite{sugarbaker2017status};
+travel mode anchored on foot-only trails, checked against 327 traces whose
+own app named the activity (5\% of ``walkers'' labeled bike or ski).}
+
+\todo{Numbers: 2,876 hiking traces, 1,994 walking outings, 4,702 moving
+hours; 290,640 walking segments (14,532~km). 1~m lidar under at least 83\%
+of walked trail in 13 regions.}
+
+\todo{Limits in one sentence each: uploaders are enthusiasts; busy API tiles
+cannot reach their oldest uploads; the Bay Area lacks anonymous traces.}
+
+\begin{figure}[t]
+\centering
+\todo{Fig.~1: map of the 17 regions (circle area = walking hours) with an
+inset of one region's segments colored by speed. Not drawn yet: adapt the
+explainer's map.}
+\caption{The 17 regions and their walking data.}
+\label{fig:map}
+\end{figure}
