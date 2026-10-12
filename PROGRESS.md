@@ -136,6 +136,13 @@ km.
   measure, not slower hikers. Without traces logged every > 10 s the
   curve peaks at 4.28 km/h (vs 4.17). Data card updated; a T1 v2 fix is a
   question for the mentors.
+- **Pipeline guide** (`travel-speed-gate1/PIPELINE.md`): how to re-run
+  everything from raw downloads to the paper PDF, with commands, outputs,
+  run times, what to re-run after a change, and where each paper number
+  comes from. Gaps closed on the way: pinned packages
+  (`requirements-pipeline.txt`), the env recipe (`cluster/make_env.sh`),
+  a script for the Fig. 1 inset data (`make_paper_data.py`), and the
+  `hetero` run in `cluster/refresh_harness.sh`.
 
 ## Sun 11 Oct 2026
 
