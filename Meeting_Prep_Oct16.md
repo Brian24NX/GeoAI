@@ -89,9 +89,14 @@ then T2". **T1 is complete and T2 tier 1 is done.**
    (+0.7%; +5% to −5% by region), while terrain does. Present it as "helps
    locally, transfers poorly"? Try another embedding (e.g. TESSERA), or
    ways to make embeddings region-robust?
-3. **Vegetation:** worth processing lidar point clouds for understory
-   density (STRIDE's 0.85–1.2 m band), given that 30 m canopy showed
-   nothing?
+3. **Vegetation from lidar points** (STRIDE's 0.85–1.2 m understory band;
+   the reader is built and tested):
+   - The White Mountains alone needs ~1.3 billion points (~12 GB, ~24,000
+     block reads).
+   - All 17 regions would be ~100+ GB.
+   - A small pilot has too few hikes (43) to test.
+   - Worth doing it for 1–3 regions, given that 30 m canopy showed
+     nothing?
 4. **Data release** with the paper (segments without user names)?
 5. **Slurm account:** keep `engr-class-any` (≤ 8 CPUs/job) or the lab's?
 
