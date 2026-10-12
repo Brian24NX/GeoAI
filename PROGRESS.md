@@ -83,6 +83,17 @@ km.
   prose is Brian's.
 - **De-identified copy of the dataset** ready on the cluster (decision #100;
   not published; needs the mentors' license decision).
+- **Fig. 1 for the paper** (`paper/figures/fig_map.png`): the 17 regions on a
+  US/Canada map (Natural Earth outlines), circle area = walking hours, with
+  an inset of the White Mountains' segments colored by speed. Wired into
+  the paper (still 4 pages).
+- **Explainer updated** (`Project_Explainer.html`):
+  - new section 11 "What it's good for": the terrain-adjusted formula
+    (curves by steppiness), pace on every White Mountains trail, bike/run
+    vs walk ratios by slope, whole-hike time errors;
+  - plan status, timeline (through 12 Oct), questions for Danni and the
+    glossary refreshed;
+  - first-pass numbers corrected to the final ones.
 
 ## Sun 11 Oct 2026
 

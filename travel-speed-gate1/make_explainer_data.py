@@ -113,6 +113,23 @@ def main():
                                      values="crps_skill_vs_slope_pct")
             if {"lin_rs", "lin_tags"} <= set(b.columns):
                 out["terrain_wins"] = int((b.lin_rs > b.lin_tags).sum())
+    for name, f in [("terrain_terciles", "results/t4_terrain_curve/terciles.csv"),
+                    ("mode_curves", "results/t4_mode_curves/curves.csv"),
+                    ("mode_ratio", "results/t4_mode_curves/ratio_by_slope.csv")]:
+        if Path(f).exists():                 # T4 practical results
+            out[name] = pd.read_csv(f).round(3).to_dict("records")
+    tc = Path("results/t4_terrain_curve/formula.json")
+    if tc.exists():
+        out["terrain_formula"] = json.loads(tc.read_text())
+    tm = Path("results/t4_trail_map/wm_summary.json")
+    if tm.exists():
+        out["trail_map"] = json.loads(tm.read_text())
+    if h.exists() and (h.parent / "hike_times.csv").exists():
+        ht = pd.read_csv(h.parent / "hike_times.csv")
+        out["hike_times"] = ht.groupby("arm").err_pct.agg(
+            median_abs=lambda e: e.abs().median(),
+            within10=lambda e: (e.abs() <= 10).mean(),
+            n="size").round(3).reset_index().to_dict("records")
     tq = Path("results/t2_terrain_effects/quintiles.csv")
     if tq.exists():                      # t2_terrain_effects.py
         q = pd.read_csv(tq)

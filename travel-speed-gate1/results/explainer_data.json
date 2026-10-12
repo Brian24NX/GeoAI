@@ -1,5 +1,5 @@
 {
- "generated_utc": "2026-10-12 07:41",
+ "generated_utc": "2026-10-12 20:03",
  "regions": [
   {
    "key": "wm",
@@ -6759,6 +6759,462 @@
   }
  ],
  "terrain_wins": 16,
+ "terrain_terciles": [
+  {
+   "tercile": "smooth",
+   "steppiness_range": "0.000-0.040",
+   "segments": 96802,
+   "outings": 1939,
+   "v0_kmh": 4.604,
+   "v0_lo": 4.51,
+   "v0_hi": 4.694,
+   "k": 1.799,
+   "k_lo": 1.675,
+   "k_hi": 1.891,
+   "peak_slope_pct": -4.5
+  },
+  {
+   "tercile": "medium",
+   "steppiness_range": "0.040-0.073",
+   "segments": 96801,
+   "outings": 1957,
+   "v0_kmh": 4.366,
+   "v0_lo": 4.271,
+   "v0_hi": 4.447,
+   "k": 1.829,
+   "k_lo": 1.753,
+   "k_hi": 1.908,
+   "peak_slope_pct": -5.0
+  },
+  {
+   "tercile": "steppy",
+   "steppiness_range": "0.073-1.913",
+   "segments": 96802,
+   "outings": 1938,
+   "v0_kmh": 3.839,
+   "v0_lo": 3.764,
+   "v0_hi": 3.915,
+   "k": 1.525,
+   "k_lo": 1.467,
+   "k_hi": 1.576,
+   "peak_slope_pct": -5.0
+  }
+ ],
+ "mode_curves": [
+  {
+   "mode": "walk",
+   "segments": 284204,
+   "outings": 1992,
+   "v0_kmh": 4.314,
+   "v0_lo": 4.247,
+   "v0_hi": 4.371,
+   "k": 1.814,
+   "k_lo": 1.728,
+   "k_hi": 1.895,
+   "peak_slope_pct": -4.5
+  },
+  {
+   "mode": "run",
+   "segments": 24661,
+   "outings": 111,
+   "v0_kmh": 10.819,
+   "v0_lo": 10.476,
+   "v0_hi": 11.24,
+   "k": 1.998,
+   "k_lo": 1.506,
+   "k_hi": 2.503,
+   "peak_slope_pct": -3.0
+  },
+  {
+   "mode": "bike/ski",
+   "segments": 105858,
+   "outings": 479,
+   "v0_kmh": 17.975,
+   "v0_lo": 17.221,
+   "v0_hi": 18.745,
+   "k": 4.587,
+   "k_lo": 4.189,
+   "k_hi": 5.0,
+   "peak_slope_pct": -7.0
+  }
+ ],
+ "mode_ratio": [
+  {
+   "slope_bin": "(-0.3, -0.26]",
+   "slope_mid_pct": -28.0,
+   "mode": "run",
+   "ratio_to_walk": 3.442,
+   "lo": 2.776,
+   "hi": 3.586,
+   "segments": 53
+  },
+  {
+   "slope_bin": "(-0.3, -0.26]",
+   "slope_mid_pct": -28.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 3.895,
+   "lo": 3.208,
+   "hi": 4.451,
+   "segments": 324
+  },
+  {
+   "slope_bin": "(-0.26, -0.22]",
+   "slope_mid_pct": -24.0,
+   "mode": "run",
+   "ratio_to_walk": 3.019,
+   "lo": 2.742,
+   "hi": 3.2,
+   "segments": 163
+  },
+  {
+   "slope_bin": "(-0.26, -0.22]",
+   "slope_mid_pct": -24.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 3.782,
+   "lo": 3.36,
+   "hi": 4.35,
+   "segments": 610
+  },
+  {
+   "slope_bin": "(-0.22, -0.18]",
+   "slope_mid_pct": -20.0,
+   "mode": "run",
+   "ratio_to_walk": 2.776,
+   "lo": 2.551,
+   "hi": 2.895,
+   "segments": 310
+  },
+  {
+   "slope_bin": "(-0.22, -0.18]",
+   "slope_mid_pct": -20.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 3.71,
+   "lo": 3.436,
+   "hi": 4.001,
+   "segments": 1340
+  },
+  {
+   "slope_bin": "(-0.18, -0.14]",
+   "slope_mid_pct": -16.0,
+   "mode": "run",
+   "ratio_to_walk": 2.561,
+   "lo": 2.351,
+   "hi": 2.677,
+   "segments": 714
+  },
+  {
+   "slope_bin": "(-0.18, -0.14]",
+   "slope_mid_pct": -16.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 3.889,
+   "lo": 3.642,
+   "hi": 4.184,
+   "segments": 2843
+  },
+  {
+   "slope_bin": "(-0.14, -0.1]",
+   "slope_mid_pct": -12.0,
+   "mode": "run",
+   "ratio_to_walk": 2.478,
+   "lo": 2.402,
+   "hi": 2.581,
+   "segments": 1448
+  },
+  {
+   "slope_bin": "(-0.14, -0.1]",
+   "slope_mid_pct": -12.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 4.086,
+   "lo": 3.887,
+   "hi": 4.3,
+   "segments": 5895
+  },
+  {
+   "slope_bin": "(-0.1, -0.06]",
+   "slope_mid_pct": -8.0,
+   "mode": "run",
+   "ratio_to_walk": 2.428,
+   "lo": 2.373,
+   "hi": 2.517,
+   "segments": 2551
+  },
+  {
+   "slope_bin": "(-0.1, -0.06]",
+   "slope_mid_pct": -8.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 4.125,
+   "lo": 3.946,
+   "hi": 4.348,
+   "segments": 9726
+  },
+  {
+   "slope_bin": "(-0.06, -0.02]",
+   "slope_mid_pct": -4.0,
+   "mode": "run",
+   "ratio_to_walk": 2.484,
+   "lo": 2.368,
+   "hi": 2.633,
+   "segments": 3768
+  },
+  {
+   "slope_bin": "(-0.06, -0.02]",
+   "slope_mid_pct": -4.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 3.903,
+   "lo": 3.73,
+   "hi": 4.095,
+   "segments": 14636
+  },
+  {
+   "slope_bin": "(-0.02, 0.02]",
+   "slope_mid_pct": 0.0,
+   "mode": "run",
+   "ratio_to_walk": 2.676,
+   "lo": 2.395,
+   "hi": 2.84,
+   "segments": 6715
+  },
+  {
+   "slope_bin": "(-0.02, 0.02]",
+   "slope_mid_pct": 0.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 3.921,
+   "lo": 3.727,
+   "hi": 4.129,
+   "segments": 35052
+  },
+  {
+   "slope_bin": "(0.02, 0.06]",
+   "slope_mid_pct": 4.0,
+   "mode": "run",
+   "ratio_to_walk": 2.468,
+   "lo": 2.347,
+   "hi": 2.576,
+   "segments": 3766
+  },
+  {
+   "slope_bin": "(0.02, 0.06]",
+   "slope_mid_pct": 4.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 2.716,
+   "lo": 2.595,
+   "hi": 2.85,
+   "segments": 15848
+  },
+  {
+   "slope_bin": "(0.06, 0.1]",
+   "slope_mid_pct": 8.0,
+   "mode": "run",
+   "ratio_to_walk": 2.399,
+   "lo": 2.26,
+   "hi": 2.531,
+   "segments": 2571
+  },
+  {
+   "slope_bin": "(0.06, 0.1]",
+   "slope_mid_pct": 8.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 2.103,
+   "lo": 2.007,
+   "hi": 2.224,
+   "segments": 10216
+  },
+  {
+   "slope_bin": "(0.1, 0.14]",
+   "slope_mid_pct": 12.0,
+   "mode": "run",
+   "ratio_to_walk": 2.308,
+   "lo": 2.121,
+   "hi": 2.58,
+   "segments": 1348
+  },
+  {
+   "slope_bin": "(0.1, 0.14]",
+   "slope_mid_pct": 12.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 1.837,
+   "lo": 1.763,
+   "hi": 1.945,
+   "segments": 5227
+  },
+  {
+   "slope_bin": "(0.14, 0.18]",
+   "slope_mid_pct": 16.0,
+   "mode": "run",
+   "ratio_to_walk": 2.18,
+   "lo": 1.951,
+   "hi": 2.444,
+   "segments": 628
+  },
+  {
+   "slope_bin": "(0.14, 0.18]",
+   "slope_mid_pct": 16.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 1.677,
+   "lo": 1.542,
+   "hi": 1.811,
+   "segments": 2027
+  },
+  {
+   "slope_bin": "(0.18, 0.22]",
+   "slope_mid_pct": 20.0,
+   "mode": "run",
+   "ratio_to_walk": 2.165,
+   "lo": 1.848,
+   "hi": 2.517,
+   "segments": 273
+  },
+  {
+   "slope_bin": "(0.18, 0.22]",
+   "slope_mid_pct": 20.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 1.655,
+   "lo": 1.434,
+   "hi": 1.836,
+   "segments": 903
+  },
+  {
+   "slope_bin": "(0.22, 0.26]",
+   "slope_mid_pct": 24.0,
+   "mode": "run",
+   "ratio_to_walk": 2.411,
+   "lo": 2.043,
+   "hi": 3.197,
+   "segments": 145
+  },
+  {
+   "slope_bin": "(0.22, 0.26]",
+   "slope_mid_pct": 24.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 1.611,
+   "lo": 1.386,
+   "hi": 2.005,
+   "segments": 409
+  },
+  {
+   "slope_bin": "(0.26, 0.3]",
+   "slope_mid_pct": 28.0,
+   "mode": "run",
+   "ratio_to_walk": 3.447,
+   "lo": 2.338,
+   "hi": 4.111,
+   "segments": 59
+  },
+  {
+   "slope_bin": "(0.26, 0.3]",
+   "slope_mid_pct": 28.0,
+   "mode": "bike/ski",
+   "ratio_to_walk": 1.773,
+   "lo": 1.287,
+   "hi": 3.198,
+   "segments": 246
+  }
+ ],
+ "terrain_formula": {
+  "form": "v = exp(a0 + a1 z) * exp(-(k0 + k1 z) |s + s0|), km/h; z = SD of 5 m pitches along the path / 0.10",
+  "a0": 1.5984571644825665,
+  "a1": -0.17253492837446183,
+  "k0": 2.1523731095849374,
+  "k1": -0.39207425303583654,
+  "s0": 0.04304835657128213,
+  "z_p10_p50_p90": [
+   0.204,
+   0.542,
+   1.307
+  ],
+  "v0_at_p10_p50_p90": [
+   4.774,
+   4.504,
+   3.947
+  ],
+  "k_at_p10_p50_p90": [
+   2.072,
+   1.94,
+   1.64
+  ],
+  "segments": 290405
+ },
+ "trail_map": {
+  "trail_km": 3368.6,
+  "walked_km": 784.3,
+  "walked_share": 0.233,
+  "pace_terrain_median": 15.2,
+  "pace_tobler_median": 12.8,
+  "pace_terrain_p10_p90": [
+   13.7,
+   20.7
+  ],
+  "fitted_on_segments": 256028,
+  "params": [
+   1.5903,
+   -0.1607,
+   2.0536,
+   -0.3604,
+   0.0427
+  ]
+ },
+ "hike_times": [
+  {
+   "arm": "campbell",
+   "median_abs": 14.336,
+   "within10": 0.373,
+   "n": 1354
+  },
+  {
+   "arm": "gbm_rs",
+   "median_abs": 13.222,
+   "within10": 0.381,
+   "n": 1354
+  },
+  {
+   "arm": "gbm_rs+me",
+   "median_abs": 9.721,
+   "within10": 0.508,
+   "n": 1352
+  },
+  {
+   "arm": "lin_rs",
+   "median_abs": 12.997,
+   "within10": 0.4,
+   "n": 1354
+  },
+  {
+   "arm": "lin_rs+me",
+   "median_abs": 9.63,
+   "within10": 0.521,
+   "n": 1352
+  },
+  {
+   "arm": "lin_tags",
+   "median_abs": 13.682,
+   "within10": 0.392,
+   "n": 1354
+  },
+  {
+   "arm": "slope_curve",
+   "median_abs": 13.603,
+   "within10": 0.377,
+   "n": 1354
+  },
+  {
+   "arm": "slope_curve+me",
+   "median_abs": 9.983,
+   "within10": 0.501,
+   "n": 1352
+  },
+  {
+   "arm": "terrain_curve",
+   "median_abs": 13.51,
+   "within10": 0.376,
+   "n": 1354
+  },
+  {
+   "arm": "tobler",
+   "median_abs": 13.74,
+   "within10": 0.356,
+   "n": 1354
+  }
+ ],
  "terrain_quintiles": [
   9.1,
   4.6,
