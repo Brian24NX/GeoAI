@@ -32,7 +32,7 @@ next. Details and reasons for every decision: `DECISIONS_LOG.md`.
 | Yosemite Valley + High Sierra, CA | API + lab | 92 | 86 | 4.17 | 1.88 | 70% |
 | Lake Tahoe, CA/NV | API + lab | 230 | 94 | 4.17 | 1.67 | 95% |
 | North Shore Mountains (Vancouver), BC | API + lab | 242 | 165 | 4.38 | 1.64 (coarse DEM) | 0% |
-| **All 17 pooled** | | **2,876** | **1,994** | **4.31** | **1.80** | |
+| **All 17 pooled** | | **2,876** | **1,994** (sum; 1,992 unique) | **4.31** | **1.80** | |
 
 Tobler (1993): v0 = 6.0 km/h, k = 3.5, fastest slope −5%. Walking analysis
 set: 290,640 segments of 50 m, 1,992 outings, 4,702 moving hours, 14,532
@@ -52,8 +52,8 @@ km.
   - Embeddings +1.1%; terrain + embeddings +2.6% / +2.8%; with tags too,
     up to +3.9%.
   - Personal pace + terrain +10.7% / +11.6%.
-- **Whole-hike time** (median error): 13.6% (slope) → 13.2% (+ terrain) →
-  9.5% (+ personal pace + terrain).
+- **Whole-hike time** (median error): 13.6% (slope) → 13.0% (+ terrain) →
+  10.0% (+ personal pace) → 9.6% (+ personal pace + terrain).
 - **Terrain formula:** smooth trails 4.60 km/h, steppy ones 3.84 km/h;
   +1.0% in unseen regions with 5 numbers.
 - Paper figures, explainer, outline and the 16 Oct brief now use these

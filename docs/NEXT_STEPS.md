@@ -109,8 +109,8 @@ which are kept below as the record.
 - **Whole-hike moving time** (1,354 hikes in unseen regions, after the
   first km; median error):
   - Tobler 13.7% (runs 5% fast), Campbell 14.3%;
-  - slope curve 13.6%, + terrain 13.2%;
-  - **+ personal pace 10.0%, + pace + terrain 9.5–9.7%** (about half of
+  - slope curve 13.6%, + terrain 13.0% / 13.2% (additive / trees);
+  - **+ personal pace 10.0%, + pace + terrain 9.6% / 9.7%** (about half of
     hikes within ±10%); with embeddings too, 9.1%.
 - **Terrain-adjusted formula:**
   v = exp(1.598 − 0.173 z) · exp(−(2.152 − 0.392 z)·|s + 0.043|) km/h,

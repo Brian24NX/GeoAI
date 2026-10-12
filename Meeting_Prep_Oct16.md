@@ -16,7 +16,7 @@ then T2". **T1 is complete and T2 tier 1 is done.**
   - 16 regions from full OSM downloads plus the lab crawl. The Bay Area
     uses lab data only: the OSM server times out on its freeway-dense
     tiles.
-  - **2,876 hiking traces, 1,994 walking outings, 4,702 walking hours.**
+  - **2,876 hiking traces, 1,992 walking outings, 4,702 walking hours.**
   - **290,640 walking segments of 50 m.**
   - One combined dataset with a data card. It stays on the cluster
     because it has user names.
@@ -56,8 +56,8 @@ then T2". **T1 is complete and T2 tier 1 is done.**
   gets +1.0% in unseen regions with 5 numbers
   (`travel-speed-gate1/results/t4_terrain_curve/fig_curves.png`).
 - **Whole-hike time error** (`paper/figures/fig_hike_time.png`, 1,354
-  hikes): Tobler 13.7%, slope curve 13.6%, + terrain 13.2%, + the hiker's
-  own pace + terrain 9.5%.
+  hikes): Tobler 13.7%, slope curve 13.6%, + terrain 13.0%, + the hiker's
+  own pace 10.0%, + own pace + terrain 9.6%.
 
 **Checks a reviewer will ask about (all done):**
 - **Not a region proxy:** terrain still adds ~1.9 points after each
@@ -107,39 +107,44 @@ then T2". **T1 is complete and T2 tier 1 is done.**
 
 ## 2. A 10-minute script
 
-1. **Status (1 min).** "T1 is done in 17 regions. I built the test harness
-   for T3 and started T2. The first T2 result already answers the paper's
-   main question."
+Slides: `meeting_plots/oct16/slides.pdf` (13 slides; the numbers match
+`docs/NEXT_STEPS.md` §1a).
 
-2. **The dataset (1 min).** Open `Project_Explainer.html` → section 8, the
-   map. "17 regions, ~2,900 hiking traces, 290k walking segments. Each
-   segment has a speed, a slope, OSM tags, travel mode, outing and 10 km
-   block for the splits."
+1. **Status (slides 1–2, 1 min).** "T1 is done in 17 regions. I built the
+   test harness for T3 and finished T2 tier 1. The first result already
+   answers the paper's main question."
 
-3. **How we test (1 min).** Section 10, the three panels. "New hikers, new
-   10 km squares, and a whole region the model never saw. The third one is
-   the headline. Scores are CRPS, which grades the predicted *range*, plus
-   whole-hike time error."
+2. **The dataset (slide 3, 30 s).** "17 regions, ~2,900 hiking traces,
+   290k walking segments. Each segment has a speed, a slope, OSM tags,
+   travel mode, outing and 10 km block for the splits."
 
-4. **The scoreboard (3 min).** `paper/figures/fig_skill.png`.
+3. **How we test (slide 4, 1 min).** "New hikers, new 10 km squares, and a
+   whole region the model never saw. The third one is the headline. Scores
+   are CRPS, which grades the predicted *range*, plus whole-hike time
+   error."
+
+4. **The scoreboard (slide 5, 2 min).**
    - "Tobler is 13% worse than a curve refitted to our data. Campbell's
-     2022 curve ties it."
+     2022 curve ties it. STRIDE's published curve is 17% worse."
    - "Tags help a bit in regions they were learned on, but not in new
      ones."
    - "Terrain from elevation data keeps its value in new regions."
 
-5. **Per region (1 min).** `paper/figures/fig_regions.png`. "Terrain beats
-   tags in 16 of 17 held-out regions."
+5. **Per region (slide 6, 30 s).** "Terrain beats tags in 16 of 17
+   held-out regions. The exception is Yosemite."
 
-6. **What terrain means (1 min).**
-   `travel-speed-gate1/results/t2_terrain_effects/fig_quintiles.png`.
-   "Steppier trail profiles are slower in every region, about 17 points
-   from smoothest to steppiest."
+6. **What terrain means (slide 7, 1 min).** "Steppier trail profiles are
+   slower in every region, about 17 points from the smoothest fifth to the
+   steppiest."
 
-7. **Checks (1 min).** Region proxy, hiker proxy, the hidden-climbing
-   control, vegetation null.
+7. **Checks (slide 8, 1 min).** Region proxy, hiker proxy, the
+   hidden-climbing control, vegetation null.
 
-8. **Questions (1 min).** The list in Part 1.
+8. **Practical results (slides 9–12, 2 min; shorten if time is tight).**
+   The formula with one DEM number, pace on every White Mountains trail,
+   travel modes, whole-hike time.
+
+9. **Questions (slide 13, 1 min).** The list in Part 1.
 
 ---
 
@@ -155,13 +160,13 @@ Source: USGS 3DEP (5 m grids for all regions; 1 m lidar where available).
 
 **How each model's range is made.** Prediction + the spread of its errors
 on held-out training hikes. So every model is calibrated the same honest
-way, and the calibration must transfer too (90% ranges hold 88%).
+way, and the calibration must transfer too (90% ranges hold 88–90%).
 
 **Baselines.**
 - Tobler 1993.
 - Campbell et al. 2022's published median curve (Table A3 of the paper).
 - STRIDE 2024 (Campbell, Cutler & Dennison; coefficients from their R
-  package), published and refitted. Results this week.
+  package): published −16.8%, form refitted +0.2%.
 - Our own refitted curves (tent, rounded, Lorentz) all score within 0.5% of
   each other.
 
@@ -175,8 +180,8 @@ time error by ~30%. HikingTTE (2024) personalizes too; we do it per
 segment and with terrain.
 
 **Where everything is.**
-- `DECISIONS_LOG.md` #78–88: every choice and number.
-- `docs/NEXT_STEPS.md` §1b–1c: the plan with results.
+- `DECISIONS_LOG.md` #78–100: every choice and number.
+- `docs/NEXT_STEPS.md` §1a: final numbers (§1b–1c: first pass).
 - `paper/OUTLINE.md`: the 4-page plan.
 - GitHub `Brian24NX/GeoAI`.
 

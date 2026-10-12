@@ -147,8 +147,8 @@ value. A hiker's own pace still matters most.
   km/h vs 4.56 on smooth ones; +0.65% in unseen regions with 5 numbers.
   Fig. candidate: `results/t4_terrain_curve/fig_curves.png`.
 - **R4. The hiker dominates.** Personal pace from the first km cuts
-  whole-hike moving-time error from 13.7% to 9.9%; terrain on top takes it
-  to ~9.5%.
+  whole-hike moving-time error from 13.6% to 10.0%; terrain on top takes it
+  to 9.6% (terrain alone: 13.0%).
 - **Fig. 2:** grouped bars, skill by model × split (the explainer's
   scoreboard).
 - **Fig. 3 (if space):** per-region skill of terrain vs tags (dot plot,
