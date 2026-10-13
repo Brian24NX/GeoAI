@@ -162,7 +162,10 @@ km.
   10/10). What differs is presence: sac_scale is on 1–96% of walked trail
   by region, and an untagged trail is faster than a tagged one in some
   regions and slower in others. Terrain: same sign in 17/17 regions.
-  Paper, outline, brief and explainer corrected.
+  In unseen regions the tag model scores about the same on untagged and
+  tagged trail (+0.8% / +0.9%), so missing tags aren't where it loses on
+  average; trees on tags lose most (+1.5% → +0.4%). Paper, outline, brief
+  and explainer corrected.
 
 ## Sun 11 Oct 2026
 

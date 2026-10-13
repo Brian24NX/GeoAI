@@ -201,8 +201,8 @@ data):
   lidar beat it).
 - Tags reach ~75% of it within a region, but only ~20% of their gain
   survives in a new region (12 Oct, decision #105: not because tag values
-  change meaning, but because tags are missing unevenly and a missing tag
-  means different things in different regions).
+  change meaning; tags are missing unevenly, and trees on tags fit
+  region-specific combinations).
 - That transfer gap is the remote-sensing opportunity: lidar roughness,
   canopy and embeddings mean the same thing everywhere. The paper tests
   exactly that, reporting gains next to tags and place memory, not as

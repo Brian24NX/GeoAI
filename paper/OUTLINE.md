@@ -136,8 +136,9 @@ value. A hiker's own pace still matters most.
   artifact; Campbell's implies 1.02–1.16.
 - **R2. Tags don't transfer.** They help a little within a region and
   barely in a new one. Not because tag values change meaning (within a
-  hike they act the same in every region) but because tags are missing
-  unevenly, and what a missing tag means differs by region (decision
+  hike they act the same in every region): tags are missing on much of
+  the trail, unevenly by region, and trees on tags lose most in transfer
+  (+1.5% → +0.4%), as if fitting region-specific combinations (decision
   #105).
 - **R3. Terrain transfers.** It beats tags in 16 of 17 held-out regions
   (the exception: Yosemite), and on tagged segments (+2.2% vs +0.9%). 95%
@@ -181,9 +182,12 @@ value. A hiker's own pace still matters most.
   same everywhere (harder sac_scale slower in 10/10 regions, paved faster
   in 10/10). What doesn't carry over is presence: sac_scale is on 1–96% of
   walked trail by region, and an untagged trail is faster than a tagged
-  one in some regions, slower in others (−3.5% to +5.1%). Terrain is on
-  every trail, with the same sign in 17/17 regions (−12%, steppiest vs
-  smoothest fifth). Candidate figure: `fig_tag_vs_terrain.png`.
+  one in some regions, slower in others (−3.5% to +5.1%). In unseen
+  regions the additive tag model does about as well on untagged as on
+  tagged trail (+0.8% / +0.9%), so missing tags are not where it loses on
+  average. Terrain is on every trail, with the same sign in 17/17 regions
+  (−12%, steppiest vs smoothest fifth). Candidate figure:
+  `fig_tag_vs_terrain.png`.
 - **What the terrain captures:** grade variability within the segment
   (rock steps, short pitches) that a single average slope hides. The
   control separates "uneven grade" from "difficulty beyond grade" (*).

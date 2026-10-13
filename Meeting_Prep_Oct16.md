@@ -209,9 +209,12 @@ way, and the calibration must transfer too (90% ranges hold 88–90%).
   sac_scale is slower in every region where it's used (10 of 10), and
   paved is faster (10 of 10).
 - It's that tags are missing unevenly. sac_scale is on 96% of walked trail
-  in the Adirondacks and 1% in the Green Mountains, and an untagged trail
-  is faster than a tagged one in some regions and slower in others. A
-  model trained elsewhere has to guess what "no tag" means.
+  in the Adirondacks and 1% in the Green Mountains, so tags can only help
+  on part of each region's trails. Whether a trail is tagged at all says
+  different things in different regions (untagged trails are faster in
+  some, slower in others).
+- The flexible tag model (trees) loses most in a new region (+1.5% →
+  +0.4%), as if it learned region-specific tag combinations.
 - Terrain is on every trail, with the same effect in all 17 regions.
 
 **Personal pace.** The hiker's median speed (relative to the curve) over

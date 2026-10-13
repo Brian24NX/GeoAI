@@ -9,9 +9,12 @@ slower in every region where it is used ($-5\%$ mountain\_hiking vs hiking,
 (10 of 10). What does not carry over is whether a tag is there: sac\_scale
 is on 1--96\% of walked trail by region, and an untagged trail is faster
 than a tagged one in some regions and slower in others ($-3.5$ to $+5.1\%$
-within a hike). A model trained elsewhere must guess what a missing tag
-means. Elevation-derived terrain exists on every trail, and its effect has
-the same sign in all 17 regions ($-12\%$, steppiest vs smoothest fifth).}
+within a hike). So tags can only inform part of each region's trails, and
+how much differs by region; boosted trees on tags also lose most in
+transfer ($+1.5\% \to +0.4\%$), as if fitting region-specific tag
+combinations. Elevation-derived terrain exists on every trail, and its
+effect has the same sign in all 17 regions ($-12\%$, steppiest vs
+smoothest fifth).}
 
 \todo{What terrain captures: uneven grade within the segment (rock steps,
 short pitches) that one average slope hides, plus difficulty beyond grade.
