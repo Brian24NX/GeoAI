@@ -190,6 +190,12 @@ km.
   with terrain +1.9% / +1.4% instead of +2.1% / +2.8%, on top of the
   hiker's own pace +0.0%. The paper's last untested limitation is now a
   result.
+- **Paper: Data and Methods drafted by Claude** (Brian asked, 13 Oct), from
+  the pipeline code and the final numbers; marked in red as drafts to
+  rewrite in his own words, with AI disclosure. NLCD 2021 reference added
+  (checked on DataCite). The paper now renders in Times with bold run-in
+  heads (`fontenc` T1 under tectonic).
+- **Backup slides** (4, after the questions) and a sparse-trace figure.
 - **Presenter's card** (`meeting_plots/oct16/presenter_card.pdf`, one page):
   opening line, numbers to know, what's new since 9 Oct, the 7 questions
   (now including which figures to keep), short answers to hard questions.

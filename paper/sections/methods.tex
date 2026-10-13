@@ -1,38 +1,59 @@
 \section{Methods}
 \label{sec:methods}
 
-% ~0.75 page. Code: travel-speed-gate1/t3_harness.py, t2_terrain5m.py,
-% t2_terrain1m.py, t2_embed.py, t4_terrain_curve.py.
-\todo{Target: the distribution of $\ln v$ for a walking trail segment.}
+% DRAFT by Claude (13 Oct 2026), written from travel-speed-gate1/
+% t3_harness.py, t2_terrain5m.py, t2_terrain1m.py, t2_embed.py,
+% t2_landcover.py, t4_terrain_curve.py and t1_findings.py.
+% Brian: rewrite it in your own words, and disclose the AI assistance.
+\todo{Draft by Claude: rewrite in your own words.}
 
-\todo{Covariates. (a) Slope. (b) OSM tags: sac\_scale, trail\_visibility,
-surface, width, smoothness, mtb\_scale, highway, access. (c) Terrain from
-elevation, read every 1~m along the segment's matched path: spread and
-maximum of 5~m pitches, relief along the line of travel, side slope (5~m
-grids; 1~m lidar adds STRIDE's roughness). (d) NLCD 30~m canopy and land
-cover. (e) AlphaEarth satellite embeddings~\cite{brown2025alphaearth,alphaearth2025}.
-Control: ``hidden climbing'', the extra time a fixed Tobler curve predicts
-when the segment is walked as 5~m pieces.}
+\textbf{Target and covariates.} We predict the distribution of $\ln v$,
+the log moving speed of a walking segment. Covariates come in five groups:
+(a)~slope; (b)~OSM tags: sac\_scale, trail\_visibility, surface, width,
+smoothness, mtb\_scale, highway type and permitted modes; (c)~terrain from
+elevation, read every 1~m along the segment's matched path: the spread (SD)
+and maximum of its 5~m pitches, the relief around an 11~m moving average
+and the side slope, from the 5~m grid and, where available, 1~m lidar,
+which adds STRIDE's ground roughness~\cite{campbell2024stride}; (d)~2021
+land cover and tree canopy at 30~m~\cite{dewitz2023nlcd}; (e)~2022
+AlphaEarth satellite embeddings at the segment
+midpoint~\cite{brown2025alphaearth,alphaearth2025}. As a control,
+``hidden climbing'' is the extra time Tobler's function predicts when the
+segment is walked as ten 5~m pieces instead of at its average grade.
 
-\todo{Models: published Tobler, Campbell (median)~\cite{campbell2022variability}
-and STRIDE~\cite{campbell2024stride}; a refitted rounded asymmetric slope
-curve (the baseline); additive ridge offsets on binned features; gradient
-boosted trees.}
-
-\todo{Predictive distribution: prediction plus residual quantiles from held
-out training outings, so calibration has to transfer too.}
-
-\todo{Splits (never by segment): 5 folds of outings; 5 folds of 10~km
-blocks; leave one region out (17 folds). Score: CRPS~\cite{gneiting2007strictly}
-as skill vs the slope curve, 95\% intervals resampling whole regions;
-coverage of 90\% intervals; moving-time error per hike. References: the
-hiker's pace from their first km; each region's own offset.}
-
+\textbf{Models.} The baselines are Tobler's function~\cite{tobler1993},
+the published median curve of Campbell et al.~\cite{campbell2022variability},
+STRIDE~\cite{campbell2024stride} as published and with its form refitted,
+and our reference: a rounded, asymmetric slope curve refitted to the
+training data, $\ln v = a - k_\pm\big(\sqrt{(s+s_0)^2+e^2}-e\big)$, with
+$k_+$ above the peak and $k_-$ below it. Each covariate group then enters
+two models: an additive one (ridge regression of the curve's residuals on
+one-hot bins: deciles of continuous covariates, one level per tag value plus
+``missing'') and gradient-boosted trees on slope and the covariates. The
+terrain-adjusted hiking function keeps Tobler's form but lets peak speed
+and slope sensitivity depend on one DEM-derived number, the steppiness
+$z$:
 \begin{equation}
-\ln v = a_0 + a_1 z - (k_0 + k_1 z)\,|s + s_0|
+\ln v = a_0 + a_1 z - (k_0 + k_1 z)\,|s + s_0|,
 \label{eq:terrain}
 \end{equation}
-with $z$ the SD of 5~m pitches along the path divided by 0.10.
-\todo{Introduce Eq.~\eqref{eq:terrain}, the terrain-adjusted hiking
-function: Tobler's form, with peak speed and slope sensitivity depending on
-one DEM-derived number.}
+with $z$ the SD of the 5~m pitches along the path divided by 0.10.
+
+\textbf{Predictive distributions and tests.} Every model predicts its
+point estimate plus the quantiles of its residuals on held-out outings of
+the training data (training outings split 70/15/15 into fitting, early
+stopping and calibration), so calibration has to transfer too. Splits never
+separate a segment from its hike: 5 folds of outings (new hikers), 5 folds
+of 10~km UTM blocks (new places) and, the headline, leave one region out
+(17 folds); stricter checks hold out whole zones or half the continent. We
+report the continuous ranked probability score
+(CRPS)~\cite{gneiting2007strictly} of $\ln v$ as skill against the refitted
+slope curve, $1-\mathrm{CRPS}/\mathrm{CRPS}_{\mathrm{slope}}$, with 95\%
+intervals that resample outings (whole regions for unseen regions); the
+coverage of 90\% intervals; and the median error in moving time over whole
+hikes after their first kilometre. A reference shows how much is the hiker:
+the median residual of a hike's first kilometre, shrunk by a factor fitted
+on calibration outings (0.61), applied to the rest of the hike. Asymmetry
+is measured on out-and-back pairs, the same outing on the same OSM way in
+both directions (mean grade at least 3\%), as the ratio of speed down to
+speed up.

@@ -3,8 +3,10 @@
 - `OUTLINE.md`: the plan (page budget, claims, Table 1, figure list).
 - `main.tex` + `sections/*.tex`: the paper skeleton. Red `[TODO: ...]` notes
   hold the points to make in each paragraph, with the final numbers (12 Oct).
-  **The prose is yours to write.** Claude set up the template, the table and
-  the figures. Disclose AI assistance as IGARSS and CSE 5999 require.
+  **Data and Methods are drafts by Claude (13 Oct, at Brian's request) to
+  rewrite in your own words**; the other sections are notes for you to
+  write. Claude also set up the template, the table and the figures.
+  Disclose AI assistance as IGARSS and CSE 5999 require.
 - `refs.bib`: references, all checked against Crossref or arXiv (12 Oct).
   `RELATED_WORK.md`: what each paper did and how we differ (for the
   Introduction).
