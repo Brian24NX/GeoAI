@@ -233,4 +233,10 @@ segment and with terrain.
 - **"What about the Campbell/Wood overlap?"** Campbell fit curves in two
   states; we test transfer across 17 regions and beat tags with remote
   sensing. Wood used OSM classes + lidar in the UK but never held out
-  regions.
+  regions, and found no whole-route gain (13.5–15.5% error for every
+  model).
+- **"Anything new in 2026?"** Huang et al. (Applied Geography, 2026):
+  boosted trees with 16 factors, weather included, on 7,913 Hong Kong
+  tracks, tested with a random split in one city. Same tool family, no
+  transfer test, and no remote sensing vs tags. They have weather; we
+  don't yet. Every reference is checked: `paper/RELATED_WORK.md`.
