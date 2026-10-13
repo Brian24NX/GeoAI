@@ -166,6 +166,14 @@ km.
   tagged trail (+0.8% / +0.9%), so missing tags aren't where it loses on
   average; trees on tags lose most (+1.5% → +0.4%). Paper, outline, brief
   and explainer corrected.
+- **Season and time of day** (decision #106, `t3_season_time.py`; harness
+  runs `context`, `contextterrain`): they add nothing for new hikers
+  (+0.1%) and hurt in new regions (−0.3%, trees −1.3%); added to terrain
+  they lower its unseen-region gain (+2.1% → +1.8%, trees +2.8% → +1.7%).
+  Seasonal effects are region-specific (winter hikes +6% in the San
+  Gabriels, −5% in the Bay Area), so they don't transfer. Within a hike,
+  afternoon vs morning +0.1%; the first hour is ~3% faster and hours 1–3
+  ~3% slower, which follows the route (approach, then the climb).
 
 ## Sun 11 Oct 2026
 

@@ -76,6 +76,10 @@ then T2". **T1 is complete and T2 tier 1 is done.**
   known.
 - **Newer hikes:** trained on hikes up to 2019 and tested on 2020–2026,
   terrain still adds +2.2% (tags +0.9%). No drift over time.
+- **Season and time of day:** they add nothing in new regions (−0.3%;
+  −1.3% with trees), and added to terrain they lower its gain. Seasonal
+  effects differ by region (winter faster in the San Gabriels, slower in
+  the Bay Area). Afternoon vs morning on the same hike: +0.1%.
 - **Where it helps:** most on descents and level trail (+2.3% to +2.8%),
   least on steep climbs (+0.8%). Footing limits you going down; effort
   limits you going up.
@@ -249,4 +253,6 @@ segment and with terrain.
   boosted trees with 16 factors, weather included, on 7,913 Hong Kong
   tracks, tested with a random split in one city. Same tool family, no
   transfer test, and no remote sensing vs tags. They have weather; we
-  don't yet. Every reference is checked: `paper/RELATED_WORK.md`.
+  don't yet. Date and time of day add nothing in our new-region test
+  (season differs by region). Every reference is checked:
+  `paper/RELATED_WORK.md`.

@@ -120,6 +120,10 @@ which are kept below as the record.
     lines cut corners; +8% moving time: short stops between points count
     as moving), and real sparse traces show the same pattern. Without
     traces logged every > 10 s the curve peaks at 4.28 km/h, not 4.17;
+  - season and time of day (decision #106): alone −0.3% / −1.3% in
+    unseen regions (+0.1% / −1.1% for new hikers); added to terrain they
+    lower its unseen-region gain (+2.1 → +1.8, +2.8 → +1.7): seasonal
+    effects differ by region. Within a hike, afternoon vs morning +0.1%;
   - by slope (unseen regions, additive / trees): terrain +2.4 / +3.2 on
     steep descents (< −15%), +2.3 / +2.8 on descents, +2.8 / +3.3 on level
     trail, +1.8 / +1.8 on climbs (5–15%), +0.8 / +2.6 on steep climbs;

@@ -202,7 +202,10 @@ value. A hiker's own pace still matters most.
     thinning dense walks to 30 s between points lowers measured speed by
     11% (straight lines cut corners; short stops count as moving). The
     curve without traces logged every > 10 s peaks at 4.28 km/h vs 4.17;
-    terrain's gain is the same at every recording rate.
+    terrain's gain is the same at every recording rate;
+  - no weather yet; date and time of day add nothing in new regions
+    (−0.3% additive, −1.3% trees; decision #106) because seasonal effects
+    differ by region.
 - **Release:** the derived segment table without user names, if mentors
   agree.
 - **Conclusion:** a 3-sentence restatement plus one line of future work

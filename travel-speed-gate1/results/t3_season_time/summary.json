@@ -1,0 +1,44 @@
+{
+ "outings": 1992,
+ "winter_vs_summer": {
+  "pct": 0.050995259337227594,
+  "ci": [
+   -2.792459526609048,
+   3.1148907704893203
+  ],
+  "outings": [
+   282,
+   780
+  ]
+ },
+ "afternoon_vs_morning_within_hike": {
+  "pct": 0.12230657890592855,
+  "ci": [
+   -0.7444478556930423,
+   0.9314365368737088
+  ]
+ },
+ "month_range_pct": [
+  -2.7725335572188037,
+  6.062265089942631
+ ],
+ "winter_vs_summer_by_region": {
+  "adk": -1.8,
+  "bayarea": -5.9,
+  "cascades": -1.1,
+  "catskills": NaN,
+  "frontrange": 1.8,
+  "gorge": 15.0,
+  "greenmtn": NaN,
+  "northshore": 7.4,
+  "olympic": -0.8,
+  "pisgah": NaN,
+  "sangabriel": 6.1,
+  "shenandoah": NaN,
+  "smokies": -0.4,
+  "tahoe": NaN,
+  "wasatch": -3.0,
+  "wm": 5.5,
+  "yosemite": NaN
+ }
+}

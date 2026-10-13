@@ -150,6 +150,8 @@ sbatch -A engr-class-any -p linuxlab-project -c 8 --mem 48G -t 2:00:00 cluster/r
 | `regionfe` | terrain 5 m + region offsets | `t3_harness_regionfe` | terrain is not a region proxy |
 | `hetero` | terrain 5 m + 1 m, terrain-dependent spread | `t3_harness_hetero` | a varying spread doesn't help |
 | `robust` | terrain 5 m + 1 m, plus a time split and GPS-rate and slope subsets | `t3_harness_robust` | robustness; then `$PY t3_robust_summary.py` writes `robust_summary.md` |
+| `context` | day of year + local hour (after `t3_season_time.py`) | `t3_harness_context` | season and time of day alone |
+| `contextterrain` | terrain 5 m + 1 m + day of year + hour | `t3_harness_context_terrain` | do they add to terrain? |
 
 The harness is seeded, so a re-run gives identical numbers. The robust
 run reproduces `terrain15m` to 1e-16, and `t3_robust_summary.py` checks
@@ -163,6 +165,7 @@ this.
 | `t4_trail_map.py --region wm` | `results/t4_trail_map/` (pace on every trail) | 2 min |
 | `t1_sampling_check.py` | `results/t1_sampling_check/` (sparse traces read slow) | 1 min |
 | `t3_tag_transfer.py` | `results/t3_tag_transfer/` (why tags don't transfer: within-hike tag and terrain effects by region) | 3 min |
+| `t3_season_time.py` | `results/t3_season_time/` (season and time of day) and `data/t2/context_<region>.parquet`; then harness runs `context` and `contextterrain` | 2 min |
 | `make_paper_data.py` | `results/fig1_wm_segments.parquet` (Fig. 1 inset) | 1 min |
 | `make_explainer_data.py` | `results/explainer_data.json` (**run last**: it reads the results above) | 1 min |
 | `t1_release.py` | `data/t1_release/` (de-identified copy; stays on the cluster) | minutes |
