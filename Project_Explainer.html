@@ -485,7 +485,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
     <figcaption>Walking speed vs slope on smooth, medium and steppy trails (each a third of all walked trail, sorted by "steppiness"), with Tobler's formula dashed. Hover the curves.</figcaption></figure>
     <div>
       <div class="card"><h4>The formula</h4><p><span class="k" id="tformula"></span></p><p style="margin-top:6px">s = slope (rise / run); z = how steppy the trail is: the spread of its 5 m pitches, in units of 10% grade. Any elevation model gives z.</p></div>
-      <div class="card" style="margin-top:12px"><h4>How good is it?</h4><p>In regions it never saw it gains <b><span id="tcurveSkill"></span></b> over a plain slope curve, with just 5 numbers, beating all the OSM tags in 11 of 17 regions. The full terrain model does better (section 10), but this one fits in a spreadsheet.</p></div>
+      <div class="card" style="margin-top:12px"><h4>How good is it?</h4><p>In regions it never saw it gains <b><span id="tcurveSkill"></span></b> over a plain slope curve, with just 5 numbers, matching or beating the full OSM-tag model in about half the regions (9 of 17). The full terrain model does better (section 10), but this one fits in a spreadsheet.</p></div>
     </div>
   </div>
 
@@ -789,7 +789,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
    ["11 Oct","T1 close-out","Elevation quality for every region, travel modes checked against the hikers' own app labels, one combined dataset with a data card.",""],
    ["11 Oct","First test (T3 harness)","Every model scored on unseen hikes, places and regions. Tobler −13%; tags +0.2% in new regions; the hiker's own pace +8.5%.",""],
    ["11 Oct","Remote sensing, all regions","Terrain from 5 m and 1 m elevation, 30 m vegetation and AlphaEarth embeddings for every segment; published Campbell and STRIDE curves added as baselines.",""],
-   ["12 Oct","T1 complete + overnight refresh","Wasatch rebuilt; the Bay Area stays lab-only (the API can't serve its tiles). Everything re-run on the final data: 290,640 walking segments, 1,994 outings.",""],
+   ["12 Oct","T1 complete + overnight refresh","Wasatch rebuilt; the Bay Area stays lab-only (the API can't serve its tiles). Everything re-run on the final data: 290,640 walking segments, 1,992 outings.",""],
    ["12 Oct","Final scoreboard","Unseen regions: terrain +2.1 to +2.8%, tags +0.9%, embeddings +1.1%, 30 m vegetation 0, Campbell −0.5%, STRIDE −17%. Terrain beats tags in 16 of 17 regions.",""],
    ["12 Oct","Practical results","A terrain-adjusted Tobler formula; pace predicted on every White Mountains trail; bikes aren't walkers × a constant.",""],
    ["12 Oct","Paper skeleton + Fig. 1","IEEE two-column skeleton with the final table and figures; the prose is yours. Region map with a speed inset.",""]];

@@ -57,8 +57,9 @@ value. A hiker's own pace still matters most.
 ## 2. Data (~0.75 page)
 
 - **Source:** OSM GPS traces (API pages + original files + the lab's crawl
-  of 1.5M uploads). 17 regions in the US and Canada; 2,533 hiking traces
-  (*), 1,744 walking outings, 4,227 walking hours.
+  of 1.5M uploads). 17 regions in the US and Canada; 2,876 hiking traces;
+  the walking analysis set has 2,046 traces in 1,992 outings, 4,702 moving
+  hours, 290,640 segments of 50 m.
 - **Pipeline (one paragraph):**
   - deduplicate (same recording, group hikes → outings);
   - stop removal;
@@ -231,7 +232,7 @@ map or crop it to one column.
 - [x] Fig. (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.
 - [x] Fig. 2 draft: `paper/figures/fig_skill.png` (skill by model, new hikers vs unseen region, 95% CIs), from `travel-speed-gate1/make_paper_figures.py`.
 - [ ] Table 1 as above, final numbers.
-- [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 15 of 17).
+- [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 16 of 17).
 - [x] Fig. 4 candidate: `paper/figures/fig_hike_time.png` (whole-hike moving-time error by model, 1,199 hikes in held-out regions).
 - [x] Fig. 5 candidate: `travel-speed-gate1/results/t4_terrain_curve/fig_curves.png` (speed vs slope by steppiness, with Tobler).
 - [x] Fig. 6 candidate (application, strong for IGARSS): `travel-speed-gate1/results/t4_trail_map/fig_wm_pace.png`. Pace on every White Mountains trail from the function fitted on the other 16 regions, vs Tobler. 77% of the trail km have no traces.
