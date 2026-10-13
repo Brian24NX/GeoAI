@@ -150,6 +150,7 @@ sbatch -A engr-class-any -p linuxlab-project -c 8 --mem 48G -t 2:00:00 cluster/r
 | `regionfe` | terrain 5 m + region offsets | `t3_harness_regionfe` | terrain is not a region proxy |
 | `hetero` | terrain 5 m + 1 m, terrain-dependent spread | `t3_harness_hetero` | a varying spread doesn't help |
 | `robust` | terrain 5 m + 1 m, plus a time split and GPS-rate and slope subsets | `t3_harness_robust` | robustness; then `$PY t3_robust_summary.py` writes `robust_summary.md` |
+| `zones` | terrain 5 m + 1 m; splits: leave one zone out, East ↔ West | `t3_harness_zones` | no neighbouring region in training |
 | `context` | day of year + local hour (after `t3_season_time.py`) | `t3_harness_context` | season and time of day alone |
 | `contextterrain` | terrain 5 m + 1 m + day of year + hour | `t3_harness_context_terrain` | do they add to terrain? |
 

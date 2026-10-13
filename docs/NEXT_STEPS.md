@@ -120,6 +120,11 @@ which are kept below as the record.
     lines cut corners; +8% moving time: short stops between points count
     as moving), and real sparse traces show the same pattern. Without
     traces logged every > 10 s the curve peaks at 4.28 km/h, not 4.17;
+  - no neighbouring region in training (decision #107): a whole zone held
+    out (5 zones) terrain +1.9% / +2.7%, tags +0.7% / −0.1%; East ↔ West
+    terrain +2.6% / +3.3%, tags +1.5% / −0.3%; terrain − tags > 0 in every
+    draw. The 5-number formula travels less well (+0.6% zone, −0.3% East ↔
+    West);
   - season and time of day (decision #106): alone −0.3% / −1.3% in
     unseen regions (+0.1% / −1.1% for new hikers); added to terrain they
     lower its unseen-region gain (+2.1 → +1.8, +2.8 → +1.7): seasonal

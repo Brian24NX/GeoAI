@@ -64,7 +64,9 @@ then T2". **T1 is complete and T2 tier 1 is done.**
 - A **terrain-adjusted Tobler formula** with one DEM input (steppiness).
   Smooth trails peak at 4.60 km/h, steppy ones at 3.84 (Tobler: 6.0). It
   gets +1.0% in unseen regions with 5 numbers
-  (`travel-speed-gate1/results/t4_terrain_curve/fig_curves.png`).
+  (`travel-speed-gate1/results/t4_terrain_curve/fig_curves.png`). Be
+  upfront: it travels less well than the full terrain models (+0.6% with a
+  whole zone held out; fitted on the East only, it misses the West).
 - **Whole-hike time error** (`paper/figures/fig_hike_time.png`, 1,354
   hikes): Tobler 13.7%, slope curve 13.6%, + terrain 13.0%, + the hiker's
   own pace 10.0%, + own pace + terrain 9.6%.
@@ -76,6 +78,10 @@ then T2". **T1 is complete and T2 tier 1 is done.**
   known.
 - **Newer hikes:** trained on hikes up to 2019 and tested on 2020–2026,
   terrain still adds +2.2% (tags +0.9%). No drift over time.
+- **No neighbours in training:** with a whole zone held out (Northeast,
+  Southern Appalachians, Rockies, Pacific Northwest, California), terrain
+  adds +1.9% (tags +0.7%); trained on the West and tested on the East and
+  back, +2.6% (tags +1.5%). Terrain beats tags in every bootstrap draw.
 - **Season and time of day:** they add nothing in new regions (−0.3%;
   −1.3% with trees), and added to terrain they lower its gain. Seasonal
   effects differ by region (winter faster in the San Gabriels, slower in

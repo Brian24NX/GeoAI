@@ -174,6 +174,14 @@ km.
   Gabriels, −5% in the Bay Area), so they don't transfer. Within a hike,
   afternoon vs morning +0.1%; the first hour is ~3% faster and hours 1–3
   ~3% slower, which follows the route (approach, then the climb).
+- **No neighbours in training** (decision #107; harness splits `macro`
+  and `eastwest`, run `zones`): with a whole zone held out, terrain +1.9%
+  / +2.7% (tags +0.7% / −0.1%); trained on the West and tested on the East
+  and back, +2.6% / +3.3% (tags +1.5% / −0.3%). Terrain beats tags in every
+  bootstrap draw, in all 5 zones and both directions. Caveat: the
+  5-number formula travels less well (+0.6% for a zone; fitted on the East
+  it misses the West, −0.8%). Harness fix: trees drop columns that are
+  constant in a fold's training rows (the main run reproduces to 1e-16).
 
 ## Sun 11 Oct 2026
 

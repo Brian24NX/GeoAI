@@ -150,7 +150,10 @@ value. A hiker's own pace still matters most.
   proxy) and ~2.3 on top of personal pace (not a hiker proxy). It holds
   for newer hikes (trained up to 2019, tested on 2020+: +2.2% / +2.9%;
   tags +0.9% / +0.9%) and at every GPS recording rate (unseen regions,
-  traces every ≤ 2 s / 2–10 s / > 10 s: +1.7 / +2.4 / +1.9%). By slope,
+  traces every ≤ 2 s / 2–10 s / > 10 s: +1.7 / +2.4 / +1.9%). With no
+  neighbouring region in training (decision #107): a whole zone held out
+  +1.9% / +2.7%, East ↔ West +2.6% / +3.3% (tags +0.7% / −0.1% and +1.5% /
+  −0.3%), terrain − tags > 0 in every draw. By slope,
   it is largest on descents and level trail (+2.3 to +2.8%, additive) and
   smallest on steep climbs (+0.8%): footing limits descents, effort limits
   climbs.
@@ -166,7 +169,10 @@ value. A hiker's own pace still matters most.
   climbing"); the rest is difficulty beyond grade.
 - **R3b. A terrain-adjusted Tobler function** (T4): v0 and k as linear
   functions of one DEM measure (steppiness). Steppy trails peak at 3.84
-  km/h vs 4.60 on smooth ones; +1.0% in unseen regions with 5 numbers.
+  km/h vs 4.60 on smooth ones; +1.0% in unseen regions with 5 numbers,
+  but less portable than the full terrain models: +0.6% [0.1, 1.3] with a
+  whole zone held out, −0.3% [−1.5, 1.0] East ↔ West (fitted on the East
+  it misses the West, −0.8%).
   Fig. candidate: `results/t4_terrain_curve/fig_curves.png`.
 - **R4. The hiker dominates.** Personal pace from the first km cuts
   whole-hike moving-time error from 13.6% to 10.0%; terrain on top takes it

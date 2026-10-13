@@ -52,6 +52,10 @@ Splits (never by segment):
   time      (on request) train on outings up to TIME_CUT, test on the later
             ones: does a model from older hikes hold for newer ones?
             Outings with a doubtful date are in neither part.
+  macro     (on request) leave one ZONE out (5 folds: Northeast, Southern
+            Appalachians, Rockies, Pacific Northwest, California): no
+            neighbouring region in training
+  eastwest  (on request) train on the West, test on the East, and back
 
 Spread. Each arm's predictive distribution = its point prediction + the
 quantiles of its residuals on held-out outings of the TRAINING data
@@ -112,6 +116,15 @@ PLACE_M = 100                # place-memory cell size (m, UTM grid)
 KAPPAS = [2, 5, 10, 20, 50, 100]   # place-memory shrinkage (segments)
 SPLITS = ["outing5", "block5", "loro"]
 TIME_CUT, TIME_TEST = 2019, "after"      # time split: test = after 2019
+ZONES = {"wm": "northeast", "adk": "northeast", "catskills": "northeast",
+         "greenmtn": "northeast", "shenandoah": "southeast",
+         "smokies": "southeast", "pisgah": "southeast",
+         "frontrange": "rockies", "wasatch": "rockies",
+         "cascades": "pacific_nw", "gorge": "pacific_nw",
+         "olympic": "pacific_nw", "northshore": "pacific_nw",
+         "bayarea": "california", "sangabriel": "california",
+         "yosemite": "california", "tahoe": "california"}
+REGION_SPLITS = ("loro", "macro", "eastwest")   # bootstrap units = regions
 GPS_SUBSETS = {"gps_le2": (0, 2), "gps_2to10": (2, 10),
                "gps_gt10": (10, np.inf)}  # recording interval (s], per trace
 SLOPE_SUBSETS = {"down_steep": (-1, -0.15), "down": (-0.15, -0.05),
@@ -336,8 +349,14 @@ class Arm:
                 [1.45, -0.1, 1.8, 0.2, 0.05], loss="soft_l1",
                 f_scale=0.3).x)
         elif self.kind == "gbm":
-            self.m = gbm().fit(self.X(fit), y[fit], X_val=self.X(stop),
-                               y_val=y[stop])
+            Xf = self.X(fit)
+            # a numeric column with < 2 values in THIS fold's training rows
+            # can't be binned (e.g. a tag nobody uses in the eastern regions)
+            self.cols = [c for c in Xf.columns
+                         if isinstance(Xf[c].dtype, pd.CategoricalDtype)
+                         or Xf[c].nunique(dropna=True) >= 2]
+            self.m = gbm().fit(Xf[self.cols], y[fit],
+                               X_val=self.X(stop)[self.cols], y_val=y[stop])
         self.r = np.quantile(y[cal] - self.predict(s, cal), QL)
         if self.kind == "fixed" or (self.kind == "stride"
                                     and self.spec == "published"):
@@ -374,7 +393,7 @@ class Arm:
         if self.kind == "place":
             return (tf.FORMS["smooth_asym"][0](self.p, s[idx])
                     + self.v[self.blocks["cell"][idx]])
-        return self.m.predict(self.X(idx))
+        return self.m.predict(self.X(idx)[self.cols])
 
 
 HET_ARMS = ["slope_curve", "lin_tags", "lin_rs", "gbm_rs"]
@@ -508,6 +527,11 @@ def summarize(d):
 def outer_folds(w, how, rng):
     if how == "loro":
         return w.region.to_numpy()
+    if how == "macro":
+        return w.region.map(ZONES).to_numpy(dtype=object)
+    if how == "eastwest":
+        east = w.region.map(ZONES).isin(["northeast", "southeast"])
+        return np.where(east, "east", "west").astype(object)
     if how == "time":            # None = doubtful date: in neither part
         o = w.groupby("outing_id")
         later = o.year.transform("min").to_numpy() > TIME_CUT
@@ -586,7 +610,7 @@ def main():
                     help="only redraw fig_harness.png from the CSVs")
     ap.add_argument("--regions", nargs="*", help="only these regions")
     ap.add_argument("--splits", nargs="*", default=SPLITS,
-                    choices=SPLITS + ["time"])
+                    choices=SPLITS + ["time", "macro", "eastwest"])
     ap.add_argument("--covariates", nargs="*", default=[],
                     help="T2 covariate tables: segment_id + numeric columns")
     ap.add_argument("--features", nargs="*",
@@ -706,11 +730,11 @@ def main():
                         **score_rows(pt, r_me, y[rt])}))
                 if split == "loro" and name == "gbm_tags":
                     pi = permutation_importance(
-                        arm.m, arm.X(te), y[te], n_repeats=3,
+                        arm.m, arm.X(te)[arm.cols], y[te], n_repeats=3,
                         random_state=SEED, scoring="neg_mean_squared_error",
                         max_samples=min(len(te), 20000))
                     imp.append(pd.DataFrame({
-                        "region": f, "feature": arm.X(te[:1]).columns,
+                        "region": f, "feature": arm.cols,
                         "mse_increase": pi.importances_mean}))
             if split == "loro":    # reference: other outings, same region
                 ofold = outer_folds(w.iloc[te], "outing5", rng)
@@ -755,6 +779,14 @@ def main():
     ci = skill_intervals(sc, splits)
     ci.to_csv(OUT / "skill_ci.csv", index=False)
     print(ci.round(2).to_string(index=False))
+    for split in [s for s in splits if s in ("macro", "eastwest")]:
+        z = sc[(sc.split == split) & ~sc.arm.str.endswith("+me")]
+        bz = pd.DataFrame([{"held_out": f, "arm": arm, **summarize(d)}
+                           for (f, arm), d in z.groupby(["fold", "arm"])])
+        ref = bz[bz.arm == BASELINE].set_index("held_out").crps_log
+        bz["crps_skill_vs_slope_pct"] = 100 * (1 - bz.crps_log
+                                               / bz.held_out.map(ref))
+        bz.to_csv(OUT / f"{split}_by_zone.csv", index=False)
     pd.concat([skill_intervals(sc, splits, subset=k).assign(subset=k)
                for k in EXTRA_SUBSETS], ignore_index=True
               ).to_csv(OUT / "skill_ci_subsets.csv", index=False)
@@ -844,7 +876,7 @@ def skill_intervals(sc, splits, B=2000, subset=None):
              ("lin_both", "lin_tags"), ("gbm_both", "gbm_tags")]
     rows = []
     for split in splits:
-        unit = "region" if split == "loro" else "outing_id"
+        unit = "region" if split in REGION_SPLITS else "outing_id"
         d = sc[(sc.split == split) & ~sc.arm.str.endswith("+me")
                & (sc.arm != "slope_curve_local")]
         if subset:

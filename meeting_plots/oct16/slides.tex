@@ -155,9 +155,10 @@ limits descents, effort limits climbs.
   each region's own speed offset.
 \item \textbf{Not a hiker proxy}: still $\sim$2.3 points once the hiker's
   pace is known.
-\item \textbf{Newer hikes}: trained up to 2019, tested on 2020--2026:
-  terrain $+2.2\%$, tags $+0.9\%$. No drift. \textbf{Season, time of
-  day}: add nothing in new regions ($-0.3\%$).
+\item \textbf{No neighbours in training}: a whole zone held out, terrain
+  $+1.9\%$ (tags $+0.7\%$); West $\leftrightarrow$ East $+2.6\%$ (tags
+  $+1.5\%$). \textbf{Newer hikes} $+2.2\%$. \textbf{Season, time of day}
+  add nothing in new regions.
 \item \textbf{GPS rate}: the same gain for traces recorded every $\le$2 s,
   2--10 s, $>$10 s ($+1.7$, $+2.4$, $+1.9\%$). Sparse traces read
   $\sim$10\% slow; thinning dense walks reproduces it (cut corners, hidden
@@ -185,7 +186,8 @@ limits descents, effort limits climbs.
 $z$ = spread of 5 m pitches $/\,0.10$ (one number from any DEM).
 \begin{itemize}\setlength\itemsep{4pt}
 \item Peak: smooth trails 4.60, steppy 3.84 km/h (Tobler: 6.0).
-\item $+1.0\%$ [0.6, 1.5] in unseen regions with 5 numbers.
+\item $+1.0\%$ [0.6, 1.5] in unseen regions with 5 numbers; less
+  portable than the full models ($+0.6\%$ for an unseen zone).
 \item A drop-in for GIS tools that use Tobler today.
 \end{itemize}
 \end{columns}

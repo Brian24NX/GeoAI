@@ -24,6 +24,8 @@ case "$1" in
                  --out results/t3_harness_robust ;;
   hetero)     $H --covariates $T5 $T1 --hetero --out results/t3_harness_hetero ;;
   context)    $H --covariates $CX --out results/t3_harness_context ;;
+  zones)      $H --covariates $T5 $T1 --splits macro eastwest \
+                 --out results/t3_harness_zones ;;
   contextterrain) $H --covariates $T5 $T1 $CX \
                  --out results/t3_harness_context_terrain ;;
   regionfe)   $H --covariates $T5 --region-fe --splits outing5 block5 \
