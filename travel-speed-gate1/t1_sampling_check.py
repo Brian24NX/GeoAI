@@ -22,8 +22,9 @@ every > 10 s.
 Input:  data/t1_<region>/points.parquet, traces.csv, modes.csv;
         data/t1_all/segments_L50.parquet
 Output: results/t1_sampling_check/ by_trace.csv, summary.json,
-        observed_by_interval.csv
-Run (cluster): python t1_sampling_check.py   (--observed-only: second part)
+        observed_by_interval.csv, fig_sampling.png
+Run (cluster): python t1_sampling_check.py   (--observed-only: second part;
+               --figure: only redraw the figure from the results)
 """
 
 import argparse
@@ -81,6 +82,45 @@ def dense_walkers(key):
 IV_BINS = [0, 5, 10, 15, 25, 40, np.inf]
 
 
+def figure():
+    """Measured speed vs seconds between GPS points: the same dense walks
+    thinned (line) and the real traces at each interval (dots)."""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    s = json.loads((OUT / "summary.json").read_text())
+    obs = pd.read_csv(OUT / "observed_by_interval.csv")
+    rates = sorted(int(r) for r in s["rates"])
+    sim = [100 * (s["rates"][str(r)]["speed_ratio"] - 1) for r in rates]
+    lo = [100 * (s["rates"][str(r)]["speed_ratio_ci"][0] - 1) for r in rates]
+    hi = [100 * (s["rates"][str(r)]["speed_ratio_ci"][1] - 1) for r in rates]
+    fig, ax = plt.subplots(figsize=(6.2, 3.6))
+    ax.fill_between(rates, lo, hi, color="#2a78d6", alpha=0.2, lw=0)
+    ax.plot(rates, sim, "o-", color="#2a78d6", lw=2,
+            label="same dense walks, thinned (simulated)")
+    ax.scatter(obs.median_interval_s, 100 * (obs.flat_speed_ratio - 1),
+               s=12 + obs.traces / 6, color="#eb6834", zorder=3,
+               label="real traces at that interval (flat ground)")
+    for r in obs.itertuples():
+        ax.annotate(f"{r.traces}", (r.median_interval_s,
+                                    100 * (r.flat_speed_ratio - 1)),
+                    xytext=(7, -3), textcoords="offset points", fontsize=7,
+                    color="#52514e", va="top")
+    ax.axhline(0, color="#52514e", lw=0.8)
+    ax.set_xscale("log")
+    ax.minorticks_off()
+    ax.set_xticks([2, 5, 10, 20, 30, 70], ["2", "5", "10", "20", "30", "70"])
+    ax.set_xlabel("seconds between GPS points (log scale)")
+    ax.set_ylabel("measured speed vs dense traces (%)")
+    ax.set_title("Sparse traces read slow: how speed is measured\n"
+                 "(dot labels: traces)", fontsize=9)
+    ax.legend(frameon=False, fontsize=7.5, loc="lower left")
+    ax.grid(color="#e4e3df")
+    ax.spines[["top", "right"]].set_visible(False)
+    fig.tight_layout()
+    fig.savefig(OUT / "fig_sampling.png", dpi=170)
+
+
 def observed():
     """Real traces by recording interval, and the curve without the
     sparse ones."""
@@ -130,8 +170,12 @@ def observed():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--observed-only", action="store_true")
+    ap.add_argument("--figure", action="store_true")
     args = ap.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
+    if args.figure:
+        figure()
+        return
     if args.observed_only:
         obs, curve = observed()
         f = OUT / "summary.json"

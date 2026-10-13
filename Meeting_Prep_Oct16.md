@@ -151,8 +151,9 @@ then T2". **T1 is complete and T2 tier 1 is done.**
 
 ## 2. A 10-minute script
 
-Slides: `meeting_plots/oct16/slides.pdf` (14 slides; the numbers match
-`docs/NEXT_STEPS.md` §1a).
+Slides: `meeting_plots/oct16/slides.pdf` (14 slides, then 4 backup slides
+to show only if asked: why tags fail, sparse GPS traces, no neighbours in
+training, season/time/weather; the numbers match `docs/NEXT_STEPS.md` §1a).
 
 1. **Status (slides 1–2, 1 min).** "T1 is done in 17 regions. I built the
    test harness for T3 and finished T2 tier 1. The first result already

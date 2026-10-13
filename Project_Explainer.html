@@ -792,7 +792,10 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
    ["12 Oct","T1 complete + overnight refresh","Wasatch rebuilt; the Bay Area stays lab-only (the API can't serve its tiles). Everything re-run on the final data: 290,640 walking segments, 1,992 outings.",""],
    ["12 Oct","Final scoreboard","Unseen regions: terrain +2.1 to +2.8%, tags +0.9%, embeddings +1.1%, 30 m vegetation 0, Campbell −0.5%, STRIDE −17%. Terrain beats tags in 16 of 17 regions.",""],
    ["12 Oct","Practical results","A terrain-adjusted Tobler formula; pace predicted on every White Mountains trail; bikes aren't walkers × a constant.",""],
-   ["12 Oct","Paper skeleton + Fig. 1","IEEE two-column skeleton with the final table and figures; the prose is yours. Region map with a speed inset.",""]];
+   ["12 Oct","Paper skeleton + Fig. 1","IEEE two-column skeleton with the final table and figures; the prose is yours. Region map with a speed inset.",""],
+   ["12 Oct","Slides, curve figure, robustness","Friday slides; the speed-vs-slope figure with same-hiker up/down ratios; terrain holds for newer hikes, every GPS rate and every slope; sparse traces read slow because of how speed is measured; modes tested the plan's way.",""],
+   ["12 Oct","References and pipeline guide","Every reference checked; a 2026 Hong Kong paper found (no transfer test); a guide to re-running everything.",""],
+   ["13 Oct","Harder tests","Why tags fail (missing, not different meanings); a whole zone or half the continent held out: terrain still wins; season, time of day and weather don't help in new regions.",""]];
   const box=document.getElementById("storyline");
   items.forEach(it=>{const d=document.createElement("div");d.className="tl-item"+(it[3]==="fix"?" fix":"");d.innerHTML=`<div class="tl-date">${it[0]}</div><h4>${it[1]}</h4><p>${it[2]}</p>`;box.appendChild(d);});
 })();
