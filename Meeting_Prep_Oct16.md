@@ -7,6 +7,9 @@ version is section 10 of `Project_Explainer.html`; the paper figures are in
 
 ---
 
+**One page to keep next to the slides:** `meeting_plots/oct16/presenter_card.pdf` (opening line,
+numbers, what's new, the questions, short answers to hard questions).
+
 ## 1. If you only read one thing
 
 **What happened since 9 Oct.** You asked for "as many regions as possible,
@@ -140,6 +143,8 @@ then T2". **T1 is complete and T2 tier 1 is done.**
    to 27% of segments). Fix it in a T1 v2 (distance along the trail
    between matched points, plus an interval correction), use only traces
    logged every ≤ 10 s for absolute speeds, or just report it?
+7. **Figures:** the paper draft runs to 5 pages with 6 figures. Which 3–4
+   to keep (suggestion in `paper/OUTLINE.md`)?
 
 ---
 
@@ -243,7 +248,8 @@ segment and with terrain.
 - **"Isn't +2% small?"** Per 50 m segment, yes: GPS noise and who is
   hiking dominate a single segment. But it is consistent (16 of 17
   regions), its interval excludes zero even when resampling whole regions,
-  and it's 2–6× what tags manage. Over a hike it lowers time error.
+  and it's more than twice what tags manage (2.3× for the simple models,
+  7× for the trees). Over a hike it lowers time error.
 - **"Why not deep learning?"** About 2,000 outings is a small sample. The
   plan uses frozen pretrained embeddings (AlphaEarth) instead of training a
   network. Result: they help within regions but transfer less reliably than terrain.

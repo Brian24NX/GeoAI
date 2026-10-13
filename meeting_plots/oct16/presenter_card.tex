@@ -1,0 +1,86 @@
+% One-page presenter's card for the 16 Oct meeting. Compile: tectonic presenter_card.tex
+% Numbers: docs/NEXT_STEPS.md section 1a and DECISIONS_LOG.md #95-107.
+% AI assistance: Claude drafted this card from the project's results.
+\documentclass[10pt]{article}
+\usepackage[a4paper,margin=1.3cm]{geometry}
+\usepackage{multicol,enumitem,booktabs}
+\setlist{nosep,leftmargin=1.2em}
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{1.2em}
+\pagestyle{empty}
+\newcommand{\h}[1]{\vspace{4pt}{\large\bfseries #1}\par\vspace{2pt}}
+
+\begin{document}
+{\LARGE\bfseries Friday 16 Oct: presenter's card}\hfill{\small slides: \texttt{meeting\_plots/oct16/slides.pdf}}
+
+\vspace{4pt}
+\textbf{Open with:} ``T1 is complete in 17 regions. I built the T3 test
+harness and finished T2 tier 1. The headline: terrain from elevation data
+predicts hiking speed in regions the model has never seen; OSM trail tags
+barely do. It survived every check I could think of.''
+
+\begin{multicols}{2}
+\h{Numbers to know}
+\begin{itemize}
+\item \textbf{Data:} 17 regions, 2,876 hiking traces; walking set 1,992
+  outings, 290,640 segments of 50 m, 4,702 h.
+\item \textbf{Tobler:} 13\% worse than our curve. Real hikers peak near
+  \textbf{4.2 km/h}, not 6.
+\item \textbf{Unseen region} (skill vs slope curve): terrain
+  \textbf{+2.1\%} (trees +2.8\%), tags +0.9\% (+0.4\%). Terrain beats
+  tags in \textbf{16 of 17} regions.
+\item \textbf{Harder tests:} a whole zone left out +1.9\%; West
+  $\leftrightarrow$ East +2.6\%; newer hikes +2.2\%; same at every GPS
+  rate.
+\item \textbf{Whole hike:} time error 13.6\% $\to$ 9.6\% with the hiker's
+  own pace (first km) + terrain.
+\item \textbf{Same hiker, same trail:} down is 8\% faster than up on gentle
+  grades, 22\% on steep ones. Tobler says 42\%.
+\item \textbf{Modes:} runners = walkers $\times$2.5; bikes need their own
+  curve.
+\end{itemize}
+
+\h{New since last week}
+\begin{itemize}
+\item Why tags fail: not different meanings (within a hike, harder
+  sac\_scale is slower in every region). They're missing on much of the
+  trail (1--96\% by region).
+\item Sparse GPS traces read up to 11\% slow: how we measure, not slower
+  hikers.
+\item A 2026 paper (Huang et al., Hong Kong) uses boosted trees with
+  weather, one city, random split: no transfer test.
+\item The 5-number formula travels less well than the full model (+0.6\%
+  for an unseen zone). Say so.
+\end{itemize}
+
+\columnbreak
+\h{Ask Danni}
+\begin{enumerate}
+\item Framing: ``terrain transfers, tags don't''. Agree?
+\item Embeddings: keep as ``helps locally, transfers less''?
+\item Lidar understory: $\sim$12 GB for the White Mountains. Do it?
+\item Data release: license (ODbL) and lab policy.
+\item Cluster account: \texttt{engr-class-any} or the lab's?
+\item Fix sparse traces in a T1 v2, or just report it?
+\item Which 3--4 figures to keep (the draft is at 5 pages).
+\end{enumerate}
+\textit{Same order as slide 14.}
+
+\h{Hard questions, short answers}
+\begin{description}[leftmargin=0pt,style=nextline]
+\item[``Isn't +2\% small?''] Per 50 m, yes: GPS noise and the hiker
+  dominate. But it's consistent (17 of 17 regions in direction), its
+  interval excludes zero, and it's more than twice what tags give.
+\item[``Is terrain just a stand-in for the region?''] No: it adds
+  $\sim$1.9 points over each region's own average, and holds with a whole
+  zone left out.
+\item[``Why no deep learning or images?''] About 2,000 outings is small.
+  We tested frozen satellite embeddings: +1.1\% in new regions, less
+  reliable than terrain.
+\item[``What about weather?''] Date and time of day add nothing in new
+  regions (seasons differ by region). Weather itself isn't tested yet.
+\item[``What did the AI do?''] Claude helped write and run the code and
+  draft the documents; I review the work and I'm responsible for it.
+\end{description}
+\end{multicols}
+\end{document}

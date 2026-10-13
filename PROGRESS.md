@@ -182,6 +182,9 @@ km.
   5-number formula travels less well (+0.6% for a zone; fitted on the East
   it misses the West, −0.8%). Harness fix: trees drop columns that are
   constant in a fold's training rows (the main run reproduces to 1e-16).
+- **Presenter's card** (`meeting_plots/oct16/presenter_card.pdf`, one page):
+  opening line, numbers to know, what's new since 9 Oct, the 7 questions
+  (now including which figures to keep), short answers to hard questions.
 
 ## Sun 11 Oct 2026
 
