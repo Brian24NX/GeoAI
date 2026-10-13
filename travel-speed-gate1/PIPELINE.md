@@ -152,6 +152,8 @@ sbatch -A engr-class-any -p linuxlab-project -c 8 --mem 48G -t 2:00:00 cluster/r
 | `robust` | terrain 5 m + 1 m, plus a time split and GPS-rate and slope subsets | `t3_harness_robust` | robustness; then `$PY t3_robust_summary.py` writes `robust_summary.md` |
 | `zones` | terrain 5 m + 1 m; splits: leave one zone out, East ↔ West | `t3_harness_zones` | no neighbouring region in training |
 | `context` | day of year + local hour (after `t3_season_time.py`) | `t3_harness_context` | season and time of day alone |
+| `weather` | Daymet weather on the hike's day (after `t2_weather.py`) | `t3_harness_weather` | weather alone |
+| `weatherterrain` | terrain 5 m + 1 m + weather | `t3_harness_weather_terrain` | does weather add to terrain? |
 | `contextterrain` | terrain 5 m + 1 m + day of year + hour | `t3_harness_context_terrain` | do they add to terrain? |
 
 The harness is seeded, so a re-run gives identical numbers. The robust
@@ -166,6 +168,7 @@ this.
 | `t4_trail_map.py --region wm` | `results/t4_trail_map/` (pace on every trail) | 2 min |
 | `t1_sampling_check.py` | `results/t1_sampling_check/` (sparse traces read slow) | 1 min |
 | `t3_tag_transfer.py` | `results/t3_tag_transfer/` (why tags don't transfer: within-hike tag and terrain effects by region) | 3 min |
+| `t2_weather.py` | `data/t2/weather_<region>.parquet` (Daymet, each hike's day and place; ~1 request/s, cached in `cache/daymet/`) and `results/t2_weather/`; then harness runs `weather` and `weatherterrain` | ~1 h first time |
 | `t3_season_time.py` | `results/t3_season_time/` (season and time of day) and `data/t2/context_<region>.parquet`; then harness runs `context` and `contextterrain` | 2 min |
 | `make_paper_data.py` | `results/fig1_wm_segments.parquet` (Fig. 1 inset) | 1 min |
 | `make_explainer_data.py` | `results/explainer_data.json` (**run last**: it reads the results above) | 1 min |

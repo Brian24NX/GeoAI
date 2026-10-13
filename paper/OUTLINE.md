@@ -209,9 +209,12 @@ value. A hiker's own pace still matters most.
     11% (straight lines cut corners; short stops count as moving). The
     curve without traces logged every > 10 s peaks at 4.28 km/h vs 4.17;
     terrain's gain is the same at every recording rate;
-  - no weather yet; date and time of day add nothing in new regions
-    (−0.3% additive, −1.3% trees; decision #106) because seasonal effects
-    differ by region.
+  - weather (Daymet, decision #108): hot days (> 25 °C) −3% and snow on
+    the ground −4% vs the region's average hike, but weather adds nothing
+    in new regions (−0.0% additive, −1.9% trees) and lowers terrain's gain
+    when added (+2.1 → +1.9%, trees +2.8 → +1.4%); date and time of day
+    likewise (−0.3%, decision #106). The hiker's day-level pace already
+    holds it.
 - **Release:** the derived segment table without user names, if mentors
   agree.
 - **Conclusion:** a 3-sentence restatement plus one line of future work

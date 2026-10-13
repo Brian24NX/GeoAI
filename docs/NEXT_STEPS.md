@@ -125,6 +125,12 @@ which are kept below as the record.
     terrain +2.6% / +3.3%, tags +1.5% / −0.3%; terrain − tags > 0 in every
     draw. The 5-number formula travels less well (+0.6% zone, −0.3% East ↔
     West);
+  - weather (decision #108, Daymet, each hike's day and place): hot days
+    (> 25 °C) −3.0% [−5.7, −0.2], snow on the ground −3.7% (Daymet's snow
+    model shows some summer snow on high pixels), rain and humidity
+    nothing clear; in the harness weather alone −0.0% / −1.9% in unseen
+    regions, with terrain +1.9% / +1.4% (vs +2.1% / +2.8%), on top of
+    personal pace +0.0%;
   - season and time of day (decision #106): alone −0.3% / −1.3% in
     unseen regions (+0.1% / −1.1% for new hikers); added to terrain they
     lower its unseen-region gain (+2.1 → +1.8, +2.8 → +1.7): seasonal
@@ -314,7 +320,7 @@ from the 5 m elevation T1 already had (in the White Mountains, 5 m ≈ 1 m):
 | **Wood et al. 2023**, PLOS ONE ([doi](https://doi.org/10.1371/journal.pone.0295848)) | 7,636 Hikr + OSM GPS tracks (~88,000 km), England and Wales; generalised linear model with walking slope, hill slope, OSM terrain class, lidar obstruction (DSM − DTM); 10-fold CV; whole routes 13.5–15.5% error for every model | the closest analog: North America, sac_scale and surface tags vs remote sensing head to head, embeddings, held-out regions (they report none) |
 | HikingTTE, Asako et al. 2024, CIT ([doi](https://doi.org/10.2478/cait-2024-0033)) | deep model of whole-hike time (hikr.org), hiker ability from the hike's first part | segment level, remote-sensing covariates |
 | Šerić et al. 2022, JOSIS ([link](https://josis.org/index.php/josis/article/view/204)) | latent walking speed from GPS trails, predicted from Sentinel-2, one Croatian range | multi-region, lidar |
-| Huang et al. 2026, Applied Geography 192:104052 ([doi](https://doi.org/10.1016/j.apgeog.2026.104052)) | interpretable ML (LightGBM + SHAP), 7,913 tracks, 16 factors incl. weather, Hong Kong; random split, test R² 0.676 | transfer to unseen regions; remote sensing vs tags. They have weather, we don't |
+| Huang et al. 2026, Applied Geography 192:104052 ([doi](https://doi.org/10.1016/j.apgeog.2026.104052)) | interpretable ML (LightGBM + SHAP), 7,913 tracks, 16 factors incl. weather, Hong Kong; random split, test R² 0.676 | transfer to unseen regions; remote sensing vs tags. We tested weather (Daymet): heat and snow slow hikers 3–4%, but it doesn't help in new regions (#108) |
 | Higgins 2021, Findings ([doi](https://doi.org/10.32866/001c.28107)) | Tobler calibrated to one person's tracks, Hong Kong | crowdsourced, many regions |
 | Goodwin et al. 2025, Acta Astronautica ([doi](https://doi.org/10.1016/j.actaastro.2024.12.005)) | analog-mission GNSS tracks; hiking functions hold only at the sampling resolution they were fitted at | supports our sparse-trace finding (decision #104) |
 | Pagneux et al. 2023, Applied Geography ([doi](https://doi.org/10.1016/j.apgeog.2023.103112)) | DEM resolution vs hiking speed functions (findings not checked) | we tested 1 m vs 5 m: no difference on trails |

@@ -10,6 +10,7 @@ T1=$(ls data/t2/terrain1m_*.parquet)
 LC=$(ls data/t2/landcover_*.parquet)
 AE=$(ls data/t2/aef2022_*.parquet)
 CX=$(ls data/t2/context_*.parquet 2>/dev/null)   # t3_season_time.py
+WX=$(ls data/t2/weather_*.parquet 2>/dev/null)   # t2_weather.py
 say() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $*" | tee -a logs/refresh.log; }
 case "$1" in
   base)       $H --out results/t3_harness ;;
@@ -26,6 +27,9 @@ case "$1" in
   context)    $H --covariates $CX --out results/t3_harness_context ;;
   zones)      $H --covariates $T5 $T1 --splits macro eastwest \
                  --out results/t3_harness_zones ;;
+  weather)    $H --covariates $WX --out results/t3_harness_weather ;;
+  weatherterrain) $H --covariates $T5 $T1 $WX \
+                 --out results/t3_harness_weather_terrain ;;
   contextterrain) $H --covariates $T5 $T1 $CX \
                  --out results/t3_harness_context_terrain ;;
   regionfe)   $H --covariates $T5 --region-fe --splits outing5 block5 \

@@ -77,8 +77,10 @@ barely do. It survived every check I could think of.''
 \item[``Why no deep learning or images?''] About 2,000 outings is small.
   We tested frozen satellite embeddings: +1.1\% in new regions, less
   reliable than terrain.
-\item[``What about weather?''] Date and time of day add nothing in new
-  regions (seasons differ by region). Weather itself isn't tested yet.
+\item[``What about weather?''] Tested (Daymet, each hike's day and
+  place): hot days are 3\% slower and snow 4\%, but weather doesn't improve
+  predictions in new regions; the hiker's own pace already holds it. Same
+  for date and time of day.
 \item[``What did the AI do?''] Claude helped write and run the code and
   draft the documents; I review the work and I'm responsible for it.
 \end{description}
