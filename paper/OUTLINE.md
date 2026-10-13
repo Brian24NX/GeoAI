@@ -224,12 +224,12 @@ map or crop it to one column.
 - [x] Fig. 5 candidate: `travel-speed-gate1/results/t4_terrain_curve/fig_curves.png` (speed vs slope by steppiness, with Tobler).
 - [x] Fig. 6 candidate (application, strong for IGARSS): `travel-speed-gate1/results/t4_trail_map/fig_wm_pace.png`. Pace on every White Mountains trail from the function fitted on the other 16 regions, vs Tobler. 77% of the trail km have no traces.
 
-## References to verify before citing (from `docs/NEXT_STEPS.md` §2)
+## References (checked 12 Oct 2026)
 
-Tobler 1993; Irmischer & Clarke 2018; Campbell et al. 2019, 2022; STRIDE
-(Campbell, Cutler & Dennison 2024); Cutler et al. 2026; Wood et al. 2023;
-HikingTTE (Asako et al. 2024); Šerić et al. 2022; Pagneux et al. 2023;
-RasterNet (Hadzic et al. 2020); Newson & Krumm 2009 (HMM map-matching);
-Gneiting & Raftery 2007 (CRPS); OSM (ODbL); USGS 3DEP. Check every author
-list, year and venue in the papers themselves. Several entries came from
-search snippets.
+All entries in `refs.bib` were checked against Crossref or arXiv (authors,
+venue, volume, pages, DOI). `RELATED_WORK.md` says what each paper did and
+how we differ, for the Introduction. New since the skeleton: Huang et al.
+2026 (Hong Kong, 16 factors incl. weather, random split), Šerić et al.
+2022 (Sentinel-2, one range), Higgins 2021, Goodwin et al. 2025 (sampling
+resolution), and the AlphaEarth paper (Brown et al. 2025). Pagneux et al.
+2023 is in `refs.bib`, but its findings are paywalled and not yet read.

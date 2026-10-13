@@ -143,6 +143,18 @@ km.
   (`requirements-pipeline.txt`), the env recipe (`cluster/make_env.sh`),
   a script for the Fig. 1 inset data (`make_paper_data.py`), and the
   `hetero` run in `cluster/refresh_harness.sh`.
+- **References checked** (`paper/refs.bib`, `paper/RELATED_WORK.md`):
+  - every entry verified against Crossref or arXiv; incomplete ones fixed
+    (Wood et al. 2023, HikingTTE, Campbell 2018, AlphaEarth);
+  - new: **Huang et al. 2026** (Applied Geography; Hong Kong, 7,913
+    tracks, 16 factors incl. weather, boosted trees, random split), Šerić
+    et al. 2022 (Sentinel-2, one Croatian range), Higgins 2021, Goodwin et
+    al. 2025, Pagneux et al. 2023 (findings not read yet);
+  - none of the prior work tests transfer to unseen regions; Wood et al.
+    found no whole-route gain over existing functions (13.5–15.5% for
+    every model);
+  - a related-work sheet for Brian's Introduction; the paper's
+    Introduction notes now cite them.
 
 ## Sun 11 Oct 2026
 
