@@ -155,6 +155,14 @@ km.
     every model);
   - a related-work sheet for Brian's Introduction; the paper's
     Introduction notes now cite them.
+- **Why tags don't transfer, tested** (decision #105, `t3_tag_transfer.py`):
+  the paper's explanation ("the same tag means different things in
+  different places") was wrong. Within the same hike, tag values act the
+  same in every region (harder sac_scale slower in 10/10, paved faster in
+  10/10). What differs is presence: sac_scale is on 1–96% of walked trail
+  by region, and an untagged trail is faster than a tagged one in some
+  regions and slower in others. Terrain: same sign in 17/17 regions.
+  Paper, outline, brief and explainer corrected.
 
 ## Sun 11 Oct 2026
 

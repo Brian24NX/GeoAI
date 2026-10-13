@@ -2,9 +2,16 @@
 \label{sec:discussion}
 
 % ~0.5 page.
-\todo{Why tags do not transfer: mapping communities tag differently; the
-same sac\_scale means different things in different places. Elevation data
-measures the same physical thing everywhere.}
+\todo{Why tags do not transfer (tested, decision \#105): not because tag
+values mean different things. Within the same hike, harder sac\_scale is
+slower in every region where it is used ($-5\%$ mountain\_hiking vs hiking,
+10 of 10 regions; $-11\%$ for harder ones, 8 of 8), and paved is faster
+(10 of 10). What does not carry over is whether a tag is there: sac\_scale
+is on 1--96\% of walked trail by region, and an untagged trail is faster
+than a tagged one in some regions and slower in others ($-3.5$ to $+5.1\%$
+within a hike). A model trained elsewhere must guess what a missing tag
+means. Elevation-derived terrain exists on every trail, and its effect has
+the same sign in all 17 regions ($-12\%$, steppiest vs smoothest fifth).}
 
 \todo{What terrain captures: uneven grade within the segment (rock steps,
 short pitches) that one average slope hides, plus difficulty beyond grade.

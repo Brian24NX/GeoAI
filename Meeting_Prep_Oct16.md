@@ -203,9 +203,16 @@ way, and the calibration must transfer too (90% ranges hold 88–90%).
 - Our own refitted curves (tent, rounded, Lorentz) all score within 0.5% of
   each other.
 
-**Why tags fail in new regions.** Mappers tag differently by region and
-community. The tag effects we measured (e.g. easy trails ~7% faster, poor
-visibility up to ~10% slower) don't carry over.
+**Why tags fail in new regions** (tested 12 Oct,
+`travel-speed-gate1/results/t3_tag_transfer/fig_tag_vs_terrain.png`).
+- Not because tags mean different things. Within the same hike, harder
+  sac_scale is slower in every region where it's used (10 of 10), and
+  paved is faster (10 of 10).
+- It's that tags are missing unevenly. sac_scale is on 96% of walked trail
+  in the Adirondacks and 1% in the Green Mountains, and an untagged trail
+  is faster than a tagged one in some regions and slower in others. A
+  model trained elsewhere has to guess what "no tag" means.
+- Terrain is on every trail, with the same effect in all 17 regions.
 
 **Personal pace.** The hiker's median speed (relative to the curve) over
 their first km, shrunk ×0.6 because one km is noisy. It cuts whole-hike

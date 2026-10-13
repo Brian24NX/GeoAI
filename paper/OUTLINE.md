@@ -135,7 +135,10 @@ value. A hiker's own pace still matters most.
   implies nearly the same ratios, so its asymmetry is not a sampling
   artifact; Campbell's implies 1.02–1.16.
 - **R2. Tags don't transfer.** They help a little within a region and
-  barely in a new one. Trees on tags overfit regional tagging habits.
+  barely in a new one. Not because tag values change meaning (within a
+  hike they act the same in every region) but because tags are missing
+  unevenly, and what a missing tag means differs by region (decision
+  #105).
 - **R3. Terrain transfers.** It beats tags in 16 of 17 held-out regions
   (the exception: Yosemite), and on tagged segments (+2.2% vs +0.9%). 95%
   intervals resampling whole regions: terrain +1.5 to +3.1% (additive),
@@ -173,9 +176,14 @@ value. A hiker's own pace still matters most.
 
 ## 5. Discussion and conclusion (~0.5 page)
 
-- **Why tags don't transfer:** OSM tagging conventions differ by region
-  and mapper community; the same sac_scale value means different things.
-  Lidar-derived terrain measures the same physical thing everywhere.
+- **Why tags don't transfer** (tested, decision #105,
+  `results/t3_tag_transfer/`): within the same hike, tag values act the
+  same everywhere (harder sac_scale slower in 10/10 regions, paved faster
+  in 10/10). What doesn't carry over is presence: sac_scale is on 1–96% of
+  walked trail by region, and an untagged trail is faster than a tagged
+  one in some regions, slower in others (−3.5% to +5.1%). Terrain is on
+  every trail, with the same sign in 17/17 regions (−12%, steppiest vs
+  smoothest fifth). Candidate figure: `fig_tag_vs_terrain.png`.
 - **What the terrain captures:** grade variability within the segment
   (rock steps, short pitches) that a single average slope hides. The
   control separates "uneven grade" from "difficulty beyond grade" (*).

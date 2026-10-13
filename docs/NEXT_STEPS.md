@@ -136,6 +136,12 @@ which are kept below as the record.
   v = exp(1.598 − 0.173 z) · exp(−(2.152 − 0.392 z)·|s + 0.043|) km/h,
   z = SD of 5 m pitches / 0.10. Steppiness terciles: smooth 4.60
   [4.51, 4.69] km/h, medium 4.37, steppy 3.84 [3.76, 3.92].
+- **Why tags don't transfer** (decision #105): within the same hike, tag
+  values act the same in every region (harder sac_scale slower in 10/10,
+  paved faster in 10/10), but tag presence doesn't: sac_scale is on 1–96%
+  of walked trail by region, and untagged trails are faster than tagged
+  ones in some regions and slower in others (−3.5% to +5.1%). Terrain:
+  same sign in 17/17 regions (−12%, steppiest vs smoothest fifth).
 - **Mode as a multiplier** (plan question 4, decision #103): one shared
   curve times a per-mode multiplier vs a curve per mode, on held-out
   outings. Runners: the multiplier (×2.5) is enough (own curve +0.1%
@@ -194,7 +200,9 @@ data):
   many hikers passed each 100 m cell, so it is not a hard ceiling (§1c:
   lidar beat it).
 - Tags reach ~75% of it within a region, but only ~20% of their gain
-  survives in a new region (tagging conventions differ).
+  survives in a new region (12 Oct, decision #105: not because tag values
+  change meaning, but because tags are missing unevenly and a missing tag
+  means different things in different regions).
 - That transfer gap is the remote-sensing opportunity: lidar roughness,
   canopy and embeddings mean the same thing everywhere. The paper tests
   exactly that, reporting gains next to tags and place memory, not as

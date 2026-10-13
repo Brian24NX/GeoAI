@@ -162,6 +162,7 @@ this.
 | `t4_mode_curves.py` | `results/t4_mode_curves/` (speed by mode, ratios, multiplier test) | 4 min |
 | `t4_trail_map.py --region wm` | `results/t4_trail_map/` (pace on every trail) | 2 min |
 | `t1_sampling_check.py` | `results/t1_sampling_check/` (sparse traces read slow) | 1 min |
+| `t3_tag_transfer.py` | `results/t3_tag_transfer/` (why tags don't transfer: within-hike tag and terrain effects by region) | 3 min |
 | `make_paper_data.py` | `results/fig1_wm_segments.parquet` (Fig. 1 inset) | 1 min |
 | `make_explainer_data.py` | `results/explainer_data.json` (**run last**: it reads the results above) | 1 min |
 | `t1_release.py` | `data/t1_release/` (de-identified copy; stays on the cluster) | minutes |
@@ -208,6 +209,7 @@ cd ../meeting_plots/oct16 && tectonic slides.tex
 | Robustness: time, GPS rate, slope | `results/t3_harness_robust/robust_summary.md` | `robust` run, `t3_robust_summary.py` |
 | Travel modes | `results/t4_mode_curves/` | `t4_mode_curves.py` |
 | Sparse traces read slow | `results/t1_sampling_check/summary.json` | `t1_sampling_check.py` |
+| Why tags don't transfer | `results/t3_tag_transfer/summary.csv`, `coverage.csv` | `t3_tag_transfer.py` |
 
 All of these numbers are collected, with their decision numbers, in
 `docs/NEXT_STEPS.md` §1a and `DECISIONS_LOG.md`.

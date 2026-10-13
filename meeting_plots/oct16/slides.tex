@@ -123,13 +123,16 @@ held-out training hikes.
 \column{0.55\textwidth}
 \includegraphics[height=0.8\textheight]{fig_regions}
 \column{0.43\textwidth}
-\begin{itemize}\setlength\itemsep{6pt}
-\item Each row: one region held out, models trained on the other 16.
+\small
+\begin{itemize}\setlength\itemsep{4pt}
 \item Terrain minus tags: $+0.7$ to $+2.2$ points (95\%), above zero in
   every bootstrap draw.
 \item In 5 regions tags make predictions \emph{worse} (Tahoe, Pisgah,
   Shenandoah, Front Range, Green Mtns); terrain helps in all 17.
 \item The exception: Yosemite (tags $+1.9$, terrain $+1.1$).
+\item Why tags fail: within a hike they act the same everywhere; but
+  sac\_scale is on 1--96\% of trail by region, and ``no tag'' means
+  different things in different regions.
 \end{itemize}
 \end{columns}
 \end{frame}
