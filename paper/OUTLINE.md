@@ -161,6 +161,13 @@ value. A hiker's own pace still matters most.
   or with terrain: the remote-sensing signal is in the elevation data.
   1 m lidar ≈ 5 m for this profile; STRIDE's roughness adds ~nothing on
   trails (published STRIDE −16.8%).
+- **R3d. Point-cloud vegetation (White Mountains, decision #111):**
+  understory density from the lidar points (STRIDE's 0.85–1.2 m band) is
+  7.5% slower in its densest fifth, within the same hike; with terrain it
+  lifts skill in new 10 km squares from +3.6% to +5.0% (about +1 point
+  beyond terrain and elevation). STRIDE's published density term
+  over-penalises trails (−37%). Transfer across regions: pending other
+  regions' point clouds.
 - **R3c. Foundation-model embeddings** (AlphaEarth) are strong within
   regions (+1.4% / +2.6%) but transfer less reliably (+1.1% / +1.1% in
   unseen regions; −5.6% to +8.3% by region). Physical terrain transfers;

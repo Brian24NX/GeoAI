@@ -63,6 +63,14 @@ km.
   from the 6 nearest ground returns, per-project checkpoints); a 1,500-
   segment pilot ran in under a minute with plausible values. STRIDE's full
   model, with its density term, added to the harness.
+- **Lidar vegetation result, White Mountains** (decision #111): the full run
+  took 46 min (7.5 GB). Within the same hike, the densest understory fifth
+  is 7.5% slower and the sparsest 6% faster, even at similar steppiness.
+  Added to terrain it improves predictions in new 10 km squares (+3.6% →
+  +5.0%; about +1 point beyond terrain and elevation together), less for
+  new hikers. STRIDE's published density term badly over-penalises trails
+  (−37%). Next question: does it transfer to unseen regions? Dry runs are
+  sizing the point clouds for the other 15 US regions.
 
 ## Mon 12 Oct 2026
 
