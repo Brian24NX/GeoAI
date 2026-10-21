@@ -1,0 +1,47 @@
+{
+ "region": "bayarea",
+ "walking_points": 119939,
+ "projection_offset_m": {
+  "median": 1.0557271585571239e-08,
+  "p99": 4.709650515554563e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 73,
+ "dense_full_rate_route_vs_chord": 1.0287289961804782,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9841167889786944,
+   "route_vs_full": 1.024898798899378
+  },
+  "20": {
+   "chord_vs_full": 0.9588001585155903,
+   "route_vs_full": 1.0142157876973252
+  },
+  "30": {
+   "chord_vs_full": 0.937602910164287,
+   "route_vs_full": 1.0047792810837426
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 73,
+   "ratio": 1.0287289961804782
+  },
+  "(5.0, 10.0]": {
+   "traces": 12,
+   "ratio": 1.0204022482993285
+  },
+  "(10.0, 15.0]": {
+   "traces": 10,
+   "ratio": 1.0206957817113098
+  },
+  "(15.0, 25.0]": {
+   "traces": 2,
+   "ratio": 1.0223277084584645
+  },
+  "(25.0, 40.0]": {
+   "traces": 11,
+   "ratio": 1.0422296495443728
+  }
+ }
+}

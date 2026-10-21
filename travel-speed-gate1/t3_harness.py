@@ -14,9 +14,11 @@ when T2's covariates exist):
   stride         STRIDE (Campbell, Cutler & Dennison 2024; R package
                  `stride`, bld_tm): Lorentz(slope) / (1 + 15.265 density +
                  16.505 roughness), m/s, from field walks; needs the 1 m
-                 covariate rough_stride; no lidar vegetation density yet
-                 (density = 0). stride_refit: the same form fitted to our
-                 hikes
+                 covariate rough_stride; density = 0 here.
+                 stride_refit: the same form fitted to our hikes.
+                 stride_dns / stride_dns_refit: the full model, with the
+                 lidar understory density nrd (t2_lidarveg.py) when the
+                 covariates include it
   terrain_curve  Tobler's form with peak speed and slope sensitivity
                  linear in steppiness (SD of 5 m pitches, pitch_sd_5m):
                  ln v = a0 + a1 z - (k0 + k1 z)|s + s0|, z = steppiness /
@@ -244,7 +246,8 @@ RS_ARMS = {                      # added when --covariates are given
     "gbm_rs": ("gbm", ["slope", "rs"]),
     "gbm_both": ("gbm", ["slope", "tags", "rs"]),
 }
-RS_SKIP = {"segment_id", "dem1m_cover", "slope_1m"}   # not terrain beyond
+RS_SKIP = {"segment_id", "dem1m_cover", "slope_1m",   # not terrain beyond
+           "n_pts"}                       # (lidar points: the flight, not the trail)
                                                       # slope
 LAMBDAS = [1e-4, 1e-3, 1e-2, 1e-1, 1.0]   # ridge penalty per segment
 
@@ -266,16 +269,19 @@ def campbell(s):
 
 FIXED = {"tobler": tobler, "campbell": campbell}
 STRIDE = (-2.320, 26.315, 147.362, 16.505)   # a, b, c, e (bld_tm.R)
+STRIDE_D = 15.265                             # d, the density term
 
 
 def terrain_curve(s, z, a0, a1, k0, k1, s0):
     return a0 + a1 * z - (k0 + k1 * z) * np.abs(s + s0)
 
 
-def stride(s, rgh, a, b, c, e):
-    """ln km/h of the STRIDE form, slope s as rise/run, roughness rgh in m."""
+def stride(s, rgh, a, b, c, e, d=0.0, dns=0.0):
+    """ln km/h of the STRIDE form, slope s as rise/run, roughness rgh in m,
+    understory density dns (share of returns at 0.85-1.20 m)."""
     deg = np.degrees(np.arctan(s))
-    r = c / (np.pi * b * (1 + ((deg - a) / b) ** 2)) / (1 + e * rgh)
+    r = c / (np.pi * b * (1 + ((deg - a) / b) ** 2)) / (1 + d * dns
+                                                         + e * rgh)
     return np.log(3.6 * np.clip(r, 1e-3, None))
 
 
@@ -331,15 +337,20 @@ class Arm:
             self.v = self._cells(s, y, both, self.kappa)
         elif self.kind == "stride":
             rgh = self.blocks["stride_rgh"]
-            if self.spec == "published":
-                self.p = STRIDE
+            dns = self._dns()
+            if self.spec.startswith("published"):
+                self.p = STRIDE + ((STRIDE_D,) if self.spec.endswith("dns")
+                                   else ())
             else:
                 from scipy.optimize import least_squares
                 both = np.r_[fit, stop]
+                x0, lo, hi = list(STRIDE), [-15, 5, 1, 0], [15, 80, 2000, 200]
+                if self.spec.endswith("dns"):
+                    x0, lo, hi = x0 + [STRIDE_D], lo + [0], hi + [500]
                 res = least_squares(
-                    lambda q: stride(s[both], rgh[both], *q) - y[both],
-                    x0=list(STRIDE), loss="soft_l1", f_scale=0.3,
-                    bounds=([-15, 5, 1, 0], [15, 80, 2000, 200]))
+                    lambda q: stride(s[both], rgh[both], *q,
+                                     dns=dns[both]) - y[both],
+                    x0=x0, loss="soft_l1", f_scale=0.3, bounds=(lo, hi))
                 self.p = tuple(res.x)
         elif self.kind == "tcurve":
             from scipy.optimize import least_squares
@@ -359,10 +370,16 @@ class Arm:
                                X_val=self.X(stop)[self.cols], y_val=y[stop])
         self.r = np.quantile(y[cal] - self.predict(s, cal), QL)
         if self.kind == "fixed" or (self.kind == "stride"
-                                    and self.spec == "published"):
+                                    and self.spec.startswith("published")):
             # a published curve keeps its level:
             self.r -= np.median(self.r)   # spread from data, no recentering
         return self
+
+    def _dns(self):
+        """STRIDE's understory density for the _dns variants, else 0."""
+        if self.spec.endswith("dns"):
+            return self.blocks["stride_dns"]
+        return np.zeros(len(self.blocks["stride_rgh"]))
 
     def _cells(self, s, y, rows, kappa):
         """Shrunken mean residual per cell, each outing's mean removed
@@ -381,7 +398,8 @@ class Arm:
         if self.kind == "fixed":
             return FIXED[self.spec](s[idx])
         if self.kind == "stride":
-            return stride(s[idx], self.blocks["stride_rgh"][idx], *self.p)
+            return stride(s[idx], self.blocks["stride_rgh"][idx], *self.p,
+                          dns=self._dns()[idx])
         if self.kind == "tcurve":
             return terrain_curve(s[idx], self.blocks["steppy"][idx],
                                  *self.p)
@@ -669,6 +687,11 @@ def main():
         blocks["stride_rgh"] = r.fillna(r.median()).to_numpy()
         ARMS["stride"] = ("stride", "published")
         ARMS["stride_refit"] = ("stride", "refit")
+        if "nrd" in rs_cols:                 # ... and its density
+            d = w["nrd"]
+            blocks["stride_dns"] = d.fillna(d.median()).to_numpy()
+            ARMS["stride_dns"] = ("stride", "published_dns")
+            ARMS["stride_dns_refit"] = ("stride", "refit_dns")
     if rs_cols:
         blocks["rs"] = varying(w[rs_cols])
         blocks["rs_1h"] = onehot(binned(w[rs_cols])).to_numpy()

@@ -1,0 +1,47 @@
+{
+ "region": "smokies",
+ "walking_points": 66274,
+ "projection_offset_m": {
+  "median": 7.222641943897529e-08,
+  "p99": 7.625474643186801e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 41,
+ "dense_full_rate_route_vs_chord": 1.016903042705416,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9842257316773912,
+   "route_vs_full": 1.013784713176684
+  },
+  "20": {
+   "chord_vs_full": 0.9599030022302384,
+   "route_vs_full": 1.010308787594814
+  },
+  "30": {
+   "chord_vs_full": 0.9423790822205299,
+   "route_vs_full": 1.0051438359945992
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 41,
+   "ratio": 1.016903042705416
+  },
+  "(5.0, 10.0]": {
+   "traces": 11,
+   "ratio": 1.0184141406422362
+  },
+  "(10.0, 15.0]": {
+   "traces": 3,
+   "ratio": 1.0179406042082282
+  },
+  "(25.0, 40.0]": {
+   "traces": 1,
+   "ratio": 1.0580750714015565
+  },
+  "(40.0, inf]": {
+   "traces": 2,
+   "ratio": 1.0174168787929756
+  }
+ }
+}

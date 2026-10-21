@@ -1,0 +1,51 @@
+{
+ "region": "yosemite",
+ "walking_points": 151167,
+ "projection_offset_m": {
+  "median": 2.800562871473881e-08,
+  "p99": 4.220290785264868e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 41,
+ "dense_full_rate_route_vs_chord": 1.0201990487770505,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.985628332441456,
+   "route_vs_full": 1.0154284819749249
+  },
+  "20": {
+   "chord_vs_full": 0.9633195864237339,
+   "route_vs_full": 1.0077302538613206
+  },
+  "30": {
+   "chord_vs_full": 0.9447680403471429,
+   "route_vs_full": 0.9981307682086378
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 41,
+   "ratio": 1.0201990487770505
+  },
+  "(5.0, 10.0]": {
+   "traces": 18,
+   "ratio": 1.0206733988993224
+  },
+  "(10.0, 15.0]": {
+   "traces": 15,
+   "ratio": 1.0280906439893742
+  },
+  "(15.0, 25.0]": {
+   "traces": 5,
+   "ratio": 1.0298684036754666
+  },
+  "(25.0, 40.0]": {
+   "traces": 4,
+   "ratio": 1.0449376562055221
+  },
+  "(40.0, inf]": {
+   "traces": 3,
+   "ratio": 1.0753128768817997
+  }
+ }
+}

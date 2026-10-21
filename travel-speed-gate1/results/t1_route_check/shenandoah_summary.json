@@ -1,0 +1,47 @@
+{
+ "region": "shenandoah",
+ "walking_points": 37631,
+ "projection_offset_m": {
+  "median": 5.228292330960091e-08,
+  "p99": 3.699364561270504e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 20,
+ "dense_full_rate_route_vs_chord": 1.0116645099033408,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9914834063645185,
+   "route_vs_full": 1.0096279606052634
+  },
+  "20": {
+   "chord_vs_full": 0.9765169919565981,
+   "route_vs_full": 1.006243755364391
+  },
+  "30": {
+   "chord_vs_full": 0.967386028611675,
+   "route_vs_full": 1.0049839765975659
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 20,
+   "ratio": 1.0116645099033408
+  },
+  "(5.0, 10.0]": {
+   "traces": 13,
+   "ratio": 1.0141273334305283
+  },
+  "(10.0, 15.0]": {
+   "traces": 4,
+   "ratio": 1.0182587901959017
+  },
+  "(15.0, 25.0]": {
+   "traces": 4,
+   "ratio": 1.0310194628032259
+  },
+  "(40.0, inf]": {
+   "traces": 1,
+   "ratio": 1.0252403318573249
+  }
+ }
+}

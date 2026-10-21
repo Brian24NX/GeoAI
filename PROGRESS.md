@@ -51,8 +51,18 @@ km.
   97.4% with straight lines). It would add only 0.6–1.7% distance to most
   traces, so no full rebuild for this alone; a sensitivity check comes
   next.
-- Waiting on Brian's OK for the lidar understory download (~12 GB, White
-  Mountains), the last deliverable in the independent study form.
+- **Along-trail distance in all 17 regions** (decision #110): the fix works
+  everywhere (thinned to 30 s: 99.3–100.5% of the distance kept, vs
+  93.5–97.7% with straight lines). Even dense traces lose 1–3% to straight
+  lines on winding trails, so a T1 v2 would raise speeds ~1–3%. Plan: one
+  v2 rebuild together with the stop-rule decision from Brian's stop-check
+  sheet, then a numbers freeze for the paper.
+- **Lidar understory, White Mountains:** Brian approved the ~12 GB download.
+  `t2_lidarveg.py` rewritten for it (8 blocks in parallel with an on-disk
+  cache, a buffer grid then a KD-tree to find trail points, ground height
+  from the 6 nearest ground returns, per-project checkpoints); a 1,500-
+  segment pilot ran in under a minute with plausible values. STRIDE's full
+  model, with its density term, added to the harness.
 
 ## Mon 12 Oct 2026
 

@@ -1,0 +1,51 @@
+{
+ "region": "northshore",
+ "walking_points": 193880,
+ "projection_offset_m": {
+  "median": 2.010482833624182e-09,
+  "p99": 5.492848230439936e-07,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 97,
+ "dense_full_rate_route_vs_chord": 1.0176292657788852,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9873238405101393,
+   "route_vs_full": 1.0140897254353234
+  },
+  "20": {
+   "chord_vs_full": 0.9675907177379943,
+   "route_vs_full": 1.0092040346564621
+  },
+  "30": {
+   "chord_vs_full": 0.9520600653870653,
+   "route_vs_full": 1.0050520653611208
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 97,
+   "ratio": 1.0176292657788852
+  },
+  "(5.0, 10.0]": {
+   "traces": 48,
+   "ratio": 1.0221332906751648
+  },
+  "(10.0, 15.0]": {
+   "traces": 8,
+   "ratio": 1.0405803887859082
+  },
+  "(15.0, 25.0]": {
+   "traces": 11,
+   "ratio": 1.0197212493049321
+  },
+  "(25.0, 40.0]": {
+   "traces": 4,
+   "ratio": 1.0591366542886493
+  },
+  "(40.0, inf]": {
+   "traces": 2,
+   "ratio": 1.1256223456940475
+  }
+ }
+}

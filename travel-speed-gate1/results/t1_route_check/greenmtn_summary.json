@@ -1,0 +1,43 @@
+{
+ "region": "greenmtn",
+ "walking_points": 41885,
+ "projection_offset_m": {
+  "median": 4.515849221082499e-08,
+  "p99": 3.650081559711464e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 14,
+ "dense_full_rate_route_vs_chord": 1.0084267266684939,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9920883519675915,
+   "route_vs_full": 1.005036877879072
+  },
+  "20": {
+   "chord_vs_full": 0.9791192042477417,
+   "route_vs_full": 1.0009765072589207
+  },
+  "30": {
+   "chord_vs_full": 0.9683263008515413,
+   "route_vs_full": 0.9993685341701962
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 14,
+   "ratio": 1.0084267266684939
+  },
+  "(5.0, 10.0]": {
+   "traces": 7,
+   "ratio": 1.01067545859249
+  },
+  "(10.0, 15.0]": {
+   "traces": 4,
+   "ratio": 1.0095324501289764
+  },
+  "(15.0, 25.0]": {
+   "traces": 1,
+   "ratio": 1.026026241370286
+  }
+ }
+}

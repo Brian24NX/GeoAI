@@ -1,0 +1,47 @@
+{
+ "region": "tahoe",
+ "walking_points": 140787,
+ "projection_offset_m": {
+  "median": 5.500830297070571e-08,
+  "p99": 5.634482516964255e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 52,
+ "dense_full_rate_route_vs_chord": 1.0098132187833435,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9916110564713587,
+   "route_vs_full": 1.0074743794931627
+  },
+  "20": {
+   "chord_vs_full": 0.9771500159128371,
+   "route_vs_full": 1.0037784228979865
+  },
+  "30": {
+   "chord_vs_full": 0.964941461773193,
+   "route_vs_full": 1.000257499265329
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 52,
+   "ratio": 1.0098132187833435
+  },
+  "(5.0, 10.0]": {
+   "traces": 27,
+   "ratio": 1.0164696062417897
+  },
+  "(10.0, 15.0]": {
+   "traces": 7,
+   "ratio": 1.0201388846200479
+  },
+  "(15.0, 25.0]": {
+   "traces": 1,
+   "ratio": 1.0594191476629722
+  },
+  "(40.0, inf]": {
+   "traces": 8,
+   "ratio": 1.0281446590035683
+  }
+ }
+}

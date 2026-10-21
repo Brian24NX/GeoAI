@@ -1,0 +1,43 @@
+{
+ "region": "catskills",
+ "walking_points": 101249,
+ "projection_offset_m": {
+  "median": 1.7398541506630746e-08,
+  "p99": 1.4801318267778128e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 39,
+ "dense_full_rate_route_vs_chord": 1.0061531997016406,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9942031883952874,
+   "route_vs_full": 1.0044892780353394
+  },
+  "20": {
+   "chord_vs_full": 0.9851923870267153,
+   "route_vs_full": 1.0021180917519243
+  },
+  "30": {
+   "chord_vs_full": 0.9770707442764144,
+   "route_vs_full": 1.0000924230298103
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 39,
+   "ratio": 1.0061531997016406
+  },
+  "(5.0, 10.0]": {
+   "traces": 14,
+   "ratio": 1.007524611068356
+  },
+  "(10.0, 15.0]": {
+   "traces": 4,
+   "ratio": 1.0093531648412786
+  },
+  "(15.0, 25.0]": {
+   "traces": 7,
+   "ratio": 1.0075143314448964
+  }
+ }
+}

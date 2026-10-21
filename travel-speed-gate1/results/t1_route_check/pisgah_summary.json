@@ -1,0 +1,51 @@
+{
+ "region": "pisgah",
+ "walking_points": 26248,
+ "projection_offset_m": {
+  "median": 5.5421518877160285e-08,
+  "p99": 2.123572174258925e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 13,
+ "dense_full_rate_route_vs_chord": 1.018904821808161,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9829619480839241,
+   "route_vs_full": 1.0127064384093363
+  },
+  "20": {
+   "chord_vs_full": 0.9603467577721498,
+   "route_vs_full": 1.0064834096438442
+  },
+  "30": {
+   "chord_vs_full": 0.9413178258810825,
+   "route_vs_full": 0.9934486629324252
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 13,
+   "ratio": 1.018904821808161
+  },
+  "(5.0, 10.0]": {
+   "traces": 11,
+   "ratio": 1.021632862456105
+  },
+  "(10.0, 15.0]": {
+   "traces": 5,
+   "ratio": 1.0275472166255568
+  },
+  "(15.0, 25.0]": {
+   "traces": 2,
+   "ratio": 1.0286569652975193
+  },
+  "(25.0, 40.0]": {
+   "traces": 6,
+   "ratio": 1.0217209968712544
+  },
+  "(40.0, inf]": {
+   "traces": 1,
+   "ratio": 1.1596531829944998
+  }
+ }
+}

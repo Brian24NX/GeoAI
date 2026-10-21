@@ -28,6 +28,16 @@ case "$1" in
   zones)      $H --covariates $T5 $T1 --splits macro eastwest \
                  --out results/t3_harness_zones ;;
   weather)    $H --covariates $WX --out results/t3_harness_weather ;;
+  wmterrain)  $H --regions wm --splits outing5 block5 \
+                 --covariates data/t2/terrain5m_wm.parquet \
+                 data/t2/terrain1m_wm.parquet --out results/t3_harness_wm_terrain ;;
+  wmveg)      $H --regions wm --splits outing5 block5 \
+                 --covariates data/t2/lidarveg_wm.parquet \
+                 --out results/t3_harness_wm_lidarveg ;;
+  wmterrainveg) $H --regions wm --splits outing5 block5 \
+                 --covariates data/t2/terrain5m_wm.parquet \
+                 data/t2/terrain1m_wm.parquet data/t2/lidarveg_wm.parquet \
+                 --out results/t3_harness_wm_terrain_lidarveg ;;
   weatherterrain) $H --covariates $T5 $T1 $WX \
                  --out results/t3_harness_weather_terrain ;;
   contextterrain) $H --covariates $T5 $T1 $CX \

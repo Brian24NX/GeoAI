@@ -1,0 +1,47 @@
+{
+ "region": "adk",
+ "walking_points": 145258,
+ "projection_offset_m": {
+  "median": 6.105636802438673e-08,
+  "p99": 2.4825650633931704e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 20,
+ "dense_full_rate_route_vs_chord": 1.0068731851323534,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9934274296099759,
+   "route_vs_full": 1.004159445965411
+  },
+  "20": {
+   "chord_vs_full": 0.9835604894557722,
+   "route_vs_full": 1.001456359466729
+  },
+  "30": {
+   "chord_vs_full": 0.975166540704352,
+   "route_vs_full": 0.9995188394731342
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 20,
+   "ratio": 1.0068731851323534
+  },
+  "(5.0, 10.0]": {
+   "traces": 32,
+   "ratio": 1.0073437113258252
+  },
+  "(10.0, 15.0]": {
+   "traces": 11,
+   "ratio": 1.0073113475824509
+  },
+  "(15.0, 25.0]": {
+   "traces": 13,
+   "ratio": 1.0124012774389535
+  },
+  "(40.0, inf]": {
+   "traces": 1,
+   "ratio": 1.0191315269211845
+  }
+ }
+}

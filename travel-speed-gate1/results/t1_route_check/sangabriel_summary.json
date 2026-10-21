@@ -1,0 +1,51 @@
+{
+ "region": "sangabriel",
+ "walking_points": 205882,
+ "projection_offset_m": {
+  "median": 1.553697569361224e-08,
+  "p99": 1.6239964261319321e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 71,
+ "dense_full_rate_route_vs_chord": 1.0128874762839801,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9879151687872929,
+   "route_vs_full": 1.0107671859346286
+  },
+  "20": {
+   "chord_vs_full": 0.9662991854726602,
+   "route_vs_full": 1.006202614357486
+  },
+  "30": {
+   "chord_vs_full": 0.9471024609509647,
+   "route_vs_full": 1.0023897502181707
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 71,
+   "ratio": 1.0128874762839801
+  },
+  "(5.0, 10.0]": {
+   "traces": 14,
+   "ratio": 1.0221038329464602
+  },
+  "(10.0, 15.0]": {
+   "traces": 4,
+   "ratio": 1.023439931374827
+  },
+  "(15.0, 25.0]": {
+   "traces": 4,
+   "ratio": 1.030673116243481
+  },
+  "(25.0, 40.0]": {
+   "traces": 23,
+   "ratio": 1.044018022965137
+  },
+  "(40.0, inf]": {
+   "traces": 2,
+   "ratio": 1.0259575247847077
+  }
+ }
+}

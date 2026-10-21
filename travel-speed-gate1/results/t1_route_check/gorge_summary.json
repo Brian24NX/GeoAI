@@ -1,0 +1,43 @@
+{
+ "region": "gorge",
+ "walking_points": 83859,
+ "projection_offset_m": {
+  "median": 3.077682940122262e-08,
+  "p99": 2.1416680650463266e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 37,
+ "dense_full_rate_route_vs_chord": 1.0200822079532352,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.983468359180326,
+   "route_vs_full": 1.0138275818436628
+  },
+  "20": {
+   "chord_vs_full": 0.9587509218125473,
+   "route_vs_full": 1.0034514850624094
+  },
+  "30": {
+   "chord_vs_full": 0.9389807161347583,
+   "route_vs_full": 0.9931301950926908
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 37,
+   "ratio": 1.0200822079532352
+  },
+  "(5.0, 10.0]": {
+   "traces": 12,
+   "ratio": 1.0196744841480276
+  },
+  "(10.0, 15.0]": {
+   "traces": 14,
+   "ratio": 1.0154222214091555
+  },
+  "(15.0, 25.0]": {
+   "traces": 5,
+   "ratio": 1.0205663368475213
+  }
+ }
+}

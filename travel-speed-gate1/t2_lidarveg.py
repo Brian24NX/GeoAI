@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
 """
-T2 tier 2 (pilot): understory vegetation from USGS 3DEP lidar POINT CLOUDS
-around each walking segment, the measure the plan names (Campbell et al.
-2018) and STRIDE uses: normalized relative density (NRD) = returns between
-0.85 and 1.20 m above ground / returns at or below 1.20 m (`stride`
-package, dns_fun). 30 m canopy maps carried no signal (decision #87); this
-is the fine-scale test.
+T2 tier 2: understory vegetation from USGS 3DEP lidar POINT CLOUDS around
+each walking segment, the measure the plan names (Campbell et al. 2018) and
+STRIDE uses: normalized relative density (NRD) = returns between 0.85 and
+1.20 m above ground / returns at or below 1.20 m (`stride` package,
+dns_fun). 30 m canopy maps carried no signal (decision #87); this is the
+fine-scale test.
 
 Point clouds: the public Entwine Point Tiles on AWS
 (s3-us-west-2.amazonaws.com/usgs-lidar-public/<project>/), read without an
 account: ept.json -> the octree hierarchy -> only the LAZ blocks that touch
-a buffer around walked trails (laspy + lazrs). The project boundaries come
-from the index hobuinc/usgs-lidar (cache/ept/resources.geojson).
+a buffer around walked trails (laspy + lazrs). Blocks are fetched 8 at a
+time and cached in cache/ept/<project>/ (a re-run downloads nothing). The
+project boundaries come from the index hobuinc/usgs-lidar
+(cache/ept/resources.geojson).
 
 Per segment, points within BUF_M of its matched path:
   nrd          STRIDE's understory density, 0.85-1.20 m
@@ -19,18 +21,29 @@ Per segment, points within BUF_M of its matched path:
   cover2m      share of first returns more than 2 m above ground
   hag_p95      95th percentile height above ground (canopy height)
   n_pts        points used
-Height above ground = z - z of the nearest ground return (class 2) within
-2 m, so no DEM or vertical datum is involved.
+Height above ground = z minus the ground (class 2) height under the point,
+interpolated from its 6 nearest ground returns within 2 m (inverse-distance
+weights): no DEM or vertical datum involved, and on a slope the ground
+under the point is not taken from one neighbour uphill or downhill.
+
+Finding the points: a grid of 2 m cells covering every buffer drops the
+points far from any trail first; the rest get their candidate segments from
+a KD-tree of the paths' vertices (densified to <= 1.5 m) and an exact
+distance to each candidate's polyline. Results are written per lidar
+project and a stopped run resumes.
 
 Run:  python t2_lidarveg.py --region wm --dry-run   (block and size count)
-      python t2_lidarveg.py --region wm [--max-segments N]
-Output: data/t2/lidarveg_<region>.parquet
+      python t2_lidarveg.py --region wm [--max-segments N] [--workers 8]
+Output: data/t2/lidarveg_<region>.parquet (per-project parts in
+        data/t2/lidarveg_parts/)
 """
 
 import argparse
 import io
 import json
 import time
+from collections import deque
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 import laspy
@@ -42,10 +55,14 @@ from pyproj import Transformer
 from scipy.spatial import cKDTree
 
 INDEX = Path("cache/ept/resources.geojson")
+CACHE = Path("cache/ept")
 SEG = Path("data/t1_all/segments_L50.parquet")
 OUT = Path("data/t2")
-BUF_M = 3.0
-AGENT = {"User-Agent": "WashU-MVRL-travel-speed/0.2 (research)"}
+BUF_M = 3.0                       # buffer around the path (real metres)
+CELL = 2.0                        # prefilter grid (mercator metres)
+VERTEX = 1.5                      # path densified to this (mercator metres)
+K_GROUND, R_GROUND = 6, 2.0       # ground interpolation (points, real m)
+AGENT = {"User-Agent": "WashU-MVRL-travel-speed/0.3 (research)"}
 
 
 def get(url, tries=4):
@@ -108,6 +125,21 @@ class EPT:
                                     f"{2 * z + dz}")
         return out
 
+    def block(self, key, cache):
+        """One block's points (x, y, z, class, return number), cached."""
+        f = cache / f"{key}.laz"
+        if f.exists():
+            data = f.read_bytes()
+        else:
+            data = get(f"{self.base}/ept-data/{key}.laz")
+            tmp = f.with_suffix(".part")
+            tmp.write_bytes(data)
+            tmp.rename(f)
+        las = laspy.read(io.BytesIO(data))
+        return (np.asarray(las.x), np.asarray(las.y), np.asarray(las.z),
+                np.asarray(las.classification, dtype=np.uint8),
+                np.asarray(las.return_number, dtype=np.uint8))
+
 
 def seg_paths(key):
     s = pd.read_parquet(SEG, columns=["region", "analysis_walk", "segment_id",
@@ -128,6 +160,16 @@ def seg_paths(key):
     return s, paths
 
 
+def densify(path, step):
+    """Vertices along a polyline, at most `step` apart."""
+    out = [path[:1]]
+    for a, b in zip(path[:-1], path[1:]):
+        n = max(int(np.ceil(np.hypot(*(b - a)) / step)), 1)
+        t = np.arange(1, n + 1)[:, None] / n
+        out.append(a + t * (b - a))
+    return np.vstack(out)
+
+
 def dist_to_path(px, py, path):
     """Distance from points to a polyline (vectorized, mercator metres)."""
     a, b = path[:-1], path[1:]
@@ -142,26 +184,111 @@ def dist_to_path(px, py, path):
                    + (py[:, None] - cy) ** 2).min(axis=1)
 
 
-def metrics(pts, dist, scale):
-    """Per-segment vegetation numbers from its buffered points."""
-    x, y, z, cls, rn = pts
+def metrics(x, y, z, cls, rn, dist, scale):
+    """Per-segment vegetation numbers from its buffered points (x, y in
+    mercator metres relative to the segment, z in metres)."""
     g = cls == 2
     if g.sum() < 10 or len(z) < 50:
         return None
     tree = cKDTree(np.c_[x[g], y[g]])
-    dd, ii = tree.query(np.c_[x, y], distance_upper_bound=2.0 * scale)
+    dd, ii = tree.query(np.c_[x, y], k=min(K_GROUND, int(g.sum())),
+                        distance_upper_bound=R_GROUND * scale)
+    dd, ii = np.atleast_2d(dd), np.atleast_2d(ii)
+    if dd.shape[0] != len(z):
+        dd, ii = dd.T, ii.T
     ok = np.isfinite(dd)
+    w = np.where(ok, 1 / np.maximum(dd, 0.05 * scale) ** 2, 0)
+    zg_all = np.r_[z[g], np.nan]
+    zg = np.nansum(w * np.where(ok, zg_all[np.minimum(ii, g.sum())], 0), 1)
+    has = w.sum(1) > 0
     hag = np.full(len(z), np.nan)
-    hag[ok] = z[ok] - z[g][ii[ok]]
-    low = ok & (hag <= 1.20)
+    hag[has] = z[has] - zg[has] / w.sum(1)[has]
+    low = has & (hag <= 1.20)
     band = low & (hag >= 0.85)
     c = low & (dist <= 1.0 * scale)
-    first = ok & (rn == 1)
+    first = has & (rn == 1)
     return {"nrd": band.sum() / max(low.sum(), 1),
             "nrd_center": (band & c).sum() / max(c.sum(), 1),
-            "cover2m": (hag[first] > 2.0).mean() if first.any() else np.nan,
-            "hag_p95": float(np.nanpercentile(hag[ok], 95)),
-            "n_pts": int(ok.sum())}
+            "cover2m": float((hag[first] > 2.0).mean())
+            if first.any() else np.nan,
+            "hag_p95": float(np.nanpercentile(hag[has], 95)),
+            "n_pts": int(has.sum())}
+
+
+def project_segments(s, paths, idx, ept, nodes, workers, cache, label):
+    """Vegetation metrics for the segments idx of one lidar project."""
+    lat = s.mlat.to_numpy()[idx]
+    scale = 1 / np.cos(np.radians(lat.mean()))      # mercator m per real m
+    buf = BUF_M * scale
+    # candidate structures: densified vertices -> segment, buffer cells
+    vx = [densify(paths[i], VERTEX) for i in idx]
+    vseg = np.concatenate([np.full(len(v), j) for j, v in enumerate(vx)])
+    vxy = np.vstack(vx)
+    tree = cKDTree(vxy)
+    reach = int(np.ceil((buf + VERTEX) / CELL))
+    cx, cy = np.floor(vxy[:, 0] / CELL).astype(np.int64), \
+        np.floor(vxy[:, 1] / CELL).astype(np.int64)
+    off = np.arange(-reach, reach + 1)
+    cells = np.unique(((cx[:, None, None] + off[None, :, None]) * 4_000_000
+                       + (cy[:, None, None] + off[None, None, :]))
+                      .ravel())
+    origin = np.array([p[0] for p in (paths[i] for i in idx)])
+    acc = [[] for _ in idx]
+    t0, done, kept = time.time(), 0, 0
+    keys = iter(key for key, _ in nodes)
+    with ThreadPoolExecutor(workers) as pool:
+        window = deque(pool.submit(ept.block, k, cache)
+                       for _, k in zip(range(3 * workers), keys))
+        while window:                        # a few blocks in flight only
+            x, y, z, cls, rn = window.popleft().result()
+            k = next(keys, None)
+            if k is not None:
+                window.append(pool.submit(ept.block, k, cache))
+            done += 1
+            cid = (np.floor(x / CELL).astype(np.int64) * 4_000_000
+                   + np.floor(y / CELL).astype(np.int64))
+            pos = np.minimum(np.searchsorted(cells, cid), len(cells) - 1)
+            near = np.nonzero(cells[pos] == cid)[0]
+            if len(near):
+                cand = tree.query_ball_point(np.c_[x[near], y[near]],
+                                             r=buf + VERTEX)
+                n = np.fromiter((len(c) for c in cand), int, len(cand))
+                if n.sum():
+                    pi = np.repeat(np.arange(len(near)), n)
+                    sj = vseg[np.concatenate([c for c in cand if c])]
+                    pair = np.unique(pi * len(idx) + sj)
+                    pi, sj = pair // len(idx), pair % len(idx)
+                    order = np.argsort(sj, kind="stable")
+                    pi, sj = pi[order], sj[order]
+                    cut = np.nonzero(np.diff(sj))[0] + 1
+                    for p_, j in zip(np.split(pi, cut), sj[np.r_[0, cut]]):
+                        q = near[p_]
+                        d = dist_to_path(x[q], y[q], paths[idx[j]])
+                        m = d <= buf
+                        if m.any():
+                            q = q[m]
+                            acc[j].append((
+                                (x[q] - origin[j, 0]).astype(np.float32),
+                                (y[q] - origin[j, 1]).astype(np.float32),
+                                z[q].astype(np.float32), cls[q], rn[q],
+                                d[m].astype(np.float32)))
+                            kept += int(m.sum())
+            if done % 500 == 0 or done == len(nodes):
+                el = time.time() - t0
+                print(f"    {label}: {done:,}/{len(nodes):,} blocks, "
+                      f"{kept / 1e6:.1f} M points kept, {el / 60:.1f} min, "
+                      f"~{el / done * (len(nodes) - done) / 60:.0f} min "
+                      "left", flush=True)
+    rows = []
+    for j, i in enumerate(idx):
+        row = {"segment_id": s.segment_id.iat[i]}
+        if acc[j]:
+            cat = [np.concatenate([p[c] for p in acc[j]]) for c in range(6)]
+            m = metrics(*cat[:5], cat[5], scale)
+            if m:
+                row.update(m)
+        rows.append(row)
+    return pd.DataFrame(rows)
 
 
 def main():
@@ -170,6 +297,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--max-segments", type=int, default=0,
                     help="pilot on a spatially compact subset")
+    ap.add_argument("--workers", type=int, default=8)
     a = ap.parse_args()
     s, paths = seg_paths(a.region)
     feats = json.loads(INDEX.read_text())["features"]
@@ -184,6 +312,7 @@ def main():
             inside |= poly.contains_points(pts_ll)
         owner[free & inside] = i
     use = np.nonzero(owner >= 0)[0]
+    tag = ""
     if a.max_segments and len(use) > a.max_segments:
         # a compact pilot: the 10 km cell walked by the most different
         # outings, then its segments nearest the cell center
@@ -195,15 +324,23 @@ def main():
         c = cells.groupby(["cx", "cy"]).o.nunique().idxmax()
         cx, cy = (c[0] + 0.5) * 10000, (c[1] + 0.5) * 10000
         use = use[np.argsort(np.hypot(mx - cx, my - cy))[:a.max_segments]]
+        tag = f"_pilot{a.max_segments}"
     print(f"{a.region}: {len(s):,} walking segments, {len(use):,} used "
           f"({s.outing_id.iloc[use].nunique():,} outings), in "
           f"{len(set(owner[use]))} lidar projects", flush=True)
-    rows, t0 = [], time.time()
+    (OUT / "lidarveg_parts").mkdir(parents=True, exist_ok=True)
+    parts, t0 = [], time.time()
     for pi in sorted(set(owner[use])):
         f = feats[pi]
+        name = f["properties"]["name"]
         idx = use[owner[use] == pi]
+        part = OUT / "lidarveg_parts" / f"{a.region}{tag}_{name}.parquet"
+        if part.exists() and not a.dry_run:
+            print(f"  {name}: done before ({part})", flush=True)
+            parts.append(pd.read_parquet(part))
+            continue
         lat = s.mlat.to_numpy()[idx]
-        scale = 1 / np.cos(np.radians(lat.mean()))   # mercator m per real m
+        scale = 1 / np.cos(np.radians(lat.mean()))
         boxes = np.array([[p[:, 0].min() - BUF_M * scale,
                            p[:, 1].min() - BUF_M * scale,
                            p[:, 0].max() + BUF_M * scale,
@@ -212,58 +349,27 @@ def main():
         ept = EPT(f["properties"]["url"])
         nodes = ept.nodes(boxes)
         npts = sum(n for _, n in nodes)
-        print(f"  {f['properties']['name']}: {len(idx):,} segments, "
-              f"{len(nodes):,} blocks, {npts / 1e6:,.0f} M points "
-              f"(~{npts * 9 / 1e9:.1f} GB as LAZ)", flush=True)
+        print(f"  {name}: {len(idx):,} segments, {len(nodes):,} blocks, "
+              f"{npts / 1e6:,.0f} M points (~{npts * 9 / 1e9:.1f} GB as "
+              "LAZ)", flush=True)
         if a.dry_run:
             continue
-        acc = {i: [] for i in idx}
-        for k, (key, _) in enumerate(nodes):
-            las = laspy.read(io.BytesIO(get(f"{ept.base}/ept-data/{key}.laz")))
-            x, y, z = (np.asarray(las.x), np.asarray(las.y),
-                       np.asarray(las.z))
-            cls = np.asarray(las.classification)
-            rn = np.asarray(las.return_number)
-            d, xi, yi, _ = map(int, key.split("-"))
-            sz = ept.size / 2 ** d
-            nx0, ny0 = ept.x0 + xi * sz, ept.y0 + yi * sz
-            hit = np.nonzero((boxes[:, 0] < nx0 + sz) & (boxes[:, 2] > nx0)
-                             & (boxes[:, 1] < ny0 + sz)
-                             & (boxes[:, 3] > ny0))[0]
-            for j in hit:
-                b = boxes[j]
-                m = (x >= b[0]) & (x <= b[2]) & (y >= b[1]) & (y <= b[3])
-                if not m.any():
-                    continue
-                dist = dist_to_path(x[m], y[m], paths[idx[j]])
-                keep = dist <= BUF_M * scale
-                if keep.any():
-                    acc[idx[j]].append((x[m][keep], y[m][keep], z[m][keep],
-                                        cls[m][keep], rn[m][keep],
-                                        dist[keep]))
-            if k % 200 == 0:
-                print(f"    {k:,}/{len(nodes):,} blocks, "
-                      f"{time.time() - t0:.0f} s", flush=True)
-        for i, parts in acc.items():
-            row = {"segment_id": s.segment_id.iat[i]}
-            if parts:
-                cat = [np.concatenate([p[c] for p in parts])
-                       for c in range(6)]
-                m = metrics(cat[:5], cat[5], scale)
-                if m:
-                    row.update(m)
-            rows.append(row)
+        cache = CACHE / name
+        cache.mkdir(parents=True, exist_ok=True)
+        out = project_segments(s, paths, idx, ept, nodes, a.workers, cache,
+                               name)
+        out.to_parquet(part, index=False)
+        parts.append(out)
     if a.dry_run:
         return
-    out = pd.DataFrame(rows)
+    out = pd.concat(parts, ignore_index=True)
     for c in ("nrd", "nrd_center", "cover2m", "hag_p95", "n_pts"):
         if c not in out:
             out[c] = np.nan
-    OUT.mkdir(parents=True, exist_ok=True)
-    f = OUT / f"lidarveg_{a.region}.parquet"
+    f = OUT / f"lidarveg_{a.region}{tag}.parquet"
     out.to_parquet(f, index=False)
     print(f"wrote {f}: {len(out):,} segments, vegetation for "
-          f"{out.nrd.notna().mean():.0%}, {time.time() - t0:.0f} s")
+          f"{out.nrd.notna().mean():.0%}, {(time.time() - t0) / 60:.0f} min")
     print(out.describe().T.round(3).to_string())
 
 

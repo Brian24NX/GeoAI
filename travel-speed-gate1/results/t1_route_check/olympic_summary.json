@@ -1,0 +1,51 @@
+{
+ "region": "olympic",
+ "walking_points": 161291,
+ "projection_offset_m": {
+  "median": 1.3334509975534262e-08,
+  "p99": 8.055635417660911e-07,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 42,
+ "dense_full_rate_route_vs_chord": 1.0120878369320065,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9903091424512854,
+   "route_vs_full": 1.0085696233324013
+  },
+  "20": {
+   "chord_vs_full": 0.974527118753515,
+   "route_vs_full": 1.0026533312871502
+  },
+  "30": {
+   "chord_vs_full": 0.9628467766620487,
+   "route_vs_full": 0.9984443467856089
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 42,
+   "ratio": 1.0120878369320065
+  },
+  "(5.0, 10.0]": {
+   "traces": 47,
+   "ratio": 1.0156923211401334
+  },
+  "(10.0, 15.0]": {
+   "traces": 33,
+   "ratio": 1.0166193068737617
+  },
+  "(15.0, 25.0]": {
+   "traces": 39,
+   "ratio": 1.014386965996165
+  },
+  "(25.0, 40.0]": {
+   "traces": 1,
+   "ratio": 1.0123820416293785
+  },
+  "(40.0, inf]": {
+   "traces": 2,
+   "ratio": 1.0559926196787286
+  }
+ }
+}
