@@ -1,0 +1,47 @@
+{
+ "region": "wm",
+ "walking_points": 372311,
+ "projection_offset_m": {
+  "median": 7.440979241320413e-08,
+  "p99": 7.169860952860031e-06,
+  "unlocated_share": 0.0
+ },
+ "dense_traces": 78,
+ "dense_full_rate_route_vs_chord": 1.0063922916449541,
+ "thinned": {
+  "10": {
+   "chord_vs_full": 0.9936961619582279,
+   "route_vs_full": 1.0041347481298362
+  },
+  "20": {
+   "chord_vs_full": 0.9828652404042351,
+   "route_vs_full": 1.0003175357450518
+  },
+  "30": {
+   "chord_vs_full": 0.9737400244874973,
+   "route_vs_full": 0.9982182716558943
+  }
+ },
+ "all_traces_route_vs_chord_by_interval": {
+  "(0.0, 5.0]": {
+   "traces": 78,
+   "ratio": 1.0063922916449541
+  },
+  "(5.0, 10.0]": {
+   "traces": 76,
+   "ratio": 1.0090150007356076
+  },
+  "(10.0, 15.0]": {
+   "traces": 22,
+   "ratio": 1.0094335713009939
+  },
+  "(15.0, 25.0]": {
+   "traces": 21,
+   "ratio": 1.0166357716793837
+  },
+  "(40.0, inf]": {
+   "traces": 4,
+   "ratio": 1.0393696543551592
+  }
+ }
+}

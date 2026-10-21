@@ -40,6 +40,20 @@ km.
 
 ---
 
+## Wed 21 Oct 2026
+
+- **16 Oct meeting with Danni went well.** She said to keep going and do
+  whatever is needed next.
+- **T1 v2 test, distance along the trail** (decision #109,
+  `t1_route_check.py`, White Mountains): measuring distance along the
+  trail between matched GPS points removes the corner-cutting loss of
+  sparse traces (thinned to 30 s: 99.8% of the full distance kept, vs
+  97.4% with straight lines). It would add only 0.6–1.7% distance to most
+  traces, so no full rebuild for this alone; a sensitivity check comes
+  next.
+- Waiting on Brian's OK for the lidar understory download (~12 GB, White
+  Mountains), the last deliverable in the independent study form.
+
 ## Mon 12 Oct 2026
 
 - **Overnight refresh on the complete T1** (00:00–02:34, decision #95):
