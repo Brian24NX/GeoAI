@@ -154,6 +154,8 @@ sbatch -A engr-class-any -p linuxlab-project -c 8 --mem 48G -t 2:00:00 cluster/r
 | `context` | day of year + local hour (after `t3_season_time.py`) | `t3_harness_context` | season and time of day alone |
 | `weather` | Daymet weather on the hike's day (after `t2_weather.py`) | `t3_harness_weather` | weather alone |
 | `weatherterrain` | terrain 5 m + 1 m + weather | `t3_harness_weather_terrain` | does weather add to terrain? |
+| `wmterrain`, `wmveg`, `wmterrainveg` | White Mountains only (outing and block splits): terrain, lidar vegetation, both | `t3_harness_wm_*` | does point-cloud vegetation add to terrain within a region? |
+| `vegterrain`, `vegonly`, `vegboth` | the 15 regions with lidar point clouds: terrain, lidar vegetation, both | `t3_harness_veg15_*` | does it transfer to unseen regions? |
 | `contextterrain` | terrain 5 m + 1 m + day of year + hour | `t3_harness_context_terrain` | do they add to terrain? |
 
 The harness is seeded, so a re-run gives identical numbers. The robust
@@ -173,7 +175,9 @@ this.
 | `make_paper_data.py` | `results/fig1_wm_segments.parquet` (Fig. 1 inset) | 1 min |
 | `make_explainer_data.py` | `results/explainer_data.json` (**run last**: it reads the results above) | 1 min |
 | `t1_release.py` | `data/t1_release/` (de-identified copy; stays on the cluster) | minutes |
-| `t2_lidarveg.py --region wm --dry-run` | sizes the lidar understory pilot (the full run waits for the mentors) | 12 min |
+| `t2_lidarveg.py --region <key>` | `data/t2/lidarveg_<key>.parquet`: understory density, canopy cover and height from USGS 3DEP point clouds on AWS (blocks cached in `cache/ept/<project>/`, ~0.25 MB per segment; `--dry-run` sizes it). Not for Yosemite (no point clouds) or the North Shore (Canada) | ~45 min per 25,000 blocks |
+| `t2_lidarveg_effects.py --region wm` | `results/t2_lidarveg_effects/` (speed by vegetation quintile, within hikes) | 2 min |
+| `t1_route_check.py --region <key>` | `results/t1_route_check/` (distance along the trail vs straight lines; the T1 v2 test) | 2–5 min per region |
 
 ### 5. On the laptop: figures, explainer, PDFs
 
