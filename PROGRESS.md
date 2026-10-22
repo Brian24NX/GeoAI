@@ -72,6 +72,13 @@ km.
   The join is now on (region, segment id). Rerun measured the effect:
   every number moves ≤ 0.06 points, no conclusion changes; the paper keeps
   its frozen numbers.
+- **Understory in three height layers** (plan T2 item, Campbell et al.
+  2018; decision #119): computed for all 15 lidar regions from the cached
+  point clouds (no downloads). The layers add nothing beyond STRIDE's
+  single band (unseen regions +0.03 / +0.01 points), so "lidar vegetation
+  adds little" holds with the plan's fuller measure. T2 item closed.
+- **Slack note for Danni drafted** (Brian asked): a plain-words walk-through
+  of the explainer's "What we've found" figures for Brian to send.
 
 ## Wed 21 Oct 2026
 

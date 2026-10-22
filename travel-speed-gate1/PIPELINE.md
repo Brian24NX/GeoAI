@@ -158,6 +158,8 @@ sbatch -A engr-class-any -p linuxlab-project -c 8 --mem 48G -t 2:00:00 cluster/r
 | `vegterrain`, `vegonly`, `vegboth` | the 15 regions with lidar point clouds: terrain, lidar vegetation, both | `t3_harness_veg15_*` | does it transfer to unseen regions? |
 | `contextterrain` | terrain 5 m + 1 m + day of year + hour | `t3_harness_context_terrain` | do they add to terrain? |
 | `hikers` | terrain 5 m + 1 m; splits: 5 folds of uploaders (`hiker5`), and leave one region out with that region's hikers also dropped from training (`loro_hiker`) | `t3_harness_hikers` | new hikers, and unseen regions with unseen hikers (#116) |
+| `vegterrainfix`, `vegbothfix` | as `vegterrain`, `vegboth`, with the fixed (region, segment) join | `t3_harness_veg15_terrain_fixid`, `..._terrain_lidarveg_fixid` | baselines for the strata comparison (#119) |
+| `strataonly`, `strataterrain` | lidar vegetation with Campbell et al.'s three strata (after `t2_lidarveg.py --strata`; `cluster/lidarstrata_job.sh`), alone and with terrain, 15 regions | `t3_harness_veg15_strata`, `..._terrain_strata` | do thin strata add to the single band? No (#119) |
 | `fixid15m` | as `terrain15m`, with the covariates joined on (region, segment id) | `t3_harness_terrain15m_fixid` | measured the shared-id bug (#118): ≤ 0.06 points; the reference for new T3 models |
 | `folds15m`, `foldshikers` | as `terrain15m` and `hikers`, with `--save-folds` | `t3_harness_terrain15m_folds`, `t3_harness_hikers_folds` | the harness's exact folds for models built outside it; then `$PY t3_export_table.py` writes the de-identified modeling table to `cache/exercise/` (T3 weeks 10–11) |
 

@@ -184,7 +184,9 @@ frozen on T1 v1 by decision #113; lidar vegetation row 21 Oct;
   points; it helps in 9 of 15 regions (Green Mtns +2.6, Adirondacks +2.0)
   and hurts in others (Front Range −1.4). Even among the 7 eastern forest
   regions: +0.4 [−0.4, 1.5] / −0.1. Like the embeddings, it knows places;
-  only terrain transfers. **Corrected (#115):** pooled over the 15 regions,
+  only terrain transfers. With Campbell et al.'s three strata (0.5–1.5,
+  1.5–2.5, 2.5–3.5 m; #119) nothing changes: +0.03 / +0.01 beyond the
+  band in unseen regions. **Corrected (#115):** pooled over the 15 regions,
   vegetation adds ~+0.2 to terrain in every split (additive; ~0 with trees),
   so it adds little anywhere; the bigger within-region gain is White
   Mountains only.
