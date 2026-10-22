@@ -44,11 +44,12 @@ Holding out one region at a time and scoring calibrated predictive
 distributions (CRPS), we find Tobler's function 12.5\% worse than a
 refitted slope curve. Terrain from elevation models, mostly airborne
 lidar, improves CRPS by 2.1--2.8\% in unseen regions and beats OSM trail
-tags in 16 of 17; tags add 0.4--0.9\%, and lidar vegetation and satellite
-embeddings help mainly where the model was trained. For the same hiker on
+tags in 16 of 17 (additive models); tags add 0.4--0.9\%, lidar vegetation
+adds little, and satellite embeddings help mainly where the model was
+trained. For the same hiker on
 the same trail, descending is 8--23\% faster than climbing, not 42\% as
-Tobler implies. A one-input terrain-adjusted Tobler function keeps part of
-the gain, but a hiker's own pace still matters most over whole hikes.
+Tobler implies. A terrain-adjusted hiking function with one
+elevation-derived input keeps part of the gain, but a hiker's own pace still matters most over whole hikes.
 \end{abstract}
 
 \begin{IEEEkeywords}

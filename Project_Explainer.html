@@ -327,7 +327,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
   <div class="grid g4">
     <div class="card"><span class="pill done">T1 · done (17 regions)</span><h4 style="margin-top:6px">Trajectory dataset</h4><p>Clean, matched, segmented hikes with speed, slope, direction, mode, tags.</p></div>
     <div class="card"><span class="pill done">T2 · tier 1 done</span><h4 style="margin-top:6px">Remote-sensing covariates</h4><p>For every segment: terrain from 5 m and 1 m elevation (lidar), 30 m vegetation, satellite embeddings. Lidar point-cloud understory: sized, waiting for Danni.</p></div>
-    <div class="card"><span class="pill done">T3 · lead result in</span><h4 style="margin-top:6px">Four-arm comparison</h4><p>Tobler vs tags vs remote sensing vs both, tested on held-out regions. <b>Answered early:</b> terrain transfers, tags don't (section 10).</p></div>
+    <div class="card"><span class="pill done">T3 · lead result in</span><h4 style="margin-top:6px">Four-arm comparison</h4><p>Tobler vs tags vs remote sensing vs both, tested on held-out regions. <b>Answered early:</b> terrain transfers; tags keep only part of their gain (section 10).</p></div>
     <div class="card"><span class="pill done">T4 · mostly done</span><h4 style="margin-top:6px">Curves &amp; asymmetry</h4><p>Curves by region and steppiness, a terrain-adjusted formula, up vs down, and by mode (section 11).</p></div>
   </div>
   <figure class="chart" style="margin-top:16px"><svg id="gantt" viewBox="0 0 960 330" width="100%" role="img" aria-label="Project timeline"></svg>
@@ -441,7 +441,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
       <ul>
         <li>Each bar shows how much better (right) or worse (left) a model predicts than a plain slope-only curve fitted to our data.</li>
         <li>The score is CRPS, which rewards predicted ranges that are both narrow and right.</li>
-        <li>Light bars: new hikers in regions the model trained on. Dark bars: a region it never saw.</li>
+        <li>Light bars: new hikes in regions the model trained on. Dark bars: a region it never saw.</li>
         <li>"Personal pace" rows are scored on each hike after its first km.</li>
       </ul>
       Hover for numbers.</figcaption>
@@ -460,7 +460,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
       <li><b>A reference point:</b> "place memory" (how fast other hikers went at the very same spot) adds ~1.3%. It is limited by how many hikers passed each spot, so it isn't a hard ceiling. The lidar pilot below beats it.</li>
     </ol>
   </div>
-  <div class="callout good"><b>And the answer is yes (final numbers, complete T1).</b> Terrain read from elevation data (how steppy the trail's profile is, plus the side slope) <b>keeps its value in regions the model never saw</b>: +2.1% (additive model) and +2.8% (trees), against +0.9% and +0.4% for tags. It beats tags in <b>16 of 17</b> held-out regions. A control shows about 60% of the gain is uneven grade inside each 50 m piece, which the elevation data sees and an average slope or a tag can't; the rest is difficulty beyond grade. It also holds when the model has seen nothing nearby (a whole zone like the Rockies left out: +1.9%; trained on the West, tested on the East and back: +2.6%), for newer hikes (trained on hikes up to 2019, tested on 2020–2026: +2.2%) and for every GPS recording rate, from a point every 2 s to one every 10+ s. (Traces with few points read slower, but that's how speed gets measured: thinning detailed traces to one point every 30 s makes the same walks look 11% slower.) It helps most going downhill and on level trail, and least on steep climbs: footing limits you going down, effort limits you going up. The date, time of day and weather, by contrast, don't help in a new region: hot days and snow do slow hikers by 3–4%, but the hiker's own pace that day already shows it, and seasons differ too much from place to place. Satellite embeddings (AlphaEarth) help a lot within regions but transfer less reliably (+1.1%). 30 m vegetation maps add nothing, and the published lidar model STRIDE fails on trails (−17%). Even vegetation measured from the lidar point clouds themselves (how dense the undergrowth is beside the trail) only helps inside a region: it doesn't carry over to regions the model never saw. Elevation data is remote sensing (mostly airborne lidar), so this is the paper's lead result.</div>
+  <div class="callout good"><b>And the answer is yes (final numbers, complete T1).</b> Terrain read from elevation data (how steppy the trail's profile is, plus the side slope) <b>keeps its value in regions the model never saw</b>: +2.1% (additive model) and +2.8% (trees), against +0.9% and +0.4% for tags. It beats tags in <b>16 of 17</b> held-out regions. A control shows about 60% of the gain is uneven grade inside each 50 m piece, which the elevation data sees and an average slope or a tag can't; the rest is difficulty beyond grade. It also holds when the model has seen nothing nearby (a whole zone like the Rockies left out: +1.9%; trained on the West, tested on the East and back: +2.6%), for newer hikes (trained on hikes up to 2019, tested on 2020–2026: +2.2%) and for every GPS recording rate, from a point every 2 s to one every 10+ s. (Traces with few points read slower, but that's how speed gets measured: thinning detailed traces to one point every 30 s makes the same walks look 11% slower.) In the simpler (additive) model it helps most going downhill and on level trail, and least on steep climbs, as if footing limits you going down and effort going up. The date, time of day and weather, by contrast, don't help in a new region: hot days and snow do slow hikers by 3–4%, but once you know the hiker's pace that day, weather adds nothing, and seasons differ too much from place to place. Satellite embeddings (AlphaEarth) help a lot within regions but transfer less reliably (+1.1%). 30 m vegetation maps add nothing, and the published lidar model STRIDE fails on trails (−17%). Even vegetation measured from the lidar point clouds themselves (how dense the undergrowth is beside the trail) adds little: about +0.2 points on top of terrain, inside or outside the regions the model trained on (more in the White Mountains alone). Elevation data is remote sensing (mostly airborne lidar), so this is the paper's lead result.</div>
 
   <h3>First remote-sensing result: 1 m lidar in the White Mountains</h3>
   <p class="sub">A pilot in one region, run the same day. Along every walked 50 m of trail we read the 1 m lidar elevation every metre. From it we measured how rough the ground is, how "steppy" the trail profile is (short steep pitches, rock steps), and how steep the hillside is across the trail.</p>
@@ -468,7 +468,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
     <figure class="chart"><svg id="pilotQ" viewBox="0 0 460 300" width="100%" role="img" aria-label="Speed by trail steppiness"></svg>
     <figcaption>All 17 regions: segments sorted into five equal groups by "steppiness" (spread of 5 m pitches along the path). Bars show speed compared with what slope alone predicts. Every region shows the same downhill pattern.</figcaption></figure>
     <figure class="chart"><svg id="pilotS" viewBox="0 0 460 300" width="100%" role="img" aria-label="Lidar vs tags skill in the White Mountains"></svg>
-    <figcaption>CRPS skill vs the slope-only curve in the White Mountains. Light bars: new hikers. Dark bars: new 10 km map squares.</figcaption></figure>
+    <figcaption>CRPS skill vs the slope-only curve in the White Mountains. Light bars: new hikes. Dark bars: new 10 km map squares.</figcaption></figure>
   </div>
   <div class="callout good"><b>Lidar beats map tags 2–4× here.</b> It also keeps most of its value in map squares it never saw, where tags keep little. The same profile from the 5 m elevation (itself mostly resampled lidar) does just as well, which is how the 17-region test above could run the same day. The 1 m elevation for all 16 US regions was added later (12.5 GB): for this signal 1 m and 5 m do equally well, and STRIDE's 1 m roughness adds nothing on trails.</div>
 </section>
@@ -1024,7 +1024,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
   // splits diagram
   (function(){
     const svg = document.getElementById("splits");
-    const panels = [["New hikers","5 folds of outings","some hikes in every region are hidden"],
+    const panels = [["New hikes","5 folds of outings","some hikes in every region are hidden"],
                     ["New places","5 folds of 10 km squares","whole map squares are hidden"],
                     ["A new region","leave one region out (17 times)","a whole mountain range is hidden"]];
     panels.forEach((pn, i) => {
@@ -1089,7 +1089,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
       });
     });
     const lg = document.getElementById("scoreLegend");
-    lg.innerHTML = '<span><i style="background:var(--s1-soft);border:1px solid var(--s1)"></i>new hikers, regions it trained on</span><span><i style="background:var(--s1)"></i>a region it never saw</span>';
+    lg.innerHTML = '<span><i style="background:var(--s1-soft);border:1px solid var(--s1)"></i>new hikes, regions it trained on</span><span><i style="background:var(--s1)"></i>a region it never saw</span>';
   })();
   // lidar pilot (White Mountains, decision #83)
   (function(){
@@ -1111,7 +1111,7 @@ function wrap(svg,text,x,y,w,cls){const words=text.split(" ");let line="",yy=y;c
     const x = lin(0, 5, 150, 430);
     [0,1,2,3,4,5].forEach(v=>{S("line",{x1:x(v),y1:20,x2:x(v),y2:262,class:"gridline"},svg);S("text",{x:x(v),y:280,"text-anchor":"middle",class:"lbl"},svg,"+"+v+"%");});
     rows.forEach((r,i)=>{const y0=30+i*58;S("text",{x:6,y:y0+20,class:"lbl-strong"},svg,r[0]);
-      [[r[1],"var(--s1-soft)","new hikers"],[r[2],"var(--s1)","new 10 km squares"]].forEach(([v,c,nm],j)=>{const yy=y0+j*20;
+      [[r[1],"var(--s1-soft)","new hikes"],[r[2],"var(--s1)","new 10 km squares"]].forEach(([v,c,nm],j)=>{const yy=y0+j*20;
         if(v==null){S("text",{x:x(0)+4,y:yy+13,class:"lbl"},svg,"n/a");return;}
         const b=S("rect",{x:x(0),y:yy,width:Math.max(x(v)-x(0),2),height:15,rx:4,fill:c,stroke:"var(--s1)","stroke-width":j?0:1},svg);
         S("text",{x:x(v)+5,y:yy+12,class:"lbl"},svg,"+"+v+"%");

@@ -9,7 +9,8 @@
 \todo{Draft by Claude: rewrite in your own words.}
 
 \textbf{Target and covariates.} We predict the distribution of $\ln v$,
-the log moving speed of a walking segment. Covariates come in six groups:
+the log moving speed of a walking segment (289,679 with grades within
+$\pm$60\%). Covariates come in six groups:
 (a)~slope; (b)~OSM tags: sac\_scale, trail\_visibility, surface, width,
 smoothness, mtb\_scale, highway type and permitted modes; (c)~terrain from
 elevation, read every 1~m along the segment's matched path: the spread (SD)
@@ -27,7 +28,8 @@ segment is walked as ten 5~m pieces instead of at its average grade.
 
 \textbf{Models.} The baselines are Tobler's function~\cite{tobler1993},
 the published median curve of Campbell et al.~\cite{campbell2022variability},
-STRIDE~\cite{campbell2024stride} as published and with its form refitted,
+STRIDE~\cite{campbell2024stride} as published (understory density set to
+0, as most regions lack point clouds) and with its form refitted,
 and our reference: a rounded, asymmetric slope curve refitted to the
 training data, $\ln v = a - k_\pm\big(\sqrt{(s+s_0)^2+e^2}-e\big)$, with
 $k_+$ above the peak and $k_-$ below it. Each covariate group then enters
@@ -41,22 +43,24 @@ $z$:
 \ln v = a_0 + a_1 z - (k_0 + k_1 z)\,|s + s_0|,
 \label{eq:terrain}
 \end{equation}
-with $z$ the SD of the path's 5~m pitches divided by 0.10.
+with $z$ the SD of the path's 5~m pitches divided by 0.10 and $v$ in km/h;
+on all walking segments, $a_0 = 1.598$, $a_1 = -0.173$, $k_0 = 2.152$,
+$k_1 = -0.392$ and $s_0 = 0.043$.
 
 \textbf{Predictive distributions and tests.} Every model predicts its
 point estimate plus the quantiles of its residuals on held-out outings of
 the training data (training outings split 70/15/15 into fitting, early
 stopping and calibration), so calibration has to transfer too. Splits never
-separate a segment from its hike: 5 folds of outings (new hikers), 5 folds
-of 10~km UTM blocks (new places) and, the headline, leave one region out
+separate a segment from its hike: 5 folds of outings (new hikes; a hiker's
+other outings may be in training), 5 folds of 10~km UTM squares (new
+places) and, the headline, leave one region out
 (17 folds); stricter checks hold out whole zones or half the continent. We
 report the CRPS~\cite{gneiting2007strictly} of $\ln v$ as skill against the refitted
 slope curve, $1-\mathrm{CRPS}/\mathrm{CRPS}_{\mathrm{slope}}$, with 95\%
 intervals that resample outings (whole regions for unseen regions); the
 coverage of 90\% intervals; and the median error in moving time over whole
 hikes after their first kilometre. A reference shows how much is the hiker:
-the median residual of a hike's first kilometre, shrunk by a factor fitted
-on calibration outings (0.61), applied to the rest of the hike. Asymmetry
-is measured on out-and-back pairs, the same outing on the same OSM way in
-both directions (mean grade at least 3\%), as the ratio of speed down to
-speed up.
+the median residual of a hike's first kilometre, shrunk by 0.61 (fitted on
+calibration outings), applied to the rest. Asymmetry is the ratio of speed
+down to speed up on out-and-back pairs (one outing, one OSM way, mean grade
+at least 3\%).

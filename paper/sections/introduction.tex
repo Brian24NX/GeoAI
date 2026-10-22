@@ -12,9 +12,8 @@ How long a walk will take matters for search and rescue, for wildland
 firefighters' escape routes~\cite{campbell2017lidar} and for the times
 trail apps show. A common starting point is Tobler's hiking
 function~\cite{tobler1993}, $v = 6\exp(-3.5\,|s + 0.05|)$~km/h on slope
-$s$, which peaks at 6~km/h on a gentle descent. It is still in use, from
-maps of what a person can reach on foot~\cite{higgins2021hiking} to
-traverse planning for planetary exploration~\cite{goodwin2025application}.
+$s$, which peaks at 6~km/h on a gentle descent. It is still in use, even
+for traverse planning in planetary exploration~\cite{goodwin2025application}.
 
 Crowdsourced GPS tracks show that the function is too fast and too peaked,
 and that speeds at one slope vary
@@ -55,7 +54,7 @@ probability score (CRPS)~\cite{gneiting2007strictly}, against published
 hiking functions (Sec.~\ref{sec:methods}); and (iii)~the finding that
 terrain measured from elevation data transfers ($+2.1$ to $+2.8\%$ CRPS
 skill over a refitted slope curve in unseen regions, ahead of tags in 16 of
-17), while tags add $+0.4$ to $+0.9\%$ and neither vegetation, from 30~m
+17 with additive models), while tags add $+0.4$ to $+0.9\%$ and neither vegetation, from 30~m
 maps or lidar point clouds, nor satellite embeddings match it
-(Sec.~\ref{sec:results}). We also give a Tobler-style function with one DEM-derived input
+(Sec.~\ref{sec:results}). We also give a terrain-adjusted hiking function with one DEM-derived input
 ($+1.0\%$).

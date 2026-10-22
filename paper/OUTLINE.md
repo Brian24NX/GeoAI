@@ -114,7 +114,7 @@ value. A hiker's own pace still matters most.
 frozen on T1 v1 by decision #113; lidar vegetation row 21 Oct;
 `travel-speed-gate1/results/t3_harness_*`; `docs/NEXT_STEPS.md` §1a):
 
-| Model | New hikers | New 10 km squares | **Unseen region** [95% CI] |
+| Model | New hikes | New 10 km squares | **Unseen region** [95% CI] |
 |---|---|---|---|
 | Tobler (published) | −12.8 | −12.7 | −12.5 |
 | Campbell et al. 2022 (published median) | −0.9 | −0.9 | −0.5 [−1.8, 0.7] |
@@ -122,7 +122,7 @@ frozen on T1 v1 by decision #113; lidar vegetation row 21 Oct;
 | + OSM tags (additive / trees) | +1.3 / +1.5 | +1.1 / +1.5 | +0.9 [0.1, 1.7] / +0.4 |
 | + vegetation, 30 m | +0.0 / +0.1 | −0.0 / −0.1 | −0.1 / −0.8 |
 | + AlphaEarth embeddings | +1.4 / +2.6 | +1.4 / +1.9 | +1.1 [0.1, 2.6] / +1.1 |
-| + lidar vegetation (15 regions with point clouds) | +0.4 / +0.5 | +0.4 / +0.4 | +0.3 [−0.3, 1.1] / +0.2 |
+| + lidar vegetation (15 regions with point clouds) | +0.4 / +0.5 | +0.4 / +0.3 | +0.3 [−0.3, 1.1] / +0.2 |
 | **+ terrain (1 m + 5 m elevation)** | +2.2 / +3.2 | +2.1 / +2.8 | **+2.1 [1.5, 3.1] / +2.8 [1.8, 4.1]** |
 | + terrain + embeddings | +2.9 / +4.3 | +3.0 / +3.6 | +2.6 / +2.8 |
 | + terrain + embeddings + tags | +3.7 / +5.1 | +3.8 / +5.1 | +3.0 / +3.9 [2.7, 5.7] |
@@ -181,7 +181,10 @@ frozen on T1 v1 by decision #113; lidar vegetation row 21 Oct;
   points; it helps in 9 of 15 regions (Green Mtns +2.6, Adirondacks +2.0)
   and hurts in others (Front Range −1.4). Even among the 7 eastern forest
   regions: +0.4 [−0.4, 1.5] / −0.1. Like the embeddings, it knows places;
-  only terrain transfers.
+  only terrain transfers. **Corrected (#115):** pooled over the 15 regions,
+  vegetation adds ~+0.2 to terrain in every split (additive; ~0 with trees),
+  so it adds little anywhere; the bigger within-region gain is White
+  Mountains only.
 - **R3c. Foundation-model embeddings** (AlphaEarth) are strong within
   regions (+1.4% / +2.6%) but transfer less reliably (+1.1% / +1.1% in
   unseen regions; −5.6% to +8.3% by region). Physical terrain transfers;
@@ -261,12 +264,14 @@ across both columns (a: skill by model, claim 3; b: each region held out;
 2.4 in tall). The hike-time result (R4) and the trail map (Discussion) are
 one sentence each; both figures are kept and commented out at the end of
 `results.tex`, so one can return if the 2027 kit puts references outside
-the 4 pages. If the final text runs long, cut first: the travel-mode
-paragraph (R5), the robustness tag numbers, the STRIDE details.
+the 4 pages. After the independent check (#115) the travel-mode result
+(R5) and the Higgins reference were cut for space (R5 is kept as a comment
+at the end of `results.tex`). If the text runs long again, cut next: the
+robustness tag numbers, the STRIDE details.
 
 - [x] Fig. 1: `paper/figures/fig_map.png` (17 regions, circle area = walking hours, White Mountains inset).
 - [x] Fig. 2 (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.
-- [x] Fig. 3 (both columns): `paper/figures/fig_skill_regions.png`: (a) skill by model, new hikers vs unseen region, 95% CIs; (b) terrain vs tags per held-out region, 16 of 17. From `travel-speed-gate1/make_paper_figures.py`, which also writes the panels on their own (`fig_skill.png`, `fig_regions.png`) for slides.
+- [x] Fig. 3 (both columns): `paper/figures/fig_skill_regions.png`: (a) skill by model, new hikes vs unseen region, 95% CIs; (b) terrain vs tags per held-out region, 16 of 17. From `travel-speed-gate1/make_paper_figures.py`, which also writes the panels on their own (`fig_skill.png`, `fig_regions.png`) for slides.
 - [x] Table I (`results.tex`), final numbers on T1 v1 (decision #113), with the lidar vegetation row.
 - [x] Out for space, one sentence each: `paper/figures/fig_hike_time.png` (R4, whole-hike moving-time error by model, 1,354 hikes in held-out regions) and `travel-speed-gate1/results/t4_trail_map/fig_wm_pace.png` (pace on every White Mountains trail from the function fitted on the other 16 regions, vs Tobler; 77% of the trail km have no traces).
 - [x] Not used: `travel-speed-gate1/results/t4_terrain_curve/fig_curves.png` (speed vs slope by steppiness, with Tobler).

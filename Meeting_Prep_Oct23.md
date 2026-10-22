@@ -29,11 +29,12 @@
 - **Lidar understory, White Mountains** (you approved the download): inside
   the same hike, the densest-understory fifth of trail is 7.5% slower. With
   terrain, predictions in new 10 km squares improve from +3.6% to +5.0%.
-- **Lidar understory, 15 regions** (72 GB, kept on the ENGR cluster): it does
-  **not** carry over to new regions (+0.2 points over terrain, not
-  significant; helps in 9 of 15). So of everything we tried (tags, 30 m
-  vegetation, satellite embeddings, lidar vegetation, weather, season),
-  **only terrain transfers reliably**.
+- **Lidar understory, 15 regions** (72 GB, kept on the ENGR cluster): pooled
+  over the 15 regions it adds only about +0.2 points on top of terrain,
+  inside or outside the regions it trained on (the bigger gain was in the
+  White Mountains alone). So of everything we tried (tags, 30 m vegetation,
+  satellite embeddings, lidar vegetation, weather, season), **terrain is the
+  only input with a large gain that holds in new regions**.
 - **STRIDE's understory term** (a published lidar model) makes it much worse
   on trails (−18% → −35%): it was calibrated off-trail.
 - **Distance along the trail** instead of straight lines between GPS points
@@ -44,6 +45,14 @@
   the next. Too few to matter.
 - **Paper layout:** the skill chart and the per-region chart became one
   figure; the hike-time chart and the trail map became one sentence each.
+- **Independent check of the draft** (#115; a fresh Claude reviewer, then
+  every point re-verified): "new hikers" is now "new hikes" (that split
+  holds out outings, so a hiker's other outings can be in training); "tags
+  do not transfer" is now "transfer less well" (the additive tag model keeps
+  two thirds of its gain in new regions; the trees lose most); terrain beats
+  tags in 16 of 17 regions with the additive models, 14 of 17 with trees;
+  Eq. (1)'s coefficients are now printed; a few smaller numbers fixed. The
+  travel-mode result was cut for space (kept as a comment).
 
 ## 4. Questions to walk out with answers to
 
@@ -97,8 +106,8 @@ with the paper kit on 10 Nov.
 >
 > The main result held up: terrain from elevation data improves predictions
 > in regions the model never saw (+2.1 to +2.8%) and beats the OSM tags in
-> 16 of 17 regions. Lidar vegetation and satellite embeddings help only
-> inside a region.
+> 16 of 17 regions. Lidar vegetation adds little, and satellite embeddings
+> help mostly inside a region.
 >
 > Could we use Friday's meeting for a few decisions: the author list, the
 > Student Paper Competition (it needs Prof. Jacobs' attestation), whether

@@ -4,7 +4,7 @@ Draft figures for the IGARSS paper (paper/OUTLINE.md), IEEE column width
 (3.5 in), from the harness results. Re-run after every harness run.
 
   fig_skill.png    CRPS skill vs the refitted slope curve, by model, for
-                   new hikers (outing folds) and unseen regions (leave one
+                   new hikes (outing folds) and unseen regions (leave one
                    region out), with 95% bootstrap intervals
   fig_regions.png  per held-out region: terrain vs tags (additive arms),
                    sorted, with the count of regions where terrain wins
@@ -53,11 +53,11 @@ ROWS = [("Tobler (published)", "tobler"),
 
 
 def _skill(ax, legend="above"):
-    """Skill bars by model: new hikers (light) and unseen regions (dark)."""
+    """Skill bars by model: new hikes (light) and unseen regions (dark)."""
     m = pd.read_csv(RES / "metrics.csv")
     ci = pd.read_csv(RES / "skill_ci.csv")
     for j, (split, col, name) in enumerate(
-            [("outing5", LIGHT, "new hikers"),
+            [("outing5", LIGHT, "new hikes"),
              ("loro", BLUE, "unseen region")]):
         mm = m[(m.split == split) & (m.subset == "all")].set_index("arm")
         cc = ci[ci.split == split].set_index("arm")
@@ -136,7 +136,7 @@ def fig_regions():
 
 
 def fig_skill_regions():
-    """Fig. 3, full width: (a) skill by model for new hikers and unseen
+    """Fig. 3, full width: (a) skill by model for new hikes and unseen
     regions; (b) terrain vs tags in each held-out region."""
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.16, 2.4),
                                  gridspec_kw={"width_ratios": [1.1, 1]})
@@ -218,7 +218,7 @@ def fig_curve():
     nums = json.loads((FIND / "numbers.json").read_text())
     bins = pd.read_csv(FIND / "slope_bins.csv")
     p = nums["forms_cv"]["smooth_asym"]["params_all"]
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=(3.5, 3.1),
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(3.5, 2.95),
                                  gridspec_kw={"height_ratios": [1.55, 1]})
     x = 100 * bins.slope_mid
     a1.fill_between(x, bins.q25_kmh, bins.q75_kmh, color="#e4e3df", lw=0)

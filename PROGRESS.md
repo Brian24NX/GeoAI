@@ -123,6 +123,16 @@ km.
   Themes SP.6 / SP.5 / L.7 fit. The reference rule comes with the paper kit
   (10 Nov). Three reference titles fixed (capitals in 3D Elevation Program,
   National Land Cover Database, North America).
+- **Independent check of the draft** (decision #115): a fresh Claude
+  reviewer read the paper against the results; every point was re-verified
+  in the code and result files before changing anything. Main fixes: "new
+  hikers" → "new hikes" (that split holds out outings, not people); "tags
+  do not transfer" → "transfer less well" (additive tags keep two thirds of
+  their gain); lidar vegetation adds ~+0.2 everywhere, not "only within a
+  region" (that was a one-region result); 14 of 17 regions with trees;
+  match rate 85–99% by region; Eq. (1) coefficients printed; Table I cell
+  +0.4 → +0.3. Paper still 4 pages (travel-mode result and one reference
+  cut). Brief, outline and explainer updated to match.
 
 ## Mon 12 Oct 2026
 
