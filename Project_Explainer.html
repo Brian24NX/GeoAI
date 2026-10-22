@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Your project, explained · Hiking speed from GPS traces and remote sensing</title>
+<title>Hiking Speed Study</title>
 <style>
 :root{
   color-scheme: light;
@@ -15,7 +15,7 @@
   --shadow:0 1px 2px rgba(0,0,0,.06),0 4px 14px rgba(0,0,0,.05);
 }
 @media (prefers-color-scheme: dark){
-  :root{
+  :root:not([data-theme="light"]){
     color-scheme: dark;
     --surface:#1a1a19; --surface-2:#232321; --surface-3:#2d2d2a; --line:#3a3a36;
     --text:#ffffff; --text-2:#c3c2b7; --text-3:#9b9a91;
@@ -24,7 +24,16 @@
     --neutral:#77766f; --grid:#33332f;
     --shadow:none;
   }
-}
+}:root[data-theme="dark"]{
+    color-scheme: dark;
+    --surface:#1a1a19; --surface-2:#232321; --surface-3:#2d2d2a; --line:#3a3a36;
+    --text:#ffffff; --text-2:#c3c2b7; --text-3:#9b9a91;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --s8:#e66767;
+    --s1-soft:#1d3a5e; --s2-soft:#4a2616; --s3-soft:#15392c; --s4-soft:#3f3110;
+    --neutral:#77766f; --grid:#33332f;
+    --shadow:none;
+  }
+
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:var(--surface);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}

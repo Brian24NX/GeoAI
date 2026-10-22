@@ -84,6 +84,10 @@ km.
   no gain in new regions); Finding 3's caption ~24% → ~23%. Brian's
   screenshots came from an older copy of the page (the current one already
   had the final numbers: ×1.08 / 1.17 / 1.22 / 1.23, peak 4.31 km/h).
+- **Explainer published as a private link** (Brian asked):
+  https://claude.ai/artifact/3s5rKBVbtfrbdx5F84S7RK, named "Hiking Speed
+  Study"; dark mode now also follows a viewer's explicit theme choice.
+  Danni can open it once Brian shares it from the page's Share menu.
 
 ## Wed 21 Oct 2026
 
