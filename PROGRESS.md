@@ -69,8 +69,14 @@ km.
   Added to terrain it improves predictions in new 10 km squares (+3.6% →
   +5.0%; about +1 point beyond terrain and elevation together), less for
   new hikers. STRIDE's published density term badly over-penalises trails
-  (−37%). Next question: does it transfer to unseen regions? Dry runs are
-  sizing the point clouds for the other 15 US regions.
+  (−37%).
+- **Lidar vegetation in 15 regions** (decision #112; Brian approved option B,
+  all 14 remaining regions with point clouds; 72 GB in total on ENGR, 4
+  parallel jobs, ~1 h): it **does not transfer**. In unseen regions it adds
+  +0.2 points to terrain (interval −0.2 to +0.5), helping in 9 of 15
+  regions; even among the 7 eastern forests, +0.4 (−0.4 to +1.5). Like the
+  satellite embeddings, it knows places. Of everything tested, only terrain
+  transfers. STRIDE's density term: −18% → −35% in all 15 regions.
 
 ## Mon 12 Oct 2026
 

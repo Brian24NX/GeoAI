@@ -1,0 +1,45 @@
+feature,value,segments,speed_effect_pct
+sac_scale,1.0,13672,12.2
+sac_scale,2.0,24718,4.6
+sac_scale,3.0,1390,5.0
+sac_scale,4.0,172,6.9
+sac_scale,missing,38918,0.0
+trail_visibility,1.0,10267,-5.9
+trail_visibility,2.0,4435,-11.6
+trail_visibility,3.0,1380,-16.1
+trail_visibility,4.0,529,-14.5
+trail_visibility,5.0,95,-12.5
+trail_visibility,missing,62164,0.0
+smoothness,1.0,31,-0.6
+smoothness,2.0,9,-0.3
+smoothness,4.0,388,2.6
+smoothness,5.0,182,-1.2
+smoothness,8.0,91,-3.2
+smoothness,missing,78169,0.0
+mtb_scale,1.0,169,-1.6
+mtb_scale,2.0,151,2.0
+mtb_scale,3.0,126,-3.3
+mtb_scale,4.0,103,-2.8
+mtb_scale,5.0,122,-4.0
+mtb_scale,missing,78199,0.0
+width_m,"[0.5, 1.0)",154,4.8
+width_m,"[1.0, 2.0)",2837,2.1
+width_m,"[2.0, inf)",648,7.7
+width_m,missing,75231,0.0
+surface,asphalt,963,7.1
+surface,dirt,8430,-0.8
+surface,earth,292,-4.4
+surface,gravel,684,-1.4
+surface,ground,42905,0.7
+surface,other,23919,1.4
+surface,unpaved,1677,-2.4
+highway,bridleway,2806,0.2
+highway,cycleway,570,2.3
+highway,footway,17088,-2.1
+highway,other,28,-0.0
+highway,path,58378,-0.4
+permission,bicycle-permitted,4661,5.4
+permission,bike+horse,968,4.1
+permission,foot-only,56154,-6.0
+permission,horse-permitted,3119,0.5
+permission,unclear,13968,-3.6

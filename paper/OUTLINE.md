@@ -166,8 +166,13 @@ value. A hiker's own pace still matters most.
   7.5% slower in its densest fifth, within the same hike; with terrain it
   lifts skill in new 10 km squares from +3.6% to +5.0% (about +1 point
   beyond terrain and elevation). STRIDE's published density term
-  over-penalises trails (−37%). Transfer across regions: pending other
-  regions' point clouds.
+  over-penalises trails (−37%). **It does not transfer** (decision #112,
+  15 regions with point clouds, 72 GB): in unseen regions vegetation alone
+  +0.3% / +0.2% (n.s.), and added to terrain +0.2 [−0.2, 0.5] / +0.0
+  points; it helps in 9 of 15 regions (Green Mtns +2.6, Adirondacks +2.0)
+  and hurts in others (Front Range −1.4). Even among the 7 eastern forest
+  regions: +0.4 [−0.4, 1.5] / −0.1. Like the embeddings, it knows places;
+  only terrain transfers.
 - **R3c. Foundation-model embeddings** (AlphaEarth) are strong within
   regions (+1.4% / +2.6%) but transfer less reliably (+1.1% / +1.1% in
   unseen regions; −5.6% to +8.3% by region). Physical terrain transfers;

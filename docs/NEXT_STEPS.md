@@ -151,6 +151,12 @@ which are kept below as the record.
   v = exp(1.598 − 0.173 z) · exp(−(2.152 − 0.392 z)·|s + 0.043|) km/h,
   z = SD of 5 m pitches / 0.10. Steppiness terciles: smooth 4.60
   [4.51, 4.69] km/h, medium 4.37, steppy 3.84 [3.76, 3.92].
+- **Lidar point-cloud vegetation** (decisions #111–112, 15 regions, 72 GB):
+  understory density and canopy height help within a region (White
+  Mountains, new squares +3.6% → +5.0%) but not in unseen regions (+0.2
+  points over terrain, helps in 9 of 15; even among the 7 eastern forests
+  +0.4 [−0.4, 1.5]). STRIDE's published density term over-penalises
+  trails (−18% → −35%). Only terrain transfers.
 - **Why tags don't transfer** (decision #105): within the same hike, tag
   values act the same in every region (harder sac_scale slower in 10/10,
   paved faster in 10/10), but tag presence doesn't: sac_scale is on 1–96%

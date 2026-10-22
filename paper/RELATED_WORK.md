@@ -31,7 +31,7 @@ brackets), with details checked against Crossref or arXiv. Numbers in the
 
 | Paper | Point to use |
 |---|---|
-| STRIDE: Campbell, Cutler & Dennison 2024, Sci. Rep. [`campbell2024stride`] | Lidar slope, understory density [`campbell2018understory`] and ground roughness, from timed field walks on and off path. **Our lidar baseline**: published −16.8%; its roughness adds nothing on trails |
+| STRIDE: Campbell, Cutler & Dennison 2024, Sci. Rep. [`campbell2024stride`] | Lidar slope, understory density [`campbell2018understory`] and ground roughness, from timed field walks on and off path. **Our lidar baseline**: published −16.8%; its roughness adds nothing on trails; its understory-density term, fed our point-cloud density, makes it far worse on trails (−18% → −35% in 15 regions), and point-cloud vegetation does not transfer to unseen regions (decision #112) |
 | Campbell et al. 2017, IJWF [`campbell2017lidar`] | The earlier lidar study (slope, vegetation density, roughness) for firefighter escape routes |
 | Cutler et al. 2026, GIScience & RS [`cutler2026machine`] | Random forest with lidar slope, vegetation and roughness, off-trail transects. Off-trail; we are on-trail and multi-region |
 | RasterNet [`hadzic2020rasternet`]; Workman & Jacobs 2020 [`workman2020dynamic`]; Workman & Hadzic 2024 [`workman2024probabilistic`] | The lab's work learning road speed from overhead imagery and lidar, the last one with predicted distributions. We bring the idea to trails and walking |
