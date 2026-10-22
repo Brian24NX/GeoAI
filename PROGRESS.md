@@ -79,6 +79,11 @@ km.
   adds little" holds with the plan's fuller measure. T2 item closed.
 - **Slack note for Danni drafted** (Brian asked): a plain-words walk-through
   of the explainer's "What we've found" figures for Brian to send.
+- **Explainer refreshed** before Brian shares it: Finding 7 ("winter isn't
+  slower") replaced by the weather result (heat −3%, snow on the ground −4%,
+  no gain in new regions); Finding 3's caption ~24% → ~23%. Brian's
+  screenshots came from an older copy of the page (the current one already
+  had the final numbers: ×1.08 / 1.17 / 1.22 / 1.23, peak 4.31 km/h).
 
 ## Wed 21 Oct 2026
 
