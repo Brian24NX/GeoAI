@@ -111,6 +111,12 @@ km.
   now defines the lidar vegetation inputs that Table I and the Results
   report (group f: understory density, canopy cover and height within 3 m
   of the path, 15 regions), which it had missed.
+- **Next steps** (`Meeting_Prep_Oct23.md`): we are ~5 weeks ahead of the
+  plan (full draft was due 27 Nov; Gate 2 answered early), so the mentors'
+  review moves from December to now. Brian sends the draft (email draft in
+  the brief), does the stop-check sheet and starts rewriting; questions for
+  Friday: authors, Student Paper Competition, data release, theme, title,
+  the freeze (#113), review timeline.
 
 ## Mon 12 Oct 2026
 
