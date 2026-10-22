@@ -1,36 +1,65 @@
 \section{Introduction}
 \label{sec:intro}
 
-% ~0.5 page. Notes from OUTLINE.md; turn them into prose.
-\todo{Paragraph 1, why travel time on foot matters: search and rescue,
-wildfire escape routes, trail apps, accessibility maps. GIS still uses
-Tobler's 1993 hiking function~\cite{tobler1993},
-$v = 6\exp(-3.5\,|s + 0.05|)$ km/h, and fixed multipliers for other
-modes.}
+% DRAFT by Claude (21 Oct 2026), written from the notes that were here,
+% paper/OUTLINE.md, paper/RELATED_WORK.md (what each cited paper did,
+% checked 12 Oct) and the final numbers (docs/NEXT_STEPS.md section 1a;
+% DECISIONS_LOG.md #95-#114). Brian: rewrite it in your own words, and
+% disclose the AI assistance (CSE 5999 and IEEE both require it).
+\todo{Draft by Claude: rewrite in your own words.}
 
-\todo{Paragraph 2, what is known: crowdsourced GPS shows Tobler is too fast
-and too peaked~\cite{campbell2019crowdsourced,campbell2022variability};
-Wood et al.~\cite{wood2023hiking} add OSM terrain classes and lidar
-obstruction (England and Wales); Huang et al.~\cite{huang2026modeling} fit
-boosted trees with 16 factors, weather included (Hong Kong); \v{S}eri\'c et
-al.~\cite{seric2022modeling} predict a latent walking speed from Sentinel-2
-(one Croatian range); HikingTTE~\cite{asako2024hikingtte} learns whole-hike
-time from the hiker's first part. STRIDE~\cite{campbell2024stride} models
+How long a walk will take matters for search and rescue, for wildland
+firefighters' escape routes~\cite{campbell2017lidar} and for the times
+trail apps show. A common starting point is Tobler's hiking
+function~\cite{tobler1993}, $v = 6\exp(-3.5\,|s + 0.05|)$~km/h on slope
+$s$, which peaks at 6~km/h on a gentle descent. It is still in use, from
+maps of what a person can reach on foot~\cite{higgins2021hiking} to
+traverse planning for planetary exploration~\cite{goodwin2025application}.
+
+Crowdsourced GPS tracks show that the function is too fast and too peaked,
+and that speeds at one slope vary
+widely~\cite{campbell2019crowdsourced,campbell2022variability}. Newer models
+add covariates: OSM terrain classes and lidar-measured obstruction in
+England and Wales~\cite{wood2023hiking}; boosted trees on 16 factors,
+weather included, in Hong Kong~\cite{huang2026modeling}; a latent walking
+speed predicted from Sentinel-2 imagery in one Croatian
+range~\cite{seric2022modeling}; the hiker's pace on the first part of a
+hike~\cite{asako2024hikingtte}. STRIDE~\cite{campbell2024stride} models
 walking speed from lidar slope, understory
-density~\cite{campbell2018understory} and roughness, calibrated on field
-walks; RasterNet~\cite{hadzic2020rasternet} learns road speed from lidar
-and imagery.}
+density~\cite{campbell2018understory} and ground roughness, calibrated on
+timed field walks. On roads, speeds and their spread have been learned from
+overhead imagery and
+lidar~\cite{hadzic2020rasternet,workman2024probabilistic}.
 
-\todo{Paragraph 3, the gap: each of these studies fits and tests in one
-country, city or range with random or within-area splits (Wood: 10-fold
-cross-validation; Huang: random split); none tests whether terrain
-covariates transfer to regions a model has never seen, against the map tags
-used today, with calibrated uncertainty. Wood et al. also found no gain over
-existing functions for whole-route times (13.5--15.5\% error for every
-model).}
+Wood et al.~\cite{wood2023hiking} test with 10-fold cross-validation and
+Huang et al.~\cite{huang2026modeling} with a random split, so their test
+tracks come from the areas they trained on. Yet predictions matter most where
+nobody has recorded a hike: in the White Mountains, one of our best-sampled
+regions, 77\% of the 3,369~km of mapped trail has no trace in our data. Two
+sources could describe such trails. On the trail map, OSM mappers tag
+difficulty (sac\_scale), surface and visibility, but unevenly: sac\_scale
+is on 1--96\% of walked trail, depending on the region. Remote sensing
+reaches every trail, tagged or not: the USGS 3D Elevation Program collects
+airborne lidar across the United States~\cite{sugarbaker2017status}, and
+satellite embeddings summarize imagery worldwide~\cite{brown2025alphaearth}.
+To our knowledge, no study has tested which of the two works in regions a
+model has never seen.
 
-\todo{Paragraph 4, contributions (three bullets): (1) a 17-region dataset of
-walking traversals of 50~m trail segments from public OSM traces; (2) an
-evaluation protocol (leave one region out, CRPS, coverage) with published
-baselines; (3) the finding that elevation-derived terrain transfers and map
-tags do not, plus a one-input terrain-adjusted hiking function.}
+We test it on public OpenStreetMap GPS traces~\cite{osm} from 17 mountain
+regions of the United States and Canada. We contribute (i)~a dataset of
+290,640 walking traversals of 50~m trail segments (1,992 outings) with
+slope, OSM tags and remote-sensing covariates (Sec.~\ref{sec:data});
+(ii)~a transfer test that holds out whole regions, zones or half the
+continent and scores predictive distributions with the continuous ranked
+probability score (CRPS)~\cite{gneiting2007strictly}, against published
+hiking functions (Sec.~\ref{sec:methods}); and (iii)~the finding that
+terrain measured from elevation data transfers ($+2.1$ to $+2.8\%$ CRPS
+skill over a refitted slope curve in unseen regions, ahead of tags in 16 of
+17), while tags add $+0.4$ to $+0.9\%$ and neither vegetation, from 30~m
+maps or lidar point clouds, nor satellite embeddings match it
+(Sec.~\ref{sec:results}). Tobler's function scores worse than the refitted
+curve in every region ($-12.5\%$ overall); for the same hiker on the same
+trail, descending is 8--23\% faster than climbing, not the 42\% Tobler
+implies; and over whole hikes the hiker's own pace matters more than any
+covariate. We also give a Tobler-style function with one DEM-derived input
+($+1.0\%$).

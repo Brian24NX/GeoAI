@@ -3,7 +3,8 @@
 *An outline for Brian to write from: bullets, a page budget, the figure
 plan and the numbers as of 11 Oct. Numbers marked (*) change when the
 city regions finish their full downloads and the 1 m / canopy / embedding
-covariates are added. AI assistance (Claude) drafted this outline; the paper
+covariates are added. AI assistance (Claude) drafted this outline, and
+Data, Methods and the Introduction for Brian to rewrite; the final paper
 text is Brian's. Disclose AI use as the conference and course require.*
 
 **Venue.** IGARSS 2027, Reykjavík. 4 pages, IEEE two-column. Deadline 11

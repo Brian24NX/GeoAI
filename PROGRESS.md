@@ -89,6 +89,12 @@ km.
   row.
 - **Check:** 2 of 1,992 walking outings cross from one region into the
   next (0.5% of segments, decision #114); too few to matter.
+- **Introduction drafted by Claude** (Brian asked), marked for rewriting
+  like Data and Methods: why walking time matters and Tobler; what
+  crowdsourced GPS and covariate models found; the gap (no test in unseen
+  regions; tags vs remote sensing); three contributions with the headline
+  numbers. Three new references (firefighter escape routes, personal
+  accessibility, the lab's probabilistic traffic model). Still 4 pages.
 
 ## Mon 12 Oct 2026
 
