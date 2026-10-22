@@ -5,3 +5,5 @@ pandas
 matplotlib
 scipy        # nearest-trail matching (KD-tree)
 tifffile     # reading the tree-canopy raster in region_layers.py
+pyarrow      # the parquet tables (exercises, results)
+torch        # T3 learned-constants model (docs/T3_learned_tobler_design.md); 2.14.1 on the Mac
