@@ -58,6 +58,20 @@ km.
   from the Python package index). The Apple GPU (MPS) works, and a test fit
   recovered Tobler's v0 and k from synthetic data.
 - Meeting brief updated (the week-9 plot, the re-paced plan).
+- **Week 10 prepared** (Claude's side of T3): the harness can now save its
+  exact folds (`--save-folds`; the reruns reproduce Table I to 5e-14);
+  `t3_export_table.py` writes a de-identified modeling table to
+  `cache/exercise/` (289,679 segments, 16 covariates, five splits' folds,
+  per-fold fit/stop/cal outings, integer hiker ids); `t3_scoring.py` holds
+  the harness's CRPS plus Gaussian / Student-t closed forms and a torch
+  loss, all checked against 1M-sample brute force; Brian's starter
+  (`exercises/week10_learned_tobler/`) reproduces Table I's baseline on all
+  five splits to ~1e-12.
+- **Bug found and fixed** (decision #118): one hike built in two regions
+  shared 363 segment ids, so 363 Gorge segments carried Cascades terrain.
+  The join is now on (region, segment id). Rerun measured the effect:
+  every number moves ≤ 0.06 points, no conclusion changes; the paper keeps
+  its frozen numbers.
 
 ## Wed 21 Oct 2026
 

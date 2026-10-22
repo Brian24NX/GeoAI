@@ -648,6 +648,11 @@ def main():
                     help="add arms with a shrunken offset per region (a "
                          "check: does a covariate add more than the "
                          "region's mean speed?)")
+    ap.add_argument("--save-folds", action="store_true",
+                    help="also write the folds for models built outside the "
+                         "harness: folds_segments.parquet (each segment's "
+                         "outer fold per split) and folds_inner.parquet (the "
+                         "fit / stop / cal outings of every fold)")
     ap.add_argument("--out", help="output folder (default results/t3_harness)")
     args = ap.parse_args()
     quick, splits = args.quick, args.splits
@@ -665,16 +670,23 @@ def main():
     rs_cols = []
     if args.covariates:
         # stack every file (columns may differ: kinds, or a region with
-        # no data), then one row per segment, first non-missing value
-        cov = pd.concat([pd.read_parquet(f) for f in args.covariates],
-                        ignore_index=True)
-        cov = cov.groupby("segment_id", sort=False).first().reset_index()
+        # no data), then one row per (region, segment), first non-missing
+        # value. The region comes from the file name (<kind>_<region>); a
+        # segment id alone is not unique: a trace built in two regions
+        # repeats ids (decision #118)
+        cov = pd.concat([pd.read_parquet(f).assign(
+            region=Path(f).stem.rsplit("_", 1)[-1]) for f in args.covariates],
+            ignore_index=True)
+        cov = cov.groupby(["region", "segment_id"], sort=False
+                          ).first().reset_index()
         rs_cols = [c for c in cov.columns if c not in RS_SKIP
+                   and c != "region"
                    and not c.startswith("dem1m_cover")
                    and pd.api.types.is_numeric_dtype(cov[c])
                    and (not args.features or c in args.features)]
-        w = w.merge(cov[["segment_id"] + rs_cols], on="segment_id",
-                    how="left").reset_index(drop=True)
+        w = w.merge(cov[["region", "segment_id"] + rs_cols],
+                    on=["region", "segment_id"], how="left"
+                    ).reset_index(drop=True)
         ARMS.update(RS_ARMS)
     rng = np.random.default_rng(SEED)
     if quick:
@@ -724,9 +736,13 @@ def main():
           "mtb_scale)", flush=True)
 
     scored, imp, lams, knobs = [], [], [], []
+    fold_cols, inner_roles = {}, []      # --save-folds
     het_rng = np.random.default_rng(SEED + 1)   # keeps the other arms' folds
     for split in splits:
         fold = outer_folds(w, split, rng)
+        if args.save_folds:
+            fold_cols[f"fold_{split}"] = pd.array(
+                [None if v is None else str(v) for v in fold], dtype="string")
         tests = [TIME_TEST] if split == "time" else pd.unique(fold)
         for f in tests:
             te = np.nonzero(fold == f)[0]
@@ -736,6 +752,11 @@ def main():
                 tr = tr[~w.uploader.iloc[tr].isin(seen).to_numpy()]
             fit_m, stop_m, cal_m = inner_split(w.outing_id.iloc[tr], rng)
             fit, stop, cal = tr[fit_m], tr[stop_m], tr[cal_m]
+            if args.save_folds:
+                for role, idx in (("fit", fit), ("stop", stop), ("cal", cal)):
+                    inner_roles.append(pd.DataFrame({
+                        "split": split, "fold": str(f), "role": role,
+                        "outing_id": pd.unique(w.outing_id.iloc[idx])}))
             for name in ARMS:
                 arm = Arm(name, blocks).fit(s, y, fit, stop, cal)
                 if arm.kind == "lin":
@@ -785,6 +806,11 @@ def main():
             print(f"  {split} fold {f}: {time.time() - t0:.0f} s",
                   flush=True)
 
+    if args.save_folds:
+        pd.DataFrame({"segment_id": w.segment_id.to_numpy(), **fold_cols}
+                     ).to_parquet(OUT / "folds_segments.parquet", index=False)
+        pd.concat(inner_roles, ignore_index=True).to_parquet(
+            OUT / "folds_inner.parquet", index=False)
     tag_effects(s, y, blocks, oh.columns, float(np.median(lams)))
     knobs = pd.DataFrame(knobs)
     knobs.to_csv(OUT / "knobs.csv", index=False)

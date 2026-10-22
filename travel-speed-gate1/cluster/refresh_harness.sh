@@ -54,6 +54,11 @@ case "$1" in
                  --out results/t3_harness_regionfe ;;
   hikers)     $H --covariates $T5 $T1 --splits hiker5 loro_hiker \
                  --out results/t3_harness_hikers ;;
+  folds15m)   $H --covariates $T5 $T1 --save-folds \
+                 --out results/t3_harness_terrain15m_folds ;;
+  foldshikers) $H --covariates $T5 $T1 --splits hiker5 loro_hiker --save-folds \
+                 --out results/t3_harness_hikers_folds ;;
+  fixid15m)   $H --covariates $T5 $T1 --out results/t3_harness_terrain15m_fixid ;;
   *) echo "unknown run $1"; exit 2 ;;
 esac >> "logs/refresh_harness_$1.log" 2>&1 \
   && say "done  harness $1" || { say "FAILED harness $1"; exit 1; }
