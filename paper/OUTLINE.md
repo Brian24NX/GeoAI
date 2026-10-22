@@ -7,11 +7,17 @@ covariates are added. AI assistance (Claude) drafted this outline, and
 every section of the paper and the abstract for Brian to rewrite; the final paper text is
 Brian's. Disclose AI use as the conference and course require.*
 
-**Venue.** IGARSS 2027, Reykjavík. 4 pages, IEEE two-column. Deadline 11
-Jan 2027; the portal opens 10 Nov. Student Paper Competition: needs an
-advisor attestation. Best-fit themes: SP.6 (Datasets, Benchmarks and
-Evaluation Methodologies) or SP.5 (Foundation Models and Embeddings for
-EO).
+**Venue.** IGARSS 2027, Reykjavík, 11–16 Jul 2027. Full papers: 4 pages,
+IEEE two-column; the only format published in IEEE Xplore and eligible for
+the Student Paper Competition (the other option, 400–600-word abstracts,
+is not published). Portal opens 10 Nov; papers, the competition and travel
+support all due 11 Jan 2027; decisions 12 Mar; final paper and
+registration 30 Apr (call for papers checked 21 Oct). Whether references
+count toward the 4 pages comes with the paper kit. Competition: needed an
+advisor attestation in past years. Best-fit themes: SP.6 (Datasets,
+Benchmarks, and Evaluation Methodologies for Earth Observation) or SP.5
+(Foundation Models and Embeddings for EO); L.7 (Land Surveying, Geodesy and
+Topography) is a fallback.
 
 **Working title.** *Does remote sensing beat the trail map? Predicting
 hiking speed in unseen regions from lidar terrain and OpenStreetMap tags.*

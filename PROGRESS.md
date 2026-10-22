@@ -117,6 +117,12 @@ km.
   the brief), does the stop-check sheet and starts rewriting; questions for
   Friday: authors, Student Paper Competition, data release, theme, title,
   the freeze (#113), review timeline.
+- **IGARSS 2027 call for papers checked:** full 4-page papers only for IEEE
+  Xplore and the Student Paper Competition; papers, the competition and
+  travel support all due 11 Jan; decisions 12 Mar; conference 11–16 Jul.
+  Themes SP.6 / SP.5 / L.7 fit. The reference rule comes with the paper kit
+  (10 Nov). Three reference titles fixed (capitals in 3D Elevation Program,
+  National Land Cover Database, North America).
 
 ## Mon 12 Oct 2026
 

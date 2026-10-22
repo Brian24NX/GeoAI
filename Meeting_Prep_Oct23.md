@@ -48,12 +48,17 @@
 ## 4. Questions to walk out with answers to
 
 1. **Authors:** who is on the paper, and in what order?
-2. **Student Paper Competition:** can we enter? It needs Prof. Jacobs'
-   attestation, so ask whether Danni or you should raise it with him.
+2. **Student Paper Competition:** can we enter? Only full 4-page papers are
+   eligible, and its deadline is the paper deadline (11 Jan). In past years
+   it needed the advisor's attestation, so ask whether Danni or you should
+   raise it with Prof. Jacobs. Also ask about **travel support** for
+   students (application deadline also 11 Jan).
 3. **Data release:** may we release the de-identified segments (no user
    names; decision #100)? The Conclusion has a placeholder sentence for it.
-4. **Theme:** SP.6 (datasets, benchmarks, evaluation) or SP.5 (foundation
-   models and embeddings)? Our pick: SP.6, since the transfer test is the
+4. **Theme:** the 2027 list has SP.6 (Datasets, Benchmarks, and Evaluation
+   Methodologies for Earth Observation), SP.5 (Foundation Models and
+   Embeddings for EO) and L.7 (Land Surveying, Geodesy and Topography); none
+   is about human mobility. Our pick: SP.6, since the transfer test is the
    contribution.
 5. **Title:** it says "Lidar Terrain", but 1 m lidar adds little over the
    5 m grid, which is itself mostly resampled lidar. Keep it, or say
@@ -62,6 +67,12 @@
    before the paper?
 7. **Review timeline:** when can they each read it, and when should it go to
    Prof. Jacobs?
+
+**IGARSS 2027 dates** (call for papers, checked 21 Oct): portal opens
+10 Nov; papers, Student Paper Competition and travel support all due
+11 Jan; decisions 12 Mar; final paper and registration 30 Apr; conference
+11–16 Jul, Reykjavík. Whether references count toward the 4 pages comes
+with the paper kit on 10 Nov.
 
 ## 5. What a reviewer will push on, and our answer
 
