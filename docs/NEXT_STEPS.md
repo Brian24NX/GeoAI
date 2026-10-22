@@ -470,16 +470,27 @@ which region it's in.
 | 7 | Stop-rule hand check: 20 cards in `stop_check/stop_check.html`, ~15 min | **Brian** | open |
 | 8 | Read: Campbell 2019 & 2022, **Wood 2023**, **STRIDE 2024**, HikingTTE, RasterNet | **Brian** | open |
 
-## 7. Timeline to 11 Jan 2027
+## 7. Timeline to 11 Jan 2027 (re-paced to the semester plan, 22 Oct; decision #117)
 
-| Week | Dates | Goal |
+Draft 0 of the paper exists five weeks early. At Brian's request the
+remaining weeks follow the semester plan's schedule, with Brian doing more
+of the hands-on work; the draft is the safety net.
+
+| Plan week | Dates | Goal |
 |---|---|---|
-| 8 | 12–16 Oct | T1 closed (17 regions); evaluation harness; paper skeleton. **16 Oct meeting:** results + this plan |
-| 9–10 | 19–30 Oct | T2 tier 1 for all regions; tier 2 started (vegetation density, snow) |
-| 11–12 | 2–13 Nov | T3 four arms, all splits. **Gate 2 (~13 Nov):** does remote sensing approach tags? Portal opens 10 Nov |
-| 13–14 | 16–27 Nov | **Full draft** (plan: week 13). Thanksgiving 26 Nov |
-| 15–16 | 30 Nov–18 Dec | Mentor + Prof. Jacobs review, polish; final exams |
-| — | 21 Dec–8 Jan | Buffer; **submit by ~8 Jan** with the Student Paper Competition attestation |
+| 8 | 12–18 Oct | Done: T1 closed (17 regions), harness, final numbers; 16 Oct meeting |
+| 9 | 19–25 Oct | Done early: lidar understory, robustness, draft 0. **Now:** the plan's log-linear diagnostic (Brian; `travel-speed-gate1/exercises/week09_loglinear/`), draft 0 to the mentors, stop-check sheet; 23 Oct meeting |
+| 10 | 26 Oct–1 Nov | T3: Tobler with learned constants + a variance head (Brian builds it in PyTorch; `docs/T3_learned_tobler_design.md`) |
+| 11 | 2–8 Nov | T3 on all splits vs boosted trees; **Gate 2** write-up for the 6 Nov meeting |
+| 12 | 9–15 Nov | NAIP imagery arm (frozen pretrained encoder + small head) if time; portal opens 10 Nov: move to the IGARSS template |
+| 13 | 16–22 Nov | **Full draft** (plan milestone): Brian's rewritten version with the new results |
+| 14 | 23–29 Nov | Figures, polish, per-hiker effects if they fit; Thanksgiving 26 Nov |
+| 15–16 | 30 Nov–13 Dec | Mentor + Prof. Jacobs review; CSE 5999 final report (format per Canvas) |
+| break | to 11 Jan | Revision; submit by ~8 Jan (deadline 11 Jan) with the Student Paper Competition attestation |
+
+Plan items still open: NAIP imagery; understory in several height layers
+(Campbell 2018: ~0.5–1.5, 1.5–2.5, 2.5–3.5 m); aspect and curvature;
+a real heteroscedastic model; per-hiker partial pooling.
 
 ## 8. Risks and how we handle them
 

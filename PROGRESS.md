@@ -40,6 +40,23 @@ km.
 
 ---
 
+## Thu 22 Oct 2026
+
+- **Re-paced to the semester plan** (decision #117, Brian's call): we are
+  in plan week 9; draft 0 of the paper is five weeks early and becomes the
+  safety net. The rest follows the plan's schedule, with Brian doing more
+  of the hands-on work (`docs/NEXT_STEPS.md` §7).
+- **Week 9 exercise set up for Brian:** the plan's log-linear diagnostic
+  (`travel-speed-gate1/exercises/week09_loglinear/`: README + starter
+  script; data = a de-identified table of the 289,679 walking segments in
+  `cache/exercise/`, not in git). His "one plot" for the 23 Oct meeting.
+- **Weeks 10–11 design:** `docs/T3_learned_tobler_design.md`: Tobler with
+  constants learned from the covariates plus a Student-t variance head,
+  scored on the harness's folds against boosted trees (Gate 2's last box).
+  Brian builds it in PyTorch (not installed yet: a ~70–80 MB download for
+  him to run or approve).
+- Meeting brief updated (the week-9 plot, the re-paced plan).
+
 ## Wed 21 Oct 2026
 
 - **16 Oct meeting with Danni went well.** She said to keep going and do

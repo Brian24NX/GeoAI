@@ -23,6 +23,9 @@
    report and its format). We still don't know them.
 3. **Fill in the stop-check sheet** (`stop_check/stop_check.html`, ~15 min).
    It now only checks the stop rule; the agreement rate goes in the paper.
+4. **Your one plot: the week-9 log-linear diagnostic**
+   (`travel-speed-gate1/exercises/week09_loglinear/README.md`, ~1 hour):
+   the plan's test of whether Tobler's form is a straight line in log space.
 
 ## 3. What changed since 16 Oct (one line each)
 
@@ -124,14 +127,18 @@ with the paper kit on 10 Nov.
 > Thanks,
 > Brian
 
-## 7. The plan from here
+## 7. The plan from here (re-paced to the semester plan, decision #117)
 
-| When | Who | What |
+Draft 0 is a safety net; the remaining weeks follow the plan's schedule,
+with Brian doing more of the hands-on work. Ask Danni and Tianyi whether
+they agree with the two new pieces (weeks 10–12).
+
+| Plan week | Dates | What |
 |---|---|---|
-| This week | Brian | Send the draft; stop-check sheet; start rewriting (Introduction and Discussion first) |
-| 26 Oct–6 Nov | Brian | Rewrite Results, Data, Methods, then the abstract; fold in mentor comments |
-| 26 Oct–6 Nov | Claude | Run any check the mentors ask for; prepare a public code-only repo if they want a release |
-| 10 Nov | Claude | Portal opens: move the paper into the official IGARSS 2027 template; confirm the page rule |
-| ~13 Nov | Brian | Rewritten draft to Prof. Jacobs |
-| Dec | Both | Review rounds; CSE 5999 final report (format per Canvas) |
-| by ~8 Jan | Brian | Submit (deadline 11 Jan) with the competition attestation |
+| 9 | now | Log-linear diagnostic (Brian); draft 0 to mentors; stop-check sheet |
+| 10–11 | 26 Oct–8 Nov | T3: Tobler with learned constants + a variance head, built by Brian in PyTorch (`docs/T3_learned_tobler_design.md`); **Gate 2** on 6 Nov |
+| 12 | 9–15 Nov | NAIP imagery arm if time; move to the IGARSS template (portal 10 Nov) |
+| 13 | 16–22 Nov | **Full draft**: Brian's rewritten version with the new results |
+| 14 | 23–29 Nov | Polish, figures, per-hiker effects if they fit |
+| 15–16 | 30 Nov–13 Dec | Mentor + Prof. Jacobs review; CSE 5999 final report |
+| break | by ~8 Jan | Submit (deadline 11 Jan) with the competition attestation |
