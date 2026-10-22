@@ -48,6 +48,14 @@
   the next. Too few to matter.
 - **Paper layout:** the skill chart and the per-region chart became one
   figure; the hike-time chart and the trail map became one sentence each.
+- **A small bug, found and fixed** (#118): one hike crossing from the
+  Cascades into the Gorge was built in both regions, so 363 Gorge segments
+  shared ids with Cascades segments and carried their terrain. Fixed;
+  rerun measured every number moving ≤ 0.06 points, so the paper keeps
+  its numbers.
+- **Week 10 is set up** for the T3 model: a de-identified modeling table,
+  the paper's exact folds (the starter reproduces Table I's baseline on
+  all five tests to 1e-12), tested scoring code, PyTorch installed.
 - **Unseen regions with unseen hikers** (#116): 47 people hiked in several
   regions, so the headline test could keep a held-out region's hikers in
   training. Holding out whole hikers changes almost nothing; leaving out a

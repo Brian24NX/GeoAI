@@ -12,6 +12,7 @@ AE=$(ls data/t2/aef2022_*.parquet)
 CX=$(ls data/t2/context_*.parquet 2>/dev/null)   # t3_season_time.py
 WX=$(ls data/t2/weather_*.parquet 2>/dev/null)   # t2_weather.py
 LV=$(ls data/t2/lidarveg_*.parquet 2>/dev/null)  # t2_lidarveg.py
+LS=$(ls data/t2/lidarstrata_*.parquet 2>/dev/null)  # t2_lidarveg.py --strata
 LVR="wm adk catskills greenmtn shenandoah smokies pisgah frontrange wasatch cascades gorge olympic bayarea sangabriel tahoe"
 say() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $*" | tee -a logs/refresh.log; }
 case "$1" in
@@ -59,6 +60,14 @@ case "$1" in
   foldshikers) $H --covariates $T5 $T1 --splits hiker5 loro_hiker --save-folds \
                  --out results/t3_harness_hikers_folds ;;
   fixid15m)   $H --covariates $T5 $T1 --out results/t3_harness_terrain15m_fixid ;;
+  vegterrainfix) $H --regions $LVR --covariates $T5 $T1 \
+                 --out results/t3_harness_veg15_terrain_fixid ;;
+  vegbothfix) $H --regions $LVR --covariates $T5 $T1 $LV \
+                 --out results/t3_harness_veg15_terrain_lidarveg_fixid ;;
+  strataonly) $H --regions $LVR --covariates $LS \
+                 --out results/t3_harness_veg15_strata ;;
+  strataterrain) $H --regions $LVR --covariates $T5 $T1 $LS \
+                 --out results/t3_harness_veg15_terrain_strata ;;
   *) echo "unknown run $1"; exit 2 ;;
 esac >> "logs/refresh_harness_$1.log" 2>&1 \
   && say "done  harness $1" || { say "FAILED harness $1"; exit 1; }

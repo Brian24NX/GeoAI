@@ -21,6 +21,11 @@ Per segment, points within BUF_M of its matched path:
   cover2m      share of first returns more than 2 m above ground
   hag_p95      95th percentile height above ground (canopy height)
   n_pts        points used
+With --strata, also Campbell et al. (2018)'s thin strata, each normalized
+by the returns that reached it (returns in the stratum / returns below its
+top): nrd_05_15, nrd_15_25, nrd_25_35 (0.5-1.5, 1.5-2.5, 2.5-3.5 m).
+Written to data/t2/lidarstrata_<region>.parquet; the default run's
+files are untouched.
 Height above ground = z minus the ground (class 2) height under the point,
 interpolated from its 6 nearest ground returns within 2 m (inverse-distance
 weights): no DEM or vertical datum involved, and on a slope the ground
@@ -34,6 +39,7 @@ project and a stopped run resumes.
 
 Run:  python t2_lidarveg.py --region wm --dry-run   (block and size count)
       python t2_lidarveg.py --region wm [--max-segments N] [--workers 8]
+      python t2_lidarveg.py --region wm --strata       (adds the strata)
 Output: data/t2/lidarveg_<region>.parquet (per-project parts in
         data/t2/lidarveg_parts/)
 """
@@ -62,6 +68,9 @@ BUF_M = 3.0                       # buffer around the path (real metres)
 CELL = 2.0                        # prefilter grid (mercator metres)
 VERTEX = 1.5                      # path densified to this (mercator metres)
 K_GROUND, R_GROUND = 6, 2.0       # ground interpolation (points, real m)
+STRATA = {"nrd_05_15": (0.5, 1.5), "nrd_15_25": (1.5, 2.5),
+          "nrd_25_35": (2.5, 3.5)}   # Campbell et al. 2018, with --strata
+WITH_STRATA = False               # set by --strata
 AGENT = {"User-Agent": "WashU-MVRL-travel-speed/0.3 (research)"}
 
 
@@ -207,12 +216,17 @@ def metrics(x, y, z, cls, rn, dist, scale):
     band = low & (hag >= 0.85)
     c = low & (dist <= 1.0 * scale)
     first = has & (rn == 1)
-    return {"nrd": band.sum() / max(low.sum(), 1),
-            "nrd_center": (band & c).sum() / max(c.sum(), 1),
-            "cover2m": float((hag[first] > 2.0).mean())
-            if first.any() else np.nan,
-            "hag_p95": float(np.nanpercentile(hag[has], 95)),
-            "n_pts": int(has.sum())}
+    out = {"nrd": band.sum() / max(low.sum(), 1),
+           "nrd_center": (band & c).sum() / max(c.sum(), 1),
+           "cover2m": float((hag[first] > 2.0).mean())
+           if first.any() else np.nan,
+           "hag_p95": float(np.nanpercentile(hag[has], 95)),
+           "n_pts": int(has.sum())}
+    if WITH_STRATA:      # returns in the stratum / returns that reached it
+        for key, (lo, hi) in STRATA.items():
+            below = has & (hag < hi)
+            out[key] = (below & (hag >= lo)).sum() / max(below.sum(), 1)
+    return out
 
 
 def project_segments(s, paths, idx, ept, nodes, workers, cache, label):
@@ -298,7 +312,12 @@ def main():
     ap.add_argument("--max-segments", type=int, default=0,
                     help="pilot on a spatially compact subset")
     ap.add_argument("--workers", type=int, default=8)
+    ap.add_argument("--strata", action="store_true",
+                    help="add Campbell et al. 2018's three strata; writes "
+                         "lidarstrata_<region>.parquet")
     a = ap.parse_args()
+    global WITH_STRATA
+    WITH_STRATA = a.strata
     s, paths = seg_paths(a.region)
     feats = json.loads(INDEX.read_text())["features"]
     pts_ll = np.c_[s.mlon, s.mlat]
@@ -325,6 +344,8 @@ def main():
         cx, cy = (c[0] + 0.5) * 10000, (c[1] + 0.5) * 10000
         use = use[np.argsort(np.hypot(mx - cx, my - cy))[:a.max_segments]]
         tag = f"_pilot{a.max_segments}"
+    if a.strata:
+        tag += "_strata"
     print(f"{a.region}: {len(s):,} walking segments, {len(use):,} used "
           f"({s.outing_id.iloc[use].nunique():,} outings), in "
           f"{len(set(owner[use]))} lidar projects", flush=True)
@@ -363,10 +384,12 @@ def main():
     if a.dry_run:
         return
     out = pd.concat(parts, ignore_index=True)
-    for c in ("nrd", "nrd_center", "cover2m", "hag_p95", "n_pts"):
+    for c in ("nrd", "nrd_center", "cover2m", "hag_p95", "n_pts",
+              *(STRATA if a.strata else ())):
         if c not in out:
             out[c] = np.nan
-    f = OUT / f"lidarveg_{a.region}{tag}.parquet"
+    f = (OUT / f"lidarstrata_{a.region}.parquet" if a.strata
+         and not a.max_segments else OUT / f"lidarveg_{a.region}{tag}.parquet")
     out.to_parquet(f, index=False)
     print(f"wrote {f}: {len(out):,} segments, vegetation for "
           f"{out.nrd.notna().mean():.0%}, {(time.time() - t0) / 60:.0f} min")
