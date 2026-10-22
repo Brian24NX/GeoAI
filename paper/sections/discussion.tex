@@ -18,10 +18,10 @@ tag combinations. Terrain exists on every trail, and its effect has the
 same sign in all 17 regions (steppiest vs smoothest fifth, $-12\%$).
 
 \textbf{What terrain captures.} Uneven grade within the segment, such as
-rock steps and short pitches, plus difficulty beyond grade. In the additive
-model its gain is largest on descents and level trail ($+2.3$ to $+2.8\%$)
-and smallest on steep climbs ($+0.8\%$), as if footing sets the pace going
-down and effort going up; the trees, though, gain $+2.6\%$ on steep climbs.
+rock steps and short pitches, plus difficulty beyond grade. Its additive
+gain is largest on descents and level trail ($+2.3$ to $+2.8\%$) and
+smallest on steep climbs ($+0.8\%$; trees $+2.6\%$), as if footing
+matters most going down.
 The signal is the trail's elevation profile, not micro-relief: 1~m lidar
 adds little over the 5~m grid, and STRIDE's off-path roughness and
 understory terms add nothing on trails or make it worse.
@@ -40,8 +40,7 @@ few percent because GPS noise and the hiker dominate.
 Weather~\cite{thornton2022daymet} (a factor in~\cite{huang2026modeling})
 slows our hikers on hot days ($-3\%$
 above 25$^\circ$C) and with snow cover ($-4\%$), but neither weather
-($-0.0\%$) nor date and time of day improves predictions in new regions,
-and once a hiker's pace on the day is known, weather adds nothing.
+($-0.0\%$) nor date and time of day improves predictions in new regions.
 
 \textbf{Conclusion.} Across 17 North American regions, terrain from
 elevation data predicts hiking speed in regions a model has never seen

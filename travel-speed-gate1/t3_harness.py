@@ -58,6 +58,11 @@ Splits (never by segment):
             Appalachians, Rockies, Pacific Northwest, California): no
             neighbouring region in training
   eastwest  (on request) train on the West, test on the East, and back
+  hiker5    (on request) 5 folds of uploaders: hikers the model never saw
+            (an anonymous trace is its own uploader). outing5 can put a
+            hiker's other outings in training.
+  loro_hiker (on request) leave one region out AND drop from training every
+            outing by an uploader who walked in the held-out region
 
 Spread. Each arm's predictive distribution = its point prediction + the
 quantiles of its residuals on held-out outings of the TRAINING data
@@ -126,7 +131,7 @@ ZONES = {"wm": "northeast", "adk": "northeast", "catskills": "northeast",
          "olympic": "pacific_nw", "northshore": "pacific_nw",
          "bayarea": "california", "sangabriel": "california",
          "yosemite": "california", "tahoe": "california"}
-REGION_SPLITS = ("loro", "macro", "eastwest")   # bootstrap units = regions
+REGION_SPLITS = ("loro", "loro_hiker", "macro", "eastwest")  # units = regions
 GPS_SUBSETS = {"gps_le2": (0, 2), "gps_2to10": (2, 10),
                "gps_gt10": (10, np.inf)}  # recording interval (s], per trace
 SLOPE_SUBSETS = {"down_steep": (-1, -0.15), "down": (-0.15, -0.05),
@@ -543,7 +548,7 @@ def summarize(d):
 
 # -------------------------------------------------------------- splits
 def outer_folds(w, how, rng):
-    if how == "loro":
+    if how in ("loro", "loro_hiker"):
         return w.region.to_numpy()
     if how == "macro":
         return w.region.map(ZONES).to_numpy(dtype=object)
@@ -555,7 +560,8 @@ def outer_folds(w, how, rng):
         later = o.year.transform("min").to_numpy() > TIME_CUT
         bad = o.date_suspect.transform("max").to_numpy(bool)
         return np.where(bad, None, np.where(later, TIME_TEST, "until"))
-    groups = w.outing_id if how == "outing5" else w.block_10km
+    groups = {"outing5": w.outing_id, "hiker5": w.uploader}.get(
+        how, w.block_10km)
     u = rng.permutation(np.asarray(groups.unique(), dtype=object))
     return groups.map({g: i % 5 for i, g in enumerate(u)}).to_numpy()
 
@@ -570,6 +576,7 @@ def inner_split(outings, rng):
 
 def load():
     cols = ["region", "segment_id", "trace_id", "outing_id", "block_10km",
+            "uploader",
             "slope",
             "speed_kmh", "length_m", "moving_s", "permission",
             "tag_surface", "tag_sac_scale", "tag_width",
@@ -628,7 +635,8 @@ def main():
                     help="only redraw fig_harness.png from the CSVs")
     ap.add_argument("--regions", nargs="*", help="only these regions")
     ap.add_argument("--splits", nargs="*", default=SPLITS,
-                    choices=SPLITS + ["time", "macro", "eastwest"])
+                    choices=SPLITS + ["time", "macro", "eastwest",
+                                      "hiker5", "loro_hiker"])
     ap.add_argument("--covariates", nargs="*", default=[],
                     help="T2 covariate tables: segment_id + numeric columns")
     ap.add_argument("--features", nargs="*",
@@ -723,6 +731,9 @@ def main():
         for f in tests:
             te = np.nonzero(fold == f)[0]
             tr = np.nonzero(pd.notna(fold) & (fold != f))[0]
+            if split == "loro_hiker":     # ... and none of its hikers
+                seen = set(w.uploader.iloc[te])
+                tr = tr[~w.uploader.iloc[tr].isin(seen).to_numpy()]
             fit_m, stop_m, cal_m = inner_split(w.outing_id.iloc[tr], rng)
             fit, stop, cal = tr[fit_m], tr[stop_m], tr[cal_m]
             for name in ARMS:
@@ -778,7 +789,8 @@ def main():
     knobs = pd.DataFrame(knobs)
     knobs.to_csv(OUT / "knobs.csv", index=False)
     sc = pd.concat(scored, ignore_index=True)
-    base = w[["region", "trace_id", "outing_id", "length_m", "moving_s", "y",
+    base = w[["region", "trace_id", "outing_id", "uploader", "length_m",
+              "moving_s", "y",
               "tagged", "rest", "stretch", *EXTRA_SUBSETS]
              ].reset_index(names="row")
     sc = sc.merge(base, on="row")
@@ -899,7 +911,8 @@ def skill_intervals(sc, splits, B=2000, subset=None):
              ("lin_both", "lin_tags"), ("gbm_both", "gbm_tags")]
     rows = []
     for split in splits:
-        unit = "region" if split in REGION_SPLITS else "outing_id"
+        unit = ("region" if split in REGION_SPLITS
+                else "uploader" if split == "hiker5" else "outing_id")
         d = sc[(sc.split == split) & ~sc.arm.str.endswith("+me")
                & (sc.arm != "slope_curve_local")]
         if subset:

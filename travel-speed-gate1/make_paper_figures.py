@@ -138,7 +138,7 @@ def fig_regions():
 def fig_skill_regions():
     """Fig. 3, full width: (a) skill by model for new hikes and unseen
     regions; (b) terrain vs tags in each held-out region."""
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.16, 2.4),
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.16, 2.3),
                                  gridspec_kw={"width_ratios": [1.1, 1]})
     _skill(a1, legend="inside")
     _regions(a2, title=False)

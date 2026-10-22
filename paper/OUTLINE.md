@@ -156,7 +156,10 @@ frozen on T1 v1 by decision #113; lidar vegetation row 21 Oct;
   tags +0.1 to +1.7%; terrain minus tags +0.7 to +2.2%, above zero in
   every draw.
   Robustness: it adds ~1.9 points on top of region offsets (not a region
-  proxy) and ~2.3 on top of personal pace (not a hiker proxy). It holds
+  proxy) and ~2.3 on top of personal pace (not a hiker proxy). New hikers
+  (5 folds of uploaders): terrain +2.2 / +3.2, tags +1.3 / +1.5. Unseen
+  region and its hikers (#116): terrain +1.8 / +2.4, tags +0.5 / −0.4,
+  terrain − tags above zero in every draw. It holds
   for newer hikes (trained up to 2019, tested on 2020+: +2.2% / +2.9%;
   tags +0.9% / +0.9%) and at every GPS recording rate (unseen regions,
   traces every ≤ 2 s / 2–10 s / > 10 s: +1.7 / +2.4 / +1.9%). With no

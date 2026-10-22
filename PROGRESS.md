@@ -133,6 +133,15 @@ km.
   match rate 85–99% by region; Eq. (1) coefficients printed; Table I cell
   +0.4 → +0.3. Paper still 4 pages (travel-mode result and one reference
   cut). Brief, outline and explainer updated to match.
+- **New hikers, and unseen regions with unseen hikers** (decision #116):
+  47 uploaders walked in several regions (24% of segments), so the
+  headline test could keep a held-out region's hikers in training. Two new
+  tests on the cluster (10 min): holding out whole uploaders changes almost
+  nothing (terrain +2.2 / +3.2, tags +1.3 / +1.5); leaving out a region
+  together with everyone who hiked there (0.1–8.5% of the training data)
+  lowers every model a little and tags most (terrain +1.8 / +2.4, tags
+  +0.5 / −0.4; terrain above tags in every draw). The paper now says the
+  result holds for regions and hikers the model never saw; still 4 pages.
 
 ## Mon 12 Oct 2026
 

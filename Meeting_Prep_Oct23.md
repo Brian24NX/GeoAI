@@ -45,6 +45,12 @@
   the next. Too few to matter.
 - **Paper layout:** the skill chart and the per-region chart became one
   figure; the hike-time chart and the trail map became one sentence each.
+- **Unseen regions with unseen hikers** (#116): 47 people hiked in several
+  regions, so the headline test could keep a held-out region's hikers in
+  training. Holding out whole hikers changes almost nothing; leaving out a
+  region together with everyone who hiked there lowers every model a
+  little, tags most (terrain +1.8 / +2.4, tags +0.5 / −0.4), and terrain
+  still beats tags in every draw. The paper now claims both.
 - **Independent check of the draft** (#115; a fresh Claude reviewer, then
   every point re-verified): "new hikers" is now "new hikes" (that split
   holds out outings, so a hiker's other outings can be in training); "tags
@@ -89,6 +95,7 @@ with the paper kit on 10 Nov.
 |---|---|
 | "2–3% is a small gain." | Much of the spread in speed is the hiker and the day, which no map can see (26% of what's left after slope is between outings). Terrain still beats a slope curve refitted on the held-out region's own hikers (+1.2%), and its CRPS is 13% lower than Tobler's. |
 | "Terrain is just telling the model which region it's in." | No: it adds ~1.9 points on top of a learned offset per region, and it holds with a whole zone, or half the continent, held out. |
+| "The same hikers are in training and test." | We also hold out everyone who hiked in the test region: terrain +1.8% / +2.4%, tags +0.5% / −0.4%, terrain still ahead in every draw. |
 | "Do you even need lidar?" | The 5 m grid works as well as 1 m lidar, and most 5 m grids are resampled lidar. This is the title question above. |
 | "OSM uploaders aren't typical hikers." | Agreed, it's in the limits. The comparison between models is what we claim, and it holds for newer hikes and every GPS recording rate. |
 | "Sparse GPS traces read slow." | Yes, a measurement effect we explain (Data section); the gains are the same at every recording rate. |

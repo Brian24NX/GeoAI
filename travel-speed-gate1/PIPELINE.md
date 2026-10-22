@@ -157,6 +157,7 @@ sbatch -A engr-class-any -p linuxlab-project -c 8 --mem 48G -t 2:00:00 cluster/r
 | `wmterrain`, `wmveg`, `wmterrainveg` | White Mountains only (outing and block splits): terrain, lidar vegetation, both | `t3_harness_wm_*` | does point-cloud vegetation add to terrain within a region? |
 | `vegterrain`, `vegonly`, `vegboth` | the 15 regions with lidar point clouds: terrain, lidar vegetation, both | `t3_harness_veg15_*` | does it transfer to unseen regions? |
 | `contextterrain` | terrain 5 m + 1 m + day of year + hour | `t3_harness_context_terrain` | do they add to terrain? |
+| `hikers` | terrain 5 m + 1 m; splits: 5 folds of uploaders (`hiker5`), and leave one region out with that region's hikers also dropped from training (`loro_hiker`) | `t3_harness_hikers` | new hikers, and unseen regions with unseen hikers (#116) |
 
 The harness is seeded, so a re-run gives identical numbers. The robust
 run reproduces `terrain15m` to 1e-16, and `t3_robust_summary.py` checks

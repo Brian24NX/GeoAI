@@ -82,11 +82,15 @@ $+0.2\%$.
 
 \textbf{Robustness.} The terrain gain holds for newer hikes (trained to
 2019, tested on 2020 on: $+2.2\%$ / $+2.9\%$; tags $+0.9\%$), at
-every GPS recording rate (traces every $\le$2~s, 2--10~s and $>$10~s:
-$+1.7\%$, $+2.4\%$ and $+1.9\%$ in unseen regions, additive) and with no
+every GPS recording rate ($+1.7\%$ to $+2.4\%$ in unseen regions,
+additive) and with no
 neighbouring region in training: with a whole zone held out, $+1.9\%$ /
 $+2.7\%$ (tags $+0.7\%$ / $-0.1\%$); from West to East and back, $+2.6\%$
-/ $+3.3\%$ (tags $+1.5\%$ / $-0.3\%$).
+/ $+3.3\%$ (tags $+1.5\%$ / $-0.3\%$). It also holds for hikers the
+model never saw: holding out uploaders instead of outings changes little
+($+2.2\%$ / $+3.2\%$), and leaving out a region together with everyone
+who hiked there (0.1--8.5\% of the training data) gives $+1.8\%$ /
+$+2.4\%$ (tags $+0.5\%$ / $-0.4\%$), above tags in every draw.
 
 \textbf{Whole hikes: the hiker dominates.} Over 1,354 hike traces in held-out
 regions, the median error in moving time after the first kilometre is
