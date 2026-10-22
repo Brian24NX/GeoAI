@@ -3,12 +3,13 @@
 
 % DRAFT by Claude (13 Oct 2026), written from travel-speed-gate1/
 % t3_harness.py, t2_terrain5m.py, t2_terrain1m.py, t2_embed.py,
-% t2_landcover.py, t4_terrain_curve.py and t1_findings.py.
+% t2_landcover.py, t4_terrain_curve.py and t1_findings.py; group (f),
+% lidar vegetation from t2_lidarveg.py, added 21 Oct.
 % Brian: rewrite it in your own words, and disclose the AI assistance.
 \todo{Draft by Claude: rewrite in your own words.}
 
 \textbf{Target and covariates.} We predict the distribution of $\ln v$,
-the log moving speed of a walking segment. Covariates come in five groups:
+the log moving speed of a walking segment. Covariates come in six groups:
 (a)~slope; (b)~OSM tags: sac\_scale, trail\_visibility, surface, width,
 smoothness, mtb\_scale, highway type and permitted modes; (c)~terrain from
 elevation, read every 1~m along the segment's matched path: the spread (SD)
@@ -17,7 +18,10 @@ and the side slope, from the 5~m grid and, where available, 1~m lidar,
 which adds STRIDE's ground roughness~\cite{campbell2024stride}; (d)~2021
 land cover and tree canopy at 30~m~\cite{dewitz2023nlcd}; (e)~2022
 AlphaEarth satellite embeddings at the segment
-midpoint~\cite{brown2025alphaearth,alphaearth2025}. As a control,
+midpoint~\cite{brown2025alphaearth,alphaearth2025}; (f)~in the 15 regions
+with lidar point clouds, understory density (returns at 0.85--1.2~m among
+those below 1.2~m~\cite{campbell2018understory}), canopy cover and height
+within 3~m of the path. As a control,
 ``hidden climbing'' is the extra time Tobler's function predicts when the
 segment is walked as ten 5~m pieces instead of at its average grade.
 
@@ -37,7 +41,7 @@ $z$:
 \ln v = a_0 + a_1 z - (k_0 + k_1 z)\,|s + s_0|,
 \label{eq:terrain}
 \end{equation}
-with $z$ the SD of the 5~m pitches along the path divided by 0.10.
+with $z$ the SD of the path's 5~m pitches divided by 0.10.
 
 \textbf{Predictive distributions and tests.} Every model predicts its
 point estimate plus the quantiles of its residuals on held-out outings of
@@ -46,8 +50,7 @@ stopping and calibration), so calibration has to transfer too. Splits never
 separate a segment from its hike: 5 folds of outings (new hikers), 5 folds
 of 10~km UTM blocks (new places) and, the headline, leave one region out
 (17 folds); stricter checks hold out whole zones or half the continent. We
-report the continuous ranked probability score
-(CRPS)~\cite{gneiting2007strictly} of $\ln v$ as skill against the refitted
+report the CRPS~\cite{gneiting2007strictly} of $\ln v$ as skill against the refitted
 slope curve, $1-\mathrm{CRPS}/\mathrm{CRPS}_{\mathrm{slope}}$, with 95\%
 intervals that resample outings (whole regions for unseen regions); the
 coverage of 90\% intervals; and the median error in moving time over whole

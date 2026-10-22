@@ -105,6 +105,12 @@ km.
   shorter and the drafts were tightened; Fig. 2b's legend no longer covers
   Tobler's line and Fig. 3a's cut-bar labels are readable. Every section is
   now drafted; the abstract is left for Brian.
+- **Abstract drafted by Claude** (Brian asked; ~145 words, marked for
+  rewriting). To keep 4 pages: the Introduction's sentence of side findings
+  went (the abstract carries them) and a few lines were tightened. Methods
+  now defines the lidar vegetation inputs that Table I and the Results
+  report (group f: understory density, canopy cover and height within 3 m
+  of the path, 15 regions), which it had missed.
 
 ## Mon 12 Oct 2026
 

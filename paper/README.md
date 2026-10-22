@@ -4,9 +4,8 @@
 - `main.tex` + `sections/*.tex`: the paper. **Every section is a draft by
   Claude, at Brian's request, to rewrite in your own words** (Data and
   Methods 13 Oct; Introduction, Results and Discussion 21 Oct), each
-  marked with a red `[TODO: Draft by Claude ...]` note. The abstract is
-  still a note for you to write, last. Claude also set up the template, the
-  table and the figures. Disclose AI assistance as IGARSS and CSE 5999
+  marked with a red `[TODO: Draft by Claude ...]` note; so is the abstract
+  (21 Oct). Claude also set up the template, the table and the figures. Disclose AI assistance as IGARSS and CSE 5999
   require.
 - `refs.bib`: references, all checked against Crossref or arXiv (12 Oct).
   `RELATED_WORK.md`: what each paper did and how we differ (for the
