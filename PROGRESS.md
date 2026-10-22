@@ -77,6 +77,18 @@ km.
   regions; even among the 7 eastern forests, +0.4 (−0.4 to +1.5). Like the
   satellite embeddings, it knows places. Of everything tested, only terrain
   transfers. STRIDE's density term: −18% → −35% in all 15 regions.
+- **Numbers frozen on T1 v1** (decision #113): no v2 rebuild before the
+  paper. Along-trail distance (~1–3% faster speeds, the same for every
+  model) goes into the paper's limits; Brian's stop-check sheet now
+  validates the stop rule rather than tuning it. A v2 can come with a data
+  release later.
+- **Paper fits 4 pages** with the TODO notes, references included, half a
+  column to spare. The skill chart and the per-region chart are now one
+  figure across both columns (Fig. 3); the whole-hike times and the trail
+  map are one sentence each (figures kept); Table I has a lidar vegetation
+  row.
+- **Check:** 2 of 1,992 walking outings cross from one region into the
+  next (0.5% of segments, decision #114); too few to matter.
 
 ## Mon 12 Oct 2026
 

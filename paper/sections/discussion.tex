@@ -22,7 +22,8 @@ It matters most going down and on the level, where footing sets the pace,
 and least on steep climbs, where effort does.
 STRIDE's micro-roughness, calibrated off-trail, over-penalizes trails.}
 
-\todo{Practical output: Eq.~(1) runs anywhere a DEM exists (Fig.~\ref{fig:trailmap});
+\todo{Practical output: Eq.~(1) runs anywhere a DEM exists (e.g. pace on
+all 3,369~km of White Mountains trail, 77\% never walked in our data);
 travel-mode multipliers fail for bikes (ratio $\sim$4$\times$ on descents,
 $\sim$1.6$\times$ on climbs).}
 
@@ -31,7 +32,10 @@ traces read slow, a measurement effect: thinning dense walks to 30~s between
 points lowers measured speed by 11\% (straight lines cut corners; short
 stops count as moving), and the curve without traces logged every $>$10~s
 peaks 3\% higher (hiking functions depend on the sampling
-resolution~\cite{goodwin2025application}); per-segment
+resolution~\cite{goodwin2025application}); distance along the mapped
+trail removes the corner cutting (walks thinned to 30~s keep 99.3--100.5\%
+of their distance, vs 93.5--97.7\% with straight lines) and would raise
+measured speeds by about 1--3\%, but our numbers use straight lines; per-segment
 effects are a few percent because GPS noise and the hiker dominate;
 weather~\cite{thornton2022daymet} slows hikers on hot days ($-3\%$ above
 25$^\circ$C) and with snow on the ground ($-4\%$), as in Hong

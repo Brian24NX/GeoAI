@@ -19,11 +19,13 @@ STRIDE 2024 (refit) & $-17.2$ ($+0.2$) & $-17.3$ ($+0.2$) & $-16.8$ ($+0.2$) \\
 OSM tags & $+1.3$ / $+1.5$ & $+1.1$ / $+1.5$ & $+0.9$ / $+0.4$ \\
 30 m vegetation & $+0.0$ / $+0.1$ & $-0.0$ / $-0.1$ & $-0.1$ / $-0.8$ \\
 Embeddings & $+1.4$ / $+2.6$ & $+1.4$ / $+1.9$ & $+1.1$ / $+1.1$ \\
+Lidar vegetation$^\dagger$ & $+0.4$ / $+0.5$ & $+0.4$ / $+0.4$ & $+0.3$ / $+0.2$ \\
 \textbf{Terrain} & $+2.2$ / $+3.2$ & $+2.1$ / $+2.8$ & $\mathbf{+2.1}$ / $\mathbf{+2.8}$ \\
 Terrain + emb.\ + tags & $+3.7$ / $+5.1$ & $+3.8$ / $+5.1$ & $+3.0$ / $+3.9$ \\
 Eq.~(1), one input & $+1.0$ & $+1.0$ & $+1.0$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}\\[2pt]
+{\scriptsize $^\dagger$The 15 regions with lidar point clouds.}
 \end{table}
 
 \todo{R1 (Fig.~\ref{fig:curve}a, Table~\ref{tab:skill}): Tobler fails
@@ -45,7 +47,7 @@ implies less (2--16\%).}
 in unseen ones.}
 
 \todo{R3: terrain transfers: $+2.1\%$ / $+2.8\%$ in unseen regions, beating
-tags in 16 of 17 (Fig.~\ref{fig:regions}); terrain minus tags $+0.7$ to
+tags in 16 of 17 (Fig.~\ref{fig:skill}b); terrain minus tags $+0.7$ to
 $+2.2$, above zero in every bootstrap draw. About 60\% of the gain is
 uneven grade inside the segment. Not a region proxy (adds $\sim$1.9 points
 over region offsets), not a hiker proxy. 1~m lidar $\approx$ 5~m; STRIDE's
@@ -66,7 +68,8 @@ It holds with no neighbouring region in training: a whole zone held out
 and back $+2.6\%$ / $+3.3\%$; tags $+0.7\%$ / $-0.1\%$ and $+1.5\%$ /
 $-0.3\%$; terrain minus tags above zero in every draw.}
 
-\todo{R4: the hiker dominates whole-hike time (Fig.~\ref{fig:hike}):
+\todo{R4: the hiker dominates whole-hike time (1,354 hikes in held-out
+regions; figure dropped for space, \texttt{fig\_hike\_time.png}):
 median error 13.6\% (slope) $\to$ 13.0\% (+ terrain); the hiker's first
 km brings it to 10.0\%, and 9.6\% with terrain.}
 
@@ -88,36 +91,16 @@ intervals resampling outings, and the ratio each curve implies.}
 \label{fig:curve}
 \end{figure}
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_skill}
-\caption{CRPS skill vs the refitted slope curve for new hikers in known
-regions (light) and in regions the model never saw (dark), with 95\%
-intervals.}
-\label{fig:skill}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_regions}
-\caption{Per held-out region: terrain vs OSM tags (additive models).}
-\label{fig:regions}
-\end{figure}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_hike_time}
-\caption{Error in predicted moving time per hike, 1,354 hikes in held-out
-regions.}
-\label{fig:hike}
-\end{figure}
-
 \begin{figure*}[t]
 \centering
-\includegraphics[width=\textwidth]{fig_wm_pace}
-\caption{Walking pace on every OSM trail of the White Mountains (3,369~km,
-77\% never walked in our data) from Eq.~(1) fitted on the other 16
-regions, vs Tobler. \todo{Keep only if space allows; a two-panel crop may
-fit one column.}}
-\label{fig:trailmap}
+\includegraphics[width=\textwidth]{fig_skill_regions}
+\caption{CRPS skill vs the refitted slope curve. (a) By model, for new
+hikers in known regions (light) and in regions the model never saw (dark),
+with 95\% intervals resampling whole regions. (b) Each region held out:
+terrain vs OSM tags (additive models); terrain beats tags in 16 of 17.}
+\label{fig:skill}
 \end{figure*}
+
+% Dropped for the 4-page budget (paper/OUTLINE.md); restore if space allows:
+% fig_hike_time.png (whole-hike time errors, R4) and fig_wm_pace.png (pace on
+% every White Mountains trail, the practical output in the Discussion).

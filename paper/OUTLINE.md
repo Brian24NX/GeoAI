@@ -29,7 +29,7 @@ value. A hiker's own pace still matters most.
 | 1 Introduction | 0.5 | problem, gap, 3 contributions |
 | 2 Data | 0.75 | Fig. 1 (map + dataset numbers), the pipeline in one paragraph |
 | 3 Methods | 0.75 | covariates, models, splits, scoring |
-| 4 Results | 1.25 | Fig. 2 (skill by model and split), Table 1, Fig. 3 (per region or curve) |
+| 4 Results | 1.25 | Table I, Fig. 2 (speed vs slope, down/up), Fig. 3 (full width: skill by model, each region held out) |
 | 5 Discussion + conclusion | 0.5 | what transfers and why; limits; release |
 | References | 0.25 | ~12 (2026 kit: references outside the 4 pages; check 2027) |
 
@@ -103,7 +103,8 @@ value. A hiker's own pace still matters most.
 
 ## 4. Results (~1.25 pages)
 
-**Table 1** (CRPS skill vs the refitted slope curve; final numbers, 12 Oct;
+**Table 1** (CRPS skill vs the refitted slope curve; final numbers, 12 Oct,
+frozen on T1 v1 by decision #113; lidar vegetation row 21 Oct;
 `travel-speed-gate1/results/t3_harness_*`; `docs/NEXT_STEPS.md` §1a):
 
 | Model | New hikers | New 10 km squares | **Unseen region** [95% CI] |
@@ -114,6 +115,7 @@ value. A hiker's own pace still matters most.
 | + OSM tags (additive / trees) | +1.3 / +1.5 | +1.1 / +1.5 | +0.9 [0.1, 1.7] / +0.4 |
 | + vegetation, 30 m | +0.0 / +0.1 | −0.0 / −0.1 | −0.1 / −0.8 |
 | + AlphaEarth embeddings | +1.4 / +2.6 | +1.4 / +1.9 | +1.1 [0.1, 2.6] / +1.1 |
+| + lidar vegetation (15 regions with point clouds) | +0.4 / +0.5 | +0.4 / +0.4 | +0.3 [−0.3, 1.1] / +0.2 |
 | **+ terrain (1 m + 5 m elevation)** | +2.2 / +3.2 | +2.1 / +2.8 | **+2.1 [1.5, 3.1] / +2.8 [1.8, 4.1]** |
 | + terrain + embeddings | +2.9 / +4.3 | +3.0 / +3.6 | +2.6 / +2.8 |
 | + terrain + embeddings + tags | +3.7 / +5.1 | +3.8 / +5.1 | +3.0 / +3.9 [2.7, 5.7] |
@@ -245,21 +247,21 @@ uphill.
 
 ## Figures and tables to make (Claude can produce drafts)
 
-**Budget.** Four pages fit Table I plus about three single-column figures.
-The skeleton now has six (map, curve, skill, regions, hike time, trail
-map), so at least two become text or go. A suggestion to discuss: keep
-Fig. 1 map, the curve (claims 2 and 4), the skill bars (claim 3); turn
-per-region and hike-time results into one sentence each; drop the trail
-map or crop it to one column.
+**Budget (21 Oct).** With the TODO notes the paper fits 4 pages,
+references included, with about half a column free on page 4: Table I,
+Fig. 1 (map), Fig. 2 (speed vs slope and down/up, claims 2 and 4) and
+Fig. 3 across both columns (a: skill by model, claim 3; b: each region held
+out). The hike-time result (R4) and the trail map (Discussion) are one
+sentence each; both figures are kept and commented out at the end of
+`results.tex`, so one can return if the 2027 kit puts references outside
+the 4 pages.
 
 - [x] Fig. 1: `paper/figures/fig_map.png` (17 regions, circle area = walking hours, White Mountains inset).
-- [x] Fig. (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.
-- [x] Fig. 2 draft: `paper/figures/fig_skill.png` (skill by model, new hikers vs unseen region, 95% CIs), from `travel-speed-gate1/make_paper_figures.py`.
-- [ ] Table 1 as above, final numbers.
-- [x] Fig. 3 draft: `paper/figures/fig_regions.png` (terrain vs tags per held-out region; 16 of 17).
-- [x] Fig. 4 candidate: `paper/figures/fig_hike_time.png` (whole-hike moving-time error by model, 1,199 hikes in held-out regions).
-- [x] Fig. 5 candidate: `travel-speed-gate1/results/t4_terrain_curve/fig_curves.png` (speed vs slope by steppiness, with Tobler).
-- [x] Fig. 6 candidate (application, strong for IGARSS): `travel-speed-gate1/results/t4_trail_map/fig_wm_pace.png`. Pace on every White Mountains trail from the function fitted on the other 16 regions, vs Tobler. 77% of the trail km have no traces.
+- [x] Fig. 2 (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.
+- [x] Fig. 3 (both columns): `paper/figures/fig_skill_regions.png`: (a) skill by model, new hikers vs unseen region, 95% CIs; (b) terrain vs tags per held-out region, 16 of 17. From `travel-speed-gate1/make_paper_figures.py`, which also writes the panels on their own (`fig_skill.png`, `fig_regions.png`) for slides.
+- [x] Table I (`results.tex`), final numbers on T1 v1 (decision #113), with the lidar vegetation row.
+- [x] Out for space, one sentence each: `paper/figures/fig_hike_time.png` (R4, whole-hike moving-time error by model, 1,354 hikes in held-out regions) and `travel-speed-gate1/results/t4_trail_map/fig_wm_pace.png` (pace on every White Mountains trail from the function fitted on the other 16 regions, vs Tobler; 77% of the trail km have no traces).
+- [x] Not used: `travel-speed-gate1/results/t4_terrain_curve/fig_curves.png` (speed vs slope by steppiness, with Tobler).
 
 ## References (checked 12 Oct 2026)
 

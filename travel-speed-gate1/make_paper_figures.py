@@ -8,6 +8,8 @@ Draft figures for the IGARSS paper (paper/OUTLINE.md), IEEE column width
                    region out), with 95% bootstrap intervals
   fig_regions.png  per held-out region: terrain vs tags (additive arms),
                    sorted, with the count of regions where terrain wins
+  fig_skill_regions.png  the two above side by side, full page width
+                   (Fig. 3 in the paper; the single ones serve the slides)
   fig_hike_time.png error in predicted moving time per hike, in held-out
                    regions (after each hike's first km), by model
   fig_curve.png    (T4) speed vs slope in 17 regions vs Tobler and Campbell,
@@ -50,10 +52,10 @@ ROWS = [("Tobler (published)", "tobler"),
         ("Terrain + tags, trees", "gbm_both")]
 
 
-def fig_skill():
+def _skill(ax, legend="above"):
+    """Skill bars by model: new hikers (light) and unseen regions (dark)."""
     m = pd.read_csv(RES / "metrics.csv")
     ci = pd.read_csv(RES / "skill_ci.csv")
-    fig, ax = plt.subplots(figsize=(3.5, 2.9))
     for j, (split, col, name) in enumerate(
             [("outing5", LIGHT, "new hikers"),
              ("loro", BLUE, "unseen region")]):
@@ -78,14 +80,24 @@ def fig_skill():
     ax.set_xlabel("CRPS skill vs slope curve (%)")
     ax.grid(axis="x", color="#e4e3df", zorder=0)
     ax.spines[["top", "right"]].set_visible(False)
-    ax.legend(frameon=False, loc="lower center", ncol=2,
-              bbox_to_anchor=(0.45, 1.0), title="95% CI as lines",
-              title_fontsize=6.5)
+    if legend == "above":
+        ax.legend(frameon=False, loc="lower center", ncol=2,
+                  bbox_to_anchor=(0.45, 1.0), title="95% CI as lines",
+                  title_fontsize=6.5)
+    else:
+        ax.legend(frameon=False, loc="upper right", title="95% CI as lines",
+                  title_fontsize=6.5)
+
+
+def fig_skill():
+    fig, ax = plt.subplots(figsize=(3.5, 2.9))
+    _skill(ax)
     fig.tight_layout()
     fig.savefig(OUT / "fig_skill.png", dpi=300)
 
 
-def fig_regions():
+def _regions(ax, title=True):
+    """Per held-out region: terrain vs tags (additive arms)."""
     b = pd.read_csv(RES / "loro_by_region.csv").pivot(
         index="region", columns="arm", values="crps_skill_vs_slope_pct")
     b = b.sort_values("lin_rs")
@@ -97,7 +109,6 @@ def fig_regions():
              "bayarea": "Bay Area", "sangabriel": "San Gabriels",
              "yosemite": "Yosemite", "tahoe": "Tahoe", "northshore":
              "North Shore"}
-    fig, ax = plt.subplots(figsize=(3.5, 3.0))
     y = range(len(b))
     for i, (t_, r_) in enumerate(zip(b.lin_tags, b.lin_rs)):
         ax.plot([t_, r_], [i, i], color="#c9c8c3", lw=1, zorder=1)
@@ -107,13 +118,33 @@ def fig_regions():
     ax.set_yticks(list(y), [names.get(r, r) for r in b.index])
     ax.set_xlabel("CRPS skill vs slope curve (%), region held out")
     wins = int((b.lin_rs > b.lin_tags).sum())
-    ax.set_title(f"Terrain beats tags in {wins} of {len(b)} unseen regions",
-                 fontsize=8)
+    if title:
+        ax.set_title(f"Terrain beats tags in {wins} of {len(b)} unseen "
+                     "regions", fontsize=8)
     ax.grid(axis="x", color="#e4e3df", zorder=0)
     ax.spines[["top", "right"]].set_visible(False)
     ax.legend(frameon=False, loc="lower right")
+    return wins, len(b)
+
+
+def fig_regions():
+    fig, ax = plt.subplots(figsize=(3.5, 3.0))
+    _regions(ax)
     fig.tight_layout()
     fig.savefig(OUT / "fig_regions.png", dpi=300)
+
+
+def fig_skill_regions():
+    """Fig. 3, full width: (a) skill by model for new hikers and unseen
+    regions; (b) terrain vs tags in each held-out region."""
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.16, 2.75),
+                                 gridspec_kw={"width_ratios": [1.1, 1]})
+    _skill(a1, legend="inside")
+    _regions(a2, title=False)
+    a1.set_title("(a) skill by model", loc="left", fontsize=7.5)
+    a2.set_title("(b) each region held out", loc="left", fontsize=7.5)
+    fig.tight_layout(w_pad=1.5)
+    fig.savefig(OUT / "fig_skill_regions.png", dpi=300)
 
 
 HIKE = [("Tobler (published)", "tobler"),
@@ -358,8 +389,9 @@ def main():
         fig_hike()
     if (FIND / "slope_bins.csv").exists():
         fig_curve()
+    fig_skill_regions()
     print(f"wrote {OUT}/fig_skill.png, fig_regions.png, fig_hike_time.png, "
-          "fig_curve.png")
+          "fig_curve.png, fig_skill_regions.png")
 
 
 if __name__ == "__main__":

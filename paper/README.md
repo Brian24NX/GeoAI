@@ -11,14 +11,15 @@
   `RELATED_WORK.md`: what each paper did and how we differ (for the
   Introduction).
 - `figures/`: drawn by `../travel-speed-gate1/make_paper_figures.py` from
-  the harness results. The trail map, terrain curves and mode curves are
-  pulled in from `../travel-speed-gate1/results/`.
+  the harness results. The trail map, terrain curves and mode curves (not
+  in the paper for now) are read from `../travel-speed-gate1/results/`.
 
 Compile: `tectonic main.tex` (writes `main.pdf`).
 
 The template is IEEEtran (conference), a stand-in until the official IGARSS
 2027 author kit is posted (the portal opens 10 Nov 2026). The section files
-move over unchanged. With only the TODO notes it already runs to 5 pages
-(the trail map floats to page 5), so the final version keeps 3–4 of the 6
-figures; see the budget note in `OUTLINE.md`. Decide which with the
-mentors.
+move over unchanged. With the TODO notes it fits 4 pages, references
+included, with about half a column to spare: Table I, the map, the
+speed-slope curve and one figure across both columns (skill by model, each
+region held out). The hike-time figure and the trail map became one
+sentence each and can come back; see the budget note in `OUTLINE.md`.
