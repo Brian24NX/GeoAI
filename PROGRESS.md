@@ -53,8 +53,10 @@ km.
 - **Weeks 10–11 design:** `docs/T3_learned_tobler_design.md`: Tobler with
   constants learned from the covariates plus a Student-t variance head,
   scored on the harness's folds against boosted trees (Gate 2's last box).
-  Brian builds it in PyTorch (not installed yet: a ~70–80 MB download for
-  him to run or approve).
+  Brian builds it in PyTorch.
+- **PyTorch 2.14.1 installed** in the Mac's `.venv` (Brian asked; 127 MB
+  from the Python package index). The Apple GPU (MPS) works, and a test fit
+  recovered Tobler's v0 and k from synthetic data.
 - Meeting brief updated (the week-9 plot, the re-paced plan).
 
 ## Wed 21 Oct 2026

@@ -78,10 +78,10 @@ Inputs, in order of priority:
 | Makes the plots of `k(x)`, `v0(x)` | Reviews the code, runs any long jobs, writes up Gate 2 |
 
 Compute: a CPU is plenty (290k rows, a network with a few thousand
-weights); the Mac works. **Needs PyTorch**, which isn't installed yet. The
-Mac install is a ~70–80 MB download from the Python package index
-(`pip install torch` in `.venv`); Brian runs it, or approves Claude doing
-it.
+weights); the Mac works. **PyTorch 2.14.1 is installed** in `.venv` (22 Oct,
+at Brian's request; a 127 MB wheel from the Python package index), and the
+Mac's GPU (MPS) works too. A test fit recovered Tobler's constants (6.01
+km/h, k = 3.51) from synthetic data.
 
 ## Schedule (plan weeks)
 
