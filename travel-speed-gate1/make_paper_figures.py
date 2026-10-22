@@ -71,8 +71,9 @@ def _skill(ax, legend="above"):
             if v > -4.6:
                 ax.plot([lo, hi], [y, y], color="#333", lw=0.8, zorder=3)
             else:
-                ax.text(-4.5, y, f"{v:.0f}%", va="center", ha="left",
-                        fontsize=6.5, color="white", zorder=4)
+                ax.text(-4.5, y, f"{v:.0f}%".replace("-", "\u2212"),
+                        va="center", ha="left", fontsize=5.5, zorder=4,
+                        color="#1b2a41" if j == 0 else "white")
     ax.axvline(0, color="#333", lw=0.8)
     ax.set_yticks(range(len(ROWS)), [r[0] for r in ROWS])
     ax.invert_yaxis()
@@ -137,7 +138,7 @@ def fig_regions():
 def fig_skill_regions():
     """Fig. 3, full width: (a) skill by model for new hikers and unseen
     regions; (b) terrain vs tags in each held-out region."""
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.16, 2.75),
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.16, 2.4),
                                  gridspec_kw={"width_ratios": [1.1, 1]})
     _skill(a1, legend="inside")
     _regions(a2, title=False)
@@ -217,7 +218,7 @@ def fig_curve():
     nums = json.loads((FIND / "numbers.json").read_text())
     bins = pd.read_csv(FIND / "slope_bins.csv")
     p = nums["forms_cv"]["smooth_asym"]["params_all"]
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=(3.5, 3.6),
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=(3.5, 3.1),
                                  gridspec_kw={"height_ratios": [1.55, 1]})
     x = 100 * bins.slope_mid
     a1.fill_between(x, bins.q25_kmh, bins.q75_kmh, color="#e4e3df", lw=0)
@@ -253,7 +254,8 @@ def fig_curve():
                 label=f"{lab}, implied")
     a2.axhline(1, color="#e4e3df", lw=0.8, zorder=0)
     a2.set_xlim(0, 42)
-    a2.set_ylim(0.95, 1.64)
+    a2.set_ylim(0.95, 1.82)    # room for the legend above Tobler's 1.42
+    a2.set_yticks([1.0, 1.2, 1.4])
     a2.set_xlabel("trail grade (%)", labelpad=1)
     a2.set_ylabel("speed down / speed up")
     a2.legend(frameon=False, loc="upper center", fontsize=5.6, ncol=2,

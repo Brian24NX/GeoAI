@@ -4,8 +4,8 @@
 plan and the numbers as of 11 Oct. Numbers marked (*) change when the
 city regions finish their full downloads and the 1 m / canopy / embedding
 covariates are added. AI assistance (Claude) drafted this outline, and
-Data, Methods and the Introduction for Brian to rewrite; the final paper
-text is Brian's. Disclose AI use as the conference and course require.*
+every section of the paper for Brian to rewrite; the final paper text is
+Brian's. Disclose AI use as the conference and course require.*
 
 **Venue.** IGARSS 2027, Reykjavík. 4 pages, IEEE two-column. Deadline 11
 Jan 2027; the portal opens 10 Nov. Student Paper Competition: needs an
@@ -32,7 +32,7 @@ value. A hiker's own pace still matters most.
 | 3 Methods | 0.75 | covariates, models, splits, scoring |
 | 4 Results | 1.25 | Table I, Fig. 2 (speed vs slope, down/up), Fig. 3 (full width: skill by model, each region held out) |
 | 5 Discussion + conclusion | 0.5 | what transfers and why; limits; release |
-| References | 0.25 | ~12 (2026 kit: references outside the 4 pages; check 2027) |
+| References | 0.6 | 22; IGARSS kits of 2013–2017 count references inside the 4 pages (an earlier note that the 2026 kit doesn't could not be re-checked); check the 2027 kit |
 
 ---
 
@@ -248,14 +248,15 @@ uphill.
 
 ## Figures and tables to make (Claude can produce drafts)
 
-**Budget (21 Oct).** With the TODO notes the paper fits 4 pages,
-references included, with about half a column free on page 4: Table I,
-Fig. 1 (map), Fig. 2 (speed vs slope and down/up, claims 2 and 4) and
-Fig. 3 across both columns (a: skill by model, claim 3; b: each region held
-out). The hike-time result (R4) and the trail map (Discussion) are one
-sentence each; both figures are kept and commented out at the end of
+**Budget (21 Oct, all sections drafted).** The paper fills exactly 4
+pages, references included, with ~5 lines to spare: Table I, Fig. 1 (map),
+Fig. 2 (speed vs slope and down/up, claims 2 and 4; 3.1 in tall) and Fig. 3
+across both columns (a: skill by model, claim 3; b: each region held out;
+2.4 in tall). The hike-time result (R4) and the trail map (Discussion) are
+one sentence each; both figures are kept and commented out at the end of
 `results.tex`, so one can return if the 2027 kit puts references outside
-the 4 pages.
+the 4 pages. If the final text runs long, cut first: the travel-mode
+paragraph (R5), the robustness tag numbers, the STRIDE details.
 
 - [x] Fig. 1: `paper/figures/fig_map.png` (17 regions, circle area = walking hours, White Mountains inset).
 - [x] Fig. 2 (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.

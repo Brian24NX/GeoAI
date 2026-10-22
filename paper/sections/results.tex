@@ -1,7 +1,11 @@
 \section{Results}
 \label{sec:results}
 
-% ~1.25 pages. Final numbers: docs/NEXT_STEPS.md section 1a (12 Oct).
+% DRAFT by Claude (21 Oct 2026), written from the notes that were here and
+% the final numbers (docs/NEXT_STEPS.md section 1a; DECISIONS_LOG.md
+% #95-#112; results/t3_harness_*/, results/t1_findings/). Brian: rewrite it
+% in your own words, and disclose the AI assistance (CSE 5999 and IEEE both
+% require it). "a / b" pairs are additive / tree models, as in Table I.
 \begin{table}[t]
 \centering
 \caption{CRPS skill (\%) vs the refitted slope curve. Additive / trees;
@@ -28,66 +32,80 @@ Eq.~(1), one input & $+1.0$ & $+1.0$ & $+1.0$ \\
 {\scriptsize $^\dagger$The 15 regions with lidar point clouds.}
 \end{table}
 
-\todo{R1 (Fig.~\ref{fig:curve}a, Table~\ref{tab:skill}): Tobler fails
-everywhere ($-12.5\%$). Walking speed peaks near 4.2~km/h on level to
-gently descending trail, not 6: Tobler is $\sim$20\% too fast within
-$\pm$10\% grade and $\sim$18\% too slow on climbs steeper than 25\%.
-Campbell's published median curve matches near level but is $\sim$20\% too
-fast on climbs steeper than 25\%; it ties our refit on average, ranging by
-region from $-3.8\%$ (White Mountains) to $+5.8\%$ (Shenandoah).}
+\todo{Draft by Claude: rewrite in your own words.}
 
-\todo{R1b, asymmetry (Fig.~\ref{fig:curve}b): on 2,763 out-and-back pairs
-(same hiker, same trail; 1,145 outings) descending is 8\% faster than
-climbing at 3--10\% grade, 22--23\% above 20\%; Tobler implies 42\% at
-every grade above 5\%. Our pooled curve implies nearly the same ratios as
-the pairs, so its asymmetry is not a sampling artifact; Campbell's curve
-implies less (2--16\%).}
+\textbf{Tobler's function fails everywhere.} Walking speed peaks near
+4.2~km/h on level to gently descending trail, not at 6~km/h
+(Fig.~\ref{fig:curve}a): Tobler's function is about 20\% too fast within
+$\pm$10\% grade and 18\% too slow on climbs steeper than 25\%, and in
+unseen regions it scores $-12.5\%$ (Table~\ref{tab:skill}), worse in all
+17. Campbell et al.'s published median curve~\cite{campbell2022variability}
+is about 20\% too fast on climbs steeper than 25\%; it ties our refit on
+average ($-0.5\%$) but ranges by region from $-3.8\%$ (White Mountains) to
+$+5.8\%$ (Shenandoah). Every model stays calibrated in unseen regions
+(90\% intervals cover about 89\% of segments).
 
-\todo{R2: tags do not transfer: $+1.3\%$ within regions, $+0.9\%$ / $+0.4\%$
-in unseen ones.}
+\textbf{Downhill is faster, but less than Tobler implies.} For the same
+hiker on the same trail (2,763 out-and-back pairs from 1,145 outings;
+Fig.~\ref{fig:curve}b), descending is 8\% faster than climbing at
+3--10\% grade and 22--23\% above 20\%, not the 42\% Tobler implies. Our
+pooled curve implies nearly the same ratios, so its asymmetry is not an
+artifact of who walks which slopes.
 
-\todo{R3: terrain transfers: $+2.1\%$ / $+2.8\%$ in unseen regions, beating
-tags in 16 of 17 (Fig.~\ref{fig:skill}b); terrain minus tags $+0.7$ to
-$+2.2$, above zero in every bootstrap draw. About 60\% of the gain is
-uneven grade inside the segment. Not a region proxy (adds $\sim$1.9 points
-over region offsets), not a hiker proxy. 1~m lidar $\approx$ 5~m; STRIDE's
-roughness adds nothing on trails; 30~m vegetation adds nothing; embeddings
-help within regions but transfer less reliably. Understory density and
-canopy height from the lidar point clouds (15 regions) help within a region
-(White Mountains: $+3.6\% \to +5.0\%$ in new 10~km squares) but not in
-unseen regions ($+0.2$ points over terrain, helping in 9 of 15); STRIDE's
-published density term over-penalises trails ($-18\% \to -35\%$).}
+\textbf{Map tags do not transfer.} OSM tags improve on the slope curve for
+new hikers in known regions ($+1.3\%$ / $+1.5\%$, additive / trees) but
+lose a third to three quarters of that in unseen regions ($+0.9\%$
+[0.1, 1.7] / $+0.4\%$ [$-1.1$, 1.6]).
 
-\todo{R3 robustness: the gain holds for newer hikes (trained up to 2019,
-tested on 2020 and later: $+2.2\%$ / $+2.9\%$; tags $+0.9\%$) and at
-every GPS recording rate (unseen regions, traces every $\le$2~s, 2--10~s,
-$>$10~s: $+1.7$, $+2.4$, $+1.9\%$). By slope it is largest on descents and
-level trail ($+2.3$ to $+2.8\%$) and smallest on steep climbs ($+0.8\%$).
-It holds with no neighbouring region in training: a whole zone held out
-(5 zones) $+1.9\%$ / $+2.7\%$, trained on the West and tested on the East
-and back $+2.6\%$ / $+3.3\%$; tags $+0.7\%$ / $-0.1\%$ and $+1.5\%$ /
-$-0.3\%$; terrain minus tags above zero in every draw.}
+\textbf{Terrain transfers.} Terrain from elevation gains nearly as much in
+unseen regions as within them, $+2.1\%$ [1.5, 3.1] / $+2.8\%$ [1.8, 4.1]. It
+beats tags in 16 of 17 held-out regions (Fig.~\ref{fig:skill}b), and even
+a slope curve refitted on the held-out region's own other hikers
+($+1.2\%$). Terrain minus tags is $+0.7$ to $+2.2$ points (95\% interval),
+above zero in every bootstrap draw. About 60\% of the gain is uneven grade
+inside the segment that one average slope hides (the hidden-climbing
+control alone gives $+1.2\%$ / $+1.6\%$). Terrain is neither a region
+proxy (within regions it adds $\sim$1.9 points to a learned offset per
+region) nor a hiker proxy (it adds $\sim$2.3 points to the hiker's own
+pace).
 
-\todo{R4: the hiker dominates whole-hike time (1,354 hikes in held-out
-regions; figure dropped for space, \texttt{fig\_hike\_time.png}):
-median error 13.6\% (slope) $\to$ 13.0\% (+ terrain); the hiker's first
-km brings it to 10.0\%, and 9.6\% with terrain.}
+No other remote-sensing input transfers as well. 30~m land cover and
+canopy add nothing. AlphaEarth embeddings help within regions ($+1.4\%$ /
+$+2.6\%$) but less, and less reliably, in unseen ones ($+1.1\%$).
+Vegetation from the lidar point clouds helps within a region (White
+Mountains, new 10~km squares: $+3.6\% \to +5.0\%$ added to terrain) but
+adds only $+0.2$ points [$-0.2$, 0.5] to terrain in unseen regions.
+Published STRIDE~\cite{campbell2024stride} scores $-16.8\%$; refitted,
+$+0.2\%$.
 
-\todo{R5, travel mode (plan claim 5): one curve times a per-mode multiplier
-predicts held-out runners as well as their own curve ($\times$2.5;
-$+0.1\%$), but not bikes and skis: their own curve is 3.8\% better, and a
-constant $\times$3.2 is 15\% too slow downhill and 35\% too fast uphill.}
+\textbf{Robustness.} The terrain gain holds for newer hikes (trained to
+2019, tested on 2020 on: $+2.2\%$ / $+2.9\%$; tags $+0.9\%$), at
+every GPS recording rate (traces every $\le$2~s, 2--10~s and $>$10~s:
+$+1.7\%$, $+2.4\%$ and $+1.9\%$ in unseen regions, additive) and with no
+neighbouring region in training: with a whole zone held out, $+1.9\%$ /
+$+2.7\%$ (tags $+0.7\%$ / $-0.1\%$); from West to East and back, $+2.6\%$
+/ $+3.3\%$ (tags $+1.5\%$ / $-0.3\%$).
+
+\textbf{Whole hikes: the hiker dominates.} Over 1,354 hikes in held-out
+regions, the median error in moving time after the first kilometre is
+13.6\% for the slope curve and 13.0\% with terrain, but 10.0\% with the
+hiker's pace on that kilometre and 9.6\% with both (CRPS skill $+8.4\%$;
+with terrain $+10.7\%$ / $+11.6\%$).
+
+\textbf{Other travel modes.} One curve times a per-mode multiplier predicts
+held-out runners as well as their own curve ($\times$2.5), but not bikes
+and skis ($\sim$4$\times$ walking speed on descents, $\sim$1.6$\times$ on
+climbs; their own curve is 3.8\% better).
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_curve}
-\caption{(a) Walking speed vs slope in the walking direction, 17 regions:
-median per 2\% bin (dots) and the middle 50\% of segments (gray), our
-refitted curve, Campbell et al.'s published median
-curve~\cite{campbell2022variability} and Tobler's
-function~\cite{tobler1993}. (b) Speed down / speed up on out-and-back pairs
-(same hiker, same trail; grade bins 3--10, 10--20, 20--30, $\ge$30\%), 95\%
-intervals resampling outings, and the ratio each curve implies.}
+\caption{(a) Walking speed vs slope in the walking direction: median per
+2\% bin (dots), middle 50\% of segments (gray), our refitted curve,
+Campbell et al.'s median curve~\cite{campbell2022variability} and
+Tobler's function~\cite{tobler1993}. (b) Speed down / speed up for the same
+hiker on the same trail (out-and-back pairs; 95\% intervals resample
+outings) and the ratio each curve implies.}
 \label{fig:curve}
 \end{figure}
 

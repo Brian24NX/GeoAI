@@ -95,6 +95,16 @@ km.
   regions; tags vs remote sensing); three contributions with the headline
   numbers. Three new references (firefighter escape routes, personal
   accessibility, the lab's probabilistic traffic model). Still 4 pages.
+- **Results and Discussion drafted by Claude** (Brian asked), marked for
+  rewriting like the other drafts. Every number re-checked against the
+  harness outputs and the decision log (e.g. Tobler worse in all 17
+  regions; 90% intervals cover ~89% for every model; Tobler 21% too fast
+  within ±10% grade, 18% too slow above 25%). Wording kept to what the
+  tests show (why tags fail; weather). To stay at 4 pages including
+  references (older IGARSS kits count them), Fig. 2 and Fig. 3 are a little
+  shorter and the drafts were tightened; Fig. 2b's legend no longer covers
+  Tobler's line and Fig. 3a's cut-bar labels are readable. Every section is
+  now drafted; the abstract is left for Brian.
 
 ## Mon 12 Oct 2026
 
