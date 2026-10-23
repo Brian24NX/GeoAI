@@ -94,6 +94,25 @@ walked.
 A de-identified copy exists (no user names); releasing it is waiting on
 Danni's and Tianyi's decision.
 
+**"Why keep Tobler's form instead of just using the trees?"**
+It gives numbers the field can use: Tobler's constants (peak speed, how
+fast speed drops uphill and downhill) as they change with the terrain,
+e.g. on smooth vs steppy trail, instead of a black box. Gate 2 on 6 Nov
+asks whether it also beats the boosted trees on the same inputs.
+
+**"Why would aerial photos help when the satellite embeddings didn't?"**
+They might not. The 10 m AlphaEarth embeddings help inside a region but
+mostly tell the model which place it's in. 1 m NAIP photos can see the
+trail itself (rock, roots, canopy over the path), and the new-region test
+decides. NAIP covers only the US, so North Shore drops out of that test.
+It's week 12, if time: a frozen pretrained encoder with a small head
+(Clay's NAIP embeddings are one option, `docs/NEXT_STEPS.md`).
+
+**"Who wrote the paper draft?"**
+Draft 0 was written with Claude's help, from our results. I'm rewriting
+it in my own words for the full draft (week 13), and the AI help is
+disclosed.
+
 ## Cut from the slides (say only if someone asks)
 
 The 23 Oct deck was simplified to one message per slide. These details

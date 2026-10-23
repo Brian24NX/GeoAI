@@ -275,12 +275,12 @@ contours(s, 62);
 s.addText("Next steps", { placeholder: "title" });
 text(s, "Done so far", [
   { text: "Done so far: ", options: { fontSize: 16, bold: true, color: C.accent5 } },
-  { text: "the dataset, the four-model comparison and a first paper draft.",
+  { text: "the dataset, the four-model comparison and a rough first draft of the paper.",
     options: { fontSize: 16, color: C.accent5 } },
 ], M, 1.35, CW, 0.4);
 [["Weeks 10–11", "Learn Tobler's constants from terrain, with uncertainty"],
-  ["Week 12", "Add aerial imagery (NAIP) with a pretrained encoder"],
-  ["January", "Paper to IGARSS 2027"]].forEach(([when, what], i) => {
+  ["Week 12, if time", "Add aerial imagery (NAIP) with a pretrained encoder"],
+  ["January", "Submit the paper to IGARSS 2027 (due 11 Jan)"]].forEach(([when, what], i) => {
   const y = 2.25 + i * 0.85;
   text(s, `Next ${i + 1} when`, [{ text: when, options: { fontSize: 18, bold: true, color: C.accent5 } }],
     M, y + 0.04, 2.5, 0.45);
@@ -293,7 +293,7 @@ text(s, "Question", [
   { text: "which pretrained encoder would you use for 1 m aerial imagery along trails?",
     options: { fontSize: 20, color: C.background1 } },
 ], M + 0.35, 5.05, CW - 0.7, 1.25, { valign: "middle" });
-s.addNotes("So far: the dataset, the four-model comparison, and a first paper draft. Next, in weeks 10 and 11: keep Tobler's shape but learn its constants from the terrain, with an uncertainty estimate. Week 12: add aerial imagery. Then the paper for IGARSS in January. One question for you: which pretrained encoder would you use for 1 m aerial imagery along trails? (If asked: the check on 6 November is whether that model beats boosted trees.)");
+s.addNotes("So far: the dataset, the four-model comparison, and a rough first draft of the paper. Next, in weeks 10 and 11: keep Tobler's formula, but let a small neural network learn its numbers from the terrain, so smooth and steppy trail get their own numbers. It also says how sure it is. On November 6 we check whether it beats the boosted trees. Week 12, if there's time: add aerial photos through a pretrained image model. Then the paper goes to IGARSS; the deadline is January 11. One question for you: which pretrained encoder would you use for 1-meter aerial imagery along trails? Thank you. (If asked: Why Tobler's form and not just the trees? It gives numbers the field can use, like how Tobler's steepness constant changes from smooth to steppy trail. Why would photos help when the satellite embeddings didn't? They might not: the 10 m embeddings mostly told the model which place it was in, while 1 m photos see the trail itself; the new-region test decides. NAIP covers only the US, so North Shore drops out of that test. The draft was written with Claude's help from our results, and I'm rewriting it in my own words.)");
 
 // ---------------------------------------------------------------- write
 (async () => {

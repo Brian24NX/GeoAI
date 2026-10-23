@@ -42,7 +42,7 @@ km.
 
 ## Fri 23 Oct 2026
 
-- **Lab deck: plain-words speaker notes** for slides 2–6 (Brian asked, one
+- **Lab deck: plain-words speaker notes** for slides 2–7 (Brian asked, one
   slide at a time), each with short answers to likely follow-ups. Slide 6's
   chart now names its zero line ("slope alone"). The PDF backup predates
   that change: Brian had the deck open in PowerPoint, so it wasn't
