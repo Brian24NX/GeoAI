@@ -50,6 +50,10 @@ km.
   figures, a native chart of sac_scale coverage, and Mt Washington contours
   from the 1 m lidar cells (`make_assets.py`); checked with the PPTX
   validator and a render in PowerPoint.
+- **Lab-meeting Q&A sheet** (`meeting_plots/oct23_lab/QA_prep.md`): twelve
+  likely questions with short answers. Checked one new fact for it: plain
+  RMSE tells the same story as CRPS (unseen regions: terrain −2.1 / −3.1%,
+  tags −0.7%, Tobler +12.7% vs the slope curve).
 - **Re-paced to the semester plan** (decision #117, Brian's call): we are
   in plan week 9; draft 0 of the paper is five weeks early and becomes the
   safety net. The rest follows the plan's schedule, with Brian doing more
