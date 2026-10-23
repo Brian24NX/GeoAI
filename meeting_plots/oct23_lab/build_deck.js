@@ -199,7 +199,7 @@ const gx = 7.65, gw = W - M - gx;
 box(s, "Goal card", gx, 1.45, gw, 5.25, C.text2);
 text(s, "Goal label", [{ text: "OUR GOAL", options: { fontSize: 12, bold: true, color: C.accent5,
   charSpacing: 2 } }], gx + 0.3, 1.7, gw - 0.6, 0.3);
-text(s, "Goal", [{ text: "Predict the speed of every 50 m of trail, with its uncertainty, from what can be seen from above, and test it in regions the model never saw.",
+text(s, "Goal", [{ text: "Predict the speed of every 50 m of trail, with its uncertainty, from what can be seen from above. Test it on regions the model never saw: train on 16, test on the 17th.",
   options: { fontFace: HEAD, fontSize: 20, color: C.background1 } }], gx + 0.3, 2.05, gw - 0.6, 1.9);
 text(s, "Arms label", [{ text: "Four models, same method, different inputs", options: { fontSize: 14,
   color: C.accent5 } }], gx + 0.3, 4.0, gw - 0.6, 0.35);
@@ -214,7 +214,7 @@ arms.forEach(([name, what, color], i) => {
     { text: what, options: { fontSize: 12, color: C.background1 } },
   ], x + 0.15, y + 0.1, cw - 0.3, 0.75);
 });
-s.addNotes("Crowdsourced GPS studies already show Tobler is too fast, and newer models add inputs like OSM terrain classes, weather or lidar. STRIDE models speed from lidar using timed field walks, and our lab's RasterNet learns road speed from lidar and imagery. But these studies fit and test in one area, with random splits. Nobody has tested whether such a model works in a region it has never seen, or compared map tags with remote sensing directly. That is the goal: four models that differ only in what they can see, tested on regions held out entirely.");
+s.addNotes("How have people tackled this before? Some refit the slope curve with data from fitness apps like Strava and AllTrails, and found Tobler is too fast, but they still use slope only. Others add more inputs: trail types and lidar in England, weather and other factors in Hong Kong. But they test on the same area they trained on, so the test trails sit right next to the training trails. STRIDE builds a lidar model from timed field walks, and our lab's RasterNet predicts road speed from lidar and aerial imagery. What's missing: nobody has checked whether these models work in a region they've never seen, which is where predictions are actually needed, and nobody has compared the map's tags with remote sensing head to head. So our goal: predict the speed on every 50 m of trail, with a range, from what's visible from above, and test it on a region the model never saw: train on 16 regions, test on the 17th. We compare four models that learn the same way but see different inputs: slope only, the map's tags, remote sensing, or both.");
 
 // ---------------------------------------------------------------- 4 what I built
 pres.addSection({ title: "What I built" });
