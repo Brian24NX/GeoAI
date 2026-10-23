@@ -255,8 +255,8 @@ stat(s, "Peak speed", 7.6, 1.5, W - M - 7.6, "4.2", C.accent1,
 stat(s, "Downhill", 7.6, 3.3, W - M - 7.6, "8–23%", C.accent1,
   "faster downhill than uphill, same hiker on the same trail", "Tobler: 42% at every grade");
 stat(s, "Tobler regions", 7.6, 5.1, W - M - 7.6, "17 of 17", C.text2,
-  "regions where Tobler predicts worse than a refitted slope curve", "−12.5% overall (CRPS skill)");
-s.addNotes("First finding. Real hikers peak around 4.2 km/h, not 6, and the top of the curve is rounded. From hikes where the same person walked the same trail both ways, going down is only 8 to 23% faster than going up; Tobler assumes 42% at every grade. Scored in regions the model never saw, Tobler is worse than a refitted slope curve in all 17 regions.");
+  "regions where Tobler predicts worse than a curve fitted to the other regions", "12.5% worse overall (CRPS score)");
+s.addNotes("First finding. Each gray dot is the typical speed of real hikers at one slope, downhill on the left, uphill on the right; the band is where the middle half of hikers fall. The dashed line is Tobler. Tobler peaks at 6 km/h with a sharp point. Real hikers top out around 4.2, and the top is rounded, so on everyday trail Tobler is about 20% too fast. The bottom panel uses hikes where the same person walked up and back down the same trail, so fitness and pack weight cancel out. Going down is only 8% faster on gentle grades and about 23% on steep ones; Tobler assumes 42% everywhere. And in all 17 regions, Tobler predicts worse than a simple curve fitted to the other regions. (If asked: 2,763 up-and-back pairs from 1,145 hikes; Campbell's AllTrails curve, in orange, matches near flat but is about 20% too fast on climbs steeper than 25%; on those steep climbs Tobler is actually about 18% too slow.)");
 
 // ---------------------------------------------------------------- 6 finding 2
 s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Findings" });
