@@ -21,10 +21,30 @@ error by 2–3% against the slope curve, tags by under 1%, and Tobler is 13%
 worse.
 
 **"2–3% sounds small."**
-Most of the leftover variation is the person and the day, which no map can
-see: about a quarter of what's left after slope is between hikes. Terrain
-still beats refitting the slope curve on the held-out region's own hikers,
-and against Tobler the error drops by about 13%.
+Speed is noisy: after slope, about a quarter of what's left differs between
+hikes (who is hiking, the day) and the rest from one 50 m stretch to the
+next. Nothing we tried does much better, and terrain is most of the best
+model's gain. It even beats a slope curve refitted on the held-out
+region's own other hikers (+1.2%), and against Tobler the error drops by
+about 13%.
+
+**"What exactly is 'terrain'?"**
+The trail's elevation profile along each 50 m segment, read from lidar
+elevation maps (1 m and 5 m): the steepest short pitch, rock steps, side
+slope, and above all the hidden ups and downs that one average slope
+hides. That hidden climbing alone carries over half of the gain.
+
+**"Why don't tags carry over to a new region?"**
+In regions the model knows, tags help (+1.3% / +1.5%, additive / trees);
+in a new region the additive model keeps +0.9% and the trees +0.4%. It's
+not that tags mean different things in different places: within the same
+hike, harder difficulty grades are slower in every region with enough
+tagged trail. Tags are patchy (1.5–96% of trail) and the trees seem to
+learn region-specific tag combinations. Terrain exists on every trail.
+
+**"Is terrain's lead over tags real or noise?"**
+Real: resampling whole regions, terrain minus tags is +0.7 to +2.2 points
+(95% interval), above zero in every draw.
 
 **"Isn't terrain just telling the model which region it's in?"**
 No. It adds about 1.9 points on top of a learned per-region offset, and it
@@ -78,7 +98,7 @@ were on the earlier version:
 - **Tag coverage:** the difficulty tag (sac_scale) covers 1.5% (Green
   Mountains) to 96% (Adirondacks) of walked trail.
 - **Additive vs trees:** in unseen regions terrain gains +2.1% (additive) /
-  +2.8% (trees), tags +0.4% / +0.9%. Terrain beats tags in 16 of 17 regions
+  +2.8% (trees), tags +0.9% / +0.4%. Terrain beats tags in 16 of 17 regions
   with the additive model and 14 of 17 with trees.
 - **Data size:** 14,532 km and 4,702 hours of walking.
 - **The November check:** Gate 2 on 6 Nov asks whether Tobler with learned

@@ -128,7 +128,10 @@ def slide_regions():
         ax.scatter(b.lin_tags, y, s=70, color="#eb6834", label="map tags", zorder=2)
         ax.scatter(b.lin_rs, y, s=70, color="#2a78d6", label="terrain (elevation)",
                    zorder=3)
-        ax.axvline(0, color="#1c2321", lw=1)
+        ax.plot([0, 0], [-0.7, len(b) - 0.35], color="#1c2321", lw=1)
+        ax.text(0, len(b) - 0.25, "slope alone", ha="center", va="bottom", fontsize=13,
+                color="#1c2321")
+        ax.set_ylim(-0.7, len(b) + 0.55)
         ax.set_yticks(y, [NAMES[r] for r in b.index], fontsize=13)
         ax.set_xlabel("improvement over slope alone (%)")
         ax.grid(axis="x", color="#e4e3df", lw=0.8)

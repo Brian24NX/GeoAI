@@ -262,11 +262,11 @@ s.addImage({ path: ASSET("slide_regions.png"), x: M, y: 1.3, w: rgw, h: rgw / as
   objectName: "Terrain vs tags in each held-out region" });
 stat(s, "Regions won", 7.95, 1.7, W - M - 7.95, "16 of 17", C.accent1,
   "new regions where terrain predicts better than map tags", null, 54);
-stat(s, "Terrain gain", 7.95, 3.8, W - M - 7.95, "2–3%", C.accent1, "terrain's gain over slope alone",
+stat(s, "Terrain gain", 7.95, 3.8, W - M - 7.95, "2–3%", C.accent1, "terrain's improvement over slope alone",
   "map tags: under 1%", 54);
 text(s, "How to read", [{ text: "Each row: train on the other 16 regions, test on this one.",
   options: { fontSize: 14, italic: true, color: C.accent4 } }], 7.95, 5.85, W - M - 7.95, 0.6);
-s.addNotes("The main result. Each row is one region the model never saw; further right means better predictions than slope alone. Blue is terrain from elevation data, orange is the map's tags. Terrain wins in 16 of 17 regions: about 2 to 3% better than slope alone, while the tags gain under 1%. (If asked: the score is CRPS on the predicted speed distribution, and RMSE agrees; it holds with all of a region's hikers removed from training; vegetation and satellite embeddings help inside a region but don't transfer.)");
+s.addNotes("This is the main result. Each row is one region the model never saw: it learned from the other 16 and was tested on this one. The black line at zero is slope alone, the curve from the last slide; dots to the right are better predictions. Blue adds terrain from lidar elevation maps, mostly the hidden ups and downs inside each 50-meter stretch that the average slope misses. Orange adds what the map says about the trail, like its difficulty grade and surface. Blue beats orange in 16 of 17 regions and is right of zero in every one. Orange is left of zero in five: there, tags learned elsewhere actually misled the model. Overall, terrain is 2 to 3% better than slope alone; tags, under 1%. (If asked why so small: speed is noisy; after slope, a quarter of what's left differs between hikes and the rest from stretch to stretch, and nothing we tried does much better; against Tobler, terrain is about 13% better. The score is CRPS, which grades the whole predicted range of speeds, and RMSE agrees. Terrain's lead over tags is +0.7 to +2.2 points, 95% interval. It holds with every hiker from the test region removed from training. Yosemite, the one exception, isn't investigated yet.)");
 
 // ---------------------------------------------------------------- 7 next steps
 pres.addSection({ title: "Next steps" });

@@ -42,8 +42,17 @@ km.
 
 ## Fri 23 Oct 2026
 
-- **Lab deck: plain-words speaker notes** for slides 2–5 (Brian asked, one
-  slide at a time), each with short answers to likely follow-ups.
+- **Lab deck: plain-words speaker notes** for slides 2–6 (Brian asked, one
+  slide at a time), each with short answers to likely follow-ups. Slide 6's
+  chart now names its zero line ("slope alone"). The PDF backup predates
+  that change: Brian had the deck open in PowerPoint, so it wasn't
+  re-exported.
+- **Q&A sheet corrected:** "2–3% sounds small" had said most of the
+  leftover variation is the person and the day, but only ~26% is between
+  hikes (`results/t1_findings/numbers.json`); and the cut-details list had
+  the tag numbers swapped (+0.9% additive / +0.4% trees). Added answers on
+  what terrain is, why tags don't carry over, and whether terrain's lead
+  is real.
 - **Lab deck simplified for a 5–6 min talk plus 4 min of questions**
   (Brian asked): one message per slide, at most two numbers each. The
   details moved to the speaker notes and to `QA_prep.md` ("Cut from the
