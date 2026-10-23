@@ -1,0 +1,72 @@
+{
+ "coverage": [
+  {
+   "region": "Green Mtns",
+   "pct": 1.5
+  },
+  {
+   "region": "Bay Area",
+   "pct": 4.9
+  },
+  {
+   "region": "Smokies",
+   "pct": 5.9
+  },
+  {
+   "region": "Col. Gorge",
+   "pct": 6.7
+  },
+  {
+   "region": "Tahoe",
+   "pct": 13.8
+  },
+  {
+   "region": "Yosemite",
+   "pct": 30.3
+  },
+  {
+   "region": "Pisgah",
+   "pct": 31.4
+  },
+  {
+   "region": "Shenandoah",
+   "pct": 32.9
+  },
+  {
+   "region": "Cascades",
+   "pct": 44.1
+  },
+  {
+   "region": "San Gabriels",
+   "pct": 46.3
+  },
+  {
+   "region": "White Mtns",
+   "pct": 50.7
+  },
+  {
+   "region": "Front Range",
+   "pct": 52.0
+  },
+  {
+   "region": "Olympic",
+   "pct": 52.2
+  },
+  {
+   "region": "Catskills",
+   "pct": 61.5
+  },
+  {
+   "region": "North Shore",
+   "pct": 62.7
+  },
+  {
+   "region": "Wasatch",
+   "pct": 86.3
+  },
+  {
+   "region": "Adirondacks",
+   "pct": 96.2
+  }
+ ]
+}

@@ -42,6 +42,14 @@ km.
 
 ## Thu 22 Oct 2026
 
+- **Lab-meeting deck for 23 Oct** (Prof. Jacobs' lab meeting; Brian asked):
+  `meeting_plots/oct23_lab/Zhou_LabMeeting_23Oct.pptx` (+ PDF), 7 slides for
+  ~5 min following Dan's outline (problem, prior work, goal, what's done,
+  findings, next steps), speaker notes on every slide. Built by
+  `build_deck.js` (pptxgenjs 3.12.0, installed locally) from the paper's
+  figures, a native chart of sac_scale coverage, and Mt Washington contours
+  from the 1 m lidar cells (`make_assets.py`); checked with the PPTX
+  validator and a render in PowerPoint.
 - **Re-paced to the semester plan** (decision #117, Brian's call): we are
   in plan week 9; draft 0 of the paper is five weeks early and becomes the
   safety net. The rest follows the plan's schedule, with Brian doing more
