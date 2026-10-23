@@ -14,6 +14,16 @@ Each trace is cleaned, stops are removed (a point that is still within
 trail map with a hidden Markov model (85–99% of points matched, by region).
 Speed is measured per 50 m segment.
 
+**"What model do you use? An MLP?"**
+Two per set of inputs, both predicting log speed for each 50 m segment:
+an additive model (the slope curve plus a ridge regression with one offset
+per tag value or per terrain decile bin, readable like Wood et al. 2023)
+and gradient-boosted trees (scikit-learn HistGradientBoosting) on slope
+plus the same inputs. The spread for CRPS is each model's errors on
+held-out training hikes. No neural net yet: in weeks 10–11 a small network
+learns Tobler's constants from terrain and tags, with a variance head, and
+Gate 2 asks whether it beats the trees.
+
 **"Why CRPS instead of RMSE?"**
 We predict a distribution of speeds, and CRPS scores both the center and
 the spread. Plain RMSE tells the same story: in unseen regions terrain cuts
