@@ -125,7 +125,7 @@ s.addNotes("Hi everyone, I'm Brian. With Danni and Tianyi I'm working on predict
 pres.addSection({ title: "Problem and goal" });
 s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Problem and goal" });
 s.addText("GIS still times hikes with a 1993 formula", { placeholder: "title" });
-box(s, "Formula card", M, 1.45, 6.0, 1.45, C.background2);
+box(s, "Formula card", M, 1.45, 6.0, 1.9, C.background2);
 text(s, "Formula label", [{ text: "TOBLER'S HIKING FUNCTION (1993)", options: { fontSize: 12, bold: true,
   color: C.accent3, charSpacing: 1.5 } }], M + 0.3, 1.62, 5.4, 0.3);
 text(s, "Formula", [
@@ -138,8 +138,13 @@ const rows2 = [
   ["One curve for every trail", "no rocks, roots, steps or vegetation"],
   ["Still the default in GIS travel-time tools", "search and rescue, wildfire escape routes, trail apps"],
 ];
+text(s, "Formula how to read", [
+  { text: "s = slope (0.10 = 10% uphill).  ", options: { fontSize: 14, color: C.text1 } },
+  { text: "Fastest at a gentle downhill: 6 km/h. Flat: 5.0 km/h. 20% climb: 2.5 km/h.",
+    options: { fontSize: 14, color: C.accent4 } },
+], M + 0.3, 2.75, 5.4, 0.5);
 rows2.forEach(([label, detail], i) => {
-  const y = 3.2 + i * 0.82;
+  const y = 3.6 + i * 0.78;
   s.addShape(SH.ellipse, { x: M + 0.02, y: y + 0.09, w: 0.18, h: 0.18, fill: { color: C.text2 },
     line: { type: "none" }, objectName: `Problem marker ${i + 1}` });
   text(s, `Problem ${i + 1}`, [
@@ -152,7 +157,7 @@ text(s, "Tag coverage note", [
   { text: "OSM's difficulty tag covers ", options: { fontSize: 16, color: C.text1 } },
   { text: "1.5% to 96%", options: { fontSize: 16, bold: true, color: C.accent2 } },
   { text: " of walked trail, depending on the region.", options: { fontSize: 16, color: C.text1 } },
-], M, 5.85, 6.0, 0.8);
+], M, 5.95, 6.0, 0.8);
 s.addChart(pres.ChartType.bar, [{ name: "Walked trail with sac_scale (%)",
   labels: data.coverage.map((d) => d.region), values: data.coverage.map((d) => d.pct) }], {
   x: 7.05, y: 1.35, w: W - M - 7.05, h: 5.5, barDir: "bar", barGapWidthPct: 45,
@@ -166,7 +171,7 @@ s.addChart(pres.ChartType.bar, [{ name: "Walked trail with sac_scale (%)",
   valGridLine: { style: "none" }, catGridLine: { style: "none" },
   objectName: "Tag coverage chart",
 });
-s.addNotes("GIS tools still estimate walking speed with Tobler's 1993 formula: 6 km/h at its peak, and the same curve for every trail. It was fit to figures in a cartography textbook, not to real hikes, and it is what search and rescue, wildfire escape routes and trail apps start from. Trail maps could add detail: OpenStreetMap has a difficulty tag. But as the chart shows, it covers 1.5% of walked trail in one region and 96% in another.");
+s.addNotes("Today, if software estimates how long a hike takes, it usually uses Tobler's formula from 1993. v is walking speed, s is the slope. It says you're fastest, 6 km/h, on a gentle downhill, and slower the steeper it gets: about 5 km/h on flat ground, 2.5 on a 20% climb. There are three problems. It was fit to numbers in a cartography textbook, not to real hikes. It's one curve for every trail, so a rocky scramble and a smooth path get the same speed. And it's still what GIS tools use for search and rescue, wildfire escape routes and trail apps. Could the trail map fix this? OpenStreetMap has a difficulty grade called sac_scale, from the Swiss Alpine Club: from easy 'hiking' up to 'alpine hiking'. But this chart shows how much of the trail actually has it: 96% in the Adirondacks, under 2% in the Green Mountains. For most trails, the map can't tell you how hard they are.");
 
 // ---------------------------------------------------------------- 3 prior work + goal
 s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Problem and goal" });
