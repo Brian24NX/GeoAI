@@ -13,3 +13,4 @@ __pycache__/
 *.part
 *.tmp
 meeting_plots/oct23_lab/node_modules/
+~$*

@@ -40,6 +40,24 @@ km.
 
 ---
 
+## Fri 23 Oct 2026
+
+- **Lab deck: plain-words speaker notes** for slides 2–5 (Brian asked, one
+  slide at a time), each with short answers to likely follow-ups.
+- **Lab deck simplified for a 5–6 min talk plus 4 min of questions**
+  (Brian asked): one message per slide, at most two numbers each. The
+  details moved to the speaker notes and to `QA_prep.md` ("Cut from the
+  slides"). `make_assets.py` draws three new slide-sized charts with large
+  type: speed vs slope (real hikers vs Tobler), terrain vs tags in each
+  held-out region, and a map of the 17 regions (circle area = walking
+  hours).
+  - Removed: the tag-coverage bar chart, the four prior-work cards, the
+    downhill panel and its stat, the nine-model bar chart, and the T1–T4
+    chips.
+  - The scripted notes are about 580 words: ~4 min at 150 words a minute,
+    ~5 min with pauses.
+  - Validated, rendered in PowerPoint; PDF backup updated.
+
 ## Thu 22 Oct 2026
 
 - **Lab-meeting deck for 23 Oct** (Prof. Jacobs' lab meeting; Brian asked):

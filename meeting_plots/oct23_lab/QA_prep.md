@@ -63,3 +63,25 @@ walked.
 **"Will the data be released?"**
 A de-identified copy exists (no user names); releasing it is waiting on
 Danni's and Tianyi's decision.
+
+## Cut from the slides (say only if someone asks)
+
+The 23 Oct deck was simplified to one message per slide. These details
+were on the earlier version:
+
+- **Downhill vs uphill:** for the same hiker on the same trail, going down
+  is 8% faster on gentle grades and about 23% on steep ones (2,763
+  out-and-back pairs from 1,145 hikes). Tobler assumes 42% everywhere.
+- **How much worse is Tobler?** 12.5% worse overall than a slope curve
+  fitted to the other regions (CRPS). On climbs steeper than 25% it is
+  actually about 18% too slow.
+- **Tag coverage:** the difficulty tag (sac_scale) covers 1.5% (Green
+  Mountains) to 96% (Adirondacks) of walked trail.
+- **Additive vs trees:** in unseen regions terrain gains +2.1% (additive) /
+  +2.8% (trees), tags +0.4% / +0.9%. Terrain beats tags in 16 of 17 regions
+  with the additive model and 14 of 17 with trees.
+- **Data size:** 14,532 km and 4,702 hours of walking.
+- **The November check:** Gate 2 on 6 Nov asks whether Tobler with learned
+  constants beats boosted trees on the same folds.
+- **Which conference:** IGARSS 2027 (deadline 11 Jan) and its Student Paper
+  Competition.
