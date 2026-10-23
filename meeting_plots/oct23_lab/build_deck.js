@@ -224,7 +224,7 @@ s.addImage({ path: FIG("fig_map.png"), x: M, y: 1.4, w: 7.0, h: 7.0 / 1.937,
   objectName: "Map of the 17 regions" });
 text(s, "Map caption", [{ text: "Circle area = walking hours. Blue: full OSM download plus the lab's crawl; orange: crawl only. Inset: White Mountains segments by speed.",
   options: { fontSize: 11, color: C.accent4 } }], M, 5.08, 7.0, 0.45);
-const stats4 = [["290,640", "", "walking segments, 50 m each"], ["1,992", "", "hikes (outings)"],
+const stats4 = [["290,640", "", "walking segments, 50 m each"], ["1,992", "", "hikes"],
   ["4,702", " h", "of walking"], ["14,532", " km", "of trail walked"]];
 stats4.forEach(([v, u, l], i) => {
   const x = 7.95 + (i % 2) * 2.55, y = 1.5 + Math.floor(i / 2) * 1.75;
@@ -242,7 +242,7 @@ steps.forEach((t, i) => {
     fill: { color: C.accent3 }, line: { type: "none" }, objectName: `Pipeline arrow ${i + 1}` });
   px += w + 0.28;
 });
-s.addNotes("I built the dataset from public OpenStreetMap GPS traces in 17 mountain regions in the US and Canada, plus the lab's crawl of 1.5 million original uploads. The pipeline cleans each trace, removes stops, matches it to the trail network with a hidden Markov model, and cuts it into 50 m segments. Each segment gets its speed, slope, OSM tags, terrain from 1 m lidar and 5 m elevation, vegetation and satellite embeddings. That's 290,640 segments from 1,992 hikes.");
+s.addNotes("Here's the data. I used public GPS tracks that hikers upload to OpenStreetMap, from 17 mountain regions in the US and Canada; bigger circles mean more hours of hiking. For each track, the pipeline at the bottom removes GPS glitches and stops, because we want walking speed, not lunch breaks. Then it snaps the points onto the trail map, the way a car's navigation snaps you to the road, and cuts the hike into 50-meter pieces. Each piece gets its speed and slope, plus what the map says about the trail and what lidar and satellites see. In total that's 290,640 pieces from about 2,000 hikes: 14,500 km and 4,700 hours of walking. The inset is the White Mountains, with every piece colored by speed. (If asked: a group that uploads several tracks of the same walk counts as one hike; snapping uses a hidden Markov model; 85 to 99% of points match, depending on the region.)");
 
 // ---------------------------------------------------------------- 5 finding 1
 pres.addSection({ title: "Findings" });
