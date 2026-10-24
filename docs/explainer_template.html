@@ -137,7 +137,7 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
 </header>
 
 <nav class="toc"><div class="wrap">
-  <a href="#tldr">1 · One minute</a><a href="#why">2 · Why it matters</a><a href="#basics">3 · The basics</a><a href="#design">4 · Research design</a><a href="#plan">5 · The plan</a><a href="#story">6 · What we did</a><a href="#pipeline">7 · The pipeline</a><a href="#dataset">8 · The dataset</a><a href="#findings">9 · Findings</a><a href="#test">10 · First test</a><a href="#useful">11 · Practical results</a><a href="#fit">12 · Where we fit</a><a href="#next">13 · What's next</a><a href="#you">14 · Brian's to-do</a><a href="#glossary">15 · Glossary</a>
+  <a href="#tldr">1 · One minute</a><a href="#why">2 · Why it matters</a><a href="#basics">3 · The basics</a><a href="#design">4 · Research design</a><a href="#plan">5 · The plan</a><a href="#story">6 · What we did</a><a href="#pipeline">7 · The pipeline</a><a href="#dataset">8 · The dataset</a><a href="#findings">9 · Findings</a><a href="#test">10 · First test</a><a href="#useful">11 · Practical results</a><a href="#fit">12 · Where we fit</a><a href="#next">13 · What's next</a><a href="#glossary">14 · Glossary</a>
 </div></nav>
 
 <main class="wrap">
@@ -569,52 +569,8 @@ footer{padding:30px 0 60px;color:var(--text-3);font-size:13.5px}
 </section>
 
 <!-- ============================================================ 14 -->
-<section id="you">
-  <h2>14 · Brian's to-do and meeting notes (16 Oct)</h2>
-  <div class="twocol">
-    <div>
-      <h3>This week</h3>
-      <ul class="check">
-        <li>Read <b>Wood et al. 2023</b> (PLOS ONE) and <b>STRIDE</b> (Campbell 2024, Sci. Reports): the two papers closest to ours.</li>
-        <li>Then Campbell 2019 &amp; 2022, HikingTTE, RasterNet.</li>
-        <li>Label the 20 stop moments in <span class="k">stop_check/stop_check.html</span> (~15 min).</li>
-        <li>Read Part 1 of <span class="k">Meeting_Prep_Oct16.md</span> (~10 min) before Friday.</li>
-        <li>Start writing the Introduction from the notes in <span class="k">paper/sections/introduction.tex</span>.</li>
-        <li class="ok">GitHub repo with a daily progress log: <span class="k">Brian24NX/GeoAI</span></li>
-      </ul>
-    </div>
-    <div>
-      <h3>Questions for Danni &amp; Tianyi (16 Oct)</h3>
-      <ol>
-        <li><b>Paper framing:</b> lead with "terrain from remote sensing transfers to new regions; map tags don't", with Tobler, Campbell and STRIDE as baselines. <b>Agree?</b></li>
-        <li><b>Embeddings:</b> AlphaEarth helps within regions but transfers unreliably. Present it as "helps locally"? Try another embedding?</li>
-        <li><b>Lidar understory:</b> ~12 GB for the White Mountains alone. Do it for 1–3 regions, or skip?</li>
-        <li><b>Data release:</b> a de-identified copy is ready; license (ODbL) and lab policy?</li>
-        <li><b>Cluster account:</b> keep <span class="k">engr-class-any</span> (≤ 8 CPUs/job) or a lab account?</li>
-      </ol>
-    </div>
-  </div>
-  <details><summary>If a mentor asks… (short answers)</summary>
-    <p><b>"Why is the peak speed so low?"</b> Several reasons:</p>
-    <ul>
-      <li>Campbell found the same (~4.1 km/h).</li>
-      <li>Our number holds under four stop rules and with 1 m elevation.</li>
-      <li>The data match Tobler on steep grades, so speeds and slopes aren't broken.</li>
-      <li>Real trails are rough, and Tobler's constants came from 1950s marching tables.</li>
-    </ul>
-    <p><b>"How do you know which trail someone was on?"</b> HMM map-matching. ~96% of points match, and we inspected the worst cases by eye.</p>
-    <p><b>"Aren't segments from one hike correlated?"</b> Yes. Every interval resamples whole outings, and every test holds out whole hikes, map squares or regions, never single points.</p>
-    <p><b>"What's new compared with Campbell and Wood?"</b> Testing in unseen regions; remote sensing vs tags head-to-head; calibrated uncertainty; same-hiker asymmetry at scale.</p>
-    <p><b>"Why so many regions?"</b> You asked for it, and it enables the leave-one-region-out test, the paper's strongest claim.</p>
-    <p><b>"Do OSM tags help?"</b> A little. +1% (CRPS) within a region, +0.2% in an unseen region; boosted trees on tags even get worse there. Tagging habits differ between regions.</p>
-    <p><b>"Then is remote sensing pointless?"</b> Not yet known; that's T2/T3. Remote-sensing variables mean the same thing everywhere, so they may transfer where tags don't. We also know the ceiling: "place memory" (other hikers at the same spot) adds +1.3%, so we judge gains against that, not against zero.</p>
-    <p><b>"What matters most, then?"</b> The hiker. Their pace from the first km cuts whole-hike time error from 13.7% to 9.9% in new regions.</p>
-  </details>
-</section>
-
-<!-- ============================================================ 15 -->
 <section id="glossary">
-  <h2>15 · Glossary</h2>
+  <h2>14 · Glossary</h2>
   <div class="controls"><input id="gsearch" type="search" placeholder="Search a term…" aria-label="search the glossary"></div>
   <dl class="gloss" id="gloss"></dl>
   <h3>Where everything lives</h3>

@@ -67,6 +67,14 @@ km.
     ~5 min with pauses.
   - Validated, rendered in PowerPoint; PDF backup updated.
 
+- **Lab meeting held** (Prof. Jacobs' lab, afternoon); feedback to be
+  logged when Brian shares it (the encoder question for week 12).
+- **Explainer: section 14 removed** (Brian asked, before sharing the link
+  with Danni): his to-do list, the 16 Oct questions for the mentors and
+  the "if a mentor asks" answers. The Glossary is now section 14. Rebuilt
+  from `docs/explainer_template.html` and republished to the same private
+  link (version 3); nothing else on the page changed.
+
 ## Thu 22 Oct 2026
 
 - **Lab-meeting deck for 23 Oct** (Prof. Jacobs' lab meeting; Brian asked):
