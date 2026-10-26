@@ -69,7 +69,14 @@ km.
     is built and runs are identical. Across starting seeds the loss barely
     moves (~0.001) but the k_up range shifts by ~0.1, so week 11's k(x)
     plots should average a few seeds.
-  Blanks filled by Claude at Brian's request. Next: TODO 4, scoring.
+  Blanks filled by Claude at Brian's request.
+- **TODO 4 (scoring) — first Gate 2 numbers (new hikes, one seed;
+  decision #120):** scored the harness's way the learned-Tobler model gets
+  **+3.12%** CRPS skill vs the slope curve, level with boosted trees on the
+  same 12 terrain covariates (+3.22%, 95% interval 2.8–3.7) and well above
+  the additive model (+2.21%). With its own per-segment Student-t spread:
+  **+3.67%**, and its 90% ranges hold 88.7–90.3% of test segments.
+  Week 11: the other four splits, intervals, several seeds.
 
 ## Sun 25 Oct 2026
 

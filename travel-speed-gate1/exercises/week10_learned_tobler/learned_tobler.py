@@ -188,7 +188,7 @@ def main():
     print(f"{len(t):,} segments; split {args.split}; "
           f"{len(terrain)} terrain covariates")
 
-    ref_crps, model_crps = [], []
+    ref_crps, model_crps, own_crps = [], [], []
     for f, fit, stop, cal, test in folds(t, inner, args.split):
         p, c_ref = reference(s, y, fit, stop, cal, test)
         ref_crps.append(c_ref)
@@ -244,6 +244,23 @@ def main():
         #       that compares with Table I
         #   (b) with your own spread: sc.crps_student_t(mu, sigma, nu, y)
         #   append (a) to model_crps.
+        te, ca = torch.from_numpy(test), torch.from_numpy(cal)
+        with torch.no_grad():                        # the trained model's centres
+            q_te, q_ca = model(X[te]), model(X[ca])
+            mu_te = curve_torch(S[te], q_te, model.e).numpy()
+            mu_ca = curve_torch(S[ca], q_ca, model.e).numpy()
+        # (a) the harness's way: our centres + the spread of the cal residuals
+        r = sc.residual_quantiles(y[cal] - mu_ca)    # the cal hikes' errors: real - predicted
+        c_a = sc.crps_quantiles(mu_te, r, y[test])
+        model_crps.append(c_a)
+        # (b) our own spread: one Student-t per segment
+        sig_te = np.exp(q_te["log_sigma"].numpy())   # each test segment's own spread
+        c_b = sc.crps_student_t(mu_te, sig_te, 5.0, y[test])
+        own_crps.append(c_b)
+        cov = sc.coverage_student_t(mu_te, sig_te, 5.0, y[test], level=0.9)  # a 90% range
+        print(f"    skill vs the reference: (a) {sc.skill(c_a, c_ref):+.2f}%, "
+              f"(b) {sc.skill(c_b, c_ref):+.2f}%; its own 90% range holds "
+              f"{100 * cov:.1f}% of the test segments")
 
     ref = np.concatenate(ref_crps)
     print(f"reference slope curve, mean CRPS (log) {ref.mean():.6f} "
@@ -251,7 +268,11 @@ def main():
     if model_crps:
         mod = np.concatenate(model_crps)
         print(f"your model: CRPS skill vs the reference "
-              f"{sc.skill(mod, ref):+.2f}%")
+              f"{sc.skill(mod, ref):+.2f}% (a, the harness's way)")
+        own = np.concatenate(own_crps)
+        print(f"            with its own spread {sc.skill(own, ref):+.2f}% (b)")
+        print("Table I, same 12 terrain covariates (README): new hikes "
+              "trees +3.22%, additive +2.21%")
 
 
 if __name__ == "__main__":
