@@ -56,8 +56,20 @@ km.
   the stop rows to five decimals in every fold (0.525, 0.465, 0.443, 0.494,
   0.508). The starting spread is too wide for a Student-t: in fold 0 the
   spread alone would take the loss to ~0.497, so only the drop below that
-  is terrain. Blanks filled by Claude at Brian's request. Next: TODO 3,
-  training.
+  is terrain. Blanks filled by Claude at Brian's request.
+- **TODO 3 (training):** Adam on mini-batches of the fit rows (2,048, lr
+  1e-3); early stopping on the stop rows (patience 5), keeping the best
+  weights; test rows untouched. All five outing5 folds in ~12 s on the
+  laptop CPU: 13–23 passes, stop loss e.g. 0.525 → 0.457 in fold 0 (the
+  spread alone gets ~0.497, so terrain does the rest). Each segment now
+  gets its own constants: k_up ~2.0–2.85 and peak speed ~3.6–4.6 km/h
+  (10th–90th percentile) instead of 2.6 and 4.2 for all.
+  - Reproducibility fix: PyTorch starts from a random seed, so fold 0's
+    starting weights changed every run; the model is now seeded before it
+    is built and runs are identical. Across starting seeds the loss barely
+    moves (~0.001) but the k_up range shifts by ~0.1, so week 11's k(x)
+    plots should average a few seeds.
+  Blanks filled by Claude at Brian's request. Next: TODO 4, scoring.
 
 ## Sun 25 Oct 2026
 

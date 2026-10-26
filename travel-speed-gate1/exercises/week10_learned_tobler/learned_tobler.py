@@ -13,6 +13,7 @@ Data: ../../cache/exercise/t3_table.parquet, t3_inner.parquet,
 Run:  ../../../.venv/bin/python learned_tobler.py --split outing5
 """
 import argparse
+import copy
 import json
 import sys
 from pathlib import Path
@@ -141,6 +142,40 @@ def loss_fn(model, x, s, y, nu=5.0):
     return nll.mean()                        # the average surprise
 
 
+# ---------------------------------------------------------------- TODO 3
+def train(model, X, S, Y, fit, stop, lr=1e-3, batch=2048, max_passes=60,
+          patience=5, seed=0):
+    """Adam on mini-batches of the fit rows. After each pass over them, the
+    loss on the stop rows decides: keep the best weights so far, and quit
+    after `patience` passes without improvement (early stopping). The test
+    rows are never used here. Returns the best stop loss and the number of
+    passes run."""
+    torch.manual_seed(seed)
+    opt = torch.optim.Adam(model.parameters(), lr=lr)
+    fit_t = torch.from_numpy(fit)
+    rows = torch.from_numpy(stop)            # the stop rows decide when to stop
+    best, best_state, bad = float("inf"), None, 0
+    for n_pass in range(1, max_passes + 1):
+        model.train()
+        for idx in fit_t[torch.randperm(len(fit_t))].split(batch):
+            opt.zero_grad()                  # forget the last batch's gradients
+            loss = loss_fn(model, X[idx], S[idx], Y[idx])
+            loss.backward()                  # backpropagation: the gradients
+            opt.step()                       # nudge every weight downhill
+        model.eval()
+        with torch.no_grad():
+            l_stop = loss_fn(model, X[rows], S[rows], Y[rows]).item()
+        if l_stop < best - 1e-5:             # better: remember these weights
+            best, bad = l_stop, 0
+            best_state = copy.deepcopy(model.state_dict())
+        else:
+            bad += 1                         # one more pass without improvement
+        if bad >= patience:
+            break
+    model.load_state_dict(best_state)        # back to the best pass
+    return best, n_pass
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="outing5",
@@ -170,6 +205,7 @@ def main():
         #   weights and set its biases so the outputs equal p (and
         #   log_sigma = log of the SD of the cal residuals).
         sd = np.std(y[cal] - CURVE(p, s[cal]))       # the reference's spread
+        torch.manual_seed(0)                         # same starting weights every run
         model = LearnedTobler(x.shape[1], p, sd)
         with torch.no_grad():                        # check: untrained = reference
             q = model(torch.from_numpy(x[test]))
@@ -194,6 +230,14 @@ def main():
         # TODO 3 (training): Adam, mini-batches of rows in fit; after each
         #   epoch compute the loss on stop and keep the best weights (early
         #   stopping). Nothing from test may be used.
+        best, n_pass = train(model, X, S, Y, fit, stop)
+        with torch.no_grad():                        # what it learned, on stop
+            q = model(X[st])
+        k10, k90 = np.percentile(q["k_up"].numpy(), [10, 90])
+        v10, v90 = np.percentile(np.exp(q["a"].numpy()), [10, 90])
+        print(f"    trained {n_pass} passes; stop loss {l0:.5f} -> {best:.5f}; "
+              f"across segments k_up {k10:.2f}-{k90:.2f}, "
+              f"peak speed {v10:.2f}-{v90:.2f} km/h (10th-90th percentile)")
         # TODO 4 (scoring, two ways):
         #   (a) like the harness: mu on test + residual quantiles of
         #       y - mu on cal -> sc.crps_quantiles(...); this is the number
