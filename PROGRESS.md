@@ -107,6 +107,8 @@ km.
   learned constants vs steppiness in unseen regions (loro, seeds
   averaged). Smoothest to steppiest decile: peak 4.46 → 3.55 km/h, k up
   2.63 → 2.11, k down 1.93 → 2.18 (peaks ~2.37 in deciles 7–8).
+  Blanks filled by Claude at Brian's request; `fig_constants.png` drawn; the
+  write-up sentence drafted with Claude (in the script).
 
 ## Sun 25 Oct 2026
 

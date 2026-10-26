@@ -29,10 +29,9 @@ t = pd.read_parquet(ROOT / "cache" / "exercise" / "t3_table.parquet",
                     columns=["pitch_sd_5m"])
 d = pd.read_parquet(ROOT / "cache" / "t3_learned" / "loro.parquet")
 
-# Brian: three ___ blanks (answers in chat are fine too).
-d["steppy"] = ___                    # BLANK 1: each segment's pitch_sd_5m (d.row = its row in t)
-d["v0"] = ___                        # BLANK 2: the peak speed in km/h, from a_mean
-d["bin"] = pd.qcut(d.steppy, ___, labels=False)   # BLANK 3: how many equal-count bins? (ten)
+d["steppy"] = t.pitch_sd_5m.to_numpy()[d.row]   # each segment's steppiness
+d["v0"] = np.exp(d.a_mean)                       # undo the log: km/h
+d["bin"] = pd.qcut(d.steppy, 10, labels=False)   # tenths of the segments
 g = d.groupby("bin").agg(
     steppy=("steppy", "median"), n=("row", "size"),
     k_up=("k_up_mean", "median"), k_down=("k_down_mean", "median"),
@@ -69,3 +68,8 @@ print("wrote fig_constants.png")
 # Brian: one sentence for the Gate 2 write-up, with numbers from the table
 # printed above: "Tobler's k = 3.5 is closer to ... on smooth trail and ...
 # on steppy trail; the peak speed falls from ... to ... km/h."
+#
+# Draft (with Claude, 26 Oct; numbers from the table above): Tobler's
+# k = 3.5 is closer to 2.6 going up and 1.9 going down on smooth trail, and
+# about 2.1-2.2 both ways on the steppiest trail, where hikers are slow at
+# every grade: the peak speed falls from 4.5 to 3.6 km/h (Tobler: 6).
