@@ -103,6 +103,10 @@ km.
   - In unseen regions it beats the trees in 13 of 17 regions.
   Left for week 11: Brian's k(x) / v0(x) plots and the Gate 2 write-up for
   6 Nov.
+- **Week 11 plot set up** (Brian asked): `plot_constants.py`, three blanks,
+  learned constants vs steppiness in unseen regions (loro, seeds
+  averaged). Smoothest to steppiest decile: peak 4.46 → 3.55 km/h, k up
+  2.63 → 2.11, k down 1.93 → 2.18 (peaks ~2.37 in deciles 7–8).
 
 ## Sun 25 Oct 2026
 

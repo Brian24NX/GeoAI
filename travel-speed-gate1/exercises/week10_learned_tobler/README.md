@@ -128,5 +128,6 @@ own spread it beats them on new hikes, new squares and unseen regions; its
 
 **Yours (Brian), week 11:** the plots of `k_up(x)` and `v0(x) = exp(a(x))`
 against steppiness (`pitch_sd_5m`), from the seed-averaged constants in
-`cache/t3_learned/<split>.parquet` (join on `row` to `t3_table.parquet`),
-and the Gate 2 write-up for 6 Nov.
+`cache/t3_learned/<split>.parquet` (join on `row` to `t3_table.parquet`):
+`plot_constants.py` (three blanks, then one sentence), and the Gate 2
+write-up for 6 Nov.
