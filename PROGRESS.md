@@ -40,6 +40,17 @@ km.
 
 ---
 
+## Sun 25 Oct 2026
+
+- **Week 9 log-linear diagnostic** (plan week 9; `travel-speed-gate1/
+  exercises/week09_loglinear/`): TODOs 1–3 done together (Claude filled
+  the blanks at Brian's request); `fig_loglinear.png`. Median log speed vs
+  |slope + 0.05| is not Tobler's straight line: the top is flat (fastest
+  bin −0.5% slope, 4.26 km/h vs Tobler's 6 at −5%). Past it, both sides
+  fall at about −2.35 (Tobler −3.5); the downhill side sits ~5% lower.
+  Real hikers match Tobler near ±15–20% grades and are faster than it on
+  the steepest bins. TODO 4 (3–4 sentences for the meeting) is Brian's.
+
 ## Fri 23 Oct 2026
 
 - **Lab deck: plain-words speaker notes** for slides 2–7 (Brian asked, one
