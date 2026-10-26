@@ -39,6 +39,10 @@ def skill(model, ref):
 def summarize(split, d, rng):
     seeds = sorted(int(m.group(1)) for c in d.columns
                    if (m := re.fullmatch(r"crps_a_s(\d+)", c)))
+    crps = d.filter(regex=r"^crps_")
+    if not np.isfinite(crps.to_numpy()).all():      # never average around it
+        raise SystemExit(f"{split}: non-finite CRPS in "
+                         f"{int((~np.isfinite(crps)).any(axis=1).sum())} rows")
     d = d.assign(a=d[[f"crps_a_s{k}" for k in seeds]].mean(axis=1),
                  b=d[[f"crps_b_s{k}" for k in seeds]].mean(axis=1))
     g = d.groupby(UNIT[split])[["crps_ref", "crps_trees", "a", "b"]].sum()

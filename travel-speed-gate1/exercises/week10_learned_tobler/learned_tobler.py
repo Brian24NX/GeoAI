@@ -75,12 +75,17 @@ def reference(s, y, fit, stop, cal, test):
 
 
 def features(t, columns, train):
-    """Numeric covariates scaled with the training rows' mean and SD;
-    missing values -> 0 (the training mean) plus a 0/1 'missing' column for
-    each covariate that has gaps. Returns a float32 array, one row per
-    segment."""
+    """Numeric covariates clipped to the training rows' 0.1st-99.9th
+    percentiles, then scaled with the training rows' mean and SD; missing
+    values -> 0 (the training mean) plus a 0/1 'missing' column for each
+    covariate that has gaps. Returns a float32 array, one row per segment.
+    The clip (26 Oct): a few elevation glitches sit hundreds of SDs out
+    (hidden_grade up to 524 SD); trees and bins shrug that off, but a
+    network extrapolates it into absurd speeds and spreads."""
     x = t[columns].to_numpy(float)
     miss = np.isnan(x)
+    lo, hi = np.nanpercentile(x[train], [0.1, 99.9], axis=0)
+    x = np.clip(x, lo, hi)                       # missing stays missing
     mu, sd = np.nanmean(x[train], 0), np.nanstd(x[train], 0)
     sd[~(sd > 0)] = 1.0
     z = np.where(miss, 0.0, (x - mu) / sd)

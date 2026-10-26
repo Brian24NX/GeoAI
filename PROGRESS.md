@@ -88,6 +88,21 @@ km.
   [−0.30, +0.05] (a tie), (b) − trees +0.45 [+0.04, +0.86]. The full run
   (~10–15 min on the laptop) is ready for week 11; README has the Gate 2
   checklist.
+- **Week 11 runs done early** (Brian: "run it now"; decision #121). The
+  first full run exposed elevation glitches (hidden_grade up to 524 SD
+  from its mean) that the network extrapolated into absurd values; fixed
+  by clipping its inputs to the training rows' 0.1st–99.9th percentiles,
+  then rerun clean (~6 min). Skill vs the slope curve, trees / learned
+  Tobler (a) / (b): new hikes +3.22 / +3.19 / +3.77; new hikers +3.19 /
+  +3.07 / +3.36; new squares +2.83 / +2.90 / +3.50; unseen regions +2.79 /
+  +3.01 / +3.37; unseen regions and hikers +2.42 / +2.55 / +3.05.
+  - (a) ties the trees in every split.
+  - (b) beats them on new hikes, new squares and unseen regions (intervals
+    above zero).
+  - Its own 90% ranges hold 89.4–89.9% of test segments.
+  - In unseen regions it beats the trees in 13 of 17 regions.
+  Left for week 11: Brian's k(x) / v0(x) plots and the Gate 2 write-up for
+  6 Nov.
 
 ## Sun 25 Oct 2026
 

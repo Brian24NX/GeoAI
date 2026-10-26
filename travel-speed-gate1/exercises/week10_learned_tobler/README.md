@@ -95,8 +95,8 @@ cd ~/Desktop/GeoAI/travel-speed-gate1/exercises/week10_learned_tobler && ../../.
   as on the cluster). One row per scored segment goes to
   `../../cache/t3_learned/<split>.parquet` (not in git), with the learned
   constants averaged over the seeds for the plots. About 40 s per split
-  for one seed on the laptop; all five splits with three seeds, roughly
-  10–15 minutes (the two region splits have 17 folds each).
+  for one seed on the laptop; all five splits with three seeds, about
+  6 minutes (the two region splits have 17 folds each).
 - `gate2_summary.py`: per split, the skills of the trees and of the learned
   model (a) and (b), 95% bootstrap intervals that resample the split's
   units like the harness (outings; uploaders for `hiker5`; regions for the
@@ -108,6 +108,13 @@ Smoke test on `outing5`, seed 0 (26 Oct): the reproduced trees give
 +3.22% [2.79, 3.67], exactly the harness's value; the learned model +3.12%
 (a) and +3.67% (b); (a) − trees −0.11 [−0.30, +0.05], (b) − trees +0.45
 [+0.04, +0.86]; its own 90% range holds 89.8% of the test segments.
+
+**Results, 26 Oct** (all five splits, seeds 0–2, inputs clipped to the
+training rows' 0.1st–99.9th percentiles after elevation glitches broke the
+first run; decision #121, `../../results/t3_learned_tobler/gate2_summary.csv`):
+scored the harness's way the model ties the trees in every split; with its
+own spread it beats them on new hikes, new squares and unseen regions; its
+90% ranges hold 89.4–89.9% of test segments.
 
 **Gate 2's five boxes** (plan §6) and where the answers come from:
 
