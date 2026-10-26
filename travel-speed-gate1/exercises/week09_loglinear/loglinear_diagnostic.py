@@ -81,3 +81,18 @@ print(f"fastest bin: slope {100 * s_top:+.1f}%, median {np.exp(top.med):.2f} km/
 # TODO 4: in a comment or a note for the meeting, 3-4 sentences: is it a
 # straight line? Where does it bend? Are the two sides the same? How does
 # the peak speed compare with 6 km/h?
+#
+# Answer (drafted with Claude, 25 Oct; numbers from the run above):
+# 1. It is not one straight line: the top is flat, with hikers at about
+#    4.2 km/h from -5% to 0% slope (fastest, 4.26 km/h, on flat ground),
+#    where Tobler peaks sharply at 6 km/h at -5%.
+# 2. Past the top the medians fall in a nearly straight line, but at about
+#    -2.35 on both sides instead of Tobler's -3.5, so hikers slow down more
+#    gently as the grade steepens.
+# 3. The two sides fall at the same rate, but the downhill side sits about
+#    5% lower: a 20% descent (3.46 km/h) is slower than a 9% climb
+#    (3.64 km/h), which Tobler treats as equal.
+# 4. So Tobler is too fast on gentle trail, about right on 10-15% climbs and
+#    20-25% descents, and too slow on the steepest climbs (34%: 2.0 vs
+#    1.6 km/h); past -35% the downhill bins are thin, so those points are
+#    noisy.

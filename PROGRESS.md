@@ -49,7 +49,8 @@ km.
   bin −0.5% slope, 4.26 km/h vs Tobler's 6 at −5%). Past it, both sides
   fall at about −2.35 (Tobler −3.5); the downhill side sits ~5% lower.
   Real hikers match Tobler near ±15–20% grades and are faster than it on
-  the steepest bins. TODO 4 (3–4 sentences for the meeting) is Brian's.
+  the steepest bins. TODO 4's four sentences drafted by Claude at Brian's
+  request (in the script, marked as drafted with Claude).
 
 ## Fri 23 Oct 2026
 
