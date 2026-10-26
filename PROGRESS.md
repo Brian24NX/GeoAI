@@ -40,6 +40,18 @@ km.
 
 ---
 
+## Mon 26 Oct 2026
+
+- **Week 10 started: Tobler with learned constants, TODO 1 (the model)**
+  (`travel-speed-gate1/exercises/week10_learned_tobler/learned_tobler.py`).
+  A small network (two hidden layers of 32, SiLU) maps the 12 terrain
+  covariates (plus missing flags) to each segment's a, k_up, k_down
+  (softplus), s0 and log_sigma; e stays the reference's. The last layer
+  starts with zero weights and the reference constants as biases, so the
+  untrained model is the reference curve: on outing5 it matches to ≤ 3e-7
+  in all five folds. Claude filled the blanks at Brian's request. Next:
+  TODO 2, the Student-t loss.
+
 ## Sun 25 Oct 2026
 
 - **Week 9 log-linear diagnostic** (plan week 9; `travel-speed-gate1/

@@ -19,6 +19,9 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import torch
+import torch.nn.functional as F
+from torch import nn
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]                       # travel-speed-gate1
@@ -83,6 +86,46 @@ def features(t, columns, train):
     return np.hstack([z, miss[:, gaps].astype(float)]).astype(np.float32)
 
 
+# ---------------------------------------------------------------- TODO 1
+class LearnedTobler(nn.Module):
+    """A segment's terrain features -> its own Tobler-style constants:
+    a (log of the peak speed), k_up / k_down (how fast speed falls above /
+    below the peak; softplus keeps them positive), s0 (where the peak sits)
+    and log_sigma (the spread). e (the rounded top) stays the reference's.
+    Before training every segment gets exactly the reference curve: the last
+    layer's weights are zero and its biases are the reference constants."""
+
+    def __init__(self, n_in, p, sd, hidden=32):
+        super().__init__()
+        self.body = nn.Sequential(nn.Linear(n_in, hidden), nn.SiLU(),
+                                  nn.Linear(hidden, hidden), nn.SiLU())
+        self.out = nn.Linear(hidden, 5)          # a, k_up, k_down, s0, log_sigma
+        a, k_up, k_down, s0, e = p
+        with torch.no_grad():
+            self.out.weight.zero_()              # every segment starts the same...
+            self.out.bias.copy_(torch.tensor([   # ...on the reference curve
+                a,
+                np.log(np.expm1(k_up)),          # softplus of this = k_up
+                np.log(np.expm1(k_down)),        # softplus of this = k_down
+                s0,
+                np.log(sd),                      # log_sigma: the reference's spread
+            ]))
+        self.e = float(abs(e))
+
+    def forward(self, x):
+        z = self.out(self.body(x))
+        return dict(a=z[:, 0], k_up=F.softplus(z[:, 1]),
+                    k_down=F.softplus(z[:, 2]), s0=z[:, 3], log_sigma=z[:, 4])
+
+
+def curve_torch(s, q, e):
+    """CURVE's formula, with each segment's own constants q (the model's
+    output) instead of one set for everybody."""
+    x = s + q["s0"]
+    r = torch.sqrt(x ** 2 + e ** 2) - e
+    return q["a"] - torch.where(x >= 0, q["k_up"], q["k_down"]) * r
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="outing5",
@@ -111,6 +154,14 @@ def main():
         #   with softplus. Start it AT the reference: zero the last layer's
         #   weights and set its biases so the outputs equal p (and
         #   log_sigma = log of the SD of the cal residuals).
+        sd = np.std(y[cal] - CURVE(p, s[cal]))       # the reference's spread
+        model = LearnedTobler(x.shape[1], p, sd)
+        with torch.no_grad():                        # check: untrained = reference
+            q = model(torch.from_numpy(x[test]))
+            mu0 = curve_torch(torch.from_numpy(s[test]).float(), q, model.e)
+        diff = np.abs(mu0.numpy() - CURVE(p, s[test])).max()
+        print(f"    untrained model vs the reference curve: largest "
+              f"difference {diff:.1e} (should be about 1e-6 or less)")
         # TODO 2 (the loss): Student-t negative log-likelihood of y,
         #   sc.nll_student_t_torch(mu, sigma, nu, y) with mu = the curve
         #   evaluated with the predicted constants; nu fixed (say 5) at
