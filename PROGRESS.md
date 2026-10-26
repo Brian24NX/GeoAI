@@ -109,6 +109,12 @@ km.
   2.63 → 2.11, k down 1.93 → 2.18 (peaks ~2.37 in deciles 7–8).
   Blanks filled by Claude at Brian's request; `fig_constants.png` drawn; the
   write-up sentence drafted with Claude (in the script).
+- **Gate 2 write-up drafted** (Brian asked) as a private Claude Doc,
+  https://claude.ai/artifact/CibPvHq7PzBePj1VLEvLeu: summary, setup, the five
+  boxes (status dropdowns), learned Tobler vs trees (paired-difference chart
+  and table), the steppiness figure, how the model works, caveats, next steps
+  and questions for Danni and Tianyi, and an AI-assistance disclosure.
+  Brian edits it and shares it before 6 Nov.
 
 ## Sun 25 Oct 2026
 
