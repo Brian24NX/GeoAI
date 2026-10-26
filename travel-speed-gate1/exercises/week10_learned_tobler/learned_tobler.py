@@ -21,6 +21,7 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn.functional as F
+from scipy.stats import t as student_t
 from torch import nn
 
 HERE = Path(__file__).resolve().parent
@@ -126,6 +127,20 @@ def curve_torch(s, q, e):
     return q["a"] - torch.where(x >= 0, q["k_up"], q["k_down"]) * r
 
 
+# ---------------------------------------------------------------- TODO 2
+def loss_fn(model, x, s, y, nu=5.0):
+    """The number training makes smaller: the average Student-t "surprise"
+    (negative log-likelihood) of the real log speeds y, given the model's
+    centre mu (the curve with each segment's own constants) and spread
+    sigma. nu = 5 gives heavy enough tails that GPS glitches and missed
+    stops don't drag the fit."""
+    q = model(x)
+    mu = curve_torch(s, q, model.e)          # the curve with each segment's constants
+    sigma = torch.exp(q["log_sigma"])        # undo the log: always > 0
+    nll = sc.nll_student_t_torch(mu, sigma, nu, y)   # one number per segment
+    return nll.mean()                        # the average surprise
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--split", default="outing5",
@@ -166,6 +181,16 @@ def main():
         #   sc.nll_student_t_torch(mu, sigma, nu, y) with mu = the curve
         #   evaluated with the predicted constants; nu fixed (say 5) at
         #   first. (Or sc.crps_gaussian_torch.)
+        X = torch.from_numpy(x)                      # the fold's tensors
+        S = torch.from_numpy(s).float()
+        Y = torch.from_numpy(y).float()
+        st = torch.from_numpy(stop)
+        with torch.no_grad():                        # check: untrained = reference
+            l0 = loss_fn(model, X[st], S[st], Y[st]).item()
+        l_ref = -student_t.logpdf(y[stop], 5.0, loc=CURVE(p, s[stop]),
+                                  scale=sd).mean()
+        print(f"    loss on the stop rows before training: {l0:.5f} "
+              f"(the reference curve's: {l_ref:.5f})")
         # TODO 3 (training): Adam, mini-batches of rows in fit; after each
         #   epoch compute the loss on stop and keep the best weights (early
         #   stopping). Nothing from test may be used.

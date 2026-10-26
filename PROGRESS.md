@@ -49,8 +49,15 @@ km.
   (softplus), s0 and log_sigma; e stays the reference's. The last layer
   starts with zero weights and the reference constants as biases, so the
   untrained model is the reference curve: on outing5 it matches to ≤ 3e-7
-  in all five folds. Claude filled the blanks at Brian's request. Next:
-  TODO 2, the Student-t loss.
+  in all five folds. Claude filled the blanks at Brian's request.
+- **TODO 2 (the loss):** mean Student-t negative log-likelihood (nu = 5) of
+  the log speeds, centre = the curve with each segment's constants, spread
+  = exp(log_sigma). Before training it equals the reference curve's loss on
+  the stop rows to five decimals in every fold (0.525, 0.465, 0.443, 0.494,
+  0.508). The starting spread is too wide for a Student-t: in fold 0 the
+  spread alone would take the loss to ~0.497, so only the drop below that
+  is terrain. Blanks filled by Claude at Brian's request. Next: TODO 3,
+  training.
 
 ## Sun 25 Oct 2026
 
