@@ -482,7 +482,7 @@ of the hands-on work; the draft is the safety net.
 | 9 | 19–25 Oct | Done early: lidar understory, robustness, draft 0. **Now:** the plan's log-linear diagnostic (Brian; `travel-speed-gate1/exercises/week09_loglinear/`), draft 0 to the mentors, stop-check sheet; 23 Oct meeting |
 | 10 | 26 Oct–1 Nov | T3: Tobler with learned constants + a variance head (Brian builds it in PyTorch; `docs/T3_learned_tobler_design.md`) |
 | 11 | 2–8 Nov | T3 on all splits vs boosted trees (runs done early, 26 Oct, #121: ties the trees, beats them with its own spread); **Gate 2** write-up for the 6 Nov meeting, k(x) plots |
-| 12 | 9–15 Nov | NAIP imagery arm (frozen pretrained encoder + small head) if time; portal opens 10 Nov: move to the IGARSS template |
+| 12 | 9–15 Nov | NAIP imagery arm (frozen pretrained encoder + small head) if time, plan in `docs/T3_naip_imagery_design.md` (Clay's precomputed NAIP embeddings first, then trail-centred chips); portal opens 10 Nov: move to the IGARSS template |
 | 13 | 16–22 Nov | **Full draft** (plan milestone): Brian's rewritten version with the new results |
 | 14 | 23–29 Nov | Figures, polish, per-hiker effects if they fit; Thanksgiving 26 Nov |
 | 15–16 | 30 Nov–13 Dec | Mentor + Prof. Jacobs review; CSE 5999 final report (format per Canvas) |

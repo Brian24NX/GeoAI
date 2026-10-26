@@ -115,6 +115,19 @@ km.
   and table), the steppiness figure, how the model works, caveats, next steps
   and questions for Danni and Tianyi, and an AI-assistance disclosure.
   Brian edits it and shares it before 6 Nov.
+- **Week 12 imagery plan** (Brian asked): `docs/T3_naip_imagery_design.md`,
+  for the go/no-go on 6 Nov; nothing downloaded. Checked today:
+  - NAIP on Planetary Computer covers all 16 US regions (latest 2021–2023;
+    0.6 m, 0.3 m in NH/VT/CO 2023), as tiled COGs (512 px tiles of ~1 MB),
+    so only the tiles along trails need reading.
+  - The 16 regions have 173,444 unique 25 m trail spots, ~24,000 tiles of
+    307 m and ~805 quarter quads.
+  - Clay v1.5 has precomputed NAIP embeddings (2010–2021, 154 m chips, CC-BY),
+    about 6.5 GB for our quads.
+  - Encoders: Satlas aerial Swin-B (open, ODC-BY); DINOv3 SAT ViT-L (gated,
+    Brian would accept Meta's license).
+  - Plan: Track A (Clay, 1–2 days) first, then Track B (96 m trail-centred
+    chips + frozen encoder, ~25–35 GB of reads) if it's promising.
 
 ## Sun 25 Oct 2026
 
