@@ -218,8 +218,8 @@ def main():
         #   evaluated with the predicted constants; nu fixed (say 5) at
         #   first. (Or sc.crps_gaussian_torch.)
         X = torch.from_numpy(x)                      # the fold's tensors
-        S = torch.from_numpy(s).float()
-        Y = torch.from_numpy(y).float()
+        S = torch.tensor(s, dtype=torch.float32)
+        Y = torch.tensor(y, dtype=torch.float32)
         st = torch.from_numpy(stop)
         with torch.no_grad():                        # check: untrained = reference
             l0 = loss_fn(model, X[st], S[st], Y[st]).item()

@@ -77,6 +77,17 @@ km.
   the additive model (+2.21%). With its own per-segment Student-t spread:
   **+3.67%**, and its 90% ranges hold 88.7–90.3% of test segments.
   Week 11: the other four splits, intervals, several seeds.
+- **Week 11 runs prepared** (Brian asked): `run_all.py` trains the model on
+  all five splits × seeds 0–2 and refits the harness's trees (gbm_rs) on
+  the same folds, saving per-segment scores to `cache/t3_learned/`;
+  `gate2_summary.py` gives skills, bootstrap intervals (the harness's
+  units) and paired learned − trees differences. scikit-learn 1.9.1
+  installed on the Mac for the trees (8.3 MB wheel, the cluster's
+  version; added to requirements.txt). Smoke test on outing5, seed 0: the
+  trees reproduce the harness exactly (+3.22%); learned (a) − trees −0.11
+  [−0.30, +0.05] (a tie), (b) − trees +0.45 [+0.04, +0.86]. The full run
+  (~10–15 min on the laptop) is ready for week 11; README has the Gate 2
+  checklist.
 
 ## Sun 25 Oct 2026
 

@@ -76,3 +76,50 @@ Start with `--split outing5` (new hikes). Week 11: all five splits,
 `k+(x)` and `v0(x) = exp(a(x))` against steppiness (`pitch_sd_5m`): the
 plan's "Tobler's k = 3.5 is closer to … on smooth trail and … on steppy
 trail".
+
+## Week 11: the runs for Gate 2 (prepared by Claude, 26 Oct)
+
+Week 10 ended with TODOs 1–4 done on `outing5` (decision #120). Week 11
+runs the same model on all five splits with three seeds, next to the
+harness's boosted trees on the same features, and puts paired intervals on
+the difference.
+
+```bash
+cd ~/Desktop/GeoAI/travel-speed-gate1/exercises/week10_learned_tobler && ../../../.venv/bin/python run_all.py
+```
+
+- `run_all.py`: for every split (`outing5`, `hiker5`, `block5`, `loro`,
+  `loro_hiker`) and seed (0, 1, 2), trains `learned_tobler.py`'s model and
+  scores it both ways; refits the harness's `gbm_rs` trees (slope + the
+  same 12 terrain covariates, same folds and settings; scikit-learn 1.9.1,
+  as on the cluster). One row per scored segment goes to
+  `../../cache/t3_learned/<split>.parquet` (not in git), with the learned
+  constants averaged over the seeds for the plots. About 40 s per split
+  for one seed on the laptop; all five splits with three seeds, roughly
+  10–15 minutes (the two region splits have 17 folds each).
+- `gate2_summary.py`: per split, the skills of the trees and of the learned
+  model (a) and (b), 95% bootstrap intervals that resample the split's
+  units like the harness (outings; uploaders for `hiker5`; regions for the
+  region splits), the paired differences (learned − trees) with the share
+  of draws above zero, and the share of test segments inside the model's
+  own 90% range. Writes `../../results/t3_learned_tobler/gate2_summary.csv`.
+
+Smoke test on `outing5`, seed 0 (26 Oct): the reproduced trees give
++3.22% [2.79, 3.67], exactly the harness's value; the learned model +3.12%
+(a) and +3.67% (b); (a) − trees −0.11 [−0.30, +0.05], (b) − trees +0.45
+[+0.04, +0.86]; its own 90% range holds 89.8% of the test segments.
+
+**Gate 2's five boxes** (plan §6) and where the answers come from:
+
+| Box | Source |
+|---|---|
+| Every learned arm beats Tobler on held-out traces | Table I (harness): Tobler −12.5% |
+| The tags arm beats slope-only | Table I: tags +1.3% / +1.5% (new hikes) |
+| Remote sensing reported against tags, gap quantified | Table I and decision #116 |
+| Predicted variances calibrated, not just the means | `gate2_summary.csv`: own 90% range |
+| Your model beats plain boosted trees on the same features | `gate2_summary.csv`: (a) − trees, (b) − trees |
+
+**Yours (Brian), week 11:** the plots of `k_up(x)` and `v0(x) = exp(a(x))`
+against steppiness (`pitch_sd_5m`), from the seed-averaged constants in
+`cache/t3_learned/<split>.parquet` (join on `row` to `t3_table.parquet`),
+and the Gate 2 write-up for 6 Nov.

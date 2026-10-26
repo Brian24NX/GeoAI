@@ -7,3 +7,4 @@ scipy        # nearest-trail matching (KD-tree)
 tifffile     # reading the tree-canopy raster in region_layers.py
 pyarrow      # the parquet tables (exercises, results)
 torch        # T3 learned-constants model (docs/T3_learned_tobler_design.md); 2.14.1 on the Mac
+scikit-learn # the trees baseline in exercises/week10_learned_tobler/run_all.py; 1.9.1 as on the cluster
