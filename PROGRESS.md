@@ -40,6 +40,19 @@ km.
 
 ---
 
+## Wed 28 Oct 2026
+
+- **Stop-check sheet opened for Brian** in the app's browser pane (served
+  from `stop_check/` by `.claude/launch.json`); Claude scores it when he
+  finishes.
+- **Data check: why terrain values blow up** (decision #122). 1,065 walking
+  segments (0.37%) have a 5 m pitch steeper than 45°, at fixed spots
+  (cliff-edge viewpoints, stairways), and hidden climbing is exponential
+  in grade, so it reaches 1.4e8. Not a code bug. The paper's binned and
+  tree models are unaffected; learned Tobler is protected by the input
+  clip (#121). Fix planned for the data release: cap 5 m pitches at ±1.0
+  and flag those segments.
+
 ## Mon 26 Oct 2026
 
 - **Week 10 started: Tobler with learned constants, TODO 1 (the model)**
