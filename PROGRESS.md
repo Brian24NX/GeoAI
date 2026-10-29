@@ -43,8 +43,9 @@ km.
 ## Wed 28 Oct 2026
 
 - **Stop-check sheet opened for Brian** in the app's browser pane (served
-  from `stop_check/` by `.claude/launch.json`); Claude scores it when he
-  finishes.
+  from `stop_check/` by `.claude/launch.json`). First pass back: 17 of 20
+  answered (2, 4, 9 blank). Not scored yet: Brian is doing a second, careful
+  pass first, since the paper cites the agreement rate (#113).
 - **Data check: why terrain values blow up** (decision #122). 1,065 walking
   segments (0.37%) have a 5 m pitch steeper than 45°, at fixed spots
   (cliff-edge viewpoints, stairways), and hidden climbing is exponential
