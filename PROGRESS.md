@@ -40,6 +40,19 @@ km.
 
 ---
 
+## Thu 29 Oct 2026
+
+- **Learned-Tobler setup spec** (Danni asked on Slack for the exact
+  architecture and setup behind the results): a 7-page doc,
+  `meeting_plots/oct30_update/LearnedTobler_setup.pdf`. It covers:
+  - an architecture diagram and the model equation;
+  - the five outputs, with constraints and starting values;
+  - the 12 terrain inputs and their preprocessing (19 inputs, 1,861 weights);
+  - training (fit/stop/cal roles, Student-t loss, Adam, early stopping, seeds);
+  - the five test setups, both scorings, the bootstrap and the trees
+    baseline settings;
+  - the results, and how to reproduce them (commands and versions).
+
 ## Wed 28 Oct 2026
 
 - **Stop-check sheet opened for Brian** in the app's browser pane (served
