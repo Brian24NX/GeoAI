@@ -53,6 +53,13 @@ km.
   tree models are unaffected; learned Tobler is protected by the input
   clip (#121). Fix planned for the data release: cap 5 m pitches at ±1.0
   and flag those segments.
+- **Slack update prepared** (Brian asked). In `meeting_plots/oct30_update/`:
+  - the Gate 2 write-up as a PDF; it now ends with a GitHub paths section
+    instead of the mentor questions, and keeps a one-line AI-assistance note;
+  - paper draft 0 (`IGARSS2027_draft0.pdf`): the red notes are removed, the
+    authors are Brian Zhou, Danni Beaulieu, Tianyi Gao, and an Acknowledgment
+    now discloses the AI assistance, as IEEE requires;
+  - the steppiness figure.
 
 ## Mon 26 Oct 2026
 
