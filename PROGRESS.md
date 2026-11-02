@@ -40,6 +40,25 @@ km.
 
 ---
 
+## Sun 1 Nov 2026
+
+- **The Friday meeting moved to Mon 2 Nov.** Danni and Brian will review
+  the learned-Tobler architecture together. To prepare, Claude wrote a
+  12-section study guide in plain words (a Claude Doc). It walks through
+  the setup spec box by box and includes likely questions with answers and
+  a 2-minute script.
+- **CSE 5999 Progress Report #2:** `progress_report_2/` (CVPR template,
+  4 pages, 14 references).
+  - Drafted with Claude from the project files on the last free late day
+    (it was due 30 Oct).
+  - Section 6 discloses the AI use.
+  - The course asks students to discuss the report with their mentor
+    before submitting; Brian will do that with Danni on 2 Nov.
+- **Next:**
+  - the 2 Nov meeting;
+  - the second pass of the stop check;
+  - Gate 2 on Fri 6 Nov.
+
 ## Thu 29 Oct 2026
 
 - **Learned-Tobler setup spec** (Danni asked on Slack for the exact
