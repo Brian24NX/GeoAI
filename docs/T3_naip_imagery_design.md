@@ -66,6 +66,42 @@ and location encoders (SatCLIP, GeoCLIP) break the held-out-region rule
 The catch: a 154 m chip shows the landscape, not the trail, which is closer
 to AlphaEarth than to what we want.
 
+**Coverage, checked 5 Nov.** These checks only listed the bucket; nothing
+was downloaded. Each region's map box was matched against Clay's quarter
+quads, taking each tile's latest year up to 2021.
+- Clay covers all 13 states we need, at 60 cm, in 2019–2021.
+- Washington's 2021 set is incomplete:
+  - the Cascades take 154 of their 300 box tiles from 2019;
+  - the Gorge's Washington side is 2019.
+- **Olympic exists only as 2017 at 1 m.** With 256-pixel chips that is
+  256 m squares from coarser photos, not comparable with the other
+  regions. So Track A runs on **15 regions**, and Olympic returns in
+  Track B.
+
+| Region | Clay files (state + year) | Box tiles found |
+|---|---|---|
+| White Mountains | NH 2021 (+ ME 2021, 1 tile NH 2018) | 197 / 204 |
+| Adirondacks, Catskills | NY 2021 | 63 / 63, 70 / 70 |
+| Green Mountains | VT 2021 | 56 / 56 |
+| Shenandoah | VA 2021 | 129 / 130 |
+| Smokies | TN 2021 + NC 2020 | 96 / 96 |
+| Pisgah | NC 2020 | 80 / 80 |
+| Front Range | CO 2021 | 110 / 110 |
+| Wasatch | UT 2021 | 48 / 48 |
+| Cascades | WA 2021 + WA 2019 | 300 / 300 |
+| Gorge | OR 2020 + WA 2019 | 60 / 60 |
+| Olympic | WA 2017 only, 1 m | 84 / 84 |
+| Bay Area | CA 2020 | 116 / 144 (the rest is probably ocean and bay) |
+| San Gabriels, Yosemite | CA 2020 | 60 / 60, 54 / 54 |
+| Tahoe | CA 2020 + NV 2019 | 56 / 56 |
+
+Box tiles are an upper bound: the whole boxes come to 1,327 files and
+10.9 GB, while the trail tiles alone are about 805 files and 6.5 GB.
+
+Tile numbering was confirmed on Planetary Computer. In each 1° block,
+quads 01–64 run from the north-west corner eastward, then south: m_4407146
+is 44.25–44.375° N, 71.25–71.375° W.
+
 ### B: chips centred on the trail + a frozen encoder (3–4 days, ~25–35 GB of reads, CPU)
 
 1. **Chip:** 96 m × 96 m, north up, centred on each unique 25 m spot, at
@@ -107,7 +143,7 @@ in the unseen-region setup.
 ## Decisions for 6 Nov
 
 1. Imagery in week 12: go or no-go.
-2. Track A first? (recommended)
+2. Track A first? (recommended, on 15 regions: see the coverage check)
 3. The encoder for Track B: Satlas (open), DINOv3 (gated; Brian accepts the
    license), or what the lab suggested at the 23 Oct meeting.
 4. Downloads, all onto ENGR:

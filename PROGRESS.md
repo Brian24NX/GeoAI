@@ -40,6 +40,21 @@ km.
 
 ---
 
+## Thu 5 Nov 2026
+
+- **Danni asked for no changes** after the 2 Nov meeting.
+- **Track A checked before Gate 2** (bucket listings only, nothing
+  downloaded; `docs/T3_naip_imagery_design.md`, "Coverage, checked 5 Nov"):
+  - Clay's NAIP embeddings cover all 13 states we need, at 60 cm,
+    in 2019–2021.
+  - Washington's 2021 set is incomplete: the Cascades and the Gorge fill
+    in from 2019.
+  - **Olympic exists only as 2017 at 1 m**, so Track A is recommended on
+    15 regions, with Olympic back in Track B.
+  - The Gate 2 brief is updated to match.
+- **Stop-check sheet reopened** for Brian's second pass.
+- **Next:** the stop check (Brian); Gate 2 on Fri 6 Nov.
+
 ## Wed 4 Nov 2026
 
 - **Mon 2 Nov meeting with Danni** (the learned-Tobler architecture
