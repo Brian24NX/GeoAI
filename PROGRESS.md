@@ -66,9 +66,21 @@ km.
   - In the White Mountains the switch barely moves the curve: peak speed
     4.23 → 4.13 km/h.
   - Proposed: keep the paper's numbers, state the check as a limit, and
-    use the speed rule in the data release. The mentors decide at Gate 2;
-    it is in the brief.
-- **Next:** Gate 2 on Fri 6 Nov.
+    use the speed rule in the data release. Brian decides; it is in the
+    brief.
+- **Brian's call: the decisions are his** (independent study; Danni
+  advises). Imagery goes ahead now instead of waiting for Gate 2 (#124).
+  The brief now frames Friday as an update plus advice.
+- **Explainer page for Brian:** "The Two Gates", an artifact with a
+  timeline, the two gates side by side, how they connect, Gate 2's five
+  checks and a skill chart.
+- **Track A manifest:** every walking segment's midpoint mapped to its NAIP
+  tile on ENGR. That gives 754 tiles in 15 regions, each with a 60 cm Clay
+  file from 2018–2021: 754 files, 6.05 GB
+  (`travel-speed-gate1/results/t3_naip/clay_manifest.csv`). The download
+  waits for Brian's OK.
+- **Next:** the Clay download onto ENGR, then joining each segment to its
+  chip.
 
 ## Wed 4 Nov 2026
 
