@@ -98,6 +98,17 @@ quads, taking each tile's latest year up to 2021.
 Box tiles are an upper bound: the whole boxes come to 1,327 files and
 10.9 GB, while the trail tiles alone are about 805 files and 6.5 GB.
 
+**File layout** (from Clay's README, `clay-v1-5-naip-2/README.md`, read
+5 Nov):
+- Each file is a parquet with two columns: `geometry` (the chip's outline)
+  and `embeddings` (1,024 numbers, Clay v1.5's class token).
+- Each NAIP tile is cut into 256 × 256-pixel chips.
+- The folders mirror NAIP on AWS (`naip-analytic`, 2010–2021). License
+  CC-BY 4.0.
+- The geometry's coordinate system is checked on the first file Monday.
+  Each segment's midpoint then takes the embedding of the chip that
+  contains it.
+
 Tile numbering was confirmed on Planetary Computer. In each 1° block,
 quads 01–64 run from the north-west corner eastward, then south: m_4407146
 is 44.25–44.375° N, 71.25–71.375° W.
