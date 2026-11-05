@@ -53,6 +53,11 @@ km.
     15 regions, with Olympic back in Track B.
   - The Gate 2 brief is updated to match.
 - **Stop-check sheet reopened** for Brian's second pass.
+  - His first try at the second pass was lost. The app closed the sheet
+    overnight before Claude read the answers, and the sheet kept them only
+    in the open page.
+  - The sheet now saves every click in the browser, so a closed or
+    reloaded page keeps the answers (tested). Brian redoes the second pass.
 - **Next:** the stop check (Brian); Gate 2 on Fri 6 Nov.
 
 ## Wed 4 Nov 2026

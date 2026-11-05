@@ -361,12 +361,34 @@ it to Claude</b>.
 </div>
 <script>
 const answers = {};
-function pick(id, val, btn){
-  answers[id] = val;
-  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on','Y','N','Q'));
-  btn.classList.add('on', val==='?' ? 'Q' : val);
+const KEY = 'stop_check_answers_v2';   // answers survive a closed or reloaded page
+function render(){
   const ids = Object.keys(answers).map(Number).sort((a,b)=>a-b);
-  document.getElementById('out').value = 'stop labels: ' + ids.map(i=>i+':'+answers[i]).join(' ');
+  document.getElementById('out').value = ids.length
+    ? 'stop labels: ' + ids.map(i=>i+':'+answers[i]).join(' ')
+    : '(click your answers above; this line fills in)';
   document.getElementById('count').textContent = ids.length + ' of 20 answered';
 }
+function mark(val, btn){
+  btn.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('on','Y','N','Q'));
+  btn.classList.add('on', val==='?' ? 'Q' : val);
+}
+function pick(id, val, btn){
+  answers[id] = val;
+  mark(val, btn);
+  render();
+  try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch (e) {}
+}
+(function restore(){
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  for (const [id, val] of Object.entries(saved)) {
+    const card = document.getElementById('c' + id);
+    if (!card) continue;
+    const btn = [...card.querySelectorAll('.btns button')]
+      .find(b => b.getAttribute('onclick') === "pick(" + id + ",'" + val + "',this)");
+    if (btn) { answers[id] = val; mark(val, btn); }
+  }
+  render();
+})();
 </script></body></html>
