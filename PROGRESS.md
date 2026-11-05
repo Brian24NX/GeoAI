@@ -58,7 +58,17 @@ km.
     in the open page.
   - The sheet now saves every click in the browser, so a closed or
     reloaded page keeps the answers (tested). Brian redoes the second pass.
-- **Next:** the stop check (Brian); Gate 2 on Fri 6 Nov.
+- **Stop check done** (second pass: 7 stopped, 12 moving, 1 can't tell;
+  decision #123):
+  - The dataset's rule (60 s ending < 10 m away) catches 1 of the 7 stops,
+    because it cannot see stops under a minute.
+  - A plain speed rule (< 0.5 km/h) catches 6 of 7 and agrees on 13 of 19.
+  - In the White Mountains the switch barely moves the curve: peak speed
+    4.23 → 4.13 km/h.
+  - Proposed: keep the paper's numbers, state the check as a limit, and
+    use the speed rule in the data release. The mentors decide at Gate 2;
+    it is in the brief.
+- **Next:** Gate 2 on Fri 6 Nov.
 
 ## Wed 4 Nov 2026
 

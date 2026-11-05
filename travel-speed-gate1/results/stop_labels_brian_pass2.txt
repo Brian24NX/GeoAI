@@ -1,0 +1,2 @@
+# Brian's stop-check labels, second pass, 5 Nov 2026 (read from stop_check.html)
+stop labels: 1:Y 2:N 3:N 4:N 5:N 6:? 7:Y 8:N 9:Y 10:N 11:N 12:N 13:N 14:N 15:Y 16:Y 17:Y 18:Y 19:N 20:N
