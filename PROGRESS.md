@@ -40,6 +40,25 @@ km.
 
 ---
 
+## Wed 4 Nov 2026
+
+- **Mon 2 Nov meeting with Danni** (the learned-Tobler architecture
+  review) went well, Brian reports.
+- **Gate 2 brief for Fri 6 Nov:** a Claude Doc, "Gate 2 Meeting Brief
+  (Fri 6 Nov)". It has:
+  - the five Gate 2 boxes, each with our answer and its number;
+  - the four imagery decisions to ask the mentors for, each with our
+    recommendation;
+  - the NAIP plan in plain words;
+  - a 2-minute opening script and likely questions;
+  - a flow drawing of week 12.
+- **Stop-check sheet reopened** in the app's browser pane for Brian's
+  second pass.
+- **Next:**
+  - the second pass of the stop check (Brian; Claude scores it);
+  - Gate 2 on Fri 6 Nov;
+  - week 12 imagery (Track A) if the mentors say go.
+
 ## Sun 1 Nov 2026
 
 - **The Friday meeting moved to Mon 2 Nov.** Danni and Brian will review
