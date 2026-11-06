@@ -72,6 +72,17 @@ km.
 - **Next:** when the array finishes, put the Satlas numbers into the
   modeling table, then run the five setups (trees and learned Tobler)
   under the same success rule.
+- **Week-12 exercise filled at Brian's request** (drafted with Claude, with
+  a plain-words answer for each TODO). Run on the Mac, it reproduces the
+  checkpoint exactly: terrain +3.37%, terrain + imagery +3.81%, gain
+  +0.44 [−0.67, +1.20].
+- **Weekly update PDF for Danni:**
+  `meeting_plots/nov6_gate2/Weekly_Update_2-6Nov.pdf`, 4 pages, printed
+  from `weekly_update.html` with headless Chrome. There is also an editable
+  Claude Doc. Track B's first run lost 9 regions to expiring Planetary
+  Computer tokens (they last ~15 min); fixed in `t3_naip_satlas.py`
+  (renewal from msft:expiry, retries, saving parts) and resubmitted as
+  Slurm 363966.
 
 ## Thu 5 Nov 2026
 

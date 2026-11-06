@@ -20,6 +20,7 @@ import os
 import sys
 import time
 import urllib.request
+from datetime import datetime
 from pathlib import Path
 
 import numpy as np
@@ -31,6 +32,7 @@ os.environ.update({          # COG reads over HTTP: only the blocks needed, cach
     "GDAL_CACHEMAX": "1024", "VSI_CACHE": "TRUE", "VSI_CACHE_SIZE": "268435456",
     "GDAL_HTTP_MAX_RETRY": "8", "GDAL_HTTP_RETRY_DELAY": "3"})
 import rasterio                                    # noqa: E402
+import rasterio.errors                             # noqa: E402
 from rasterio.enums import Resampling              # noqa: E402
 from rasterio.warp import transform as warp        # noqa: E402
 from rasterio.windows import from_bounds           # noqa: E402
@@ -44,26 +46,49 @@ UA = {"User-Agent": "travel-speed-research-script"}
 
 
 class Token:
-    """A Planetary Computer read token for NAIP, renewed every 30 minutes."""
+    """A Planetary Computer read token for NAIP. A token lasts only about 15
+    minutes (its msft:expiry), so it is renewed 2 minutes before it expires;
+    a token that cannot be renewed stops the run (6 Nov: a 30-minute renewal
+    let tokens expire and every region longer than ~14 minutes failed, 403)."""
     def __init__(self):
         self.value, self.until = None, 0.0
 
+    def refresh(self):
+        for k in range(10):
+            try:
+                req = urllib.request.Request(SAS, headers=UA)
+                d = json.load(urllib.request.urlopen(req, timeout=60))
+                expiry = datetime.fromisoformat(d["msft:expiry"].replace("Z", "+00:00")).timestamp()
+                if expiry - time.time() > 180:          # at least 3 minutes left
+                    self.value, self.until = d["token"], expiry - 120
+                    return
+                print(f"  token expires in {expiry - time.time():.0f} s; waiting for a new one", flush=True)
+            except Exception as e:                       # the token service hiccuped
+                print(f"  token retry {k + 1}: {e}", flush=True)
+            time.sleep(15 * (k + 1))
+        raise RuntimeError("no usable Planetary Computer token after 10 tries")
+
     def __call__(self):
         if time.time() > self.until:
-            for k in range(8):
-                try:
-                    req = urllib.request.Request(SAS, headers=UA)
-                    self.value = json.load(urllib.request.urlopen(req, timeout=60))["token"]
-                    break
-                except Exception as e:             # the token service hiccuped
-                    print(f"  token retry {k + 1}: {e}", flush=True)
-                    time.sleep(10 * (k + 1))
-            self.until = time.time() + 30 * 60
+            self.refresh()
         return self.value
 
 
 def open_photo(href, token):
     return rasterio.open(f"/vsicurl/{href}?{token()}")
+
+
+def photo_chips(href, lat, lon, token, tries=4):
+    """All chips from one photo; on a failed read, a fresh token and a retry."""
+    for k in range(tries):
+        try:
+            with open_photo(href, token) as src:
+                return chips(src, lat, lon)
+        except rasterio.errors.RasterioIOError as e:
+            print(f"  retry {k + 1} {href.rsplit('/', 1)[-1]}: {e}", flush=True)
+            token.refresh()
+            time.sleep(5 * (k + 1))
+    raise RuntimeError(f"cannot read {href} after {tries} tries")
 
 
 def centre_xy(src, lat, lon):
@@ -120,30 +145,43 @@ def main():
     s = s[(s.region == region) & s.href.notna()].sort_values(["href", "lat", "lon"])
     if limit:
         s = s.head(limit)
+    # progress is saved in parts of ~2,000 chips, so a failed task resumes
+    parts = OUT / "parts"
+    parts.mkdir(parents=True, exist_ok=True)
+    old = sorted(parts.glob(f"{region}_*.npz"))
+    done = set(np.concatenate([np.load(p)["spot"] for p in old]).tolist()) if old else set()
+    todo = s[~s.spot.isin(done)]
+    print(f"{region}: {len(s):,} spots, {len(done):,} already done", flush=True)
     model, token = load_model(), Token()
-    spots, embs, buf, bufid = [], [], [], []
+    spots, embs, n_part = [], [], len(old)
     t0, n_done = time.time(), 0
-    for href, g in s.groupby("href", sort=False):
-        with open_photo(href, token) as src:
-            buf.append(chips(src, g.lat.to_numpy(), g.lon.to_numpy()))
-            bufid.append(g.spot.to_numpy())
-        if sum(len(b) for b in buf) >= BATCH:
-            x = np.concatenate(buf)
-            embs.append(embed(model, x))
-            spots.append(np.concatenate(bufid))
-            n_done += len(x)
-            buf, bufid = [], []
-            if len(embs) % 20 == 0:
-                rate = n_done / (time.time() - t0)
-                print(f"  {n_done:,}/{len(s):,} chips, {rate:.1f}/s", flush=True)
-    if buf:
-        embs.append(embed(model, np.concatenate(buf)))
-        spots.append(np.concatenate(bufid))
-    spot, emb = np.concatenate(spots), np.concatenate(embs)
-    print(f"{region}: {len(spot):,} chips in {time.time() - t0:.0f} s", flush=True)
+
+    def save_part():
+        nonlocal spots, embs, n_part
+        if spots and limit is None:
+            n_part += 1
+            np.savez(parts / f"{region}_{n_part:04d}.npz",
+                     spot=np.concatenate(spots), emb=np.concatenate(embs))
+        spots, embs = [], []
+
+    for href, g in todo.groupby("href", sort=False):
+        x = photo_chips(href, g.lat.to_numpy(), g.lon.to_numpy(), token)
+        embs.append(embed(model, x))
+        spots.append(g.spot.to_numpy())
+        n_done += len(x)
+        if sum(len(v) for v in spots) >= 2000:
+            save_part()
+            print(f"  {n_done:,}/{len(todo):,} chips, {n_done / (time.time() - t0):.1f}/s", flush=True)
+    save_part()
+    print(f"{region}: {n_done:,} chips in {time.time() - t0:.0f} s", flush=True)
     if limit is None:
-        OUT.mkdir(parents=True, exist_ok=True)
+        allp = sorted(parts.glob(f"{region}_*.npz"))
+        spot = np.concatenate([np.load(p)["spot"] for p in allp])
+        emb = np.concatenate([np.load(p)["emb"] for p in allp])
+        assert len(spot) == len(s) and len(set(spot.tolist())) == len(s)
         np.savez(dest, spot=spot, emb=emb)
+        for p in allp:
+            p.unlink()
 
 
 if __name__ == "__main__":
