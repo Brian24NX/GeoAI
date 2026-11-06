@@ -77,10 +77,23 @@ km.
 - **Track A manifest:** every walking segment's midpoint mapped to its NAIP
   tile on ENGR. That gives 754 tiles in 15 regions, each with a 60 cm Clay
   file from 2018–2021: 754 files, 6.05 GB
-  (`travel-speed-gate1/results/t3_naip/clay_manifest.csv`). The download
-  waits for Brian's OK.
-- **Next:** the Clay download onto ENGR, then joining each segment to its
-  chip.
+  (`travel-speed-gate1/results/t3_naip/clay_manifest.csv`).
+- **Clay download done** (Brian approved: 754 files, 6.05 GB, onto ENGR
+  only).
+  - `t3_naip_clay_download.py` (Slurm 363903) fetched all 754 files with
+    none failed: 5.7 GB in `cache/naip_clay/`.
+  - Each file is chips of about 155 m: a longitude/latitude WKB outline
+    plus 1,024 numbers.
+- **Segment-to-chip join** (`t3_naip_clay_join.py`, Slurm 363911): each
+  of the 251,615 walking segments in the 15 regions takes the chip under
+  its midpoint.
+  - In the mid-download test, every matched midpoint was within 108 m of
+    its chip's centre (median 61 m), i.e. inside the chip.
+  - Output: `data/t3/naip_clay_index.parquet` and `naip_clay_emb.npy`
+    (float16).
+- **Next:** imagery columns for the models, with PCA to 16 fitted per fold
+  on training rows. Then the five setups for the trees and learned Tobler:
+  imagery alone, and terrain + imagery.
 
 ## Wed 4 Nov 2026
 
