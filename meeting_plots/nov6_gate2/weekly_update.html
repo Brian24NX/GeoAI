@@ -34,7 +34,7 @@ img.wide { width: 100%; display: block; }
 
 <h1>Weekly Update, 2–6 Nov 2026</h1>
 <div class="byline">Brian Zhou · CSE 5999 hiking-speed project · for Danni Beaulieu · 6 Nov 2026</div>
-<p class="lead">This week all five Gate 2 checks passed, I hand-checked the stop rule, and I tested aerial imagery. Ready-made imagery embeddings (Track A) did not carry over to new regions, so photos centred on the trail (Track B) are now running.</p>
+<p class="lead">This week all five Gate 2 checks passed, I hand-checked the stop rule, and I tested aerial imagery. Neither ready-made imagery embeddings (Track A) nor photos centred on the trail (Track B) carried over to new regions; terrain still does.</p>
 
 <h2>This week at a glance</h2>
 <figure>
@@ -54,7 +54,7 @@ img.wide { width: 100%; display: block; }
   <g font-weight="600" fill="#1b221d">
     <text x="36" y="70">Architecture review</text><text x="218" y="70">Gate 2 brief</text>
     <text x="400" y="70">Stop-rule check</text><text x="400" y="146">Clay imagery</text>
-    <text x="582" y="70">Track A tested</text><text x="582" y="146">Track B started</text>
+    <text x="582" y="70">Track A tested</text><text x="582" y="146">Track B tested</text>
   </g>
   <g font-size="11.5" fill="#56625a">
     <text x="36" y="88">learned Tobler's setup,</text><text x="36" y="104">explained to Danni</text>
@@ -62,7 +62,7 @@ img.wide { width: 100%; display: block; }
     <text x="400" y="88">20 GPS moments</text><text x="400" y="104">labeled by hand</text>
     <text x="400" y="164">754 tiles checked,</text><text x="400" y="180">6 GB downloaded</text>
     <text x="582" y="88">helps in known places,</text><text x="582" y="104">not in new regions</text>
-    <text x="582" y="164">164,415 trail photos</text><text x="582" y="180">through Satlas</text>
+    <text x="582" y="164">164,415 trail photos:</text><text x="582" y="180">same result as A</text>
   </g>
 </svg>
 </figure>
@@ -169,7 +169,7 @@ img.wide { width: 100%; display: block; }
 </div>
 
 <div class="section">
-<h2>Imagery Track B: photos centred on the trail (running)</h2>
+<h2>Imagery Track B: photos centred on the trail, same result</h2>
 <p>Track A's 155 m squares mostly show the landscape around a trail. Track B tests whether a closer look at the trail itself carries over to new regions, with the same tests and the same pass rule.</p>
 <figure>
 <svg viewBox="0 0 760 252" role="img" aria-label="Track B looks at the trail itself: a 96 m photo centred on every trail spot" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13">
@@ -202,7 +202,17 @@ img.wide { width: 100%; display: block; }
 </svg>
 <figcaption>Decision #126; scripts t3_naip_spots.py and t3_naip_satlas.py.</figcaption>
 </figure>
-<p><b>Status (6 Nov):</b> running on the cluster, 16 regions; results expected later today. The first run lost 9 regions because Planetary Computer's download token expires after about 15 minutes. That is fixed, and those regions restarted.</p>
+<p><b>Result (6 Nov): Track B does not pass either.</b> Photos of the trail itself also help only where the model has been. Skill in % over the slope-only curve, 16 regions, trees unless noted:</p>
+<table>
+  <tr><th>Test</th><th>Terrain</th><th>Terrain + imagery</th><th>Gain [95% range]</th></tr>
+  <tr><td>New hikes</td><td>3.20</td><td>4.21</td><td>+1.01 [+0.57, +1.44]</td></tr>
+  <tr><td>New 10 km squares</td><td>2.79</td><td>3.24</td><td>+0.45 [+0.01, +0.85]</td></tr>
+  <tr><td>New hikers</td><td>3.10</td><td>3.62</td><td>+0.52 [−0.08, +1.09]</td></tr>
+  <tr><td><b>Unseen regions</b></td><td>2.92</td><td>3.08</td><td><b>+0.16 [−0.24, +0.57]</b></td></tr>
+  <tr><td><b>Unseen regions + hikers</b></td><td>2.52</td><td>2.43</td><td><b>−0.09 [−0.79, +0.46]</b></td></tr>
+  <tr><td><b>Unseen regions, learned Tobler</b></td><td>3.50</td><td>3.50</td><td><b>−0.01 [−0.52, +0.34]</b></td></tr>
+</table>
+<p>So neither landscape-scale nor trail-centred aerial imagery carries over to new regions, while terrain does.</p>
 <p><b>What the model sees.</b> Two of the 20 photos I checked by hand, with our matched trail in red: under forest the trail is hidden; in open terrain the path is visible.</p>
 <div class="chips">
   <figure><img src="chip_02.png" alt="White Mountains forest chip"><figcaption>White Mountains, forest: the trail (red) is hidden under the canopy.</figcaption></figure>
@@ -213,9 +223,8 @@ img.wide { width: 100%; display: block; }
 <div class="section">
 <h2>Next steps</h2>
 <ul>
-  <li><b>Today or tomorrow:</b> Track B results, with the same tests and pass rule as Track A.</li>
   <li><b>Tue 10 Nov:</b> the IGARSS submission site opens; the paper moves to the official template.</li>
-  <li><b>Wed 11 Nov:</b> decide imagery's place in the paper: a result, or one sentence.</li>
+  <li><b>Wed 11 Nov:</b> decide how imagery goes in the paper; both tracks point to one sentence: it helps within regions, not in new ones.</li>
   <li><b>16–22 Nov:</b> the full draft, rewritten in my own words.</li>
 </ul>
 </div>

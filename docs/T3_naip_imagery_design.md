@@ -127,6 +127,16 @@ So imagery helps inside known regions but not in new ones: the AlphaEarth
 pattern. Track A does not pass. Details:
 `travel-speed-gate1/exercises/week12_imagery/README.md`.
 
+**Track B result (6 Nov, decision #127):** the same pattern as Track A.
+Trees on 16 regions, terrain + imagery minus terrain:
+- new hikes +1.01 [+0.57, +1.44];
+- new 10 km squares +0.45 [+0.01, +0.85];
+- unseen regions +0.16 [−0.24, +0.57];
+- unseen regions + hikers −0.09 [−0.79, +0.46].
+
+Learned Tobler, unseen regions: −0.01 [−0.52, +0.34]. Neither track
+passes, so imagery is one sentence in the paper (Brian's call).
+
 ### B: chips centred on the trail + a frozen encoder (3–4 days, ~25–35 GB of reads, CPU)
 
 1. **Chip:** 96 m × 96 m, north up, centred on each unique 25 m spot, at

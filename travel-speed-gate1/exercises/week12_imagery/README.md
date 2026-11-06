@@ -81,3 +81,23 @@ regions it never saw, where every range crosses zero. That is the same
 pattern as the satellite embeddings (decision #93). By the success rule,
 Track A does not pass. Whether to try Track B (photos centred on the trail)
 is Brian's call (decision #125).
+
+## Track B results (6 Nov; `track_a_trees.py --emb satlas`)
+
+Track B uses 96 m NAIP photos centred on each trail spot, run through the
+frozen Satlas aerial model, on 16 regions.
+
+| Test | Terrain | Imagery only | Terrain + imagery | Gain [95% range] |
+|---|---|---|---|---|
+| New hikes | 3.20 | 1.74 | 4.21 | +1.01 [+0.57, +1.44] |
+| New hikers | 3.10 | 1.26 | 3.62 | +0.52 [−0.08, +1.09] |
+| New 10 km squares | 2.79 | 1.04 | 3.24 | +0.45 [+0.01, +0.85] |
+| Unseen regions | 2.92 | 0.52 | 3.08 | +0.16 [−0.24, +0.57] |
+| Unseen regions + hikers | 2.52 | 0.07 | 2.43 | −0.09 [−0.79, +0.46] |
+
+**Checkpoint with `EMB = "satlas"`:** terrain +3.50%, both +3.50%,
+gain **−0.01 [−0.52, +0.34]**.
+
+**What it means.** Photos of the trail itself give the same answer as
+Track A: they help inside regions the model knows, not in new ones. So
+neither track passes, and only terrain carries over (decision #127).

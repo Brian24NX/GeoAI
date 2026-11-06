@@ -72,6 +72,17 @@ km.
 - **Next:** when the array finishes, put the Satlas numbers into the
   modeling table, then run the five setups (trees and learned Tobler)
   under the same success rule.
+- **Track B result (#127): the same as Track A.**
+  - All 16 regions were embedded (the second run, after the token fix).
+    `shell3` was unreachable off campus, so the follow-up ran through
+    `shell2` (same host key).
+  - Trees, gain over terrain: new hikes +1.01 [+0.57, +1.44]; unseen
+    regions +0.16 [−0.24, +0.57]; unseen regions + hikers −0.09
+    [−0.79, +0.46].
+  - Learned Tobler, unseen regions: −0.01 [−0.52, +0.34].
+  - Imagery, landscape-scale or trail-centred, helps only where the model
+    has been; only terrain carries over. The weekly update PDF and doc now
+    show this result.
 - **Week-12 exercise filled at Brian's request** (drafted with Claude, with
   a plain-words answer for each TODO). Run on the Mac, it reproduces the
   checkpoint exactly: terrain +3.37%, terrain + imagery +3.81%, gain
