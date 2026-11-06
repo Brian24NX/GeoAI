@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weekly Update, 2–6 Nov 2026</title>
+<style>
+@page { size: letter; margin: 0.55in 0.6in; }
+:root { --ink: #1b221d; --quiet: #56625a; --line: #d3dbd1; --accent: #2a78d6; --tint: #eef1ec; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); font: 10.5pt/1.45 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+h1 { font-size: 21pt; margin: 0 0 2pt; letter-spacing: -0.01em; }
+.byline { color: var(--quiet); font-size: 9.5pt; margin-bottom: 8pt; }
+h2 { font-size: 13pt; margin: 14pt 0 5pt; break-after: avoid; }
+p { margin: 0 0 6pt; }
+.lead { font-size: 11.5pt; margin-bottom: 4pt; }
+figure { margin: 6pt 0 8pt; break-inside: avoid; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { font-size: 8pt; color: var(--quiet); margin-top: 2pt; }
+table { border-collapse: collapse; width: 100%; font-size: 9.5pt; margin: 4pt 0 8pt; break-inside: avoid; }
+th, td { text-align: left; padding: 4pt 6pt; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; border-bottom: 1.5px solid var(--ink); }
+ul, ol { margin: 0 0 6pt 16pt; padding: 0; }
+li { margin: 1pt 0; }
+.chips { display: flex; gap: 16pt; justify-content: center; break-inside: avoid; }
+.chips figure { flex: 0 0 2.55in; margin: 4pt 0; }
+.chips img { width: 100%; display: block; border-radius: 3pt; }
+img.wide { width: 100%; display: block; }
+.section { }
+.note { font-size: 8.5pt; color: var(--quiet); margin-top: 12pt; border-top: 1px solid var(--line); padding-top: 6pt; }
+.page-break { break-before: page; }
+</style>
+</head>
+<body>
+
+<h1>Weekly Update, 2–6 Nov 2026</h1>
+<div class="byline">Brian Zhou · CSE 5999 hiking-speed project · for Danni Beaulieu · 6 Nov 2026</div>
+<p class="lead">This week all five Gate 2 checks passed, I hand-checked the stop rule, and I tested aerial imagery. Ready-made imagery embeddings (Track A) did not carry over to new regions, so photos centred on the trail (Track B) are now running.</p>
+
+<h2>This week at a glance</h2>
+<figure>
+<svg viewBox="0 0 760 200" role="img" aria-label="This week: Gate 2 done, the stop rule checked, two imagery tests" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13">
+  <g fill="#eef1ec" stroke="#9aa39b">
+    <rect x="24" y="6" width="166" height="32" rx="8"/><rect x="206" y="6" width="166" height="32" rx="8"/>
+    <rect x="388" y="6" width="166" height="32" rx="8"/><rect x="570" y="6" width="166" height="32" rx="8"/>
+  </g>
+  <g font-weight="600" text-anchor="middle" fill="#1b221d">
+    <text x="107" y="27">Mon 2 Nov</text><text x="289" y="27">Wed 4 Nov</text><text x="471" y="27">Thu 5 Nov</text><text x="653" y="27">Fri 6 Nov</text>
+  </g>
+  <g fill="none" stroke="#9aa39b" stroke-width="1.25">
+    <rect x="24" y="48" width="166" height="66" rx="8"/><rect x="206" y="48" width="166" height="66" rx="8"/>
+    <rect x="388" y="48" width="166" height="66" rx="8"/><rect x="388" y="124" width="166" height="66" rx="8"/>
+    <rect x="570" y="48" width="166" height="66" rx="8"/><rect x="570" y="124" width="166" height="66" rx="8"/>
+  </g>
+  <g font-weight="600" fill="#1b221d">
+    <text x="36" y="70">Architecture review</text><text x="218" y="70">Gate 2 brief</text>
+    <text x="400" y="70">Stop-rule check</text><text x="400" y="146">Clay imagery</text>
+    <text x="582" y="70">Track A tested</text><text x="582" y="146">Track B started</text>
+  </g>
+  <g font-size="11.5" fill="#56625a">
+    <text x="36" y="88">learned Tobler's setup,</text><text x="36" y="104">explained to Danni</text>
+    <text x="218" y="88">five checks and the</text><text x="218" y="104">imagery plan</text>
+    <text x="400" y="88">20 GPS moments</text><text x="400" y="104">labeled by hand</text>
+    <text x="400" y="164">754 tiles checked,</text><text x="400" y="180">6 GB downloaded</text>
+    <text x="582" y="88">helps in known places,</text><text x="582" y="104">not in new regions</text>
+    <text x="582" y="164">164,415 trail photos</text><text x="582" y="180">through Satlas</text>
+  </g>
+</svg>
+</figure>
+
+<div class="section">
+<h2>Gate 2: all five checks pass</h2>
+<table>
+  <tr><th style="width:42%">Gate 2 check</th><th>Result</th></tr>
+  <tr><td>Every learned model beats Tobler on held-out hikes</td><td>Yes: Tobler's fixed numbers are the worst model in every test</td></tr>
+  <tr><td>Trail tags beat slope alone</td><td>Yes: +1.3–1.5% on new hikes</td></tr>
+  <tr><td>Remote sensing compared with tags, gap measured</td><td>In unseen regions terrain adds 2.1–2.8%, tags 0.4–0.9%; terrain wins in 16 of 17 regions</td></tr>
+  <tr><td>Uncertainty is calibrated</td><td>The 90% ranges hold 89.4–89.9% of test segments</td></tr>
+  <tr><td>Our model beats boosted trees on the same inputs</td><td>A tie with the same spread rule; +0.55–0.66 points with its own spread</td></tr>
+</table>
+</div>
+<figure>
+<svg viewBox="0 0 760 252" role="img" aria-label="In new regions, learned Tobler is 3.4% better than slope alone; Tobler is 12.5% worse" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12">
+  <text x="24" y="22" font-size="15" font-weight="600" fill="#1b221d">In new regions, learned Tobler is 3.4% better than slope alone; Tobler is 12.5% worse</text>
+  <text x="24" y="42" fill="#56625a">CRPS skill vs a slope-only curve, each of 17 regions held out in turn; best version of each model</text>
+  <g text-anchor="end" fill="#1b221d">
+    <text x="170" y="82">Tobler, 1993</text><text x="170" y="120">Trail tags</text><text x="170" y="158">Lidar terrain</text>
+    <text x="170" y="196" font-weight="600">Learned Tobler</text>
+  </g>
+  <rect x="222.2" y="66" width="351.3" height="24" rx="3" fill="#c9cbc2"/>
+  <rect x="573.5" y="104" width="25.3" height="24" rx="3" fill="#c9cbc2"/>
+  <rect x="573.5" y="142" width="78.7" height="24" rx="3" fill="#c9cbc2"/>
+  <rect x="573.5" y="180" width="95.6" height="24" rx="3" fill="#2a78d6"/>
+  <g fill="#1b221d">
+    <text x="230.2" y="82">−12.5%</text><text x="604.8" y="120">+0.9%</text><text x="658.2" y="158">+2.8%</text>
+    <text x="675.1" y="196" font-weight="600">+3.4%</text>
+  </g>
+  <line x1="573.5" x2="573.5" y1="58" y2="218" stroke="#7d867f" stroke-width="1.25"/>
+  <text x="573.5" y="236" text-anchor="middle" fill="#56625a">0 = slope-only curve</text>
+</svg>
+<figcaption>Source: gate2_summary.csv and the paper's Table I. Tags: additive model; terrain: boosted trees; learned Tobler: its own spread.</figcaption>
+</figure>
+<p>The one caveat is check 5: learned Tobler's edge comes from its own uncertainty, which the trees did not have in this test.</p>
+
+<div class="section">
+<h2>What learned Tobler learned</h2>
+<p>Its constants change with the terrain in sensible ways. These are read in regions it never saw (17 regions, 3 seeds averaged):</p>
+<ul>
+  <li><b>k</b>, how fast speed falls as the trail steepens, stays between about 1.9 and 2.7, never Tobler's 3.5.</li>
+  <li><b>Peak speed</b> falls from 4.5 km/h on smooth trail to 3.6 km/h on steppy trail (Tobler: 6).</li>
+  <li>Going down smooth trail is easy (k down 1.9); steppy trail slows descents too.</li>
+</ul>
+<figure><img class="wide" src="fig_constants.png" alt="Learned Tobler's k and peak speed against steppiness">
+<figcaption>Left: k going up and down; right: peak speed. Dashed: Tobler's 3.5 and 6 km/h.</figcaption></figure>
+</div>
+
+<div class="section">
+<h2>Stop-rule hand check</h2>
+<p>The rule that built our dataset misses most short stops; a plain speed rule matches my hand labels better. I labeled 20 GPS moments from White Mountains hikes as stopped or moving (19 usable answers: 7 stops, 12 moving).</p>
+<table>
+  <tr><th>Stop rule</th><th>Agrees with me</th><th>Stops caught</th><th>False stops</th></tr>
+  <tr><td>Dataset rule: 60 s ending &lt; 10 m away</td><td>8 of 19</td><td>1 of 7</td><td>5</td></tr>
+  <tr><td>Speed rule: &lt; 0.5 km/h</td><td>13 of 19</td><td>6 of 7</td><td>5</td></tr>
+  <tr><td>Either rule</td><td>12 of 19</td><td>6 of 7</td><td>6</td></tr>
+</table>
+<p>The dataset rule cannot see stops under a minute, and most of mine were 20–40 s. Switching to the speed rule barely moves the White Mountains curve: peak speed 4.23 → 4.13 km/h, k 2.10 → 2.15. My plan: keep the paper's numbers, state this check as a limitation, and use the speed rule in the data release.</p>
+</div>
+
+<div class="section">
+<h2>Imagery Track A: helps where the model has been, not in new regions</h2>
+<p>Track A used Clay v1.5's ready-made embeddings: 1,024 numbers for every 155 m square of NAIP aerial photos, already computed. Each walking segment took the square under its midpoint. That covers 15 regions: Clay has Olympic only as 2017 photos at 1 m, and the North Shore is in Canada. In each test fold, PCA shrank the numbers to 16, fitted on that fold's training rows only, and they were added to the Gate 2 models.</p>
+<figure>
+<svg viewBox="0 0 760 296" role="img" aria-label="Imagery helps where the model has been, not in new regions" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12">
+  <text x="24" y="22" font-size="15" font-weight="600" fill="#1b221d">Imagery helps where the model has been (+1.0 on new hikes), not in new regions (+0.2)</text>
+  <text x="24" y="42" fill="#56625a">Gain from adding Clay imagery to terrain, in CRPS skill points, with 95% range; 15 regions</text>
+  <line x1="400" x2="400" y1="58" y2="264" stroke="#7d867f" stroke-width="1.25"/>
+  <text x="400" y="282" text-anchor="middle" fill="#56625a">no gain</text>
+  <g text-anchor="end" fill="#1b221d">
+    <text x="236" y="80">New hikes</text><text x="236" y="114">New 10 km squares</text><text x="236" y="148">New hikers</text>
+    <text x="236" y="182">Unseen regions</text><text x="236" y="216">Unseen regions + hikers</text><text x="236" y="250">Unseen regions, learned Tobler</text>
+  </g>
+  <g stroke="#b9bcb2" stroke-width="2.5">
+    <line x1="452.5" x2="656.5" y1="76" y2="76"/><line x1="419.5" x2="577" y1="110" y2="110"/><line x1="343" x2="613" y1="144" y2="144"/>
+  </g>
+  <g stroke="#b9bcb2" stroke-width="2">
+    <line x1="452.5" x2="452.5" y1="71" y2="81"/><line x1="656.5" x2="656.5" y1="71" y2="81"/>
+    <line x1="419.5" x2="419.5" y1="105" y2="115"/><line x1="577" x2="577" y1="105" y2="115"/>
+    <line x1="343" x2="343" y1="139" y2="149"/><line x1="613" x2="613" y1="139" y2="149"/>
+  </g>
+  <g stroke="#2a78d6" stroke-width="2.5">
+    <line x1="284.5" x2="578.5" y1="178" y2="178"/><line x1="281.5" x2="583" y1="212" y2="212"/><line x1="299.5" x2="580" y1="246" y2="246"/>
+  </g>
+  <g stroke="#2a78d6" stroke-width="2">
+    <line x1="284.5" x2="284.5" y1="173" y2="183"/><line x1="578.5" x2="578.5" y1="173" y2="183"/>
+    <line x1="281.5" x2="281.5" y1="207" y2="217"/><line x1="583" x2="583" y1="207" y2="217"/>
+    <line x1="299.5" x2="299.5" y1="241" y2="251"/><line x1="580" x2="580" y1="241" y2="251"/>
+  </g>
+  <g stroke="#ffffff" stroke-width="1.5">
+    <circle cx="554.5" cy="76" r="5.5" fill="#b9bcb2"/><circle cx="497.5" cy="110" r="5.5" fill="#b9bcb2"/><circle cx="482.5" cy="144" r="5.5" fill="#b9bcb2"/>
+    <circle cx="428.5" cy="178" r="5.5" fill="#2a78d6"/><circle cx="455.5" cy="212" r="5.5" fill="#2a78d6"/><circle cx="466" cy="246" r="5.5" fill="#2a78d6"/>
+  </g>
+  <g fill="#1b221d">
+    <text x="666.5" y="80">+1.03</text><text x="587" y="114">+0.65</text><text x="623" y="148">+0.55</text>
+    <text x="588.5" y="182" font-weight="600">+0.19</text><text x="593" y="216" font-weight="600">+0.37</text><text x="590" y="250" font-weight="600">+0.44</text>
+  </g>
+</svg>
+<figcaption>Source: results/t3_imagery/track_a_trees_summary.csv and the learned-Tobler check (decision #125). Trees unless noted.</figcaption>
+</figure>
+<p>By the rule I set before running it (a gain above zero in the new-region tests), Track A does not pass. It is the same pattern as the satellite embeddings: the model uses imagery to recognize places it has seen, not to learn trail features that carry over.</p>
+</div>
+
+<div class="section">
+<h2>Imagery Track B: photos centred on the trail (running)</h2>
+<p>Track A's 155 m squares mostly show the landscape around a trail. Track B tests whether a closer look at the trail itself carries over to new regions, with the same tests and the same pass rule.</p>
+<figure>
+<svg viewBox="0 0 760 252" role="img" aria-label="Track B looks at the trail itself: a 96 m photo centred on every trail spot" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13">
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#9aa39b"/></marker></defs>
+  <text x="24" y="22" font-size="15" font-weight="600" fill="#1b221d">Track B looks at the trail itself: a 96 m photo centred on every trail spot</text>
+  <g fill="none" stroke="#9aa39b" stroke-width="1.25">
+    <path d="M240 70H270" marker-end="url(#arrow)"/><path d="M488 70H518" marker-end="url(#arrow)"/>
+    <path d="M628 108V130H132V150" marker-end="url(#arrow)"/>
+    <path d="M240 190H270" marker-end="url(#arrow)"/><path d="M488 190H518" marker-end="url(#arrow)"/>
+  </g>
+  <g fill="none" stroke="#9aa39b" stroke-width="1.25">
+    <rect x="24" y="32" width="216" height="76" rx="8"/><rect x="272" y="32" width="216" height="76" rx="8"/><rect x="520" y="32" width="216" height="76" rx="8"/>
+    <rect x="272" y="152" width="216" height="76" rx="8"/><rect x="520" y="152" width="216" height="76" rx="8"/>
+  </g>
+  <rect x="24" y="152" width="216" height="76" rx="8" fill="#2a78d6" fill-opacity="0.12" stroke="#2a78d6" stroke-width="2"/>
+  <g font-weight="600" fill="#1b221d">
+    <text x="36" y="56">Trail segments</text><text x="284" y="56">Trail spots</text><text x="532" y="56">NAIP photo per spot</text>
+    <text x="36" y="176">96 m chip</text><text x="284" y="176">Satlas aerial model</text><text x="532" y="176">The same five tests</text>
+  </g>
+  <g font-size="11.5" fill="#56625a">
+    <text x="36" y="74">275,797 walking segments</text><text x="36" y="90">in 16 US regions</text>
+    <text x="284" y="74">164,415 spots on a 25 m grid,</text><text x="284" y="90">shared by nearby segments</text>
+    <text x="532" y="74">newest: 807 photos, 2021–2023</text><text x="532" y="90">from Planetary Computer</text>
+    <text x="284" y="194">frozen Swin-B backbone:</text><text x="284" y="210">1,024 numbers per chip</text>
+    <text x="532" y="194">PCA to 16 numbers per fold,</text><text x="532" y="210">trees + learned Tobler</text>
+  </g>
+  <g font-size="11.5" fill="#1b221d">
+    <text x="36" y="194">160 × 160 pixels at 0.6 m,</text><text x="36" y="210">centred on the trail</text>
+  </g>
+</svg>
+<figcaption>Decision #126; scripts t3_naip_spots.py and t3_naip_satlas.py.</figcaption>
+</figure>
+<p><b>Status (6 Nov):</b> running on the cluster, 16 regions; results expected later today. The first run lost 9 regions because Planetary Computer's download token expires after about 15 minutes. That is fixed, and those regions restarted.</p>
+<p><b>What the model sees.</b> Two of the 20 photos I checked by hand, with our matched trail in red: under forest the trail is hidden; in open terrain the path is visible.</p>
+<div class="chips">
+  <figure><img src="chip_02.png" alt="White Mountains forest chip"><figcaption>White Mountains, forest: the trail (red) is hidden under the canopy.</figcaption></figure>
+  <figure><img src="chip_11.png" alt="Front Range alpine meadow chip"><figcaption>Front Range, alpine meadow: a faint path runs along the red line.</figcaption></figure>
+</div>
+</div>
+
+<div class="section">
+<h2>Next steps</h2>
+<ul>
+  <li><b>Today or tomorrow:</b> Track B results, with the same tests and pass rule as Track A.</li>
+  <li><b>Tue 10 Nov:</b> the IGARSS submission site opens; the paper moves to the official template.</li>
+  <li><b>Wed 11 Nov:</b> decide imagery's place in the paper: a result, or one sentence.</li>
+  <li><b>16–22 Nov:</b> the full draft, rewritten in my own words.</li>
+</ul>
+<p><b>Questions for Danni</b></p>
+<ol>
+  <li>Does Track B's setup make sense: 96 m photos centred on the trail, a frozen Satlas model, 16 numbers per fold?</li>
+  <li>If Track B also fails in new regions, is "terrain carries over to new regions, imagery doesn't" a good result for the paper?</li>
+  <li>Is the stop-rule plan OK: keep the paper's numbers, and switch rules for the data release?</li>
+</ol>
+</div>
+
+<p class="note">Prepared with Claude (Anthropic). The numbers come from the project repo (github.com/Brian24NX/GeoAI): DECISIONS_LOG.md #120–#126 and the scripts named there.</p>
+
+</body>
+</html>
