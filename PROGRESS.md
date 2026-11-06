@@ -83,6 +83,10 @@ km.
   - Imagery, landscape-scale or trail-centred, helps only where the model
     has been; only terrain carries over. The weekly update PDF and doc now
     show this result.
+- **Paper rewrite guide** (Claude Doc, "Paper Rewrite Guide (IGARSS 2027)"): for each section of the paper it
+  gives what the section must say, the key numbers, and the reader questions. It also lists what changed since
+  draft 0 (learned Tobler, imagery A/B, the stop check) and a day-by-day plan from Tue 10 Nov (template) to
+  Fri 20 Nov (full draft in Brian's words).
 - **Week-12 exercise filled at Brian's request** (drafted with Claude, with
   a plain-words answer for each TODO). Run on the Mac, it reproduces the
   checkpoint exactly: terrain +3.37%, terrain + imagery +3.81%, gain
