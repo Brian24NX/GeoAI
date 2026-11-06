@@ -1,0 +1,142 @@
+[
+ {
+  "id": 1,
+  "region": "sangabriel",
+  "year": 2022,
+  "gsd": 0.6,
+  "segments": 5
+ },
+ {
+  "id": 2,
+  "region": "wm",
+  "year": 2023,
+  "gsd": 0.3,
+  "segments": 1
+ },
+ {
+  "id": 3,
+  "region": "cascades",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 4,
+  "region": "olympic",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 5,
+  "region": "olympic",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 6,
+  "region": "cascades",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 7,
+  "region": "cascades",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 8,
+  "region": "catskills",
+  "year": 2022,
+  "gsd": 0.6,
+  "segments": 3
+ },
+ {
+  "id": 9,
+  "region": "gorge",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 10,
+  "region": "adk",
+  "year": 2022,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 11,
+  "region": "frontrange",
+  "year": 2023,
+  "gsd": 0.3,
+  "segments": 1
+ },
+ {
+  "id": 12,
+  "region": "shenandoah",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 3
+ },
+ {
+  "id": 13,
+  "region": "sangabriel",
+  "year": 2022,
+  "gsd": 0.6,
+  "segments": 2
+ },
+ {
+  "id": 14,
+  "region": "tahoe",
+  "year": 2022,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 15,
+  "region": "wm",
+  "year": 2023,
+  "gsd": 0.3,
+  "segments": 2
+ },
+ {
+  "id": 16,
+  "region": "greenmtn",
+  "year": 2023,
+  "gsd": 0.3,
+  "segments": 2
+ },
+ {
+  "id": 17,
+  "region": "tahoe",
+  "year": 2022,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 18,
+  "region": "sangabriel",
+  "year": 2022,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 19,
+  "region": "cascades",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 1
+ },
+ {
+  "id": 20,
+  "region": "olympic",
+  "year": 2023,
+  "gsd": 0.6,
+  "segments": 3
+ }
+]

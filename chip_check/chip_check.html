@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chip check</title>
+<style>
+:root { --bg: #f4f6f1; --card: #ffffff; --ink: #1b221d; --muted: #56625a; --line: #d3dbd1;
+        --on: #24704c; --off: #c2410c; --hid: #1f6fb2; --q: #6b6b6b; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111612; --card: #182019; --ink: #e4ebe3; --muted: #9aa79d; --line: #2d3830;
+          --on: #5cc08e; --off: #f08a4b; --hid: #5aa7e6; --q: #a0a0a0; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+       font: 16px/1.5 -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 140px; }
+h1 { font-size: 28px; margin: 0 0 8px; }
+.intro { max-width: 70ch; color: var(--ink); }
+.intro li { margin: 2px 0; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; margin-top: 20px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; }
+.card h2 { font-size: 18px; margin: 0; }
+.card img { width: 100%; height: auto; border-radius: 6px; display: block; }
+.facts { font-size: 13.5px; color: var(--muted); }
+.btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.btns button { font: inherit; font-size: 14px; padding: 8px 6px; border-radius: 6px; border: 1px solid var(--line);
+               background: var(--bg); color: var(--ink); cursor: pointer; }
+.btns button:focus-visible { outline: 2px solid var(--hid); outline-offset: 2px; }
+.btns button.on { color: #fff; border-color: transparent; }
+.btns button.on.V { background: var(--on); } .btns button.on.O { background: var(--off); }
+.btns button.on.H { background: var(--hid); } .btns button.on.Q { background: var(--q); }
+.sticky { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line);
+          padding: 10px 16px; display: grid; gap: 6px; }
+.sticky .count { font-weight: 600; }
+.sticky textarea { width: 100%; height: 44px; font: 13px ui-monospace, Menlo, monospace; background: var(--bg); color: var(--ink);
+                   border: 1px solid var(--line); border-radius: 6px; padding: 6px; resize: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Do the chips show the trail?</h1>
+<div class="intro">
+  <p>Each picture is a 96 m × 96 m aerial photo (NAIP) centred on a spot on one of our trails, the same view the image model sees in Track B. The red line is where the matched GPS tracks put the trail. For each one, pick:</p>
+  <ul>
+    <li><b>Visible, on the line</b>: you can see a path, clearing or bare strip under the red line.</li>
+    <li><b>Visible, off the line</b>: you can see the trail, but clearly beside the red line.</li>
+    <li><b>Hidden</b>: trees or shadow cover it, so the photo can't show the trail itself.</li>
+    <li><b>Can't tell</b>.</li>
+  </ul>
+  <p>Answers save as you click, even if this page closes. When you're done, tell Claude "done".</p>
+</div>
+<div class="grid" id="grid"></div>
+</div>
+<div class="sticky">
+  <div class="count" id="count">0 of 20 answered</div>
+  <textarea id="out" readonly>(click your answers above; this line fills in)</textarea>
+</div>
+<script>
+const KEY = 'chip_check_answers_v1';
+const LABEL = {V: 'Visible, on the line', O: 'Visible, off the line', H: 'Hidden', '?': "Can't tell"};
+const NAMES = {wm: 'White Mountains', adk: 'Adirondacks', catskills: 'Catskills', greenmtn: 'Green Mountains',
+  shenandoah: 'Shenandoah', smokies: 'Smokies', pisgah: 'Pisgah', frontrange: 'Front Range', wasatch: 'Wasatch',
+  cascades: 'Cascades', gorge: 'Columbia River Gorge', olympic: 'Olympic', bayarea: 'Bay Area',
+  sangabriel: 'San Gabriels', yosemite: 'Yosemite', tahoe: 'Tahoe'};
+const answers = {};
+function render() {
+  const ids = Object.keys(answers).map(Number).sort((a, b) => a - b);
+  document.getElementById('out').value = ids.length
+    ? 'chip labels: ' + ids.map(i => i + ':' + answers[i]).join(' ')
+    : '(click your answers above; this line fills in)';
+  document.getElementById('count').textContent = ids.length + ' of 20 answered';
+}
+function mark(id, val) {
+  document.querySelectorAll('#c' + id + ' .btns button').forEach(b => {
+    const on = b.dataset.v === val;
+    b.classList.toggle('on', on);
+    b.classList.remove('V', 'O', 'H', 'Q');
+    if (on) b.classList.add(val === '?' ? 'Q' : val);
+  });
+}
+function pick(id, val) {
+  answers[id] = val; mark(id, val); render();
+  try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch (e) {}
+}
+fetch('chips.json').then(r => r.json()).then(chips => {
+  const grid = document.getElementById('grid');
+  for (const c of chips) {
+    const card = document.createElement('div');
+    card.className = 'card'; card.id = 'c' + c.id;
+    card.innerHTML = `<h2>#${c.id}</h2>
+      <img src="chip_${String(c.id).padStart(2, '0')}.png" alt="Aerial chip ${c.id} with the trail drawn in red" width="480" height="480">
+      <div class="facts">${NAMES[c.region] || c.region} · photo ${c.year} · ${c.gsd} m pixels · ${c.segments} segment${c.segments > 1 ? 's' : ''} drawn</div>
+      <div class="btns">${Object.entries(LABEL).map(([v, t]) =>
+        `<button type="button" data-v="${v}">${t}</button>`).join('')}</div>`;
+    card.querySelectorAll('button').forEach(b => b.addEventListener('click', () => pick(c.id, b.dataset.v)));
+    grid.appendChild(card);
+  }
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  for (const [id, v] of Object.entries(saved)) { answers[id] = v; mark(id, v); }
+  render();
+});
+</script>
+</body>
+</html>

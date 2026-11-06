@@ -59,8 +59,19 @@ km.
   - The success rule is not met; it is the AlphaEarth pattern.
 - **Brian's exercise set up:** `exercises/week12_imagery/`. Four TODOs add
   imagery to learned Tobler; the checkpoints are in the README.
-- **Next (Brian's call):** stop, giving imagery one sentence in the paper,
-  or Track B, photos centred on the trail.
+- **Brian chose Track B** (#126): photos centred on the trail, embedded
+  with the Satlas aerial model.
+  - Cluster set-up: CPU PyTorch 2.15 and the Satlas package; the 504 MB
+    Satlas weights in `models/satlas/`.
+  - 164,415 trail spots (25 m grid) in 16 regions, each matched to its
+    newest NAIP photo on Planetary Computer: 807 photos, 2021–2023.
+  - Slurm array 363948: 16 region tasks, about 6.6 chips/s each.
+- **Brian's sanity check:** `chip_check/chip_check.html`, served from the
+  browser pane as "chip-check". It shows 20 random chips with the matched
+  trail in red; does each one show the trail? Answers save as he clicks.
+- **Next:** when the array finishes, put the Satlas numbers into the
+  modeling table, then run the five setups (trees and learned Tobler)
+  under the same success rule.
 
 ## Thu 5 Nov 2026
 
