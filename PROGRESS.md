@@ -40,6 +40,28 @@ km.
 
 ---
 
+## Fri 6 Nov 2026
+
+- **Gate 2 meeting day.** Brian presents the five checks (all pass) and his
+  imagery plan, and asks for advice. The brief now includes the Track A
+  result.
+- **Imagery for the models.** `t3_export_naip_clay.py` (ENGR) put the Clay
+  embeddings in the exercise table's row order: 250,867 of 289,679 rows.
+  The rest are Olympic and the North Shore, as planned. It was copied to
+  the Mac's `cache/exercise/` (0.6 GB, not in git).
+- **Track A result (#125): imagery helps inside known regions, not in new
+  ones.**
+  - New hikes +1.03 [+0.35, +1.71].
+  - New 10 km squares +0.65 [+0.13, +1.18].
+  - Unseen regions +0.19 [−0.77, +1.19].
+  - Unseen regions + hikers +0.37 [−0.79, +1.22].
+  - Learned Tobler, unseen regions: +0.44 [−0.67, +1.20].
+  - The success rule is not met; it is the AlphaEarth pattern.
+- **Brian's exercise set up:** `exercises/week12_imagery/`. Four TODOs add
+  imagery to learned Tobler; the checkpoints are in the README.
+- **Next (Brian's call):** stop, giving imagery one sentence in the paper,
+  or Track B, photos centred on the trail.
+
 ## Thu 5 Nov 2026
 
 - **Danni asked for no changes** after the 2 Nov meeting.

@@ -113,6 +113,20 @@ Tile numbering was confirmed on Planetary Computer. In each 1° block,
 quads 01–64 run from the north-west corner eastward, then south: m_4407146
 is 44.25–44.375° N, 71.25–71.375° W.
 
+**Track A result (6 Nov, decision #125).** Trees on 15 regions, terrain +
+imagery minus terrain:
+- new hikes +1.03 [+0.35, +1.71];
+- new 10 km squares +0.65 [+0.13, +1.18];
+- new hikers +0.55 [−0.38, +1.42];
+- unseen regions +0.19 [−0.77, +1.19];
+- unseen regions + hikers +0.37 [−0.79, +1.22].
+
+Learned Tobler, unseen regions, its own spread: +0.44 [−0.67, +1.20].
+
+So imagery helps inside known regions but not in new ones: the AlphaEarth
+pattern. Track A does not pass. Details:
+`travel-speed-gate1/exercises/week12_imagery/README.md`.
+
 ### B: chips centred on the trail + a frozen encoder (3–4 days, ~25–35 GB of reads, CPU)
 
 1. **Chip:** 96 m × 96 m, north up, centred on each unique 25 m spot, at

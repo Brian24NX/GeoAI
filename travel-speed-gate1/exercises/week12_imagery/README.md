@@ -56,6 +56,28 @@ beat terrain alone, with the 95% interval above zero, for learned Tobler or
 the trees. Otherwise imagery gets one sentence in the paper, like the
 satellite embeddings.
 
-## Checkpoints
+## Results (Claude's runs, 6 Nov)
 
-Filled in after Claude's runs: see "Results" below.
+The trees (`track_a_trees.py`). Skill is the % improvement over the
+slope-only curve on the 15 regions; the gain's range is a 95% bootstrap
+over the setup's units.
+
+| Test | Terrain | Imagery only | Terrain + imagery | Gain [95% range] |
+|---|---|---|---|---|
+| New hikes (`outing5`) | 2.73 | 1.90 | 3.76 | +1.03 [+0.35, +1.71] |
+| New hikers (`hiker5`) | 2.69 | 1.47 | 3.23 | +0.55 [−0.38, +1.42] |
+| New 10 km squares (`block5`) | 2.51 | 1.26 | 3.16 | +0.65 [+0.13, +1.18] |
+| Unseen regions (`loro`) | 2.61 | 0.56 | 2.80 | +0.19 [−0.77, +1.19] |
+| Unseen regions + hikers (`loro_hiker`) | 2.08 | 0.84 | 2.45 | +0.37 [−0.79, +1.22] |
+
+**Checkpoint for your TODO 3.** Claude's filled-in copy, with seed 0 and
+the same draws: terrain +3.37%, both +3.81%, gain **+0.44 [−0.67, +1.20]**.
+- Biggest gains: Adirondacks +4.1, Green Mountains +4.0, San Gabriels +1.5.
+- Biggest losses: Wasatch −3.6, Tahoe −3.3, Catskills −1.3.
+
+**What it means.** Imagery helps inside regions the model knows: new hikes
+and new squares, with ranges above zero. It does not help reliably in
+regions it never saw, where every range crosses zero. That is the same
+pattern as the satellite embeddings (decision #93). By the success rule,
+Track A does not pass. Whether to try Track B (photos centred on the trail)
+is Brian's call (decision #125).
