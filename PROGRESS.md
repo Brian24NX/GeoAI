@@ -87,8 +87,9 @@ km.
 - **Segment-to-chip join** (`t3_naip_clay_join.py`, Slurm 363911): each
   of the 251,615 walking segments in the 15 regions takes the chip under
   its midpoint.
-  - In the mid-download test, every matched midpoint was within 108 m of
-    its chip's centre (median 61 m), i.e. inside the chip.
+  - Final run (3 min): all 251,615 segments joined, no files missing.
+    Every midpoint is within 108 m of its chip's centre (median 61 m),
+    i.e. inside the chip.
   - Output: `data/t3/naip_clay_index.parquet` and `naip_clay_emb.npy`
     (float16).
 - **Next:** imagery columns for the models, with PCA to 16 fitted per fold
