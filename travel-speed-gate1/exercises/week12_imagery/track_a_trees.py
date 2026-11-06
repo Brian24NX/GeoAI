@@ -51,10 +51,14 @@ N_PC, PCA_ROWS, B = 16, 60_000, 2000
 PCS = [f"img_pc{i}" for i in range(N_PC)]
 
 
-def load():
+EMB = {"clay": "t3_naip_clay.npy",       # Track A: Clay, 155 m squares, 15 regions
+       "satlas": "t3_naip_satlas.npy"}   # Track B: Satlas, 96 m trail-centred chips, 16 regions
+
+
+def load(emb_name="clay"):
     t, inner, cols = lt.load()
     terrain = cols["covariates"]["terrain5m"] + cols["covariates"]["terrain1m"]
-    emb = np.load(ROOT / "cache" / "exercise" / "t3_naip_clay.npy", mmap_mode="r")
+    emb = np.load(ROOT / "cache" / "exercise" / EMB[emb_name], mmap_mode="r")
     assert emb.shape[0] == len(t)
     keep = ~np.isnan(emb[:, 0])
     t = t[keep].reset_index().rename(columns={"index": "row"})   # row = full-table row
@@ -72,7 +76,7 @@ def imagery_pcs(emb, rows, rng):
     return pca.transform(emb).astype(np.float32)
 
 
-def run_split(t, inner, terrain, emb, split):
+def run_split(t, inner, terrain, emb, split, prefix=""):
     s, y = t.slope.to_numpy(), t.y.to_numpy()
     rng = np.random.default_rng(0)
     parts = []
@@ -95,7 +99,7 @@ def run_split(t, inner, terrain, emb, split):
               f"({time.time() - t0:.0f} s)", flush=True)
     d = pd.concat(parts, ignore_index=True)
     OUT.mkdir(parents=True, exist_ok=True)
-    d.to_parquet(OUT / f"{split}.parquet", index=False)
+    d.to_parquet(OUT / f"{prefix}{split}.parquet", index=False)
     return d
 
 
@@ -125,13 +129,17 @@ def summarize(split, d):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--splits", nargs="+", default=SPLITS, choices=SPLITS)
+    ap.add_argument("--emb", default="clay", choices=sorted(EMB),
+                    help="clay = Track A (default), satlas = Track B")
     a = ap.parse_args()
-    t, inner, terrain, emb = load()
-    print(f"{len(t):,} segments in {t.region.nunique()} regions with imagery", flush=True)
-    rows = [summarize(split, run_split(t, inner, terrain, emb, split)) for split in a.splits]
+    t, inner, terrain, emb = load(a.emb)
+    prefix = "" if a.emb == "clay" else f"{a.emb}_"
+    print(f"{a.emb}: {len(t):,} segments in {t.region.nunique()} regions with imagery", flush=True)
+    rows = [summarize(split, run_split(t, inner, terrain, emb, split, prefix)) for split in a.splits]
     res = pd.DataFrame(rows)
     RES.mkdir(parents=True, exist_ok=True)
-    res.to_csv(RES / "track_a_trees_summary.csv", index=False)
+    name = "track_a_trees_summary.csv" if a.emb == "clay" else "track_b_trees_summary.csv"
+    res.to_csv(RES / name, index=False)
     print(res.round(2).to_string(index=False))
 
 

@@ -17,7 +17,8 @@ Success rule (set before looking): both - terrain > 0, with the 95%
 interval (bootstrap over the 15 regions) above zero.
 
 Run:    ../../../.venv/bin/python learned_tobler_imagery.py   (a few minutes)
-Writes: ../../cache/t3_imagery/learned_loro.parquet
+        Set EMB = "satlas" below to repeat it for Track B.
+Writes: ../../cache/t3_imagery/learned_loro_<EMB>.parquet
 """
 import sys
 from pathlib import Path
@@ -31,9 +32,11 @@ import learned_tobler as lt  # noqa: E402
 import run_all as ra         # noqa: E402
 import track_a_trees as ta   # noqa: E402
 
+EMB = "clay"     # "clay" = Track A (Clay, 155 m squares); "satlas" = Track B (trail-centred chips)
+
 
 def main():
-    t, inner, terrain, emb = ta.load()
+    t, inner, terrain, emb = ta.load(EMB)
     s, y = t.slope.to_numpy(), t.y.to_numpy()
     rng = np.random.default_rng(0)        # the same draws as track_a_trees.py
     parts = []
@@ -67,7 +70,7 @@ def main():
 
     d = pd.concat(parts, ignore_index=True)
     ta.OUT.mkdir(parents=True, exist_ok=True)
-    d.to_parquet(ta.OUT / "learned_loro.parquet", index=False)
+    d.to_parquet(ta.OUT / f"learned_loro_{EMB}.parquet", index=False)
 
     # ------------------------------------------------------------ TODO 3
     # (a) Each model's skill over the slope-only curve, in percent:
