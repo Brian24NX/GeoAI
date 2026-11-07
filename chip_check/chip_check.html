@@ -33,6 +33,7 @@ h1 { font-size: 28px; margin: 0 0 8px; }
 .sticky { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line);
           padding: 10px 16px; display: grid; gap: 6px; }
 .sticky .count { font-weight: 600; }
+.sticky .saved { font-weight: 400; margin-left: 10px; } .saved.ok { color: var(--on); } .saved.bad { color: var(--off); }
 .sticky textarea { width: 100%; height: 44px; font: 13px ui-monospace, Menlo, monospace; background: var(--bg); color: var(--ink);
                    border: 1px solid var(--line); border-radius: 6px; padding: 6px; resize: none; }
 </style>
@@ -48,12 +49,12 @@ h1 { font-size: 28px; margin: 0 0 8px; }
     <li><b>Hidden</b>: trees or shadow cover it, so the photo can't show the trail itself.</li>
     <li><b>Can't tell</b>.</li>
   </ul>
-  <p>Answers save as you click, even if this page closes. When you're done, tell Claude "done".</p>
+  <p>Each click is saved to a file on the Mac, so closing or reloading this page loses nothing. When you're done, tell Claude "done".</p>
 </div>
 <div class="grid" id="grid"></div>
 </div>
 <div class="sticky">
-  <div class="count" id="count">0 of 20 answered</div>
+  <div class="count"><span id="count">0 of 20 answered</span><span class="saved" id="saved"></span></div>
   <textarea id="out" readonly>(click your answers above; this line fills in)</textarea>
 </div>
 <script>
@@ -79,9 +80,21 @@ function mark(id, val) {
     if (on) b.classList.add(val === '?' ? 'Q' : val);
   });
 }
+function setSaved(ok) {
+  const el = document.getElementById('saved');
+  el.textContent = ok ? 'saved' : 'NOT saved: copy the line below and paste it to Claude';
+  el.className = 'saved ' + (ok ? 'ok' : 'bad');
+}
+let queue = Promise.resolve();
+function save() {  // writes answers.json through serve.py; in order, last click wins
+  const body = JSON.stringify(answers);
+  queue = queue.then(() => fetch('save', {method: 'POST', headers: {'Content-Type': 'application/json'}, body}))
+    .then(r => setSaved(r.ok), () => setSaved(false));
+}
 function pick(id, val) {
   answers[id] = val; mark(id, val); render();
   try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch (e) {}
+  save();
 }
 fetch('chips.json').then(r => r.json()).then(chips => {
   const grid = document.getElementById('grid');
@@ -96,11 +109,19 @@ fetch('chips.json').then(r => r.json()).then(chips => {
     card.querySelectorAll('button').forEach(b => b.addEventListener('click', () => pick(c.id, b.dataset.v)));
     grid.appendChild(card);
   }
-  let saved = {};
-  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) {}
+  return restore();
+});
+async function restore() {
+  let saved = null, fromDisk = false;
+  try {
+    const r = await fetch('answers.json', {cache: 'no-store'});
+    if (r.ok) { saved = await r.json(); fromDisk = true; }
+  } catch (e) {}
+  if (!saved) { try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch (e) { saved = {}; } }
   for (const [id, v] of Object.entries(saved)) { answers[id] = v; mark(id, v); }
   render();
-});
+  if (Object.keys(saved).length) fromDisk ? setSaved(true) : save();
+}
 </script>
 </body>
 </html>
