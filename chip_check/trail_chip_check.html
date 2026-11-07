@@ -1,0 +1,204 @@
+<title>Trail Chip Check</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;600;700&display=swap">
+<style>
+/* Layout: a field sheet. One responsive grid of photo cards; the tally bar is fixed to the bottom edge. */
+:root {
+  --bg: #f3f5f0; --card: #ffffff; --ink: #1b221d; --muted: #56625a; --line: #d3dbd1;
+  --vis: #24704c; --off: #b4470f; --hid: #1f6fb2; --unk: #686d69; --on-ink: #ffffff;
+  --sans: "Public Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111612; --card: #182019; --ink: #e4ebe3; --muted: #9aa79d; --line: #2d3830;
+    --vis: #5cc08e; --off: #f08a4b; --hid: #5aa7e6; --unk: #a3a8a4; --on-ink: #0d120e; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111612; --card: #182019; --ink: #e4ebe3; --muted: #9aa79d; --line: #2d3830;
+  --vis: #5cc08e; --off: #f08a4b; --hid: #5aa7e6; --unk: #a3a8a4; --on-ink: #0d120e; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 16px/1.5 var(--sans); }
+.wrap { max-width: 1100px; margin: 0 auto; padding-block: 24px 200px;
+        padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1 { font-size: 1.75rem; line-height: 1.2; margin: 0 0 10px; font-weight: 700; text-wrap: balance; }
+.intro { max-width: 68ch; }
+.intro p { margin: 0 0 10px; }
+.key { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 4px; }
+.key li { display: flex; gap: 10px; align-items: baseline; }
+.swatch { flex: none; width: 12px; height: 12px; border-radius: 3px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 18px; margin-top: 20px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; min-width: 0; }
+.card header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.card h2 { font-size: 1.1rem; margin: 0; font-variant-numeric: tabular-nums; }
+.card img { width: 100%; max-width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 6px; display: block; background: var(--line); }
+.facts { font: 0.8rem/1.4 var(--mono); color: var(--muted); }
+.btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.btns button, .bar button { font: inherit; font-size: 0.875rem; padding: 8px 6px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--ink); cursor: pointer; }
+.btns button:hover, .bar button:hover { border-color: var(--muted); }
+.btns button:focus-visible, .bar button:focus-visible { outline: 2px solid var(--hid); outline-offset: 2px; }
+.btns button[aria-pressed="true"] { color: var(--on-ink); border-color: transparent; font-weight: 600; }
+.btns button[aria-pressed="true"][data-v="V"] { background: var(--vis); }
+.btns button[aria-pressed="true"][data-v="O"] { background: var(--off); }
+.btns button[aria-pressed="true"][data-v="H"] { background: var(--hid); }
+.btns button[aria-pressed="true"][data-v="?"] { background: var(--unk); }
+.bar { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line);
+  padding-block: 10px calc(10px + env(safe-area-inset-bottom, 0px));
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.bar-inner { max-width: 1100px; margin: 0 auto; display: grid; gap: 8px; }
+.tally { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; font-variant-numeric: tabular-nums; }
+.tally .count { font-weight: 700; }
+.tally .counts { color: var(--muted); font-size: 0.9rem; }
+.state { font-weight: 600; color: var(--muted); }
+.state[data-state="ok"] { color: var(--vis); }
+.state[data-state="bad"] { color: var(--off); }
+.copyrow { display: flex; gap: 8px; align-items: stretch; min-width: 0; }
+.copyrow output { flex: 1; min-width: 0; font: 0.8rem/1.4 var(--mono); background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; padding: 7px 8px; overflow-x: auto; white-space: nowrap; user-select: all; }
+.bar button { padding: 6px 14px; }
+@media (prefers-reduced-motion: no-preference) { .btns button { transition: background-color .12s, border-color .12s; } }
+</style>
+
+<div class="wrap">
+  <h1>Do the photos show the trail?</h1>
+  <div class="intro">
+    <p>Each photo shows 96 m &times; 96 m of NAIP aerial imagery around one of our trail spots, the same view the image model saw in Track B. The red line is where our matched GPS tracks put the trail. For each photo, pick one:</p>
+    <ul class="key">
+      <li><span class="swatch" style="background: var(--vis)"></span><span><b>Visible, on the line</b>: a path, clearing or bare strip shows under the red line.</span></li>
+      <li><span class="swatch" style="background: var(--off)"></span><span><b>Visible, off the line</b>: the trail shows, but clearly beside the red line.</span></li>
+      <li><span class="swatch" style="background: var(--hid)"></span><span><b>Hidden</b>: trees or shadow cover it, so the photo can't show the trail.</span></li>
+      <li><span class="swatch" style="background: var(--unk)"></span><span><b>Can't tell</b></span></li>
+    </ul>
+    <p>Each click is saved online, so you can close this page and come back. When you're done, tell Claude "done".</p>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<div class="bar" role="region" aria-label="Progress">
+  <div class="bar-inner">
+    <div class="tally">
+      <span class="count" id="count">0 of 20 answered</span>
+      <span class="state" id="state" data-state="connecting" role="status">Connecting&hellip;</span>
+      <span class="counts" id="counts"></span>
+    </div>
+    <div class="copyrow">
+      <output id="out">(your answers appear here as you click)</output>
+      <button type="button" id="copy">Copy</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const CHIPS = [{"id":1,"region":"sangabriel","year":2022,"gsd":0.6,"segments":5},{"id":2,"region":"wm","year":2023,"gsd":0.3,"segments":1},{"id":3,"region":"cascades","year":2023,"gsd":0.6,"segments":1},{"id":4,"region":"olympic","year":2023,"gsd":0.6,"segments":1},{"id":5,"region":"olympic","year":2023,"gsd":0.6,"segments":1},{"id":6,"region":"cascades","year":2023,"gsd":0.6,"segments":1},{"id":7,"region":"cascades","year":2023,"gsd":0.6,"segments":1},{"id":8,"region":"catskills","year":2022,"gsd":0.6,"segments":3},{"id":9,"region":"gorge","year":2023,"gsd":0.6,"segments":1},{"id":10,"region":"adk","year":2022,"gsd":0.6,"segments":1},{"id":11,"region":"frontrange","year":2023,"gsd":0.3,"segments":1},{"id":12,"region":"shenandoah","year":2023,"gsd":0.6,"segments":3},{"id":13,"region":"sangabriel","year":2022,"gsd":0.6,"segments":2},{"id":14,"region":"tahoe","year":2022,"gsd":0.6,"segments":1},{"id":15,"region":"wm","year":2023,"gsd":0.3,"segments":2},{"id":16,"region":"greenmtn","year":2023,"gsd":0.3,"segments":2},{"id":17,"region":"tahoe","year":2022,"gsd":0.6,"segments":1},{"id":18,"region":"sangabriel","year":2022,"gsd":0.6,"segments":1},{"id":19,"region":"cascades","year":2023,"gsd":0.6,"segments":1},{"id":20,"region":"olympic","year":2023,"gsd":0.6,"segments":3}];
+const NAMES = {"wm":"White Mountains","adk":"Adirondacks","catskills":"Catskills","greenmtn":"Green Mountains","shenandoah":"Shenandoah","smokies":"Smokies","pisgah":"Pisgah","frontrange":"Front Range","wasatch":"Wasatch","cascades":"Cascades","gorge":"Columbia River Gorge","olympic":"Olympic","bayarea":"Bay Area","sangabriel":"San Gabriels","yosemite":"Yosemite","tahoe":"Tahoe"};
+const KEY = 'trail_chip_check_v1';
+const LABEL = {V: 'Visible, on the line', O: 'Visible, off the line', H: 'Hidden', '?': "Can't tell"};
+const SHORT = {V: 'on the line', O: 'off the line', H: 'hidden', '?': "can't tell"};
+const STATES = {connecting: 'Connecting…', ready: 'Ready: each click saves', saving: 'Saving…', ok: 'Saved',
+  bad: 'Not saved. Copy the line below and paste it to Claude.'};
+const answers = {};
+const touched = new Set();
+const $ = id => document.getElementById(id);
+
+function render() {
+  const ids = Object.keys(answers).map(Number).sort((a, b) => a - b);
+  $('out').textContent = ids.length ? 'chip labels: ' + ids.map(i => i + ':' + answers[i]).join(' ')
+                                    : '(your answers appear here as you click)';
+  $('count').textContent = ids.length + ' of ' + CHIPS.length + ' answered';
+  const n = {V: 0, O: 0, H: 0, '?': 0};
+  for (const v of Object.values(answers)) n[v]++;
+  $('counts').textContent = ids.length ? Object.keys(LABEL).map(k => n[k] + ' ' + SHORT[k]).join(' · ') : '';
+}
+function mark(id, val) {
+  document.querySelectorAll('#c' + id + ' .btns button')
+    .forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
+}
+function setState(s) { const el = $('state'); el.dataset.state = s; el.textContent = STATES[s]; }
+function saveLocal() { try { localStorage.setItem(KEY, JSON.stringify(answers)); } catch (e) {} }
+
+// The answers live in this page's online store, one document; the browser copy is only a backup.
+const refPromise = (async () => {
+  try {
+    const db = window.claude && typeof window.claude.use === 'function' ? await window.claude.use('db') : null;
+    return db ? db.doc('chipcheck/answers') : null;
+  } catch (e) { return null; }
+})();
+
+async function write(ref, body) {
+  try { await ref.set(body); return true; }
+  catch (e) {
+    if (!e || !['unavailable', 'resource_exhausted'].includes(e.code)) return false;
+    await new Promise(r => setTimeout(r, 600 + Math.random() * 900));
+    try { await ref.set(body); return true; } catch (e2) { return false; }
+  }
+}
+let writing = false, again = false;
+async function flush() {            // one write at a time; a click during a write triggers one more
+  if (writing) { again = true; return; }
+  writing = true;
+  setState('saving');
+  const ref = await refPromise;
+  let ok = !!ref;
+  while (ok) {
+    again = false;
+    ok = await write(ref, {labels: {...answers}, updated: new Date().toISOString()});
+    if (!again) break;
+  }
+  writing = false;
+  setState(ok ? 'ok' : 'bad');
+}
+function pick(id, val) {
+  answers[id] = val; touched.add(String(id));
+  mark(id, val); render(); saveLocal(); flush();
+}
+
+const grid = $('grid');
+for (const c of CHIPS) {
+  const place = NAMES[c.region] || c.region;
+  const card = document.createElement('article');
+  card.className = 'card'; card.id = 'c' + c.id;
+  card.innerHTML = `<header><h2>#${c.id}</h2><span class="facts">${place}</span></header>
+    <img src="chip_${String(c.id).padStart(2, '0')}.png" width="480" height="480"
+         alt="Aerial photo ${c.id}, ${place}, with the matched trail drawn in red">
+    <div class="facts">NAIP ${c.year} · ${c.gsd} m pixels · ${c.segments} segment${c.segments > 1 ? 's' : ''} drawn</div>
+    <div class="btns" role="group" aria-label="Photo ${c.id}">${Object.entries(LABEL).map(([v, t]) =>
+      `<button type="button" data-v="${v}" aria-pressed="false">${t}</button>`).join('')}</div>`;
+  card.querySelectorAll('button').forEach(b => b.addEventListener('click', () => pick(c.id, b.dataset.v)));
+  grid.appendChild(card);
+}
+
+let local = {};
+try { local = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+for (const [id, v] of Object.entries(local)) if (LABEL[v]) { answers[id] = v; mark(id, v); }
+render();
+
+refPromise.then(async ref => {
+  if (!ref) { setState('bad'); return; }
+  let online = {};
+  try { const s = await ref.get(); if (s.exists) online = (s.data() || {}).labels || {}; } catch (e) {}
+  for (const [id, v] of Object.entries(online)) if (!touched.has(id) && LABEL[v]) { answers[id] = v; mark(id, v); }
+  render(); saveLocal();
+  const same = Object.keys(answers).length === Object.keys(online).length
+    && Object.entries(answers).every(([k, v]) => online[k] === v);
+  if (!same) flush();
+  else if (!writing) setState(Object.keys(answers).length ? 'ok' : 'ready');
+});
+
+$('copy').addEventListener('click', () => {
+  const btn = $('copy');
+  const fallback = () => {
+    const r = document.createRange(); r.selectNodeContents($('out'));
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    btn.textContent = 'Selected: press ⌘C';
+  };
+  try {
+    navigator.clipboard.writeText($('out').textContent)
+      .then(() => { btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = 'Copy'; }, 1500); }, fallback);
+  } catch (e) { fallback(); }
+});
+</script>
