@@ -169,7 +169,9 @@ measures over steps of 10 s or more either way.
   "identifiable" traces. They stay out of trail numbers, but they swell the
   "all points" usable % and fill the newest pages (Boulder: ~500 pages of
   them, so that box is cut at `--max-pages`).
-- The draft stop rule is not tuned.
+- The stop rule (60 s window) misses short stops: in Brian's hand check
+  it caught 1 of 7 (decision #123). v1 and the paper keep it; a v2
+  release will use the speed rule `crude05` (< 0.5 km/h).
 - A trackable trace that a page break splits exactly between two recording
   segments is counted twice.
 - A hike crossing two boxes is counted in both.
@@ -192,7 +194,7 @@ everything is cached, so re-runs are cheap.
 | `t1_build_dataset.py` | **The T1 dataset.** Cleans every hike, flags stops, map-matches it, and cuts it into 50 m and 25 m trail segments with speed, signed slope, direction, trail tags, permitted modes, date and uploader. Writes `data/t1_white_mountains/` (segment tables, matched points, `traces.csv`, `data_card.md`). Runs a sign test first, so uphill is always positive. |
 | `t1_variants.py` | Stop-rule sensitivity check: rebuilds the segments under 4 stop rules (from the saved points, no re-matching) and fits the slope–speed curve under each, with 95% intervals from resampling whole hikes. |
 | `t1_meeting_figures.py` | The figures and numbers for the weekly meeting (`../meeting_plots/oct9/`), plus the extra checks quoted in the 9 Oct notes: Tobler's error in hours, out-and-back ratios by grade, `sac_scale` vs speed, winter vs the rest, and bad dates. |
-| `make_stop_sheet.py`, `score_stop_labels.py` | The hand-check of stops: a blind sheet of 20 moments, and a scorer that compares 36 stop rules with the answers. **Still to do**: a careful labeling pass. |
+| `make_stop_sheet.py`, `score_stop_labels.py` | The hand-check of stops: a blind sheet of 20 moments, and a scorer that compares 36 stop rules with the answers. Brian's second pass (5 Nov) is scored in `results/stop_rule_scores.csv` (decision #123). |
 
 | `regions.py`, `scout_regions.py` | The 23 candidate regions (US + Vancouver) and a scout that counts hike-like traces per region in the lab index (`results/region_scout.csv`). |
 | `t1_queue.py` | Downloads many regions unattended: OSM one region at a time (`--probe` skips huge, city-dominated regions); 5 m elevation in a parallel queue. |

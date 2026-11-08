@@ -259,8 +259,10 @@ All of these numbers are collected, with their decision numbers, in
 - **Sparse traces read slow.** Traces with more than 10 s between points
   read up to 11% slow (decision #104). Filter or correct with
   `native_interval_s`.
-- **The stop rule is a draft** until the hand-labeled sheet in
-  `stop_check/` is scored (`score_stop_labels.py`).
+- **The stop rule misses short stops.** The 60 s window rule caught 1
+  of 7 hand-labelled stops (decision #123; `score_stop_labels.py` ->
+  `results/stop_rule_scores.csv`). v1 and the paper keep it; the v2
+  release switches to the speed rule `crude05` (< 0.5 km/h).
 
 AI assistance: Claude (Anthropic) helped write the code and this guide;
 Brian reviews the work and is responsible for it.

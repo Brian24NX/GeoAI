@@ -465,9 +465,9 @@ which region it's in.
 | 2 | First multi-region findings (shape, variance, fatigue, asymmetry) | Claude | ✅ |
 | 3 | **T1 close-out:** combined all-region dataset + one data card; elevation-quality check for every region; mode calls checked against the uploaders' own activity labels | Claude | ✅ 11 Oct (re-run as the city regions upgrade) |
 | 4 | **Evaluation harness on T1 data**: Tobler / slope-only / Lorentz / Tags arms (+ place memory, personal pace); outing, block and leave-one-region-out splits; CRPS, coverage, stretch and hike time errors | Claude | ✅ 11 Oct (§1b). Next: Campbell's published constants, once read |
-| 5 | **Paper skeleton**: storyline, figure slots, related-work list, 4-page budget | Claude drafts, Brian writes | outline ✅ 11 Oct (`paper/OUTLINE.md`); LaTeX once the 2027 kit is out |
+| 5 | **Paper skeleton**: storyline, figure slots, related-work list, 4-page budget | Claude drafts, Brian writes | outline ✅ 11 Oct (`paper/OUTLINE.md`); draft in the official IGARSS template ✅ 8 Nov (#129) |
 | 6 | T2 pilot on the White Mountains: 1 m lidar terrain | Claude | ✅ 11 Oct (§1c). Scaling: 1 m elevation for all US regions downloading (#84); Meta canopy and AlphaEarth next |
-| 7 | Stop-rule hand check: 20 cards in `stop_check/stop_check.html`, ~15 min | **Brian** | open |
+| 7 | Stop-rule hand check: 20 cards in `stop_check/stop_check.html`, ~15 min | **Brian** | ✅ 5 Nov (#123); decided 8 Nov: the paper keeps v1's rule, the v2 release uses the speed rule |
 | 8 | Read: Campbell 2019 & 2022, **Wood 2023**, **STRIDE 2024**, HikingTTE, RasterNet | **Brian** | open |
 
 ## 7. Timeline to 11 Jan 2027 (re-paced to the semester plan, 22 Oct; decision #117)

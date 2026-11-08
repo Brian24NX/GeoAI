@@ -282,9 +282,11 @@ def write_card(seg, reg, summ):
         "- **Elevation quality.** Slopes rest on 1 m lidar under most "
         "trails, but not in Olympic NP or the North Shore (coarser data "
         "flattens slopes and lowers k).",
-        "- **Stops.** The window rule is a draft until the hand-labeled "
-        "sheet (`stop_check/`) is scored; the curve barely moves across 4 "
-        "rules.",
+        "- **Stops.** The window rule misses stops under 60 s: in a hand "
+        "check of 20 moments (`stop_check/`, decision #123) it caught 1 of "
+        "7 stops, a speed rule (< 0.5 km/h) 6 of 7. The curve barely moves "
+        "across 4 rules (White Mountains peak 4.23 km/h, 4.13 with the "
+        "speed rule). A v2 release will use the speed rule.",
         "- **Recording interval.** Speeds of traces logged every > 10 s "
         "read low: straight lines between sparse points cut corners, and "
         "short stops between points count as moving. Thinning dense walks "

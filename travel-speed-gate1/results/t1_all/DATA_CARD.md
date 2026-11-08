@@ -109,7 +109,7 @@ Capped tiles (the OSM API times out past ~4.5M points of one area, so the oldest
 - **Lab-only regions** lack anonymous traces and uploads after 2022 until their full downloads land (rebuilt automatically).
 - **Capped tiles** miss their oldest uploads (see above).
 - **Elevation quality.** Slopes rest on 1 m lidar under most trails, but not in Olympic NP or the North Shore (coarser data flattens slopes and lowers k).
-- **Stops.** The window rule is a draft until the hand-labeled sheet (`stop_check/`) is scored; the curve barely moves across 4 rules.
+- **Stops.** The window rule misses stops under 60 s: in a hand check of 20 moments (`stop_check/`, decision #123) it caught 1 of 7 stops, a speed rule (< 0.5 km/h) 6 of 7. The curve barely moves across 4 rules (White Mountains peak 4.23 km/h, 4.13 with the speed rule). A v2 release will use the speed rule.
 - **Recording interval.** Speeds of traces logged every > 10 s read low: straight lines between sparse points cut corners, and short stops between points count as moving. Thinning dense walks shows -3% at 10 s, -7.5% at 20 s, -11% at 30 s (`t1_sampling_check.py`). Filter or correct with `native_interval_s`; the walking curve without > 10 s traces peaks 3% higher.
 - **Mode** is inferred, not reported by the hiker (`mode_conf`).
 - **Map matching.** OSM trails are often traced from these same uploads, so match errors look smaller than the true trail position error.

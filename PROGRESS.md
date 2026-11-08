@@ -59,6 +59,17 @@ km.
     squares, +3.0 (+3.4) unseen regions; brackets are its own spread.
   - Brian writes the Methods paragraph and the two Results sentences in
     his rewrite; comments in the .tex files mark where they go.
+- **Stop rule decided (#123):** Brian said yes to the 5 Nov proposal.
+  - The paper keeps its numbers (v1, the 60 s window rule) and says in
+    one Limits clause that a hand check found the rule misses short
+    stops.
+  - The later data release (v2) uses the speed rule (< 0.5 km/h), which
+    caught 6 of the 7 hand-labelled stops.
+  - The 17-region run under the speed rule happens only if the mentors
+    ask for it.
+  - The data card, pipeline guide, README, next-steps table and rewrite
+    guide no longer call the rule a draft or the decision open; a
+    comment in `discussion.tex` marks where Brian's clause goes.
 - **Next:** Tue 10 Nov, compare with the 2027 kit; Brian reads the whole
   draft once. Then he rewrites Data (Wed 11) and Methods (Thu 12).
 
