@@ -27,9 +27,12 @@ Lidar vegetation$^\dagger$ & $+0.4$ / $+0.5$ & $+0.4$ / $+0.3$ & $+0.3$ / $+0.2$
 \textbf{Terrain} & $+2.2$ / $+3.2$ & $+2.1$ / $+2.8$ & $\mathbf{+2.1}$ / $\mathbf{+2.8}$ \\
 Terrain + emb.\ + tags & $+3.7$ / $+5.1$ & $+3.8$ / $+5.1$ & $+3.0$ / $+3.9$ \\
 Eq.~(1), one input & $+1.0$ & $+1.0$ & $+1.0$ \\
+Learned Tobler$^\ddagger$ & $+3.2$ ($+3.8$) & $+2.9$ ($+3.5$) & $+3.0$ ($+3.4$) \\
 \bottomrule
 \end{tabular}\\[2pt]
-{\scriptsize $^\dagger$The 15 regions with lidar point clouds.}
+{\scriptsize $^\dagger$The 15 regions with lidar point clouds.
+$^\ddagger$Terrain inputs; residual-quantile spread (its own Student-t
+spread); mean of 3 seeds.}
 \end{table}
 
 
@@ -69,10 +72,16 @@ Terrain is neither a region
 proxy (within regions it adds $\sim$1.9 points to a learned offset per
 region) nor a hiker proxy (it adds $\sim$2.3 points to the hiker's own
 pace).
+% TODO (Brian, Results rewrite; decided 8 Nov, DECISIONS_LOG #130): one
+% sentence on learned Tobler (Table I, last row): it ties the trees with the
+% shared spread and beats them with its own; numbers in the Paper Rewrite Guide.
 
 No other input transfers as well. 30~m land cover and canopy add nothing.
 AlphaEarth embeddings help within regions ($+1.4\%$ / $+2.6\%$) but less,
-and less reliably, in unseen ones ($+1.1\%$). Vegetation from the lidar
+and less reliably, in unseen ones ($+1.1\%$).
+% TODO (Brian; decided 8 Nov, #130): one sentence on aerial imagery (NAIP,
+% Tracks A and B): it helps within known regions, not in unseen ones; numbers
+% in the Paper Rewrite Guide. Vegetation from the lidar
 point clouds adds at most $+0.2$ points to terrain, within or across the
 15 regions. Terrain + tags gives $+2.6\%$ / $+3.0\%$ in unseen regions
 (Fig.~\ref{fig:skill}a).

@@ -279,7 +279,10 @@ robustness tag numbers, the STRIDE details.
 ends in page 4's left column and the references run onto page 5. If the
 2027 kit also leaves references out of the 4 pages, about 0.4 page (0.8 of
 a column) is free: room for the hike-time figure or the trail map, or for
-imagery and learned Tobler (Brian's call).
+imagery and learned Tobler (Brian's call). Brian's decisions (8 Nov, #130):
+imagery gets one sentence, and learned Tobler is a Table I row beside
+Eq. (1). The row is in (about 3 lines with its note); the Methods paragraph
+and the two Results sentences come with his rewrite.
 
 - [x] Fig. 1: `paper/figures/fig_map.png` (17 regions, circle area = walking hours, White Mountains inset).
 - [x] Fig. 2 (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.

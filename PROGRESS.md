@@ -53,8 +53,14 @@ km.
 - **References don't count** toward the 4 pages in the 2026 kit. The build
   is 5 pages: the main text ends on page 4 and the references run onto
   page 5, so about 0.4 page is free if the 2027 kit agrees.
+- **Brian's two paper decisions (#130), three days early:** imagery gets
+  one sentence, and learned Tobler is a Table I row beside Eq. (1).
+  - The row is in Table I: +3.2 (+3.8) new hikes, +2.9 (+3.5) new 10 km
+    squares, +3.0 (+3.4) unseen regions; brackets are its own spread.
+  - Brian writes the Methods paragraph and the two Results sentences in
+    his rewrite; comments in the .tex files mark where they go.
 - **Next:** Tue 10 Nov, compare with the 2027 kit; Brian reads the whole
-  draft once. Wed 11 Nov, his two decisions, then Data.
+  draft once. Then he rewrites Data (Wed 11) and Methods (Thu 12).
 
 ## Sat 7 Nov 2026
 
