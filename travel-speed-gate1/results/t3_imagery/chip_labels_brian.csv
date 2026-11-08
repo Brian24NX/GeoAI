@@ -1,0 +1,21 @@
+chip,region,region_name,photo_year,photo_pixel_m,segments,label,meaning
+1,sangabriel,San Gabriels,2022,0.6,5,O,"visible, off the line"
+2,wm,White Mountains,2023,0.3,1,H,hidden
+3,cascades,Cascades,2023,0.6,1,?,can't tell
+4,olympic,Olympic,2023,0.6,1,H,hidden
+5,olympic,Olympic,2023,0.6,1,V,"visible, on the line"
+6,cascades,Cascades,2023,0.6,1,O,"visible, off the line"
+7,cascades,Cascades,2023,0.6,1,H,hidden
+8,catskills,Catskills,2022,0.6,3,H,hidden
+9,gorge,Columbia River Gorge,2023,0.6,1,H,hidden
+10,adk,Adirondacks,2022,0.6,1,H,hidden
+11,frontrange,Front Range,2023,0.3,1,?,can't tell
+12,shenandoah,Shenandoah,2023,0.6,3,H,hidden
+13,sangabriel,San Gabriels,2022,0.6,2,O,"visible, off the line"
+14,tahoe,Tahoe,2022,0.6,1,?,can't tell
+15,wm,White Mountains,2023,0.3,2,H,hidden
+16,greenmtn,Green Mountains,2023,0.3,2,H,hidden
+17,tahoe,Tahoe,2022,0.6,1,O,"visible, off the line"
+18,sangabriel,San Gabriels,2022,0.6,1,O,"visible, off the line"
+19,cascades,Cascades,2023,0.6,1,H,hidden
+20,olympic,Olympic,2023,0.6,3,O,"visible, off the line"

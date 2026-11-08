@@ -155,6 +155,12 @@ passes, so imagery is one sentence in the paper (Brian's call).
 **Brian's sanity check:** 20 random chips with the matched trail drawn on
 top. Does each chip actually show the trail?
 
+**Result (7 Nov, decision #128):** the trail shows in 7 of the 20 chips;
+trees or shadow hide it in 10, and 3 are unclear. All 6 eastern chips are
+hidden, and all 3 San Gabriels chips show it. Where the trail shows, the
+GPS line runs beside it in 6 of 7. Labels:
+`travel-speed-gate1/results/t3_imagery/chip_labels_brian.csv`.
+
 ### Why A first
 
 A is cheap and answers "does NAIP transfer at all?" in two days.

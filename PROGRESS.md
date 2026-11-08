@@ -40,6 +40,25 @@ km.
 
 ---
 
+## Sat 7 Nov 2026
+
+- **Chip check done (#128).** Brian labelled all 20 Track B chips on the
+  new online sheet, "Trail Chip Check" (`chip_check/trail_chip_check.html`,
+  a private claude.ai page that saves each click). The local sheet had lost
+  two passes when the app stopped its preview server.
+  - The trail shows in 7 chips; trees or shadow hide it in 10; 3 are
+    unclear.
+  - All 6 eastern chips are hidden; all 3 San Gabriels chips show it.
+  - Where the trail shows, the GPS line runs beside it in 6 of 7. This
+    doesn't change Track B, since the whole 96 m chip is averaged.
+  - Labels: `travel-speed-gate1/results/t3_imagery/chip_labels_brian.csv`.
+- **Rewrite guide:** the Discussion note "under forest, the photo often
+  can't see the trail at all" now gives the count.
+- **Next (plan):** Tue 10 Nov, the paper moves to the IGARSS template, and
+  Claude confirms the deadline (10 or 11 Jan) and whether references count
+  toward the 4 pages. Wed 11 Nov, Brian decides imagery and learned Tobler,
+  then rewrites Data.
+
 ## Fri 6 Nov 2026
 
 - **Gate 2 meeting day.** Brian presents the five checks (all pass) and his

@@ -101,3 +101,8 @@ gain **−0.01 [−0.52, +0.34]**.
 **What it means.** Photos of the trail itself give the same answer as
 Track A: they help inside regions the model knows, not in new ones. So
 neither track passes, and only terrain carries over (decision #127).
+
+**Brian's chip check (7 Nov, decision #128).** Of 20 random Track B chips,
+the trail shows in 7. Trees or shadow hide it in 10, all 6 eastern chips
+among them, and 3 are unclear. Under forest, a photo of the trail mostly
+shows the canopy.
