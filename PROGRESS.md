@@ -40,6 +40,22 @@ km.
 
 ---
 
+## Sun 8 Nov 2026
+
+- **Paper in the official IGARSS template (#129)**, two days early at
+  Brian's request. The 2027 kit only comes with the portal on Tue 10 Nov,
+  so the paper uses the official 2026 kit (Brian approved the 1.1 MB
+  download from 2026.ieeeigarss.org). It is the same IEEEtran class on A4,
+  with the title in capitals, one block per author and natbib references.
+  The section files did not change.
+- **Deadline confirmed:** 11 Jan 2027 on the official Important Dates page
+  (no time zone given).
+- **References don't count** toward the 4 pages in the 2026 kit. The build
+  is 5 pages: the main text ends on page 4 and the references run onto
+  page 5, so about 0.4 page is free if the 2027 kit agrees.
+- **Next:** Tue 10 Nov, compare with the 2027 kit; Brian reads the whole
+  draft once. Wed 11 Nov, his two decisions, then Data.
+
 ## Sat 7 Nov 2026
 
 - **Chip check done (#128).** Brian labelled all 20 Track B chips on the

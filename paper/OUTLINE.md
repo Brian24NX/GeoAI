@@ -12,8 +12,9 @@ IEEE two-column; the only format published in IEEE Xplore and eligible for
 the Student Paper Competition (the other option, 400–600-word abstracts,
 is not published). Portal opens 10 Nov; papers, the competition and travel
 support all due 11 Jan 2027; decisions 12 Mar; final paper and
-registration 30 Apr (call for papers checked 21 Oct). Whether references
-count toward the 4 pages comes with the paper kit. Competition: needed an
+registration 30 Apr (call for papers checked 21 Oct). The 2026 paper kit
+(checked 8 Nov) asks for 800 words to 4 pages including figures and does
+not count references; the 2027 kit comes with the portal on 10 Nov. Competition: needed an
 advisor attestation in past years. Best-fit themes: SP.6 (Datasets,
 Benchmarks, and Evaluation Methodologies for Earth Observation) or SP.5
 (Foundation Models and Embeddings for EO); L.7 (Land Surveying, Geodesy and
@@ -38,7 +39,7 @@ value. A hiker's own pace still matters most.
 | 3 Methods | 0.75 | covariates, models, splits, scoring |
 | 4 Results | 1.25 | Table I, Fig. 2 (speed vs slope, down/up), Fig. 3 (full width: skill by model, each region held out) |
 | 5 Discussion + conclusion | 0.5 | what transfers and why; limits; release |
-| References | 0.6 | 22; IGARSS kits of 2013–2017 count references inside the 4 pages (an earlier note that the 2026 kit doesn't could not be re-checked); check the 2027 kit |
+| References | not counted | 21 cited; the 2026 paper kit leaves references out of the 4 pages (checked 8 Nov; the kits of 2013–2017 counted them); check the 2027 kit |
 
 ---
 
@@ -273,6 +274,12 @@ the 4 pages. After the independent check (#115) the travel-mode result
 (R5) and the Higgins reference were cut for space (R5 is kept as a comment
 at the end of `results.tex`). If the text runs long again, cut next: the
 robustness tag numbers, the STRIDE details.
+
+**Budget (8 Nov, in the official IGARSS 2026 template, A4).** The main text
+ends in page 4's left column and the references run onto page 5. If the
+2027 kit also leaves references out of the 4 pages, about 0.4 page (0.8 of
+a column) is free: room for the hike-time figure or the trail map, or for
+imagery and learned Tobler (Brian's call).
 
 - [x] Fig. 1: `paper/figures/fig_map.png` (17 regions, circle area = walking hours, White Mountains inset).
 - [x] Fig. 2 (T4, plan claims 2 and 4): `paper/figures/fig_curve.png`: speed vs slope (medians, middle 50%, our curve, Campbell, Tobler) and the same-hiker down/up ratio.

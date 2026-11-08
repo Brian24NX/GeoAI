@@ -1,32 +1,66 @@
-% IGARSS 2027 paper skeleton (12 Oct 2026).
-% Uses IEEEtran (conference) as a stand-in until the official IGARSS 2027
-% author kit is posted (portal opens 10 Nov 2026); the section files in
-% sections/ move over unchanged. 4 pages including references, as in older
-% IGARSS kits (check the 2027 rule).
+% IGARSS 2027 paper: draft 0 in the official IGARSS 2026 LaTeX template
+% (moved 8 Nov 2026; kit IGARSS2026LaTeXTemplate.zip from
+% 2026.ieeeigarss.org, copy of its .tex in template_igarss2026/).
+% The 2027 kit goes up when the portal opens on 10 Nov 2026: compare it
+% with template_igarss2026/ then. The section files in sections/ are
+% unchanged by the move.
+% Page rule (IGARSS 2026 paper kit): 800 words minimum, 4 pages maximum
+% including figures; references are not counted. A4 as in the template
+% (Letter is also allowed).
 % Compile:  tectonic main.tex
-% AI assistance: Claude (Anthropic) set up this skeleton, the tables and the
-% figures, and drafted Data and Methods (13 Oct) and the Introduction,
-% Results, Discussion and abstract (21 Oct) for Brian to rewrite. Disclose
-% as IGARSS and CSE 5999 require.
-\documentclass[conference]{IEEEtran}
-\usepackage[T1]{fontenc}   % Times with bold under XeTeX (tectonic)
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{booktabs}
-\usepackage{xcolor}
-\usepackage{cite}
+% AI assistance: Claude (Anthropic) set up this file and the template move,
+% the tables and the figures, and drafted Data and Methods (13 Oct) and the
+% Introduction, Results, Discussion and abstract (21 Oct) for Brian to
+% rewrite. Disclose as IGARSS and CSE 5999 require.
+\documentclass[conference,a4paper]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage[T1]{fontenc}   % ours: Times with bold under XeTeX (tectonic)
+
+% ---- IGARSS 2026 template preamble (as in the kit) ----
 \usepackage[hidelinks]{hyperref}
+\usepackage[cmex10]{amsmath}%American Math Society(AMS) math formatting
+\usepackage{amssymb,amsfonts}%AMS extra symbols and fonts
+\interdisplaylinepenalty=2500%allow line breaks in multi-line formulas
+\usepackage{dblfloatfix}%fix double column figure ordering and placement
+
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{graphicx}
 \graphicspath{{figures/}{../travel-speed-gate1/results/t4_terrain_curve/}{../travel-speed-gate1/results/t4_trail_map/}{../travel-speed-gate1/results/t4_mode_curves/}}
+
+\usepackage{booktabs}
+\usepackage{siunitx}
+\usepackage[numbers,compress]{natbib}
+\usepackage{texnames}
+\usepackage{bm,bbm}
+\usepackage{orcidlink}
+
+% ---- ours ----
+\usepackage{xcolor}
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
 
 \begin{document}
 
-\title{Does Remote Sensing Beat the Trail Map? Predicting Hiking Speed in
-Unseen Regions from Lidar Terrain and OpenStreetMap Tags}
+\title{\uppercase{Does Remote Sensing Beat the Trail Map? Predicting Hiking
+Speed in Unseen Regions from Lidar Terrain and OpenStreetMap Tags}}
 
-\author{\IEEEauthorblockN{Brian Zhou, Danni Beaulieu, Tianyi Gao}
-\IEEEauthorblockA{Department of Computer Science and Engineering,
-Washington University in St.\ Louis}}
+% Template style: one block per author. Emails and ORCIDs (\orcidlink{...})
+% are optional; the author list and order are Brian's to settle with the
+% mentors.
+\author{\IEEEauthorblockN{Brian Zhou}
+\IEEEauthorblockA{\textit{Computer Science and Engineering}\\
+\textit{Washington University in St.\ Louis}\\
+St.\ Louis, MO, USA}
+\and
+\IEEEauthorblockN{Danni Beaulieu}
+\IEEEauthorblockA{\textit{Computer Science and Engineering}\\
+\textit{Washington University in St.\ Louis}\\
+St.\ Louis, MO, USA}
+\and
+\IEEEauthorblockN{Tianyi Gao}
+\IEEEauthorblockA{\textit{Computer Science and Engineering}\\
+\textit{Washington University in St.\ Louis}\\
+St.\ Louis, MO, USA}
+}
 
 \maketitle
 
@@ -67,7 +101,8 @@ hiking speed, lidar, OpenStreetMap, GPS trajectories, transfer, calibration
 Claude (Anthropic) was used to write the data-processing and analysis code
 and to draft the text, tables and figures of every section of this draft.
 
-\bibliographystyle{IEEEtran}
+\small
+\bibliographystyle{IEEEtranN}
 \bibliography{refs}
 
 \end{document}
