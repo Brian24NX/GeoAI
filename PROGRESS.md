@@ -70,6 +70,10 @@ km.
   - The data card, pipeline guide, README, next-steps table and rewrite
     guide no longer call the rule a draft or the decision open; a
     comment in `discussion.tex` marks where Brian's clause goes.
+- **Slack note for Danni drafted** (Brian asked; he sends it): the author
+  order and whether Prof. Jacobs is on the paper, each author's email,
+  ORCID and affiliation for the template's author block, and any grant
+  to acknowledge. The answers go into `paper/main.tex`.
 - **Next:** Tue 10 Nov, compare with the 2027 kit; Brian reads the whole
   draft once. Then he rewrites Data (Wed 11) and Methods (Thu 12).
 
