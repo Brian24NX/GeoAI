@@ -91,9 +91,9 @@ km.
   until the kit is out. It downloads nothing; when it reports the kit,
   turn it off and ask Brian before the download.
 - **Danni answered the author note** (Brian sent it in the Geo AI channel
-  on 9 Nov; her reply came 10 Nov, 13:36): she is "Danielle Beaulieu" in
-  her author profiles, Prof. Jacobs goes on the paper, her WashU email is
-  fine, and no special acknowledgment is needed. `main.tex` now lists
+  on 9 Nov; the reply came 10 Nov, 13:36): Danni is "Danielle Beaulieu"
+  in author profiles, Prof. Jacobs goes on the paper, Danni's WashU email
+  is fine, and no special acknowledgment is needed. `main.tex` now lists
   Brian Zhou, Danielle Beaulieu, Tianyi Gao and Nathan Jacobs in one
   shared WashU author block, and the Acknowledgment stays the AI-use
   disclosure (#133). Still 5 pages, and the text sits slightly higher.
