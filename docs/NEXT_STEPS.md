@@ -488,9 +488,11 @@ of the hands-on work; the draft is the safety net.
 | 15–16 | 30 Nov–13 Dec | Mentor + Prof. Jacobs review; CSE 5999 final report (format per Canvas) |
 | break | to 11 Jan | Revision; submit by ~8 Jan (deadline 11 Jan) with the Student Paper Competition attestation |
 
-Plan items still open: NAIP imagery; understory in several height layers
-(Campbell 2018: ~0.5–1.5, 1.5–2.5, 2.5–3.5 m); aspect and curvature;
-a real heteroscedastic model; per-hiker partial pooling.
+Plan items: NAIP imagery ✅ (#125–#128); understory in several height
+layers (Campbell 2018: ~0.5–1.5, 1.5–2.5, 2.5–3.5 m) ✅ (#119); aspect
+and curvature ✅ 9 Nov (#131: about +0.2 points, not clearly above zero);
+a real heteroscedastic model ✅ (learned Tobler's variance head, #121).
+Still open: per-hiker partial pooling.
 
 ## 8. Risks and how we handle them
 

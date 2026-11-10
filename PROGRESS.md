@@ -75,10 +75,24 @@ km.
     exactly (Green Mountains, 4,408 segments). The harness runs with a
     coarse slope swapped in. The summary script reproduces the paper's
     numbers (16 of 17 regions; terrain minus tags +0.7 to +2.2).
-  - Running on the cluster as one job (Slurm 372671; 8 CPUs, the class
-    limit; Brian's GPU jobs hold the other slots).
-- **Next:** the idea 1 results (tonight). Tue 10 Nov: the 2027 kit.
-  Wed 11 Nov: Brian rewrites Data.
+  - Ran on the cluster as one job (Slurm 372671; 8 CPUs, the class limit;
+    30 min).
+- **Idea 1 results (#131).** Unseen regions, terrain vs the slope curve
+  from the same elevation data (additive / trees):
+  - 5 m: +2.05 / +2.55. **10 m: +2.12 / +2.62, no loss.**
+  - **30 m: +1.77 / +2.19**, about 85% of the 5 m gain. Terrain still
+    beats tags (terrain minus tags +0.1 to +1.4, 98% of draws above 0)
+    and wins in 12 of 17 regions (additive) and 14 of 17 (trees).
+  - The coarser slope itself costs 1.0% at 30 m (0.5% at 10 m), so
+    against the 5 m slope curve the 30 m terrain model scores +1.2.
+  - Aspect and curvature add about 0.2 points to the paper's terrain,
+    not clearly above zero (unseen +0.21 [-0.02, +0.38] additive).
+  - Caveat: averaging changes only the resolution. A real 30 m DEM
+    (Copernicus GLO-30: 40 tiles, 1.6 GB) also has radar and canopy
+    errors.
+- **Next:** Brian decides on one Robustness sentence and on the
+  real-DEM check. Tue 10 Nov: the 2027 kit. Wed 11 Nov: Brian rewrites
+  Data.
 
 ## Sun 8 Nov 2026
 
