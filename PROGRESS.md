@@ -66,7 +66,13 @@ km.
   Markers are in `results.tex` and `discussion.tex`. The rewrite guide has
   a new row in "New result", a new rewrite item and the numbers in the
   Robustness row.
-- **Next:** today, the 2027 kit. Wed 11 Nov: Brian rewrites Data.
+- **2027 kit: not out yet.** The call for papers
+  (2027.ieeeigarss.org/call_for_papers.php) says the portal opens 10 Nov
+  and the paper kit and templates will be on it, but its "Submit a Paper"
+  button still says "Opens November". It confirms the deadline (11 Jan
+  2027) and 4 pages; it doesn't say whether references count.
+- **Next:** check the portal again for the kit (ask Brian before the
+  download). Wed 11 Nov: Brian rewrites Data.
 
 ## Mon 9 Nov 2026
 
