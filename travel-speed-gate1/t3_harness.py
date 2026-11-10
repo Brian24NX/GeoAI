@@ -641,6 +641,11 @@ def main():
                     help="T2 covariate tables: segment_id + numeric columns")
     ap.add_argument("--features", nargs="*",
                     help="use only these covariate columns")
+    ap.add_argument("--slope-from", metavar="COLUMN",
+                    help="a covariate column to use as every arm's slope "
+                         "instead of T1's 5 m slope, e.g. slope_30m: what a "
+                         "coarser DEM gives (t2_terrain_coarse.py, #131). "
+                         "The segments and the slope subsets stay T1's")
     ap.add_argument("--hetero", action="store_true",
                     help="add +het arms: a spread that depends on the "
                          "segment (slope, tags, remote sensing)")
@@ -680,14 +685,26 @@ def main():
         cov = cov.groupby(["region", "segment_id"], sort=False
                           ).first().reset_index()
         rs_cols = [c for c in cov.columns if c not in RS_SKIP
-                   and c != "region"
+                   and c != "region" and c != args.slope_from
                    and not c.startswith("dem1m_cover")
                    and pd.api.types.is_numeric_dtype(cov[c])
                    and (not args.features or c in args.features)]
-        w = w.merge(cov[["region", "segment_id"] + rs_cols],
+        extra = [args.slope_from] if args.slope_from in cov else []
+        w = w.merge(cov[["region", "segment_id"] + rs_cols + extra],
                     on=["region", "segment_id"], how="left"
                     ).reset_index(drop=True)
         ARMS.update(RS_ARMS)
+    if args.slope_from:                      # what a coarser DEM gives
+        if args.slope_from not in w:
+            raise SystemExit(f"--slope-from {args.slope_from}: no such "
+                             "covariate column")
+        alt = w.pop(args.slope_from)
+        w["slope_t1"] = w.slope
+        w["slope"] = alt.fillna(w.slope).clip(-0.6, 0.6)
+        ok = alt.notna()
+        print(f"slope from {args.slope_from} for {ok.mean():.2%} of segments "
+              f"(T1's elsewhere); r with T1's slope "
+              f"{np.corrcoef(alt[ok], w.slope_t1[ok])[0, 1]:.3f}", flush=True)
     rng = np.random.default_rng(SEED)
     if quick:
         keep = rng.permutation(np.asarray(w.outing_id.unique(), dtype=object))
@@ -887,6 +904,7 @@ def main():
                                          "crps_skill_vs_slope_pct"]]
         .mean().round(4).to_dict("index") if len(by) else {},
         "remote_sensing_covariates": rs_cols,
+        "slope_from": args.slope_from or "T1 (5 m)",
         "skill_ci": ci.round(3).to_dict("records")}
     (OUT / "summary.json").write_text(json.dumps(summary, indent=1))
     figure(met[~met.arm.str.endswith("+me")], by, splits)

@@ -56,8 +56,8 @@ km.
   Naismith's rule as a whole-hike baseline; (3) the Alps as a test region
   on another continent; (4) a per-hiker model; (5) a network on the raw
   elevation profile.
-- **Claude's recommendation (Brian decides):** finish the paper and add
-  only (1).
+- **Claude's recommendation, and Brian said go:** finish the paper and
+  add only (1).
   - Claude runs it on the cluster while Brian rewrites, with aspect and
     curvature (the plan's two untested terrain measures) in the same run.
   - It becomes one sentence in Robustness if it's clean by Fri 20 Nov;
@@ -66,7 +66,18 @@ km.
     (3) and (5) wait until after submission; (2) is skipped.
 - Brian's read-through comments are still not in the guide (checked again
   today).
-- **Next:** Brian's call on the recommendation. Tue 10 Nov: the 2027 kit.
+- **Idea 1 started (#131):** the 5 m elevation grids averaged to 10 m and
+  30 m; the same five terrain measures and the segment's slope are read
+  from them, plus aspect and curvature at 5 m.
+  - New: `t2_terrain_coarse.py`, `t3_harness.py --slope-from`,
+    `cluster/coarse_job.sh`, `t3_coarse_summary.py`.
+  - Checks passed. At 5 m the new code reproduces the old terrain numbers
+    exactly (Green Mountains, 4,408 segments). The harness runs with a
+    coarse slope swapped in. The summary script reproduces the paper's
+    numbers (16 of 17 regions; terrain minus tags +0.7 to +2.2).
+  - Running on the cluster as one job (Slurm 372671; 8 CPUs, the class
+    limit; Brian's GPU jobs hold the other slots).
+- **Next:** the idea 1 results (tonight). Tue 10 Nov: the 2027 kit.
   Wed 11 Nov: Brian rewrites Data.
 
 ## Sun 8 Nov 2026

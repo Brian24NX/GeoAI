@@ -13,6 +13,11 @@ CX=$(ls data/t2/context_*.parquet 2>/dev/null)   # t3_season_time.py
 WX=$(ls data/t2/weather_*.parquet 2>/dev/null)   # t2_weather.py
 LV=$(ls data/t2/lidarveg_*.parquet 2>/dev/null)  # t2_lidarveg.py
 LS=$(ls data/t2/lidarstrata_*.parquet 2>/dev/null)  # t2_lidarveg.py --strata
+T10=$(ls data/t2/terrain10m_*.parquet 2>/dev/null)  # t2_terrain_coarse.py (#131)
+T30=$(ls data/t2/terrain30m_*.parquet 2>/dev/null)
+AC=$(ls data/t2/aspcurv5m_*.parquet 2>/dev/null)
+TER="pitch_max pitch_sd relief_sd hidden_grade cross_slope"
+feat() { for c in $TER; do printf "%s_%s " $c $1; done; }
 LVR="wm adk catskills greenmtn shenandoah smokies pisgah frontrange wasatch cascades gorge olympic bayarea sangabriel tahoe"
 say() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $*" | tee -a logs/refresh.log; }
 case "$1" in
@@ -68,6 +73,16 @@ case "$1" in
                  --out results/t3_harness_veg15_strata ;;
   strataterrain) $H --regions $LVR --covariates $T5 $T1 $LS \
                  --out results/t3_harness_veg15_terrain_strata ;;
+  # #131: terrain from coarser elevation; the slope comes from the
+  # same coarse grid (coarse30s5: 30 m terrain on T1's 5 m slope)
+  coarse10)   $H --covariates $T10 --features $(feat 10m) \
+                 --slope-from slope_10m --out results/t3_harness_coarse10 ;;
+  coarse30)   $H --covariates $T30 --features $(feat 30m) \
+                 --slope-from slope_30m --out results/t3_harness_coarse30 ;;
+  coarse30s5) $H --covariates $T30 --features $(feat 30m) \
+                 --out results/t3_harness_coarse30_slope5m ;;
+  aspcurv)    $H --covariates $T5 $T1 $AC \
+                 --out results/t3_harness_terrain15m_aspcurv ;;
   *) echo "unknown run $1"; exit 2 ;;
 esac >> "logs/refresh_harness_$1.log" 2>&1 \
   && say "done  harness $1" || { say "FAILED harness $1"; exit 1; }
