@@ -40,6 +40,34 @@ km.
 
 ---
 
+## Tue 10 Nov 2026
+
+- **Real 30 m DEM results (#132)**, unseen regions (additive / trees):
+  - Copernicus's slope is much noisier than the averaged grids' (r with
+    our 5 m slope 0.85 vs 0.97), so the slope curve built from it is 4.9%
+    worse (30 m averages: 1.0%).
+  - On that slope, terrain from Copernicus adds +1.1 / +2.1 but tags add
+    +1.7 / +2.0: terrain no longer beats tags (additive: tags ahead in 95%
+    of draws; trees: a tie). Terrain wins in 7 and 11 of 17 regions.
+  - Copernicus terrain on our 5 m slope: +0.9 / +1.5 (5 m terrain: +2.05 /
+    +2.55).
+  - Along trails Copernicus sits 1 m (San Gabriels) to 19 m (Olympic,
+    Gorge) above the lidar ground: the forest canopy. Forest regions lose
+    more (slope curve 5.3% worse vs 3.6% in open ones), but the loss does
+    not follow canopy height region by region. The radar model is noisier
+    everywhere; the worst are steep forested trails (Gorge 12%,
+    Adirondacks 8%, Green Mountains 7%).
+- **What it means:** terrain needs accurate bare-earth elevation, not fine
+  resolution. 10 m loses nothing and 30 m averages keep most of the gain,
+  but the global radar DEM loses the edge over tags.
+- **Paper:** the Robustness sentence (decided) uses the averaged numbers;
+  the Copernicus result is suggested as a Limits clause (Brian decides).
+  Markers are in `results.tex` and `discussion.tex`. The rewrite guide has
+  a new row in "New result", a new rewrite item and the numbers in the
+  Robustness row.
+- **Next:** today, the 2027 kit, and Brian's call on the Limits clause. Wed
+  11 Nov: Brian rewrites Data.
+
 ## Mon 9 Nov 2026
 
 - **Status against the semester plan (Brian asked):** everything through

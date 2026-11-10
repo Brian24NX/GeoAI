@@ -101,11 +101,12 @@ who hiked there (0.1--8.5\% of the training data) gives $+1.8\%$ /
 $+2.4\%$ (tags $+0.5\%$ / $-0.4\%$), above tags in every draw.
 % TODO (Brian, Results rewrite; decided 9 Nov, DECISIONS_LOG #131-#132): one
 % sentence on coarser elevation. Averaged to 10 m, terrain keeps its whole
-% gain in unseen regions; at 30 m, the resolution of free global elevation
-% data, about 85% (+1.8% / +2.2%), still above tags. The real 30 m DEM
-% (Copernicus GLO-30) result and the exact numbers are in the Paper Rewrite
-% Guide. Methods needs half a clause on how (block averages; Copernicus) and
-% References the Copernicus DEM.
+% gain in unseen regions (+2.1% / +2.6%); averaged to 30 m, +1.8% / +2.2%,
+% still above tags. From the real global 30 m DEM (Copernicus GLO-30, a
+% radar surface model) even the slope curve is 4.9% worse and terrain no
+% longer beats tags: suggested as a Limits clause (discussion.tex). Numbers
+% in the Paper Rewrite Guide. Methods: half a clause on how; cite
+% copernicusdem (refs.bib).
 
 \textbf{Whole hikes: the hiker dominates.} Over 1,354 hike traces in held-out
 regions, the median error in moving time after the first kilometre is
