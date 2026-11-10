@@ -40,6 +40,35 @@ km.
 
 ---
 
+## Mon 9 Nov 2026
+
+- **Status against the semester plan (Brian asked):** everything through
+  week 12 is done.
+  - Gate 2 (weeks 10-11): all four arms are in Table I (#95); a spread per
+    segment was tested on all four and doesn't help (#98); learned Tobler
+    has its own Student-t spread (#121). All five checks passed; Brian
+    presented on 6 Nov.
+  - T4 (week 12): the out-and-back pairs and Fig. 2, done 12 Oct.
+  - Left: the full draft (week 13, Fri 20 Nov), then figures, polish and
+    per-hiker effects (week 14).
+- **Extra experiments brainstormed** (Brian asked whether to keep
+  improving): (1) terrain from coarser elevation (10 m, 30 m); (2)
+  Naismith's rule as a whole-hike baseline; (3) the Alps as a test region
+  on another continent; (4) a per-hiker model; (5) a network on the raw
+  elevation profile.
+- **Claude's recommendation (Brian decides):** finish the paper and add
+  only (1).
+  - Claude runs it on the cluster while Brian rewrites, with aspect and
+    curvature (the plan's two untested terrain measures) in the same run.
+  - It becomes one sentence in Robustness if it's clean by Fri 20 Nov;
+    otherwise it goes into the final report.
+  - (4) is for the CSE 5999 final report after 20 Nov, if Brian wants it;
+    (3) and (5) wait until after submission; (2) is skipped.
+- Brian's read-through comments are still not in the guide (checked again
+  today).
+- **Next:** Brian's call on the recommendation. Tue 10 Nov: the 2027 kit.
+  Wed 11 Nov: Brian rewrites Data.
+
 ## Sun 8 Nov 2026
 
 - **Paper in the official IGARSS template (#129)**, two days early at
