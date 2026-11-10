@@ -86,8 +86,11 @@ km.
   matching, stops, outings, sparse traces, travel mode). At his request, a
   scheduled task quizzes him on map matching and sparse traces at 9 am on
   Wed 11 Nov, before he writes.
-- **Next:** Wed 11 Nov: the quiz, then Brian rewrites Data. Keep checking
-  the portal for the kit (ask Brian before the download).
+- **Kit check is now daily** (Brian, 10 Nov): the scheduled task
+  `igarss-2027-kit-check` checks the portal at about 9:08 every morning
+  until the kit is out. It downloads nothing; when it reports the kit,
+  turn it off and ask Brian before the download.
+- **Next:** Wed 11 Nov: the quiz, then Brian rewrites Data.
 
 ## Mon 9 Nov 2026
 
