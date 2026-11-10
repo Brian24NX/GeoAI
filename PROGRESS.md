@@ -75,12 +75,19 @@ km.
     still not online. Last year's addresses (`/papers/paper_kit.php`, the
     LaTeX and Word zips) give 404. The Important Dates page says the
     submission system goes online 10 Nov.
+  - Checked at 09:00 CST (scheduled task) and 16:36 CST: still not
+    online. "Submit a Paper" is still greyed out ("Opens November"), and
+    last year's kit and template addresses still give 404.
   - Other dates there: Student Paper Competition and **travel support
     application deadlines also 11 Jan 2027**; acceptance 12 Mar;
     travel support decision 19 Mar; accepted-paper upload 30 Apr; the
     conference is 11-16 Jul 2027.
-- **Next:** check the portal again later today for the kit (ask Brian
-  before the download). Wed 11 Nov: Brian rewrites Data.
+- **Brian read the model answers** to the Data warm-up quiz (sources, map
+  matching, stops, outings, sparse traces, travel mode). At his request, a
+  scheduled task quizzes him on map matching and sparse traces at 9 am on
+  Wed 11 Nov, before he writes.
+- **Next:** Wed 11 Nov: the quiz, then Brian rewrites Data. Keep checking
+  the portal for the kit (ask Brian before the download).
 
 ## Mon 9 Nov 2026
 
