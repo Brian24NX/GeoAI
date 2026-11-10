@@ -90,6 +90,16 @@ km.
   `igarss-2027-kit-check` checks the portal at about 9:08 every morning
   until the kit is out. It downloads nothing; when it reports the kit,
   turn it off and ask Brian before the download.
+- **Danni answered the author note** (Brian sent it in the Geo AI channel
+  on 9 Nov; her reply came 10 Nov, 13:36): she is "Danielle Beaulieu" in
+  her author profiles, Prof. Jacobs goes on the paper, her WashU email is
+  fine, and no special acknowledgment is needed. `main.tex` now lists
+  Brian Zhou, Danielle Beaulieu, Tianyi Gao and Nathan Jacobs in one
+  shared WashU author block, and the Acknowledgment stays the AI-use
+  disclosure (#133). Still 5 pages, and the text sits slightly higher.
+  Still open: the authors' emails (Tianyi's and Prof. Jacobs'), and
+  whether to enter the Student Paper Competition or apply for travel
+  support (both due 11 Jan).
 - **Next:** Wed 11 Nov: the quiz, then Brian rewrites Data.
 
 ## Mon 9 Nov 2026
