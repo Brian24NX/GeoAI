@@ -71,8 +71,16 @@ km.
   and the paper kit and templates will be on it, but its "Submit a Paper"
   button still says "Opens November". It confirms the deadline (11 Jan
   2027) and 4 pages; it doesn't say whether references count.
-- **Next:** check the portal again for the kit (ask Brian before the
-  download). Wed 11 Nov: Brian rewrites Data.
+  - Checked again at 00:24 CST (06:24 in Reykjavik), at Brian's request:
+    still not online. Last year's addresses (`/papers/paper_kit.php`, the
+    LaTeX and Word zips) give 404. The Important Dates page says the
+    submission system goes online 10 Nov.
+  - Other dates there: Student Paper Competition and **travel support
+    application deadlines also 11 Jan 2027**; acceptance 12 Mar;
+    travel support decision 19 Mar; accepted-paper upload 30 Apr; the
+    conference is 11-16 Jul 2027.
+- **Next:** check the portal again later today for the kit (ask Brian
+  before the download). Wed 11 Nov: Brian rewrites Data.
 
 ## Mon 9 Nov 2026
 
