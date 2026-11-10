@@ -28,22 +28,35 @@ trail bed:
                       100 m): < 0 convex (ridges, spurs), > 0 concave
                       (valleys, hollows)
 
+Real 30 m data (--source cop30, decision #132): the Copernicus DEM GLO-30
+tiles in cache/cop30/ (cluster/cop30_download.sh; 1 arc-second, ~31 m
+north-south and ~22-26 m east-west here), read the same way with the same
+1/3-pixel smoothing as the 30 m blocks: slope_cop30, pitch_max_cop30, ...,
+cross_slope_cop30. Copernicus is a radar surface model, so under trees it
+sees partly the canopy. Two diagnostics (not features): dz_mean_cop30 and
+dz_sd_cop30, the mean and SD along the path of Copernicus minus the 5 m
+USGS grid (the datum offset, under 1 m here, plus canopy and radar error).
+
 Check: --check <region> recomputes the 5 m measures with this code and
 compares them with data/t2/terrain5m_<region>.parquet (they must match),
 and this code's 5 m slope with T1's slope column.
 
 Output: data/t2/terrain10m_<region>.parquet, terrain30m_<region>.parquet,
-        aspcurv5m_<region>.parquet (segment_id + columns)
-Run:    python t2_terrain_coarse.py --region <key> ...  |  --all
-        [--workers 8]  |  --check <region>
+        aspcurv5m_<region>.parquet; with --source cop30,
+        terraincop30_<region>.parquet (segment_id + columns)
+Run:    python -I t2_terrain_coarse.py --region <key> ...  |  --all
+        [--workers 8] [--source cop30]  |  --check <region>
+        (-I: the downloaded tiles are data; nothing next to them is imported)
 """
 
 import argparse
 import json
 import logging
 import math
+import sys
 import warnings
 from collections import OrderedDict
+from functools import partial
 from multiprocessing import Pool
 from pathlib import Path
 
@@ -53,10 +66,12 @@ import tifffile
 from pyproj import Transformer
 from scipy.ndimage import gaussian_filter, map_coordinates
 
-import regions
-from t2_terrain1m import parse, profile_metrics, resample
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # our modules (-I)
+import regions  # noqa: E402
+from t2_terrain1m import parse, profile_metrics, resample  # noqa: E402
 
 LAYERS = Path("cache/layers")
+COP = Path("cache/cop30")
 SEG = Path("data/t1_all/segments_L50.parquet")
 OUT = Path("data/t2")
 RES = {10: 2, 30: 6}       # target resolution (m): block size in 5 m pixels
@@ -120,16 +135,18 @@ class Pieces:
         px = (e["xmax"] - e["xmin"]) / cols * 111_320 * math.cos(
             math.radians(lat))                   # m per column
         py = (e["ymax"] - e["ymin"]) / rows * 111_132   # m per row
-        lay = {"shape": (rows, cols), "z5": (z, 1)}
+        lay = {"shape": (rows, cols), "z5m": (z, 1)}
         if self.check:
             gx, gy = gradient(z, px, py, SIGMA_5M)
-            lay.update({"gx5": (gx, 1), "gy5": (gy, 1)})
+            lay.update({"gx5m": (gx, 1), "gy5m": (gy, 1)})
+        elif self.check is None:              # only the elevation itself
+            pass
         else:
             for r, f in RES.items():
                 zc = block_mean(z, f)
                 gx, gy = gradient(zc, px * f, py * f, SIGMA_5M / f)
-                lay.update({f"z{r}": (zc, f), f"gx{r}": (gx, f),
-                            f"gy{r}": (gy, f)})
+                lay.update({f"z{r}m": (zc, f), f"gx{r}m": (gx, f),
+                            f"gy{r}m": (gy, f)})
             hx, hy = gradient(z, px, py, HILL_SIGMA_5M)
             lap = (np.gradient(hx, axis=1) / px
                    - np.gradient(hy, axis=0) / py)   # d/dx east + d/dy north
@@ -156,28 +173,78 @@ class Pieces:
         return out
 
 
-def profile(pieces, plon, plat, x, y, L, r):
-    """The along-path measures from the resolution-r layers."""
-    z = pieces.sample(plon, plat, f"z{r}")
+class CopTiles(Pieces):
+    """The Copernicus GLO-30 tiles (1 x 1 degree, geographic, row 0
+    north), with the same sampling as the 5 m pieces."""
+
+    def __init__(self):
+        self.files = sorted(COP.glob("Copernicus_DSM_COG_10_*_DEM.tif"))
+        self.ext = [self.extent(f) for f in self.files]
+        self.cache = OrderedDict()
+
+    @staticmethod
+    def extent(f):
+        """Pixel-edge extent from the GeoTIFF tags."""
+        with tifffile.TiffFile(f) as tif:
+            page = tif.pages[0]
+            sx, sy = page.tags["ModelPixelScaleTag"].value[:2]
+            x0, y0 = page.tags["ModelTiepointTag"].value[3:5]
+            rows, cols = page.shape
+            keys = page.tags["GeoKeyDirectoryTag"].value
+        point = any(keys[i] == 1025 and keys[i + 3] == 2     # PixelIsPoint
+                    for i in range(4, len(keys), 4))
+        if point:
+            x0, y0 = x0 - sx / 2, y0 + sy / 2
+        return {"xmin": x0, "xmax": x0 + cols * sx, "ymin": y0 - rows * sy,
+                "ymax": y0}
+
+    def get(self, i):
+        if i in self.cache:
+            self.cache.move_to_end(i)
+            return self.cache[i]
+        import rasterio   # the tiles use DEFLATE with a floating-point
+        # predictor, which tifffile cannot decode without imagecodecs
+        with rasterio.open(self.files[i]) as src:
+            z = src.read(1).astype(np.float64)
+        z[z < -1000] = np.nan
+        e = self.ext[i]
+        rows, cols = z.shape
+        lat = (e["ymin"] + e["ymax"]) / 2
+        px = (e["xmax"] - e["xmin"]) / cols * 111_320 * math.cos(
+            math.radians(lat))
+        py = (e["ymax"] - e["ymin"]) / rows * 111_132
+        gx, gy = gradient(z, px, py, SIGMA_5M / 6)    # as the 30 m blocks
+        lay = {"shape": (rows, cols), "zcop30": (z, 1), "gxcop30": (gx, 1),
+               "gycop30": (gy, 1)}
+        self.cache[i] = lay
+        if len(self.cache) > CACHE_PIECES:
+            self.cache.popitem(last=False)
+        return lay
+
+
+def profile(pieces, plon, plat, x, y, L, tag):
+    """The along-path measures from the layers named by `tag` (5m, 10m,
+    30m, cop30), which is also the column suffix."""
+    z = pieces.sample(plon, plat, f"z{tag}")
     if np.isfinite(z).mean() < MIN_COVER:
         return {}
     zz = pd.Series(z).interpolate(limit_direction="both").to_numpy()
     pm = profile_metrics(zz, L)
-    row = {("slope" if k == "slope_1m" else k) + f"_{r}m": v
+    row = {("slope" if k == "slope_1m" else k) + f"_{tag}": v
            for k, v in pm.items()}
-    gx = pieces.sample(plon, plat, f"gx{r}")
-    gy = pieces.sample(plon, plat, f"gy{r}")
+    gx = pieces.sample(plon, plat, f"gx{tag}")
+    gy = pieces.sample(plon, plat, f"gy{tag}")
     tx, ty = np.gradient(x), np.gradient(y)
     norm = np.hypot(tx, ty)
     norm[norm == 0] = np.nan
-    row[f"cross_slope_{r}m"] = float(np.nanmean(np.abs(
+    row[f"cross_slope_{tag}"] = float(np.nanmean(np.abs(
         gx * (-ty / norm) + gy * (tx / norm))))
     return row
 
 
 def hillside(pieces, plon, plat):
     """Aspect and curvature along the path (5 m grid, 25 m smoothing)."""
-    if np.isfinite(pieces.sample(plon, plat, "z5")).mean() < MIN_COVER:
+    if np.isfinite(pieces.sample(plon, plat, "z5m")).mean() < MIN_COVER:
         return {}
     hx = pieces.sample(plon, plat, "hx")
     hy = pieces.sample(plon, plat, "hy")
@@ -188,7 +255,7 @@ def hillside(pieces, plon, plat):
                              * 100)}
 
 
-def run(key, check=False):
+def run(key, check=False, source="usgs5m"):
     epsg = regions.utm_epsg(key)
     seg = pd.read_parquet(SEG, columns=["region", "analysis_walk",
                                         "segment_id", "geometry_wkt",
@@ -197,7 +264,10 @@ def run(key, check=False):
     seg = seg[seg.analysis_walk].reset_index(drop=True)
     to_utm = Transformer.from_crs(4326, epsg, always_xy=True)
     to_geo = Transformer.from_crs(epsg, 4326, always_xy=True)
-    pieces = Pieces(key, check)
+    if source == "cop30":
+        pieces, usgs = CopTiles(), Pieces(key, check=None)
+    else:
+        pieces = Pieces(key, check)
     # visit segments piece by piece so each grid is loaded about once
     owner = np.full(len(seg), len(pieces.ext))
     for i, e in enumerate(pieces.ext):
@@ -205,9 +275,14 @@ def run(key, check=False):
              & (seg.lon0 <= e["xmax"]) & (seg.lat0 >= e["ymin"])
              & (seg.lat0 <= e["ymax"])).to_numpy()
         owner[m] = i
-    cols = ({"check": [f"{c}_5m" for c in PROFILE] + ["slope_t1"]} if check
-            else {**{f"terrain{r}m": [f"{c}_{r}m" for c in PROFILE]
-                     for r in RES}, "aspcurv5m": HILL})
+    if check:
+        cols = {"check": [f"{c}_5m" for c in PROFILE] + ["slope_t1"]}
+    elif source == "cop30":
+        cols = {"terraincop30": [f"{c}_cop30" for c in PROFILE]
+                + ["dz_mean_cop30", "dz_sd_cop30"]}
+    else:
+        cols = {**{f"terrain{r}m": [f"{c}_{r}m" for c in PROFILE]
+                   for r in RES}, "aspcurv5m": HILL}
     out = {p: [] for p in cols}
     for n, i in enumerate(np.argsort(owner, kind="stable")):
         lon, lat = parse(seg.geometry_wkt.iat[i])
@@ -218,12 +293,21 @@ def run(key, check=False):
             plon, plat = to_geo.transform(x, y)
             plon, plat = np.asarray(plon), np.asarray(plat)
             if check:
-                rows["check"].update(profile(pieces, plon, plat, x, y, L, 5))
+                rows["check"].update(profile(pieces, plon, plat, x, y, L,
+                                             "5m"))
                 rows["check"]["slope_t1"] = seg.slope.iat[i]
+            elif source == "cop30":
+                row = rows["terraincop30"]
+                row.update(profile(pieces, plon, plat, x, y, L, "cop30"))
+                dz = (pieces.sample(plon, plat, "zcop30")
+                      - usgs.sample(plon, plat, "z5m"))
+                if np.isfinite(dz).mean() >= MIN_COVER:
+                    row["dz_mean_cop30"] = float(np.nanmean(dz))
+                    row["dz_sd_cop30"] = float(np.nanstd(dz))
             else:
                 for r in RES:
                     rows[f"terrain{r}m"].update(
-                        profile(pieces, plon, plat, x, y, L, r))
+                        profile(pieces, plon, plat, x, y, L, f"{r}m"))
                 rows["aspcurv5m"].update(hillside(pieces, plon, plat))
         for p in cols:
             out[p].append(rows[p])
@@ -268,6 +352,10 @@ def main():
     ap.add_argument("--region", nargs="*", default=[])
     ap.add_argument("--all", action="store_true")
     ap.add_argument("--workers", type=int, default=1)
+    ap.add_argument("--source", choices=["usgs5m", "cop30"], default="usgs5m",
+                    help="usgs5m: block averages of the 5 m grids (10 m, "
+                         "30 m) plus aspect and curvature; cop30: the "
+                         "Copernicus GLO-30 tiles")
     ap.add_argument("--check", metavar="REGION",
                     help="compare this code at 5 m with terrain5m_<REGION>")
     a = ap.parse_args()
@@ -278,13 +366,14 @@ def main():
     if a.all:
         built = set(pd.read_parquet(SEG, columns=["region"]).region)
         keys = [k for k in regions.CANDIDATES if k in built]
+    job = partial(run, source=a.source)
     if a.workers > 1:
         with Pool(a.workers) as pool:
-            for msg in pool.imap_unordered(run, keys):
+            for msg in pool.imap_unordered(job, keys):
                 print(msg, flush=True)
     else:
         for k in keys:
-            print(run(k), flush=True)
+            print(job(k), flush=True)
 
 
 if __name__ == "__main__":

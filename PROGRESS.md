@@ -90,9 +90,20 @@ km.
   - Caveat: averaging changes only the resolution. A real 30 m DEM
     (Copernicus GLO-30: 40 tiles, 1.6 GB) also has radar and canopy
     errors.
-- **Next:** Brian decides on one Robustness sentence and on the
-  real-DEM check. Tue 10 Nov: the 2027 kit. Wed 11 Nov: Brian rewrites
-  Data.
+- **Brian said yes to both:** the 30 m sentence goes in Robustness (he
+  writes it; a marker is in `results.tex`), and the real-DEM check runs.
+- **Real 30 m DEM (#132):** Copernicus GLO-30, 40 tiles, 1.6 GB, from the
+  public AWS bucket to `cache/cop30/` on the cluster (0 failures).
+  - Read with rasterio, because tifffile can't decode the tiles'
+    compression. The tile extents check out against rasterio's.
+  - Green Mountains test: along trails Copernicus sits about 8 m above
+    the lidar ground (the forest canopy); its slope correlates 0.956
+    with ours (30 m averages: 0.984).
+  - Reference ready in `paper/refs.bib` (`copernicusdem`,
+    doi:10.5270/ESA-c5d3d65); a test build formats it correctly.
+  - Full run on the cluster (Slurm 373143).
+- **Next:** the Copernicus results. Tue 10 Nov: the 2027 kit. Wed 11 Nov:
+  Brian rewrites Data.
 
 ## Sun 8 Nov 2026
 

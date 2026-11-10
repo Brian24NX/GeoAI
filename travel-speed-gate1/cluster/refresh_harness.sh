@@ -16,6 +16,7 @@ LS=$(ls data/t2/lidarstrata_*.parquet 2>/dev/null)  # t2_lidarveg.py --strata
 T10=$(ls data/t2/terrain10m_*.parquet 2>/dev/null)  # t2_terrain_coarse.py (#131)
 T30=$(ls data/t2/terrain30m_*.parquet 2>/dev/null)
 AC=$(ls data/t2/aspcurv5m_*.parquet 2>/dev/null)
+TC=$(ls data/t2/terraincop30_*.parquet 2>/dev/null)  # --source cop30 (#132)
 TER="pitch_max pitch_sd relief_sd hidden_grade cross_slope"
 feat() { for c in $TER; do printf "%s_%s " $c $1; done; }
 LVR="wm adk catskills greenmtn shenandoah smokies pisgah frontrange wasatch cascades gorge olympic bayarea sangabriel tahoe"
@@ -83,6 +84,11 @@ case "$1" in
                  --out results/t3_harness_coarse30_slope5m ;;
   aspcurv)    $H --covariates $T5 $T1 $AC \
                  --out results/t3_harness_terrain15m_aspcurv ;;
+  # #132: the real 30 m DEM (Copernicus GLO-30), slope from it too
+  cop30)      $H --covariates $TC --features $(feat cop30) \
+                 --slope-from slope_cop30 --out results/t3_harness_cop30 ;;
+  cop30s5)    $H --covariates $TC --features $(feat cop30) \
+                 --out results/t3_harness_cop30_slope5m ;;
   *) echo "unknown run $1"; exit 2 ;;
 esac >> "logs/refresh_harness_$1.log" 2>&1 \
   && say "done  harness $1" || { say "FAILED harness $1"; exit 1; }

@@ -10,6 +10,8 @@ grid, except "30 m terrain, 5 m slope"):
   10 m         10 m terrain and slope              t3_harness_coarse10
   30 m         30 m terrain and slope              t3_harness_coarse30
   30 m / 5 m   30 m terrain, T1's 5 m slope        t3_harness_coarse30_slope5m
+  Copernicus   the real 30 m DEM (GLO-30, #132)    t3_harness_cop30
+               ... its terrain on T1's 5 m slope   t3_harness_cop30_slope5m
 Columns: CRPS skill (%) vs that run's own slope curve, additive / trees, for
 new hikes, new 10 km squares and unseen regions (95% interval over regions);
 tags on the same slope; terrain minus tags (95% interval, additive); held-
@@ -33,7 +35,9 @@ RUNS = {"paper (1 m + 5 m)": "t3_harness_terrain15m",
         "5 m": "t3_harness_terrain5m",
         "10 m": "t3_harness_coarse10",
         "30 m": "t3_harness_coarse30",
-        "30 m terrain, 5 m slope": "t3_harness_coarse30_slope5m"}
+        "30 m terrain, 5 m slope": "t3_harness_coarse30_slope5m",
+        "Copernicus 30 m": "t3_harness_cop30",
+        "Copernicus terrain, 5 m slope": "t3_harness_cop30_slope5m"}
 ASPCURV = {"paper terrain": "t3_harness_terrain15m",
            "+ aspect, curvature": "t3_harness_terrain15m_aspcurv"}
 SPLITS = {"outing5": "new hikes", "block5": "new 10 km", "loro": "unseen"}
