@@ -60,13 +60,13 @@ km.
 - **What it means:** terrain needs accurate bare-earth elevation, not fine
   resolution. 10 m loses nothing and 30 m averages keep most of the gain,
   but the global radar DEM loses the edge over tags.
-- **Paper:** the Robustness sentence (decided) uses the averaged numbers;
-  the Copernicus result is suggested as a Limits clause (Brian decides).
+- **Paper:** the Robustness sentence (decided) uses the averaged numbers.
+  Brian said yes (10 Nov) to the Copernicus result as one Limits clause.
+  He writes both: Results on Fri 13 / Mon 16, Discussion on Tue 17.
   Markers are in `results.tex` and `discussion.tex`. The rewrite guide has
   a new row in "New result", a new rewrite item and the numbers in the
   Robustness row.
-- **Next:** today, the 2027 kit, and Brian's call on the Limits clause. Wed
-  11 Nov: Brian rewrites Data.
+- **Next:** today, the 2027 kit. Wed 11 Nov: Brian rewrites Data.
 
 ## Mon 9 Nov 2026
 
