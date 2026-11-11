@@ -105,9 +105,20 @@ km.
   Tianyi the current PDF** (draft 0 in the template, 5 pages; the
   `paper/main.pdf` of commit 677064a), saying Claude drafted the text and
   that the rewritten draft comes Fri 20 Nov. Page references in Tianyi's
-  feedback refer to that version (`git show 677064a:paper/main.pdf`). Still
-  open: Danni's exact WashU address and Prof. Jacobs' email, and Danni's
-  answers.
+  feedback refer to that version (`git show 677064a:paper/main.pdf`).
+- **Brian's answers (10 Nov, evening):**
+  - Prof. Jacobs gets the draft on Fri 20 Nov, with Danni and Tianyi (the
+    rewrite guide says so now).
+  - All four email addresses are in. They stay out of the repo and go into
+    `main.tex` at the final build in January (#133).
+  - No travel support: Brian won't travel outside the US (#134). IGARSS
+    2027 is in Reykjavík, so by last year's rules (2027's aren't posted)
+    there is no Student Paper Competition entry (finalists must present in
+    person), and a co-author or a proxy must present the paper there,
+    presenting the slides or playing a recorded talk. A paper nobody
+    presents is a "no show" and stays out of IEEE Xplore. An author must
+    also register by 30 Apr. Open: who presents (ask Danni; acceptance is
+    12 Mar).
 - **Next:** Wed 11 Nov: the quiz, then Brian rewrites Data.
 
 ## Mon 9 Nov 2026

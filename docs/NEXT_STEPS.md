@@ -351,7 +351,8 @@ held-out regions.
 - portal opens **10 Nov 2026**; notification 12 Mar 2027;
 - 4 pages, IEEE two-column. The 2026 kit allowed 4 pages *excluding
   references*; the 2027 kit isn't posted yet.
-- Student papers needed an advisor attestation in 2026.
+- Student papers needed an advisor attestation in 2026. Not entering
+  (#134): Brian won't travel outside the US, and finalists present in person.
 
 **Best-fit themes:** SP.6 "Datasets, Benchmarks, and Evaluation
 Methodologies" or SP.5 "Foundation Models and Embeddings for EO"
@@ -486,7 +487,7 @@ of the hands-on work; the draft is the safety net.
 | 13 | 16–22 Nov | **Full draft** (plan milestone): Brian's rewritten version with the new results |
 | 14 | 23–29 Nov | Figures, polish, per-hiker effects if they fit; Thanksgiving 26 Nov |
 | 15–16 | 30 Nov–13 Dec | Mentor + Prof. Jacobs review; CSE 5999 final report (format per Canvas) |
-| break | to 11 Jan | Revision; submit by ~8 Jan (deadline 11 Jan) with the Student Paper Competition attestation |
+| break | to 11 Jan | Revision; submit by ~8 Jan (deadline 11 Jan); no competition entry (#134) |
 
 Plan items: NAIP imagery ✅ (#125–#128); understory in several height
 layers (Campbell 2018: ~0.5–1.5, 1.5–2.5, 2.5–3.5 m) ✅ (#119); aspect

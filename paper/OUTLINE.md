@@ -14,8 +14,10 @@ is not published). Portal opens 10 Nov; papers, the competition and travel
 support all due 11 Jan 2027; decisions 12 Mar; final paper and
 registration 30 Apr (call for papers checked 21 Oct). The 2026 paper kit
 (checked 8 Nov) asks for 800 words to 4 pages including figures and does
-not count references; the 2027 kit comes with the portal on 10 Nov. Competition: needed an
-advisor attestation in past years. Best-fit themes: SP.6 (Datasets,
+not count references; the 2027 kit comes with the portal on 10 Nov. No competition entry or travel
+support (#134, 10 Nov): Brian won't travel outside the US, competition
+finalists must present in person, and someone else (a co-author or a proxy)
+must present the paper in Reykjavík. Best-fit themes: SP.6 (Datasets,
 Benchmarks, and Evaluation Methodologies for Earth Observation) or SP.5
 (Foundation Models and Embeddings for EO); L.7 (Land Surveying, Geodesy and
 Topography) is a fallback.
