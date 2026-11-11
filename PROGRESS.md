@@ -101,7 +101,11 @@ km.
   20 Nov draft, and whether to enter the Student Paper Competition or apply
   for travel support (both due 11 Jan). He also asked Tianyi, who sent an
   email address for the author block and asked whether there is a draft
-  to look at. Email addresses stay out of the repo for now. Still
+  to look at. Email addresses stay out of the repo for now. **Brian sent
+  Tianyi the current PDF** (draft 0 in the template, 5 pages; the
+  `paper/main.pdf` of commit 677064a), saying Claude drafted the text and
+  that the rewritten draft comes Fri 20 Nov. Page references in Tianyi's
+  feedback refer to that version (`git show 677064a:paper/main.pdf`). Still
   open: Danni's exact WashU address and Prof. Jacobs' email, and Danni's
   answers.
 - **Next:** Wed 11 Nov: the quiz, then Brian rewrites Data.
