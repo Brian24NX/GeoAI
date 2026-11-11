@@ -97,9 +97,13 @@ km.
   Brian Zhou, Danielle Beaulieu, Tianyi Gao and Nathan Jacobs in one
   shared WashU author block, and the Acknowledgment stays the AI-use
   disclosure (#133). Still 5 pages, and the text sits slightly higher.
-  Still open: the authors' emails (Tianyi's and Prof. Jacobs'), and
-  whether to enter the Student Paper Competition or apply for travel
-  support (both due 11 Jan).
+  Brian then asked Danni in the thread whether Prof. Jacobs should get the
+  20 Nov draft, and whether to enter the Student Paper Competition or apply
+  for travel support (both due 11 Jan). He also asked Tianyi, who sent an
+  email address for the author block and asked whether there is a draft
+  to look at. Email addresses stay out of the repo for now. Still
+  open: Danni's exact WashU address and Prof. Jacobs' email, and Danni's
+  answers.
 - **Next:** Wed 11 Nov: the quiz, then Brian rewrites Data.
 
 ## Mon 9 Nov 2026
