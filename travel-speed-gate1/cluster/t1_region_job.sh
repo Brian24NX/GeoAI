@@ -29,7 +29,9 @@ else
   say "BUILD $KEY: start (cluster, $SLURM_CPUS_PER_TASK CPUs)"
   $PY -u t1_build_dataset.py --region "$KEY" --workers "${SLURM_CPUS_PER_TASK:-8}" >> "$LOG" 2>&1 \
     || { say "BUILD $KEY: build FAILED, see $LOG"; exit 1; }
-  BUILT=$(ls -d data/t1_*/ | grep -v -e sample -e archive | while read d; do [ -f "$d/segments_L50.parquet" ] && echo "${d%/}"; done)
+  # the built regions only (not data/t1_all, the combined copy: its traces
+  # would count twice; harmless for the median/MAD fit, but wrong)
+  BUILT=$($PY -c "import regions; print(' '.join(str(regions.data_dir(k)) for k in regions.CANDIDATES if (regions.data_dir(k) / 'segments_L50.parquet').exists()))")
   $PY t1_modes.py $BUILT >> "$LOG" 2>&1 \
     && $PY -u t1_variants.py --region "$KEY" >> "$LOG" 2>&1 \
     && for d in $BUILT; do k=$($PY -c "import regions; print(regions.key_of('$(basename $d)') or '')"); [ -n "$k" ] && $PY t1_finalize.py --region "$k" >> "$LOG" 2>&1; done \

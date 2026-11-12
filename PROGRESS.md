@@ -7,7 +7,8 @@ next. Details and reasons for every decision: `DECISIONS_LOG.md`.
 
 **Stage: T1 complete; T2 tier 1 done; T3 harness running on everything.**
 - **T1:** 17 regions, 16 from full OSM downloads plus the lab crawl, and the
-  Bay Area from the lab crawl only.
+  Bay Area from the lab crawl only. (11 Nov, #135: the Bay Area's full
+  download is running; then all 17 come from the same sources.)
 - **T2:** elevation terrain at 5 m and 1 m, vegetation, satellite
   embeddings.
 - **Lead result:** terrain from elevation data beats OSM tags in unseen
@@ -39,6 +40,47 @@ set: 290,640 segments of 50 m, 1,992 outings, 4,702 moving hours, 14,532
 km.
 
 ---
+
+## Wed 11 Nov 2026
+
+- **Danni on Slack (08:36):** Fig 1 still shows the orange dot (the Bay
+  Area, "lab only"). Her points: no notion of "lab only" vs "full
+  download"; find out exactly what differs and make the regions the same;
+  ask Jonathan Lin about anything his crawl is missing; if the API times
+  out, improve the script.
+- **What was different (#135):** the Bay Area was built from the lab crawl
+  alone, so it had no anonymous uploads (OSM never lists them; only the API
+  has them), nothing outside 2016-2022, and none of the uploads the crawl
+  has no file for. Cause: the API gives up after 30 s on the Bay Area's
+  0.25-degree tiles (freeways), even on page 0, and the October queue
+  skipped the region instead of trying smaller boxes. Smaller boxes answer
+  (Marin probe: 0.06 deg in 2.7 s, 0.12 deg in 9.7 s).
+- **The crawl's own gaps** (all regions): no files for the 2008-2015 upload
+  lists (1,031,004 uploads), none for ~15% of 2016-19 (57,291) and ~25% of
+  2020-22 (395,646), nothing after 2022. Draft message to Jonathan written;
+  Brian sends it.
+- **Fix:** `t1_download.py` splits a box the API can't answer into
+  quarters, again if needed, down to ~1 km (`cache/<region>/splits.json`);
+  the builder reads the same boxes. Tested offline against a fake API.
+  The builder's rejoining of anonymous pieces now also handles a recording
+  that leaves a box and comes back: on the October White Mountains pages,
+  147 -> 125 anonymous traces. So every region gets rebuilt by the same
+  code.
+- **Running on the cluster** (Brian's OK; stop and ask past 10 GB):
+  - job 376724: OSM download for the Bay Area, then the 4 tiles the same
+    timeout cut short (San Gabriels, Shenandoah, Front Range, Cascades);
+    each finished region submits its own build. Round 1: the Bay Area's
+    southwest tile came whole (97 pages); the other 8 tiles timed out on
+    page 0 and were split.
+  - job 376731: rebuild of the 12 other regions. October's builds are
+    copied to `data/archive/t1_v1_2026-10`.
+  - then: `cluster/finish_rebuild_job.sh` (modes, variants, data cards),
+    `refresh_all.sh`, the harness runs, new numbers (T1 v1.1), paper and
+    guide updated, frozen again.
+- **Fig 1:** one color and a size key instead of the source colors.
+- **Brian:** reply to Danni (drafted); message Jonathan; in today's Data
+  rewrite, drop the Bay Area "crawl only" sentence and the color sentence
+  of the Fig 1 caption.
 
 ## Tue 10 Nov 2026
 

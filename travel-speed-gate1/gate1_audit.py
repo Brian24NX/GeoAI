@@ -96,6 +96,7 @@ WINDOW_STOP_S = 60.0       # draft stop rule (plan section 8): any stretch of
 WINDOW_STOP_M = 10.0       #   60+ s that ends < 10 m from where it started
 MATCH_RADIUS_M = 25.0      # a GPS point is "on" a way if within 25 m of it
 MIN_TRAIL_MIN = 5.0        # a "trail trace" has 5+ moving minutes on trails
+DOWNLOADED_BYTES = 0       # bytes fetched by this process (size cap)
 CONTINUE_S = 600.0         # join trackable pieces split by a page break if
                            #   the second starts within 10 min of the first
 
@@ -156,6 +157,10 @@ REGIONS = {
 
 
 # ----------------------------------------------------------- download + cache
+class _Done(Exception):
+    """download_box: the usable part is all that was asked for."""
+
+
 class DownloadError(Exception):
     pass
 
@@ -169,7 +174,11 @@ def check_box(box):
 
 
 def get_page(cache_dir, region, box, page, offline):
-    """Return (gpx_text, source). Reads from disk if already downloaded."""
+    """Return (gpx_text, source). Reads from disk if already downloaded.
+
+    source is "timeout" when the server gave up on the query (too many
+    points in the box, or paging too deep: "503 first byte timeout" after
+    30 s); a smaller box answers. Other failures are "error"."""
     name, west, south, east, north = box
     path = Path(cache_dir) / region / f"{name}_p{page:03d}.gpx"
     if path.exists():
@@ -183,6 +192,9 @@ def get_page(cache_dir, region, box, page, offline):
     try:
         resp = requests.get(API_URL, params=params,
                             headers={"User-Agent": USER_AGENT}, timeout=120)
+    except requests.Timeout as err:
+        print(f"    ! timeout on {name} page {page}: {err}")
+        return None, "timeout"
     except requests.RequestException as err:
         print(f"    ! network problem on {name} page {page}: {err}")
         return None, "error"
@@ -192,8 +204,12 @@ def get_page(cache_dir, region, box, page, offline):
     if resp.status_code != 200:
         print(f"    ! HTTP {resp.status_code} on {name} page {page}: "
               f"{resp.text[:150]!r}")
-        return None, "error"
+        timed_out = resp.status_code in (503, 504) and \
+            "timeout" in resp.text[:2000].lower()
+        return None, "timeout" if timed_out else "error"
 
+    global DOWNLOADED_BYTES
+    DOWNLOADED_BYTES += len(resp.content)
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = path.with_suffix(".tmp")
     tmp.write_text(resp.text, encoding="utf-8")
@@ -207,7 +223,7 @@ def page_counts(text):
 
 
 def download_box(cache_dir, region, box, offline=False, max_pages=150,
-                 untimed_sample=6):
+                 untimed_sample=6, count_untimed=True):
     """Download one box.
 
     Returns (texts of the pages with usable points, info, texts of a sample
@@ -226,6 +242,9 @@ def download_box(cache_dir, region, box, offline=False, max_pages=150,
          can be mostly car loggers);
       4. read a few evenly spaced untimed pages, so we can estimate how many
          of the UNusable points are on trails too.
+    count_untimed=False stops after step 1 (no point counts): the quarters
+    of a split tile (t1_download.py), where steps 2-4 would cost ~20 extra
+    pages per box for a Gate 1 statistic nothing downstream uses.
     """
     counts = {}  # page number -> (points, timestamped points)
 
@@ -263,6 +282,10 @@ def download_box(cache_dir, region, box, offline=False, max_pages=150,
             if boundary is not None or end is not None:
                 break
         info["usable_part_complete"] = boundary is not None or end is not None
+        if not count_untimed:
+            if not info["usable_part_complete"]:
+                info["status"] = f"usable part cut at {max_pages} pages"
+            raise _Done
 
         # 2. find the last page: jump ahead, then narrow down
         if end is None:
@@ -320,6 +343,8 @@ def download_box(cache_dir, region, box, offline=False, max_pages=150,
                                    f"untimed page, on pages {late}")
     except DownloadError as err:
         info["status"] = f"stopped: {err}"
+    except _Done:
+        pass
     info["pages_read"] = len(counts)
     info["usable_pages_used"] = len(texts)
     return texts, info, untimed_texts
@@ -597,6 +622,13 @@ def get_ways(cache_dir, region, box, offline=False, say=print):
     path = Path(cache_dir) / region / f"{name}_ways.json"
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))["elements"]
+    # a quarter of a split tile (<tile>_q0 ... _q3, t1_download.py): the
+    # tile's own ways cover it (WayMatcher only counts lengths inside the box)
+    parent = re.sub(r"(_q\d)+$", "", name)
+    if parent != name:
+        ppath = Path(cache_dir) / region / f"{parent}_ways.json"
+        if ppath.exists():
+            return json.loads(ppath.read_text(encoding="utf-8"))["elements"]
     if offline:
         return None
 
@@ -988,8 +1020,9 @@ def audit_region(region, boxes, cache_dir="cache", out_dir="results",
     for box in boxes:
         check_box(box)
         name = box[0]
-        texts, info, untimed_texts = download_box(cache_dir, region, box,
-                                                  offline, max_pages)
+        texts, info, untimed_texts = download_box(
+            cache_dir, region, box, offline, max_pages,
+            count_untimed=not re.search(r"_q\d$", name))
         traces = timed_traces(texts, info)
 
         ways = get_ways(cache_dir, region, box, offline, say) if trails else None

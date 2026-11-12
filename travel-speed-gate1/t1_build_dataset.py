@@ -42,6 +42,7 @@ Run:  python t1_build_dataset.py                    (White Mountains)
 """
 
 import argparse
+import bisect
 import bz2
 import gzip
 import io
@@ -209,8 +210,9 @@ def _trace_id(url):
 
 def collect_traces(region, boxes, bbox, lab_key=None):
     """Every hike once. Returns (list of traces, counts for the data card)."""
+    import t1_download
     by_url, anon, counts = {}, [], defaultdict(int)
-    for box in boxes:
+    for box in t1_download.leaf_boxes(region, boxes):  # tiles or quarters
         texts, info, _ = g.download_box("cache", region, box, offline=True,
                                         max_pages=MAX_PAGES)
         for tr in g.timed_traces(texts, info):
@@ -247,28 +249,7 @@ def collect_traces(region, boxes, bbox, lab_key=None):
             counts["identifiable_tile_pieces"] += 1
         traces.append(rec)
 
-    # stitch anonymous pieces that continue across a tile edge
-    anon.sort(key=lambda r: min(p[2] for s in r["segments"] for p in s))
-    stitched = []
-    for rec in anon:
-        first = min((p for s in rec["segments"] for p in s),
-                    key=lambda p: p[2])
-        joined = False
-        for prev in stitched[-30:]:
-            last = max((p for s in prev["segments"] for p in s),
-                       key=lambda p: p[2])
-            gap = (first[2] - last[2]).total_seconds()
-            if 0 <= gap <= STITCH_S and prev.get("box") != rec["box"] and \
-                    g.haversine_m(last[0], last[1], first[0], first[1]) \
-                    <= STITCH_M:
-                prev["segments"].extend(rec["segments"])
-                prev["box"] = rec["box"]
-                counts["anonymous_pieces_stitched"] += 1
-                joined = True
-                break
-        if not joined:
-            stitched.append(dict(rec, source="tile pieces"))
-    traces += stitched
+    traces += stitch_anonymous(anon, counts)
 
     # lab crawl: original files of public + identifiable traces (2016-2022)
     api_ids = {_trace_id(t["url"]) for t in traces if t["url"]}
@@ -301,6 +282,83 @@ def collect_traces(region, boxes, bbox, lab_key=None):
     counts["named"] = sum(1 for t in unique if t["url"])
     counts["anonymous"] = sum(1 for t in unique if not t["url"])
     return unique, dict(counts)
+
+
+def stitch_anonymous(anon, counts):
+    """Rejoin the pieces of one anonymous recording cut at box edges.
+
+    The API returns an anonymous (trackable) recording as one piece per box,
+    with no id. A recording that leaves a box and comes back gives pieces
+    that interleave in time, so a piece R joins an earlier recording G when
+    their points, merged in time order, read as one recording: every hand-off
+    between R and G is a step into a different box, at most STITCH_S and
+    STITCH_M long, and no two points share a time at different places (one
+    recording is in one place at a time; this also keeps two phones on the
+    same group hike apart). A point on a shared edge is in both boxes: the
+    same point, kept once. Hand-offs at nearly every point mean two phones
+    walking side by side along an edge, not one recording: rejected. Among
+    several candidates, the closest first hand-off wins (meters + seconds,
+    i.e. walking pace), so two phones crossing an edge together stay apart. (11 Nov 2026: small split boxes make interleaving common;
+    the old rule only joined R to G's last point.)"""
+    def points(rec):
+        return sorted(((p[2].timestamp(), p[0], p[1], rec["box"])
+                       for s in rec["segments"] for p in s),
+                      key=lambda q: q[0])
+
+    def fits(gpts, gt, rpts):
+        """Cost of the first hand-off if R's points continue G's (meters
+        + seconds), else None."""
+        t0, t1 = rpts[0][0], rpts[-1][0]
+        i = bisect.bisect_left(gt, t0)
+        if i == 0 or gt[i - 1] < t0 - STITCH_S:
+            return None                      # nothing of G just before R
+        j = bisect.bisect_right(gt, t1)
+        window = gpts[i - 1:j + 1]           # G around R, one point each side
+        merged = sorted([(q, 0) for q in window] + [(q, 1) for q in rpts],
+                        key=lambda x: (x[0][0], x[1]))
+        first, prev, handoffs = None, None, 0
+        for q, src in merged:
+            if prev is not None and src != prev[1]:
+                a, b = prev[0], q
+                if a[0] == b[0]:
+                    if (a[1], a[2]) != (b[1], b[2]):
+                        return None          # two places at one time
+                    continue                 # a shared edge point
+                if a[3] == b[3] or b[0] - a[0] > STITCH_S or \
+                        g.haversine_m(a[1], a[2], b[1], b[2]) > STITCH_M:
+                    return None
+                if first is None:
+                    first = b[0] - a[0] + g.haversine_m(a[1], a[2], b[1], b[2])
+                handoffs += 1
+            prev = (q, src)
+        if handoffs >= 10 and handoffs > len(rpts) / 2:
+            return None                      # alternating: two recordings
+        return first
+
+    anon = sorted(anon, key=lambda r: min(p[2] for s in r["segments"]
+                                          for p in s))
+    groups, active = [], []
+    for rec in anon:
+        rpts = points(rec)
+        t0 = rpts[0][0]
+        active = [gr for gr in active if gr["t"][-1] >= t0 - STITCH_S]
+        best = None
+        for gr in active:
+            cost = fits(gr["pts"], gr["t"], rpts)
+            if cost is not None and (best is None or cost < best[0]):
+                best = (cost, gr)
+        if best:
+            gr = best[1]
+            gr["rec"]["segments"].extend(rec["segments"])
+            gr["pts"] = sorted(gr["pts"] + rpts, key=lambda q: q[0])
+            gr["t"] = [q[0] for q in gr["pts"]]
+            counts["anonymous_pieces_stitched"] += 1
+        else:
+            gr = {"rec": dict(rec, source="tile pieces"), "pts": rpts,
+                  "t": [q[0] for q in rpts]}
+            groups.append(gr)
+            active.append(gr)
+    return [gr["rec"] for gr in groups]
 
 
 def _keys(tr):
@@ -790,6 +848,17 @@ def depth_capped(region):
     return "; ".join(parts)
 
 
+def api_boxes(region, boxes):
+    """How the API pages were fetched: whole tiles, or split boxes."""
+    import t1_download
+    leaves = t1_download.leaf_boxes(region, boxes)
+    if len(leaves) == len(boxes):
+        return f"{len(boxes)} tiles, none split"
+    return (f"{len(boxes)} tiles; where the API timed out, a tile was split "
+            f"into quarters (again if needed, down to "
+            f"{t1_download.SPLIT_MIN_DEG} deg): {len(leaves)} boxes")
+
+
 def osm_dates(region):
     """Date range of the cached Overpass downloads (the OSM snapshot)."""
     fs = list(Path("cache", region).glob("*_ways.json"))
@@ -852,8 +921,9 @@ def write_card(out, region, boxes, counts, summaries,
         f"- local time zone: {W.get('tz', TZ)}",
         f"- OSM ways (trails, tags) from Overpass, downloaded "
         f"{osm_dates(region)}",
-        f"- OSM API depth limit (tiles whose oldest uploads are out of reach; "
-        f"the API times out past ~4.5M points): {depth_capped(region)}",
+        f"- OSM API boxes: {api_boxes(region, boxes)}",
+        f"- OSM API limit (boxes whose oldest uploads stay out of reach even "
+        f"at the smallest split): {depth_capped(region)}",
         f"- traces with impossible dates (before {DATE_OK_FROM}, flagged "
         f"date_suspect): "
         f"{sorted(seg.loc[seg.date_suspect, 'trace_id'].unique())}"

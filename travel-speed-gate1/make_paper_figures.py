@@ -342,8 +342,8 @@ def fig_map():
                                   ascending=False).iterrows():
         w, s_, e, n = regions.CANDIDATES[key][1]
         x, y = to.transform((w + e) / 2, (s_ + n) / 2)
-        col = ORANGE if row.sources == "lab only" else BLUE
-        ax.scatter(x, y, s=8 + 260 * row.walking_hours / hmax, color=col,
+        # one color: every region comes from the same sources (#135)
+        ax.scatter(x, y, s=8 + 260 * row.walking_hours / hmax, color=BLUE,
                    alpha=0.85, edgecolor="white", lw=0.6, zorder=3)
         name, off, ha = LABELS.get(key, (key, (5, 0), "left"))
         ax.annotate(name, (x, y), xytext=off, textcoords="offset points",
@@ -352,11 +352,12 @@ def fig_map():
     ax.set_ylim(*yr)
     ax.set_aspect("equal")
     ax.axis("off")
-    for c, lab in [(BLUE, "full download + lab"), (ORANGE, "lab only")]:
-        ax.scatter([], [], s=25, color=c, label=lab)
-    ax.legend(loc="lower left", frameon=False, fontsize=5.3,
-              title="circle area = walking hours", title_fontsize=5.3,
-              handletextpad=0.2, borderaxespad=0.2)
+    for h in (100, 1000):                         # size key
+        ax.scatter([], [], s=8 + 260 * h / hmax, color=BLUE, alpha=0.85,
+                   edgecolor="white", lw=0.6, label=f"{h:,} h")
+    ax.legend(loc="lower right", ncol=2, frameon=False, fontsize=5.3,
+              title="walking hours", title_fontsize=5.3,
+              handletextpad=0.3, columnspacing=0.9, borderaxespad=0.6)
     # inset: the White Mountains' walking segments by speed
     seg = pd.read_parquet(HERE / "results/fig1_wm_segments.parquet")
     ia = fig.add_axes([0.40, 0.03, 0.24, 0.34])
