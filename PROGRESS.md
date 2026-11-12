@@ -78,6 +78,19 @@ km.
     `refresh_all.sh`, the harness runs, new numbers (T1 v1.1), paper and
     guide updated, frozen again.
 - **Fig 1:** one color and a size key instead of the source colors.
+- **Evening checks:** the 12-region rebuild finished at 21:15 with no
+  failures. New vs October: fewer anonymous fragments (White Mountains
+  147 -> 125 anonymous traces, hiking outings 218 -> 210), but trail
+  segments almost unchanged (-0.1% to +1.6%).
+- **Bay Area download fix (23:00):** a box can time out deep, on the page
+  where its untimed points start (box r0_c1_q1 failed at page 369 of ~370
+  every time), and its pages were then thrown away: 557 of the first 1,432
+  pages. Now a split box's quarters are rebuilt from the pages it already
+  has (the API orders a quarter's points like its parent's), checked
+  against one real page (up to the order of points within one second,
+  which the API doesn't fix), and handled right after the parent. Tested
+  against the fake API; on restart 104 pages were rebuilt instead of
+  downloaded. Job 376847 now (0.96 GB downloaded so far).
 - **Brian:** reply to Danni (drafted); message Jonathan; in today's Data
   rewrite, drop the Bay Area "crawl only" sentence and the color sentence
   of the Fig 1 caption.

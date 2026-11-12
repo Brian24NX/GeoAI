@@ -125,8 +125,12 @@ def fake_get(url, params=None, headers=None, timeout=None):
         timed += [(up, u, p) for p in pts if inside(p[0], p[1])]
     unt = sorted((p for p in untimed if inside(*p)))
     total = len(timed) + len(unt)
-    # the query time grows with the points in the box and the page depth
-    if total > 6000 or (page > 40 and total > 3000):
+    # the query time grows with the points in the box and the page depth;
+    # the page where the untimed points start is the slowest (11 Nov: the
+    # Bay Area's r0_c1_q1 fails there every time)
+    boundary = len(timed) // g.POINTS_PER_PAGE
+    if total > 6000 or (page > 40 and total > 3000) or \
+            (page == boundary and page >= 8 and len(unt) > 120):
         calls["timeouts"] += 1
         if calls["timeouts"] % 7 == 0:             # sometimes a client timeout
             raise requests.ReadTimeout("read timed out")
@@ -175,7 +179,16 @@ for t in regions.tiles(KEY):          # tile ways exist (as on the cluster)
     p.write_text(json.dumps({"elements": []}))
 
 # ---- run the download (pages + summary), as main() does
-d.step_pages(KEY)
+import io, contextlib
+buf = io.StringIO()
+with contextlib.redirect_stdout(buf):
+    d.step_pages(KEY)
+log = buf.getvalue()
+print("\n".join(l for l in log.splitlines() if not l.startswith("    !")))
+rebuilt = sum(int(l.split("pages 0-")[1].split()[0]) + 1
+              for l in log.splitlines() if "rebuilt from its parent" in l)
+print(f"pages rebuilt from parents: {rebuilt}")
+assert rebuilt > 0, "the boundary timeouts should trigger seeding"
 d.step_trackpoints(KEY)
 
 splits = d.load_splits(REGION)
@@ -272,4 +285,37 @@ print("summary boxes:", len(summ["boxes"]), "| statuses:",
       sorted({str(x['status'])[:40] for x in summ["boxes"]}))
 print("data-card line:", b.api_boxes(REGION, boxes))
 print("depth_capped:", b.depth_capped(REGION)[:300])
+# ---- seeding unit checks on a real leaf with several pages
+P = g.POINTS_PER_PAGE
+leaf = max((b for b in leaves if b[0] not in capped),
+           key=lambda b: len(list((Path("cache") / REGION).glob(b[0] + "_p*"))))
+texts = []
+for k in range(1000):
+    f = Path("cache") / REGION / f"{leaf[0]}_p{k:03d}.gpx"
+    if not f.exists():
+        break
+    texts.append(f.read_text())
+full = [t for t in texts if t.count("<trkpt") == P and t.count("<time>") == P]
+pts = d._labelled_points(full)
+# 1. a rebuilt page parses exactly like the real one
+for k in range(len(full)):
+    a = g.parse_gpx(full[k])
+    b = g.parse_gpx(d._render_page(pts[k * P:(k + 1) * P]))
+    assert [(t["url"], t["segments"]) for t in a] == \
+        [(t["url"], t["segments"]) for t in b], f"page {k} differs"
+# 2. seeding a copy of the leaf: right stream -> pages rebuilt, equal to the
+#    real pages; shifted stream -> rejected, nothing rebuilt
+twin = (leaf[0] + "x",) + tuple(leaf[1:])
+fresh = (leaf[0] + "y",) + tuple(leaf[1:])
+sp = {}
+assert d.seed(REGION, fresh, pts[1:], sp) == 0, "a shifted stream must fail"
+assert not (Path("cache") / REGION / f"{fresh[0]}_p000.gpx").exists()
+n_ok = d.seed(REGION, twin, pts, sp)
+assert n_ok == len(full) - 1, (n_ok, len(full))
+for k in range(n_ok):
+    got = (Path("cache") / REGION / f"{twin[0]}_p{k:03d}.gpx").read_text()
+    assert [d._key(x) for x in d._labelled_points([got])] == \
+        [d._key(x) for x in d._labelled_points([full[k]])]
+print(f"seeding checks: {len(full)} real pages of {leaf[0]} rebuilt "
+      f"identically; a shifted parent is rejected")
 print("ALL CHECKS PASSED")

@@ -41,7 +41,10 @@ import json
 import os
 import re
 import time
+import xml.etree.ElementTree as ET
+from itertools import groupby
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 import pandas as pd
 
@@ -59,7 +62,11 @@ RETRY_WAIT_S = 300                       #   files, 5 min apart; the pages
                                          #   step retries network errors
                                          #   the same way
 SPLIT_MIN_DEG = 0.01                     # quarters no smaller than ~1 km
-MAX_ROUNDS = 12                          # page rounds (splits + retries)
+MAX_ROUNDS = 12                          # page rounds (network retries)
+SEED_MIN_PAGE = 4                        # a box that fails this deep seeds
+                                         # its quarters from its own pages
+SEED_MIN_OVERLAP = 0.1                   # share of a page the check page
+                                         # must share with the rebuilt ones
 GPX_DIR = Path("cache/t1_gpx")
 TRACE_URL = "https://www.openstreetmap.org/trace/{}/data"
 CAR_LOGGERS = {"sunnypilot", "dragonpilot", "openpilot", "frogpilot"}
@@ -114,11 +121,12 @@ def quarters(box):
             (f"{name}_q2", w, my, mx, n), (f"{name}_q3", mx, my, e, n)]
 
 
-def leaf_boxes(region, boxes):
+def leaf_boxes(region, boxes, splits=None):
     """The boxes the API pages come from: each tile, or its quarters
     (recursively) where the tile was split (cache/<region>/splits.json).
     Elevation and OSM ways stay per tile."""
-    splits, out = load_splits(region), []
+    splits = load_splits(region) if splits is None else splits
+    out = []
 
     def walk(box):
         if box[0] in splits:
@@ -131,9 +139,202 @@ def leaf_boxes(region, boxes):
     return out
 
 
+# ------------------------------------------- seeding quarters from a parent
+# A box that times out deep (e.g. on the page where its untimed points
+# start: 11 Nov, Bay Area box r0_c1_q1, page 369 of ~370, every time) used
+# to be split and its quarters downloaded from page 0, throwing away every
+# page the box already had. But the API orders a quarter's points exactly as
+# its parent's (newest upload first, then by track and time), so a quarter's
+# first pages are the parent's points inside the quarter. They are rebuilt
+# from the parent's pages; one real page of the quarter is fetched and must
+# match the rebuilt points where they overlap (else nothing is rebuilt and
+# the quarter is downloaded in full); then the download carries on from
+# there. Quarters are handled right after their parent, so few new uploads
+# land in between.
+
+def _labelled_points(texts):
+    """The points of consecutive API pages in order, as dicts with the raw
+    lat, lon and time strings, the track header, and track and segment
+    labels. A track carried over a page break keeps its label (the rule of
+    gate1_audit.merge_pages); its segment does too when the points run on
+    within a minute."""
+    pts, prev = [], None              # prev: (track label, last time, seg)
+    for j, text in enumerate(texts):
+        trks = [t for t in ET.fromstring(text) if g._local(t.tag) == "trk"]
+        for i, trk in enumerate(trks):
+            head, segs = {"name": None, "desc": None, "url": None}, []
+            for child in trk:
+                tag = g._local(child.tag)
+                if tag in head:
+                    head[tag] = child.text or ""
+                elif tag == "trkseg":
+                    seg = []
+                    for pt in child:
+                        if g._local(pt.tag) != "trkpt":
+                            continue
+                        when = None
+                        for sub in pt:
+                            if g._local(sub.tag) == "time":
+                                when = (sub.text or "").strip()
+                        seg.append((pt.get("lat"), pt.get("lon"), when))
+                    if seg:
+                        segs.append(seg)
+            if not segs:
+                continue
+            url = (head["url"] or "").strip() or None
+            t0 = g.parse_time(segs[0][0][2]) if segs[0][0][2] else None
+            gap = (t0 - prev[1]).total_seconds() \
+                if prev and prev[1] and t0 else None
+            cont = i == 0 and prev is not None and (
+                (url is not None and prev[0] == ("url", url)) or
+                (url is None and prev[0][0] == "anon" and gap is not None
+                 and 0 <= gap <= g.CONTINUE_S))
+            label = ("url", url) if url else \
+                (prev[0] if cont else ("anon", j, i))
+            seg_label = None
+            for k, seg in enumerate(segs):
+                seg_label = (label, j, k)
+                if k == 0 and cont and gap is not None and gap <= 60:
+                    seg_label = prev[2]                  # runs on
+                for lat, lon, when in seg:
+                    pts.append({"lat": lat, "lon": lon, "time": when,
+                                "trk": label, "seg": seg_label, **head})
+            t1 = g.parse_time(segs[-1][-1][2]) if segs[-1][-1][2] else None
+            prev = (label, t1, seg_label)
+    return pts
+
+
+def _key(p):
+    return (p["lat"], p["lon"], p["time"])
+
+
+def _same_order(a, b, min_points):
+    """Do two runs of points match, up to the order within one second? The
+    API orders the points of one track within one second arbitrarily (10 Hz
+    car loggers: up to ~11), so parent and quarter can differ there. The
+    first and last second of each run may be cut differently: skipped."""
+    def ties(pts):
+        return [sorted(_key(p) for p in grp)
+                for _, grp in groupby(pts, key=lambda p: p["time"])]
+    ga, gb = ties(a)[1:-1], ties(b)[1:-1]
+    return sum(map(len, ga)) >= min_points and ga == gb
+
+
+def _inside(box, p):
+    """The API's bbox test, on the 1e-7 degree grid it stores points on."""
+    _, w, s, e, n = box
+    la, lo = round(float(p["lat"]) * 1e7), round(float(p["lon"]) * 1e7)
+    return round(s * 1e7) <= la <= round(n * 1e7) and \
+        round(w * 1e7) <= lo <= round(e * 1e7)
+
+
+def _render_page(points):
+    """One API page (same layout) from labelled points."""
+    out = ['<?xml version="1.0" encoding="UTF-8"?>',
+           '<gpx version="1.0" creator="OpenStreetMap.org" '
+           'xmlns="http://www.topografix.com/GPX/1/0">']
+    trk = seg = None
+    for p in points:
+        if p["trk"] != trk:
+            if trk is not None:
+                out += ["    </trkseg>", "  </trk>"]
+            out.append("  <trk>")
+            for tag in ("name", "desc", "url"):
+                if p[tag] is not None:
+                    out.append(f"    <{tag}>{escape(p[tag])}</{tag}>")
+            out.append("    <trkseg>")
+            trk, seg = p["trk"], p["seg"]
+        elif p["seg"] != seg:
+            out += ["    </trkseg>", "    <trkseg>"]
+            seg = p["seg"]
+        out.append(f'      <trkpt lat="{p["lat"]}" lon="{p["lon"]}">')
+        if p["time"] is not None:
+            out.append(f"        <time>{p['time']}</time>")
+        out.append("      </trkpt>")
+    if trk is not None:
+        out += ["    </trkseg>", "  </trk>"]
+    out.append("</gpx>")
+    return "\n".join(out) + "\n"
+
+
+def seed(region, box, stream, splits):
+    """Rebuild box's first pages from stream (its parent's points inside
+    box, in API order), after checking one real page. Returns the number of
+    pages rebuilt. If the check page itself times out, the box is split and
+    its quarters are seeded the same way."""
+    P = g.POINTS_PER_PAGE
+    k, r = divmod(len(stream), P)
+    least = int(SEED_MIN_OVERLAP * P)               # 500 of 5,000
+    check = k if r >= least else k - 1              # overlap: >= 500 points
+    if check < 1:                                   # or a full page
+        return 0                                    # (nothing to rebuild)
+    text, src = g.get_page("cache", region, box, check, offline=False)
+    if text is None:
+        side = min(box[3] - box[1], box[4] - box[2])
+        if src == "timeout" and side / 2 >= SPLIT_MIN_DEG:
+            splits[box[0]] = (f"{time.strftime('%Y-%m-%d')}: seeding: "
+                              f"page {check}: timeout")
+            save_splits(region, splits)
+            return sum(seed(region, q, [p for p in stream if _inside(q, p)],
+                            splits) for q in quarters(box))
+        return 0
+    # (the second that straddles the page break may come out with a few of
+    # its points twice or missing: one second of one track; harmless)
+    real = _labelled_points([text])
+    known = stream[check * P:]
+    if not _same_order(known, real[:len(known)], least // 2):
+        print(f"  {box[0]}: page {check} doesn't match its parent's pages "
+              f"(new uploads?); downloading it in full", flush=True)
+        return 0
+    for page in range(check):
+        path = Path("cache") / region / f"{box[0]}_p{page:03d}.gpx"
+        if not path.exists():
+            tmp = path.with_suffix(".tmp")
+            tmp.write_text(_render_page(stream[page * P:(page + 1) * P]),
+                           encoding="utf-8")
+            os.replace(tmp, path)
+    print(f"  {box[0]}: pages 0-{check - 1} rebuilt from its parent's pages, "
+          f"page {check} checked", flush=True)
+    return check
+
+
 def _stop_page(status):
     m = re.search(r"page (\d+)", status)
     return int(m.group(1)) if m else -1
+
+
+def catch_up_seeding(region, boxes, splits):
+    """Quarters of boxes split before seeding existed (or by a run that was
+    stopped) that have no pages yet: seed them from their parent's pages,
+    if those are all still cached. The check page guards against new
+    uploads since then. Returns the number of pages rebuilt."""
+    every, todo = {}, list(boxes)
+    while todo:
+        b = todo.pop()
+        every[b[0]] = b
+        if b[0] in splits:
+            todo += quarters(b)
+    done = 0
+    for name, why in list(splits.items()):
+        page, box = _stop_page(str(why)), every.get(name)
+        if box is None or page < SEED_MIN_PAGE:
+            continue
+        files = [Path("cache") / region / f"{name}_p{k:03d}.gpx"
+                 for k in range(page)]
+        kids = [q for q in quarters(box) if q[0] not in splits and not
+                (Path("cache") / region / f"{q[0]}_p000.gpx").exists()]
+        if not kids or not all(f.exists() for f in files):
+            continue
+        texts = [f.read_text(encoding="utf-8") for f in files]
+        P = g.POINTS_PER_PAGE
+        if any(t.count("<trkpt") != P or t.count("<time>") != P
+               for t in texts):
+            continue
+        stream = _labelled_points(texts)
+        for q in kids:
+            done += seed(region, q, [p for p in stream if _inside(q, p)],
+                         splits)
+    return done
 
 
 def step_pages(key="wm"):
@@ -141,11 +342,18 @@ def step_pages(key="wm"):
     can't answer (see the top of the file). Pages only, no parsing."""
     region = regions.region_name(key)
     splits, last_failed = load_splits(region), {}
+    n = catch_up_seeding(region, tiles(key), splits)
+    if n:
+        print(f"Caught up: {n:,} pages rebuilt from parents split earlier",
+              flush=True)
     for rnd in range(1, MAX_ROUNDS + 1):
-        boxes = leaf_boxes(region, tiles(key))
-        split, failed, capped, pages = [], {}, [], 0
-        for box in boxes:
-            _, info, _ = g.download_box(
+        # depth first: a split box's quarters come right after it
+        stack = leaf_boxes(region, tiles(key), splits)[::-1]
+        split, failed, capped, pages, seeded, n = [], {}, [], 0, 0, 0
+        while stack:
+            box = stack.pop()
+            n += 1
+            texts, info, _ = g.download_box(
                 "cache", region, box, max_pages=MAX_PAGES,
                 count_untimed=not re.search(r"_q\d$", box[0]))
             check_budget()
@@ -164,14 +372,20 @@ def step_pages(key="wm"):
                 splits[box[0]] = f"{time.strftime('%Y-%m-%d')}: {st}"
                 save_splits(region, splits)
                 split.append(box[0])
+                if page >= SEED_MIN_PAGE:      # full, timed pages 0..page-1
+                    stream = _labelled_points(texts[:page])
+                    for q in quarters(box):
+                        seeded += seed(region, q, [p for p in stream
+                                                   if _inside(q, p)], splits)
+                stack.extend(leaf_boxes(region, quarters(box), splits)[::-1])
             elif heavy:
                 capped.append(box[0])
             else:
                 failed[box[0]] = page
-        print(f"\nRound {rnd}: {len(boxes)} boxes, {pages:,} usable pages; "
-              f"split {len(split)}, network errors {len(failed)}, "
-              f"capped {len(capped)} ({g.DOWNLOADED_BYTES / 1e9:.2f} GB "
-              f"this run)", flush=True)
+        print(f"\nRound {rnd}: {n} boxes, {pages:,} usable pages; "
+              f"split {len(split)} ({seeded:,} pages rebuilt from parents), "
+              f"network errors {len(failed)}, capped {len(capped)} "
+              f"({g.DOWNLOADED_BYTES / 1e9:.2f} GB this run)", flush=True)
         if split:
             print(f"  split into quarters: {', '.join(split)}")
         if failed:
@@ -179,12 +393,11 @@ def step_pages(key="wm"):
         if capped:
             print(f"  capped (smallest box still times out): "
                   f"{', '.join(capped)}")
-        if not split and not failed:
+        if not failed:
             return
         last_failed = failed
-        if not split:
-            print(f"  next round in {RETRY_WAIT_S // 60} min", flush=True)
-            time.sleep(RETRY_WAIT_S)
+        print(f"  next round in {RETRY_WAIT_S // 60} min", flush=True)
+        time.sleep(RETRY_WAIT_S)
 
 
 def step_trackpoints(key="wm"):
