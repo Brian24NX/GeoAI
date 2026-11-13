@@ -92,6 +92,13 @@ km.
   built/building (233 and 1,537 pages rebuilt from October's pages, 0.61
   and 0.53 GB); Front Range nearly done (899 pages reused, 0.02 GB);
   Cascades next. OSM total 8.10 GB of the 10 GB stop.
+- **23:52:** Shenandoah built (23:44), Front Range downloaded (23:31, 9
+  min) and building, Cascades downloading (its October pages reused too).
+  Job 379830 (`cluster/chain_finish_job.sh`) waits for the download job,
+  then submits `cluster/finish_rebuild_job.sh` to run after Cascades' new
+  build succeeds. Next (Fri): the covariates for the rebuilt segments
+  (check download sizes first: 11 GB cap), the harness and learned-Tobler
+  runs, figures and the paper's numbers.
 - **Weekly update for Danni (Fri 13 Nov meeting):**
   `meeting_plots/nov13_update/Weekly_Update_9-13Nov.pdf` (3 pages, from
   `weekly_update.html` with headless Chrome): the week, the Bay Area (what
