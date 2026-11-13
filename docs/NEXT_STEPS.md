@@ -349,8 +349,9 @@ held-out regions.
 **Confirmed:**
 - deadline **11 Jan 2027** (also for the Student Paper Competition);
 - portal opens **10 Nov 2026**; notification 12 Mar 2027;
-- 4 pages, IEEE two-column. The 2026 kit allowed 4 pages *excluding
-  references*; the 2027 kit isn't posted yet.
+- 4 pages, IEEE two-column, *excluding references* (2027 kit, posted
+  10 Nov; the template is the same as 2026's). The kit page says papers
+  are due **Sunday 10 Jan**, the dates page 11 Jan: plan for the 10th.
 - Student papers needed an advisor attestation in 2026. Not entering
   (#134): Brian won't travel outside the US, and finalists present in person.
 

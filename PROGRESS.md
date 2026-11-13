@@ -66,7 +66,13 @@ km.
   says "Opens November", and this morning's runs failed on the network).
   `2027.ieeeigarss.org/papers/paper_kit.php`; LaTeX template
   `papers/PaperFormat/IGARSS2027LaTeXTemplate.zip` (1,080,825 bytes), Word
-  `IG27_WordTemplate.zip` (44,421 bytes); not downloaded (ask Brian).
+  `IG27_WordTemplate.zip` (44,421 bytes). **LaTeX template downloaded
+  (Brian's OK, 12 Nov; sha256 f4f95328...)** into
+  `paper/template_igarss2027/`: its .tex equals the 2026 one except the
+  year in four lines, so `main.tex` needs no format change; its example PDF
+  sets figure captions at 8 pt, as ours (so we follow the template, not
+  the kit's "10-12 pt including captions" sentence). The kit also allows
+  PDFs up to 15 MB (2026: 5 MB) and asks for no page numbers.
   Rules: full paper **4 pages excluding references**; fonts 10-12 pt
   "throughout the paper, including figure captions" (our captions are 8 pt,
   as in the 2026 template: check the 2027 one); the kit says papers are

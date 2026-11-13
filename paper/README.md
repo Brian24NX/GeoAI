@@ -20,13 +20,14 @@ The template is the official IGARSS 2026 LaTeX kit (8 Nov 2026;
 `IGARSS2026LaTeXTemplate.zip` from 2026.ieeeigarss.org, a copy of its .tex
 in `template_igarss2026/`): IEEEtran conference on A4, natbib with
 IEEEtranN, the title in capitals, one block per author. The section files
-did not change. The 2027 kit goes up with the submission portal on 10 Nov;
-compare it with the 2026 copy then.
+did not change. The 2027 kit (posted 10 Nov, downloaded 12 Nov into
+`template_igarss2027/`) is the same template; only the year in its
+example text changed. Its own example sets captions at 8 pt, as ours.
 
-The 2026 paper kit allows 4 pages including figures and does not count
-references. In this template the main text (Table I, the map, the
+The 2026 and 2027 paper kits allow 4 pages including figures and do not
+count references. In this template the main text (Table I, the map, the
 speed-slope curve and the two-column skill figure) ends in page 4's left
 column; the references fill the rest of page 4 and part of page 5. So
-about 0.4 page is free if the 2027 kit keeps the rule. The hike-time figure
+about 0.4 page is free (the 2027 kit keeps the rule). The hike-time figure
 and the trail map, cut to one sentence each when references counted, could
 come back; see the budget note in `OUTLINE.md`.

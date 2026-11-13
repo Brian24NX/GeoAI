@@ -14,7 +14,7 @@ is not published). Portal opens 10 Nov; papers, the competition and travel
 support all due 11 Jan 2027; decisions 12 Mar; final paper and
 registration 30 Apr (call for papers checked 21 Oct). The 2026 paper kit
 (checked 8 Nov) asks for 800 words to 4 pages including figures and does
-not count references; the 2027 kit comes with the portal on 10 Nov. No competition entry or travel
+not count references; the 2027 kit (10 Nov) keeps that rule, and it says papers are due Sun 10 Jan. No competition entry or travel
 support (#134, 10 Nov): Brian won't travel outside the US, competition
 finalists must present in person, and someone else (a co-author or a proxy)
 must present the paper in Reykjavík. Best-fit themes: SP.6 (Datasets,
@@ -41,7 +41,7 @@ value. A hiker's own pace still matters most.
 | 3 Methods | 0.75 | covariates, models, splits, scoring |
 | 4 Results | 1.25 | Table I, Fig. 2 (speed vs slope, down/up), Fig. 3 (full width: skill by model, each region held out) |
 | 5 Discussion + conclusion | 0.5 | what transfers and why; limits; release |
-| References | not counted | 21 cited; the 2026 paper kit leaves references out of the 4 pages (checked 8 Nov; the kits of 2013–2017 counted them); check the 2027 kit |
+| References | not counted | 21 cited; the 2026 and 2027 paper kits leave references out of the 4 pages (checked 8 and 12 Nov; the kits of 2013–2017 counted them) |
 
 ---
 
@@ -278,9 +278,9 @@ at the end of `results.tex`). If the text runs long again, cut next: the
 robustness tag numbers, the STRIDE details.
 
 **Budget (8 Nov, in the official IGARSS 2026 template, A4).** The main text
-ends in page 4's left column and the references run onto page 5. If the
-2027 kit also leaves references out of the 4 pages, about 0.4 page (0.8 of
-a column) is free: room for the hike-time figure or the trail map, or for
+ends in page 4's left column and the references run onto page 5. The
+2027 kit also leaves references out of the 4 pages (12 Nov), so about 0.4
+page (0.8 of a column) is free: room for the hike-time figure or the trail map, or for
 imagery and learned Tobler (Brian's call). Brian's decisions (8 Nov, #130):
 imagery gets one sentence, and learned Tobler is a Table I row beside
 Eq. (1). The row is in (about 3 lines with its note); the Methods paragraph
