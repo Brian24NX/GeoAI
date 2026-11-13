@@ -59,6 +59,24 @@ km.
   - The values come from the unrounded `results/t3_coarse_dem/summary.csv`.
     The 10 m value is +1.25. The 3-page brief's +1.24 came from
     subtracting rounded table values.
+- **The finish step failed at 02:12 and was rerun.** `t1_finalize` for
+  Shenandoah hit a least-squares failure: 20 walking segments of one trace
+  lie outside the DEM, so their slope is NaN. The data card's
+  interval fits now drop slope-less segments, as `t1_variants` already
+  does. The rerun (job 380467, `FROM=finalize`) finished at **13:18:
+  FINISH DONE**.
+- **T1 v1.1 (16 regions):**
+  - 2,654 hiking traces and 2,586 outings, of which 1,867 are walking
+    outings;
+  - 284,711 walking segments and 4,623 walking hours;
+  - pooled v0 4.30 km/h [4.23, 4.39], k 1.80.
+  - October's 16 regions (v1 without the Bay Area) had 2,699 traces and
+    4,585 h, so traces are down 1.7% and hours up 0.8%.
+  - Table: `results/t1_summary/` on the cluster.
+- **Next:** the covariate refresh for the new segments (refresh_all.sh,
+  with UPGRADED = all 16 regions plus the missing steps). Check the
+  download sizes against the ~2.5 GB left. Then the harness runs, learned
+  Tobler, figures and tables.
 - Brian has `paper/main.pdf` as the current draft. It is the 10 Nov build,
   the same as Tianyi's; only comments have changed since.
 
