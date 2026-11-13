@@ -61,6 +61,23 @@ km.
   Bay Area dot.
 - **Brian:** "17 regions" becomes 16 in `data.tex`, `discussion.tex` and
   `OUTLINE.md` (counts get updated after the rerun).
+- **IGARSS 2027 paper kit is out** (found 12 Nov evening; posted Tue 10 Nov
+  ~13:00 CST; the daily check missed it: the "Submit a Paper" button still
+  says "Opens November", and this morning's runs failed on the network).
+  `2027.ieeeigarss.org/papers/paper_kit.php`; LaTeX template
+  `papers/PaperFormat/IGARSS2027LaTeXTemplate.zip` (1,080,825 bytes), Word
+  `IG27_WordTemplate.zip` (44,421 bytes); not downloaded (ask Brian).
+  Rules: full paper **4 pages excluding references**; fonts 10-12 pt
+  "throughout the paper, including figure captions" (our captions are 8 pt,
+  as in the 2026 template: check the 2027 one); the kit says papers are
+  due **Sunday 10 Jan 2027**, the Important Dates page 11 Jan: plan for
+  the 10th (target ~8 Jan). The daily kit-check task is paused.
+- **Weekly update for Danni (Fri 13 Nov meeting):**
+  `meeting_plots/nov13_update/Weekly_Update_9-13Nov.pdf` (3 pages, from
+  `weekly_update.html` with headless Chrome): the week, the Bay Area (what
+  differed, the 96% car logs, the drop), the two fixes, the elevation
+  check plot, the kit, travel, two questions (Bay Area OK? who presents
+  in Reykjavik?).
 
 ## Wed 11 Nov 2026
 

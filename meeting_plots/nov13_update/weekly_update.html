@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weekly Update, 9–13 Nov 2026</title>
+<style>
+@page { size: letter; margin: 0.55in 0.6in; }
+:root { --ink: #1b221d; --quiet: #56625a; --line: #d3dbd1; --accent: #2a78d6; --tint: #eef1ec; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); font: 10.5pt/1.45 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+h1 { font-size: 21pt; margin: 0 0 2pt; letter-spacing: -0.01em; }
+.byline { color: var(--quiet); font-size: 9.5pt; margin-bottom: 8pt; }
+h2 { font-size: 13pt; margin: 14pt 0 5pt; break-after: avoid; }
+h3 { font-size: 10.5pt; margin: 8pt 0 3pt; break-after: avoid; }
+p { margin: 0 0 6pt; widows: 3; orphans: 3; }
+li { break-inside: avoid; }
+.lead { font-size: 11.5pt; margin-bottom: 4pt; }
+figure { margin: 6pt 0 8pt; break-inside: avoid; }
+figure svg { width: 100%; height: auto; display: block; }
+figcaption { font-size: 8pt; color: var(--quiet); margin-top: 2pt; }
+table { border-collapse: collapse; width: 100%; font-size: 9.5pt; margin: 4pt 0 8pt; break-inside: avoid; }
+th, td { text-align: left; padding: 4pt 6pt; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; border-bottom: 1.5px solid var(--ink); }
+ul, ol { margin: 0 0 6pt 16pt; padding: 0; }
+li { margin: 1pt 0; }
+.box { background: var(--tint); border-radius: 6pt; padding: 7pt 10pt; margin: 6pt 0 8pt; break-inside: avoid; }
+.box p:last-child, .box ul:last-child, .box ol:last-child { margin-bottom: 0; }
+.keep { break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<h1>Weekly Update, 9–13 Nov 2026</h1>
+<div class="byline">Brian Zhou · CSE 5999 hiking-speed project · for Danni Beaulieu · 13 Nov 2026</div>
+<p class="lead">This week I followed up on Fig. 1's orange dot. The Bay Area was built differently from the other regions. I tried to make it the same, found it couldn't be done at a sane cost, and dropped it, so all 16 regions now come from the same sources. Along the way I fixed two things that change every region a little, so everything is being rebuilt and the new numbers come this weekend. I also checked whether terrain needs lidar-quality elevation. It needs accurate bare-earth elevation, not fine resolution.</p>
+
+<h2>This week at a glance</h2>
+<figure>
+<svg viewBox="0 0 760 200" role="img" aria-label="This week: the elevation check, the Bay Area followed up and dropped, two pipeline fixes, authors settled" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13">
+  <g fill="#eef1ec" stroke="#9aa39b">
+    <rect x="24" y="6" width="166" height="32" rx="8"/><rect x="206" y="6" width="166" height="32" rx="8"/>
+    <rect x="388" y="6" width="166" height="32" rx="8"/><rect x="570" y="6" width="166" height="32" rx="8"/>
+  </g>
+  <g font-weight="600" text-anchor="middle" fill="#1b221d">
+    <text x="107" y="27">Mon 9 Nov</text><text x="289" y="27">Tue 10 Nov</text><text x="471" y="27">Wed 11 Nov</text><text x="653" y="27">Thu 12 Nov</text>
+  </g>
+  <g fill="none" stroke="#9aa39b" stroke-width="1.25">
+    <rect x="24" y="48" width="166" height="66" rx="8"/>
+    <rect x="206" y="48" width="166" height="66" rx="8"/><rect x="206" y="124" width="166" height="66" rx="8"/>
+    <rect x="388" y="48" width="166" height="66" rx="8"/><rect x="388" y="124" width="166" height="66" rx="8"/>
+    <rect x="570" y="48" width="166" height="66" rx="8"/><rect x="570" y="124" width="166" height="66" rx="8"/>
+  </g>
+  <g font-weight="600" fill="#1b221d">
+    <text x="36" y="70">Coarser elevation</text>
+    <text x="218" y="70">Global 30 m DEM</text><text x="218" y="146">Authors settled</text>
+    <text x="400" y="70">Bay Area checked</text><text x="400" y="146">Download fixed</text>
+    <text x="582" y="70">Bay Area dropped</text><text x="582" y="146">4 tiles downloading</text>
+  </g>
+  <g font-size="11.5" fill="#56625a">
+    <text x="36" y="88">10 m and 30 m lidar</text><text x="36" y="104">keep terrain's gain</text>
+    <text x="218" y="88">radar DEM loses the</text><text x="218" y="104">edge over trail tags</text>
+    <text x="218" y="164">four authors, one</text><text x="218" y="180">WashU block</text>
+    <text x="400" y="88">the API had timed out;</text><text x="400" y="104">built from the crawl only</text>
+    <text x="400" y="164">busy boxes now split;</text><text x="400" y="180">12 regions rebuilt</text>
+    <text x="582" y="88">96% of its data</text><text x="582" y="104">were car logs</text>
+    <text x="582" y="164">cut short by the</text><text x="582" y="180">same timeout</text>
+  </g>
+</svg>
+</figure>
+
+<h2>The Bay Area: what was different, and what I did</h2>
+<table>
+  <tr><th style="width:52%">Source</th><th>Other 16 regions</th><th>Bay Area (October)</th></tr>
+  <tr><td>OSM API: every timestamped upload in the box, named and anonymous, any year</td><td>Yes</td><td>No: the API timed out on its tiles, so the download skipped it</td></tr>
+  <tr><td>Lab crawl: original files of public and named uploads, 2016–2022</td><td>Yes</td><td>Yes</td></tr>
+</table>
+<p>So the Bay Area had no anonymous uploads and nothing from before 2016 or after 2022. To make it the same, I changed the download script: a box the API can't answer is split into quarters, again if needed, down to about 1 km. That worked, and the Bay Area downloaded. But after 20 hours and 6.8 GB only 37% of its area was done, and almost all of it was car logs:</p>
+<figure>
+<svg viewBox="0 0 760 178" role="img" aria-label="96% of the Bay Area's OSM data came from two car-logging accounts" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12">
+  <text x="24" y="22" font-size="15" font-weight="600" fill="#1b221d">96% of the Bay Area's OSM data came from two car-logging accounts</text>
+  <text x="24" y="42" fill="#56625a">Share of points by uploader, in a 3% sample of the downloaded pages (2.1 million points)</text>
+  <g text-anchor="end" fill="#1b221d">
+    <text x="200" y="74">sunnypilot (car logs)</text><text x="200" y="104">dragonpilot (car logs)</text>
+    <text x="200" y="134">other named uploaders</text><text x="200" y="164">anonymous uploads</text>
+  </g>
+  <rect x="210" y="60" width="427.2" height="20" rx="3" fill="#b9bcb2"/>
+  <rect x="210" y="90" width="38.4" height="20" rx="3" fill="#b9bcb2"/>
+  <rect x="210" y="120" width="14.4" height="20" rx="3" fill="#2a78d6"/>
+  <rect x="210" y="150" width="4.8" height="20" rx="2" fill="#2a78d6"/>
+  <g fill="#1b221d">
+    <text x="645" y="74">89%</text><text x="256" y="104">8%</text>
+    <text x="232" y="134" font-weight="600">3%</text><text x="223" y="164" font-weight="600">1%</text>
+  </g>
+  <text x="300" y="148" fill="#56625a" font-size="11.5">blue: what the builder keeps</text>
+</svg>
+<figcaption>The builder drops both car-logging accounts. The API can't filter by account, so a box with a trail and a freeway has to be downloaded in full.</figcaption>
+</figure>
+<p>The hikes are spread through the whole region (67 of the 100 boxes not yet downloaded had hikes in October's build), so leaving out the city boxes wouldn't have saved much. Finishing would have taken another 10–20 GB and 2–3 days.</p>
+<div class="box">
+<p><b>Decision: I dropped the Bay Area.</b> It was 6% of hiking traces (177 of 2,876) and 2.5% of walking hours (117 of 4,702). The paper now has 16 regions, all from the full OSM download plus the lab crawl, and Fig. 1 has one color.</p>
+</div>
+<p><b>What the lab crawl itself is missing</b> (this affects every region): there are no files for its 2008–2015 upload lists (1,031,004 uploads), none for about 15% of the 2016–19 uploads (57,291) and 25% of the 2020–22 uploads (395,646), and nothing after 2022. The API returns these public uploads' points but without timestamps, so they can't give speeds. I've asked Jonathan Lin whether the missing files can be recovered.</p>
+
+<h2>Two fixes that change every region a little</h2>
+<ol>
+  <li><b>Timeouts.</b> The same server timeout had cut four tiles short in other regions, before their oldest uploads. Front Range and Cascades reached back only to 2009; Shenandoah and San Gabriels only to mid-2023, because three years of car logs fill their first 500+ pages. With the split boxes they are downloading again now. Where October's pages still match the server, they are reused instead of downloaded again.</li>
+  <li><b>Anonymous recordings.</b> The API returns an anonymous recording as one piece per box, and the builder rejoins the pieces. It missed recordings that leave a box and come back, which smaller boxes make common. Fixing that changes the counts more than the data. In the White Mountains, 147 anonymous traces become 125 and 218 hiking outings become 210. The trail segments the models use change by −0.1% to +1.6% across the six regions I compared.</li>
+</ol>
+<p>So all 16 regions are rebuilt with the same code. October's builds are kept for comparison.</p>
+
+<h2>Does terrain need lidar?</h2>
+<figure>
+<svg viewBox="0 0 760 290" role="img" aria-label="Coarser lidar keeps terrain's edge over trail tags; the global radar DEM loses it" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12">
+  <text x="24" y="22" font-size="15" font-weight="600" fill="#1b221d">Coarser lidar keeps terrain's edge over trail tags; the global radar DEM loses it</text>
+  <text x="24" y="42" fill="#56625a">Unseen regions: terrain's CRPS skill minus the tags', in points (additive model), with 95% range</text>
+  <g stroke="#e3e8e1" stroke-width="1">
+    <line x1="362" x2="362" y1="60" y2="236"/><line x1="566" x2="566" y1="60" y2="236"/><line x1="668" x2="668" y1="60" y2="236"/>
+  </g>
+  <line x1="464" x2="464" y1="56" y2="240" stroke="#7d867f" stroke-width="1.25"/>
+  <g text-anchor="middle" fill="#56625a" font-size="11">
+    <text x="362" y="254">−1</text><text x="464" y="254">0</text><text x="566" y="254">+1</text><text x="668" y="254">+2</text>
+  </g>
+  <text x="464" y="276" text-anchor="middle" fill="#56625a">0 = tags as good as terrain</text>
+  <g text-anchor="end" fill="#1b221d">
+    <text x="250" y="84" font-weight="600">Paper: lidar 1 m + 5 m</text><text x="250" y="118">Lidar 5 m</text>
+    <text x="250" y="152">Lidar averaged to 10 m</text><text x="250" y="186">Lidar averaged to 30 m</text>
+    <text x="250" y="220">Copernicus 30 m (radar)</text>
+  </g>
+  <g stroke="#2a78d6" stroke-width="2.5">
+    <line x1="535.4" x2="688.4" y1="80" y2="80"/><line x1="525.2" x2="657.8" y1="114" y2="114"/>
+    <line x1="535.4" x2="647.6" y1="148" y2="148"/><line x1="474.2" x2="606.8" y1="182" y2="182"/>
+  </g>
+  <g stroke="#2a78d6" stroke-width="2">
+    <line x1="535.4" x2="535.4" y1="75" y2="85"/><line x1="688.4" x2="688.4" y1="75" y2="85"/>
+    <line x1="525.2" x2="525.2" y1="109" y2="119"/><line x1="657.8" x2="657.8" y1="109" y2="119"/>
+    <line x1="535.4" x2="535.4" y1="143" y2="153"/><line x1="647.6" x2="647.6" y1="143" y2="153"/>
+    <line x1="474.2" x2="474.2" y1="177" y2="187"/><line x1="606.8" x2="606.8" y1="177" y2="187"/>
+  </g>
+  <line x1="290.6" x2="484.4" y1="216" y2="216" stroke="#9aa39b" stroke-width="2.5"/>
+  <g stroke="#9aa39b" stroke-width="2"><line x1="290.6" x2="290.6" y1="211" y2="221"/><line x1="484.4" x2="484.4" y1="211" y2="221"/></g>
+  <g stroke="#ffffff" stroke-width="1.5">
+    <circle cx="592.5" cy="80" r="5.5" fill="#2a78d6"/><circle cx="584.4" cy="114" r="5.5" fill="#2a78d6"/>
+    <circle cx="590.5" cy="148" r="5.5" fill="#2a78d6"/><circle cx="548.7" cy="182" r="5.5" fill="#2a78d6"/>
+    <circle cx="394.6" cy="216" r="5.5" fill="#9aa39b"/>
+  </g>
+  <g fill="#1b221d">
+    <text x="702" y="84" font-weight="600">+1.26</text><text x="672" y="118">+1.18</text>
+    <text x="662" y="152">+1.24</text><text x="621" y="186">+0.83</text><text x="499" y="220">−0.68</text>
+  </g>
+</svg>
+<figcaption>Source: results/t3_coarse_dem/summary.csv (decisions #131–132), October data (17 regions). Each elevation source is scored against the slope curve built from the same elevation. Boosted trees show the same pattern (Copernicus: a tie).</figcaption>
+</figure>
+<p>Averaging our 5 m lidar grids to 10 m loses nothing, and at 30 m terrain keeps most of its edge over trail tags. The free global 30 m DEM (Copernicus, from radar) loses it. Along trails it sits 1–19 m above the lidar ground, because the radar sees the forest canopy, and its slope is much noisier (correlation with ours 0.85, against 0.97 for 30 m averages). <b>So terrain needs accurate bare-earth elevation, not fine resolution.</b> In the paper this is one Robustness sentence and one Limits clause. These numbers will be rerun with the rebuilt data.</p>
+
+<h2>Paper and IGARSS</h2>
+<ul>
+  <li><b>Authors:</b> Brian Zhou, Danielle Beaulieu, Tianyi Gao and Nathan Jacobs, in one WashU block. The full draft goes to you, Tianyi and Prof. Jacobs on Fri 20 Nov. Tianyi already has draft 0.</li>
+  <li><b>The IGARSS 2027 paper kit is out</b> (posted 10 Nov). The page limit is 4 pages excluding references, as planned, which leaves us about 0.4 page spare. Fonts must be 10–12 pt "including figure captions"; our captions are 8 pt, as in last year's template, so I'll check the new template. The kit says papers are due Sunday 10 Jan (the dates page says 11 Jan); I plan to submit around 8 Jan.</li>
+  <li><b>Travel:</b> I won't travel outside the US, so I'm not entering the Student Paper Competition or applying for travel support. Someone has to present the paper in Reykjavík (11–16 Jul 2027): a co-author at the conference, or a proxy who presents the slides or plays a recorded talk. An author must register by 30 Apr.</li>
+</ul>
+
+<div class="box keep">
+<p><b>Questions for you</b></p>
+<ol>
+  <li>Are you OK with dropping the Bay Area, so the paper has 16 regions?</li>
+  <li>Who could present the paper in Reykjavík: will you or Tianyi be there, or should we plan a proxy and a recorded talk?</li>
+</ol>
+</div>
+
+<h2>Next steps</h2>
+<ul>
+  <li><b>Fri 13 – Sun 15 Nov:</b> the four tiles finish downloading; all 16 regions are rebuilt and every model is rerun. Then the paper's numbers are updated and frozen again.</li>
+  <li><b>Mon 16 – Thu 19 Nov:</b> rewriting the draft in my own words, with the new numbers.</li>
+  <li><b>Fri 20 Nov:</b> the full draft to you, Tianyi and Prof. Jacobs.</li>
+</ul>
+
+</body>
+</html>
