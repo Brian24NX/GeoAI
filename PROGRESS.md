@@ -41,6 +41,27 @@ km.
 
 ---
 
+## Fri 13 Nov 2026
+
+- **All 4 short tiles are re-downloaded** (Cascades finished at 01:01).
+  OSM pages and GPX files now total **8.45 GB** of the 11 GB Brian
+  approved, so about **2.5 GB** is left for the covariate refresh (lidar
+  etc.). Check sizes before any download.
+- The Cascades build (job 379940) has been running since 01:02. The finish
+  step (job 379941: modes, variants, finalize and summary over the 16
+  regions) starts by itself after it.
+- **One-page brief for Danni, in plain words:**
+  `meeting_plots/nov13_update/weekly_update_short.html` produces
+  `Weekly_Update_9-13Nov_short.pdf`. Brian found the 3-page brief hard to
+  follow, so this is the one to send.
+  - Its chart shows the coarse-DEM check as terrain minus tags (unseen
+    regions, additive model).
+  - The values come from the unrounded `results/t3_coarse_dem/summary.csv`.
+    The 10 m value is +1.25. The 3-page brief's +1.24 came from
+    subtracting rounded table values.
+- Brian has `paper/main.pdf` as the current draft. It is the 10 Nov build,
+  the same as Tianyi's; only comments have changed since.
+
 ## Thu 12 Nov 2026
 
 - **Bay Area download paused at 19:04 (6.83 GB)** and then **dropped
