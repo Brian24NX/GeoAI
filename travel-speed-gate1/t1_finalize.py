@@ -104,6 +104,10 @@ def card_section(d, key):
     rng, parts = np.random.default_rng(0), []
     for name, a, c in (("<= 2 s", 0, 2), ("2-6 s", 2, 6), ("> 6 s", 6, 1e9)):
         sub = walk[walk.trace_id.isin(iv[(iv > a) & (iv <= c)].index)]
+        # 13 Nov 2026: the curve needs a slope; segments outside the DEM
+        # have none (Shenandoah v1.1: 20 segments of one trace), and one
+        # NaN breaks the fit. t1_variants.walker_trail_segments drops them too.
+        sub = sub[sub.slope.notna()]
         if sub.trace_id.nunique() < 10:
             parts.append(f"{name}: {sub.trace_id.nunique()} traces")
             continue

@@ -20,11 +20,18 @@ say() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $*" | tee -a logs/t1_queue.log; }
 LOG=logs/finish_rebuild.log
 KEYS=$($PY -c "import regions; print(' '.join(k for k in regions.CANDIDATES if regions.kept(k) and (regions.data_dir(k) / 'segments_L50.parquet').exists()))")
 BUILT=$(for k in $KEYS; do $PY -c "import regions; print(regions.data_dir('$k'))"; done)
-say "FINISH: modes over $(echo $KEYS | wc -w) regions"
-$PY -u t1_modes.py $BUILT >> $LOG 2>&1 || { say "FINISH: t1_modes FAILED"; exit 1; }
-for k in $KEYS; do
-  $PY -u t1_variants.py --region "$k" >> $LOG 2>&1 || { say "FINISH: t1_variants $k FAILED"; exit 1; }
-done
+# FROM=finalize skips modes and variants (a rerun after they succeeded):
+#   sbatch --export=ALL,FROM=finalize cluster/finish_rebuild_job.sh
+FROM=${FROM:-modes}
+if [ "$FROM" = modes ]; then
+  say "FINISH: modes over $(echo $KEYS | wc -w) regions"
+  $PY -u t1_modes.py $BUILT >> $LOG 2>&1 || { say "FINISH: t1_modes FAILED"; exit 1; }
+  for k in $KEYS; do
+    $PY -u t1_variants.py --region "$k" >> $LOG 2>&1 || { say "FINISH: t1_variants $k FAILED"; exit 1; }
+  done
+else
+  say "FINISH: from $FROM over $(echo $KEYS | wc -w) regions (modes and variants already done)"
+fi
 for k in $KEYS; do
   $PY t1_finalize.py --region "$k" >> $LOG 2>&1 || { say "FINISH: t1_finalize $k FAILED"; exit 1; }
 done
