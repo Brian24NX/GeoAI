@@ -78,6 +78,20 @@ km.
   as in the 2026 template: check the 2027 one); the kit says papers are
   due **Sunday 10 Jan 2027**, the Important Dates page 11 Jan: plan for
   the 10th (target ~8 Jan). The daily kit-check task is paused.
+- **Jonathan Lin answered Brian (Slack, 12 Nov 14:35):** the 2008-2016
+  files are in `/storage1/fs1/jacobsn/Active/proj_mobility/OSM_GPX_PLANET`
+  (from OSM's published GPS dump; planet.openstreetmap.org/gps/ has
+  `gpx-planet-2013-04-09.tar.xz`, 21 GB), the 2016-2022 crawl in
+  `.../user_jiayu.lin/OSM_data` (our ENGRFS copy: `/engrfs/project/jacobsn/
+  OSM_data`); nothing after 2022; the lab's `mvrl/mobogen-datasets` repo
+  can extend the crawl; careful with OSM rate limits (blacklisting).
+  `/storage1` is not mounted on the ENGR cluster. Open: do those files keep
+  the public traces' timestamps? If so they fill the crawl's 2008-2015 gap
+  in every region (question 3 for Danni: add them after the 20 Nov draft).
+- **4 tiles (22:00-23:30):** San Gabriels and Shenandoah downloaded and
+  built/building (233 and 1,537 pages rebuilt from October's pages, 0.61
+  and 0.53 GB); Front Range nearly done (899 pages reused, 0.02 GB);
+  Cascades next. OSM total 8.10 GB of the 10 GB stop.
 - **Weekly update for Danni (Fri 13 Nov meeting):**
   `meeting_plots/nov13_update/Weekly_Update_9-13Nov.pdf` (3 pages, from
   `weekly_update.html` with headless Chrome): the week, the Bay Area (what

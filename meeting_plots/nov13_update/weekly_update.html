@@ -26,6 +26,7 @@ li { margin: 1pt 0; }
 .box { background: var(--tint); border-radius: 6pt; padding: 7pt 10pt; margin: 6pt 0 8pt; break-inside: avoid; }
 .box p:last-child, .box ul:last-child, .box ol:last-child { margin-bottom: 0; }
 .keep { break-inside: avoid; }
+code { font: 9pt Menlo, Consolas, monospace; }
 </style>
 </head>
 <body>
@@ -99,7 +100,8 @@ li { margin: 1pt 0; }
 <div class="box">
 <p><b>Decision: I dropped the Bay Area.</b> It was 6% of hiking traces (177 of 2,876) and 2.5% of walking hours (117 of 4,702). The paper now has 16 regions, all from the full OSM download plus the lab crawl, and Fig. 1 has one color.</p>
 </div>
-<p><b>What the lab crawl itself is missing</b> (this affects every region): there are no files for its 2008–2015 upload lists (1,031,004 uploads), none for about 15% of the 2016–19 uploads (57,291) and 25% of the 2020–22 uploads (395,646), and nothing after 2022. The API returns these public uploads' points but without timestamps, so they can't give speeds. I've asked Jonathan Lin whether the missing files can be recovered.</p>
+<p><b>What the lab crawl itself is missing</b> (this affects every region): there are no files for its 2008–2015 upload lists (1,031,004 uploads), none for about 15% of the 2016–19 uploads (57,291) and 25% of the 2020–22 uploads (395,646), and nothing after 2022. The API returns these public uploads' points but without timestamps, so they can't give speeds.</p>
+<p><b>Jonathan Lin answered</b> (12 Nov): the 2008–2016 files are in another folder on the lab's RIS storage (<code>proj_mobility/OSM_GPX_PLANET</code>, from the GPS dump OSM itself published), there is nothing after 2022, and the lab's <code>mobogen-datasets</code> code can extend the crawl, slowly, because OSM can block heavy scrapers. I'm asking whether the 2008–2016 files keep their timestamps. If they do, they fill the crawl's biggest gap in every region. The ENGR cluster can't see that storage yet.</p>
 
 <h2>Two fixes that change every region a little</h2>
 <ol>
@@ -109,7 +111,7 @@ li { margin: 1pt 0; }
 <p>So all 16 regions are rebuilt with the same code. October's builds are kept for comparison.</p>
 
 <h2>Does terrain need lidar?</h2>
-<figure>
+<figure style="width: 88%; margin-left: auto; margin-right: auto;">
 <svg viewBox="0 0 760 290" role="img" aria-label="Coarser lidar keeps terrain's edge over trail tags; the global radar DEM loses it" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="12">
   <text x="24" y="22" font-size="15" font-weight="600" fill="#1b221d">Coarser lidar keeps terrain's edge over trail tags; the global radar DEM loses it</text>
   <text x="24" y="42" fill="#56625a">Unseen regions: terrain's CRPS skill minus the tags', in points (additive model), with 95% range</text>
@@ -164,6 +166,7 @@ li { margin: 1pt 0; }
 <ol>
   <li>Are you OK with dropping the Bay Area, so the paper has 16 regions?</li>
   <li>Who could present the paper in Reykjavík: will you or Tianyi be there, or should we plan a proxy and a recorded talk?</li>
+  <li>If Jonathan's 2008–2016 files keep their timestamps, should we add them for every region after the 20 Nov draft (and rebuild once more before submitting in January)? They are on RIS storage, which my cluster account can't reach.</li>
 </ol>
 </div>
 
