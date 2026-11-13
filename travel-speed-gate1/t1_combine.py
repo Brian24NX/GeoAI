@@ -95,8 +95,8 @@ COLUMNS = [  # (column, meaning) for the data card, in file order
 
 
 def built_keys():
-    return [k for k in regions.CANDIDATES
-            if (regions.data_dir(k) / "modes.csv").exists()]
+    return [k for k in regions.CANDIDATES if regions.kept(k)
+            and (regions.data_dir(k) / "modes.csv").exists()]
 
 
 def built_at(d):

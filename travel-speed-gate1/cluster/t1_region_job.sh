@@ -31,7 +31,7 @@ else
     || { say "BUILD $KEY: build FAILED, see $LOG"; exit 1; }
   # the built regions only (not data/t1_all, the combined copy: its traces
   # would count twice; harmless for the median/MAD fit, but wrong)
-  BUILT=$($PY -c "import regions; print(' '.join(str(regions.data_dir(k)) for k in regions.CANDIDATES if (regions.data_dir(k) / 'segments_L50.parquet').exists()))")
+  BUILT=$($PY -c "import regions; print(' '.join(str(regions.data_dir(k)) for k in regions.CANDIDATES if regions.kept(k) and (regions.data_dir(k) / 'segments_L50.parquet').exists()))")
   $PY t1_modes.py $BUILT >> "$LOG" 2>&1 \
     && $PY -u t1_variants.py --region "$KEY" >> "$LOG" 2>&1 \
     && for d in $BUILT; do k=$($PY -c "import regions; print(regions.key_of('$(basename $d)') or '')"); [ -n "$k" ] && $PY t1_finalize.py --region "$k" >> "$LOG" 2>&1; done \

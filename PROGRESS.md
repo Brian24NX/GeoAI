@@ -7,8 +7,8 @@ next. Details and reasons for every decision: `DECISIONS_LOG.md`.
 
 **Stage: T1 complete; T2 tier 1 done; T3 harness running on everything.**
 - **T1:** 17 regions, 16 from full OSM downloads plus the lab crawl, and the
-  Bay Area from the lab crawl only. (11 Nov, #135: the Bay Area's full
-  download is running; then all 17 come from the same sources.)
+  Bay Area from the lab crawl only. (12 Nov, #136: the Bay Area is dropped;
+  16 regions, all from the same sources, rebuilt as T1 v1.1.)
 - **T2:** elevation terrain at 5 m and 1 m, vegetation, satellite
   embeddings.
 - **Lead result:** terrain from elevation data beats OSM tags in unseen
@@ -40,6 +40,27 @@ set: 290,640 segments of 50 m, 1,992 outings, 4,702 moving hours, 14,532
 km.
 
 ---
+
+## Thu 12 Nov 2026
+
+- **Bay Area download paused at 19:04 (6.83 GB)** and then **dropped
+  (#136, Brian's call)**. After 20 h only 37% of its area was done; 96% of
+  the points were two car-logging accounts the builder throws away
+  (sunnypilot 89%, dragonpilot 8%); finishing meant 10-20 GB more and 2-3
+  days. It was 6% of hiking traces and 2.5% of walking hours. The dataset
+  now has **16 regions, all from the same sources**. Its build and
+  covariates moved to `data/archive/dropped/` on the cluster.
+- **The 4 short tiles** (Front Range and Cascades: missing 2005-09 uploads;
+  Shenandoah and San Gabriels: missing everything before ~mid-2023 that the
+  crawl lacks) re-download now (job 379480, up to 11 GB in all). Quarters
+  are rebuilt from the October pages where one real page still matches:
+  in the San Gabriels ~230 pages so far.
+- **Next:** their builds (submitted by the job), then
+  `cluster/finish_rebuild_job.sh`, `refresh_all.sh` (covariates for new
+  segments), the harness runs, new numbers (T1 v1.1), Fig 1 without the
+  Bay Area dot.
+- **Brian:** "17 regions" becomes 16 in `data.tex`, `discussion.tex` and
+  `OUTLINE.md` (counts get updated after the rerun).
 
 ## Wed 11 Nov 2026
 

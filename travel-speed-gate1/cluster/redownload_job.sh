@@ -14,19 +14,25 @@
 # the size cap Brian approved: 8 GB of OSM pages + original GPX files in all
 # (the rest of the 10 GB is left for elevation, lidar and embeddings).
 # Each finished region submits its elevation + build jobs.
-#   sbatch cluster/redownload_job.sh            (default regions)
-#   sbatch cluster/redownload_job.sh bayarea    (some of them)
+# 12 Nov (#136): the Bay Area is dropped (paused at 6.8 GB: 96% car logs);
+# Brian OK'd the 4 tiles with up to 11 GB in all, so OSM stops at 10 GB
+# (the budget file already holds the Bay Area's 6.8 GB).
+#   sbatch --export=ALL,MAXGB=10 cluster/redownload_job.sh   (the 4 tiles)
+#   sbatch cluster/redownload_job.sh shenandoah              (some of them)
 set -u
 cd /engrfs/project/jacobsn/zhou.n/travel-speed
 PY=/engrfs/project/jacobsn/zhou.n/envs/t1/bin/python
-KEYS=${*:-"bayarea sangabriel shenandoah frontrange cascades"}
+KEYS=${*:-"sangabriel shenandoah frontrange cascades"}
+MAXGB=${MAXGB:-8}
 say() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $*" | tee -a logs/t1_queue.log; }
 for KEY in $KEYS; do
   say "REDOWNLOAD $KEY: start"
-  $PY -u t1_download.py --region "$KEY" --max-gb 8 \
-      --budget-file logs/redownload_bytes.json >> "logs/t1_download_${KEY}.log" 2>&1
+  LOGF="logs/t1_download_${KEY}.log"
+  N0=$(cat "$LOGF" 2>/dev/null | wc -l)          # only this run's lines count
+  $PY -u t1_download.py --region "$KEY" --max-gb "$MAXGB" \
+      --budget-file logs/redownload_bytes.json >> "$LOGF" 2>&1
   RC=$?
-  LAST=$(grep "^T1 DOWNLOAD" "logs/t1_download_${KEY}.log" | tail -1)
+  LAST=$(tail -n +$((N0 + 1)) "$LOGF" | grep "^T1 DOWNLOAD" | tail -1)
   say "REDOWNLOAD $KEY: exit $RC, $LAST"
   if [ "$LAST" = "T1 DOWNLOAD DONE" ]; then
     rm -f "logs/build_submitted_${KEY}"

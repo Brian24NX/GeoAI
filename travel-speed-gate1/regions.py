@@ -82,6 +82,23 @@ CANDIDATES = {
 }
 
 
+# regions left out of the dataset (their data stay in data/archive/dropped/)
+DROPPED = {
+    "bayarea": "12 Nov 2026 (#136, Brian): its full OSM download can't be "
+               "finished at a sane cost: after 20 h and 6.8 GB only 37% of "
+               "the area was done, and 96% of the points were two car-"
+               "logging accounts (sunnypilot, dragonpilot) the builder "
+               "drops; finishing meant 10-20 GB more and 2-3 days. It was "
+               "6% of hiking traces, 2.5% of walking hours. Dropped so "
+               "every region comes from the same sources (#135).",
+}
+
+
+def kept(key):
+    """In the dataset (not dropped)."""
+    return key not in DROPPED
+
+
 # tiles left out of a region: low relief, few trails, and thousands of OSM
 # pages of car-logger data (plan sec. 7: "real relief")
 EXCLUDE_TILES = {

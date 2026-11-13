@@ -19,7 +19,7 @@ AC=$(ls data/t2/aspcurv5m_*.parquet 2>/dev/null)
 TC=$(ls data/t2/terraincop30_*.parquet 2>/dev/null)  # --source cop30 (#132)
 TER="pitch_max pitch_sd relief_sd hidden_grade cross_slope"
 feat() { for c in $TER; do printf "%s_%s " $c $1; done; }
-LVR="wm adk catskills greenmtn shenandoah smokies pisgah frontrange wasatch cascades gorge olympic bayarea sangabriel tahoe"
+LVR="wm adk catskills greenmtn shenandoah smokies pisgah frontrange wasatch cascades gorge olympic sangabriel tahoe"   # Bay Area dropped (#136)
 say() { echo "$(date '+%Y-%m-%d %H:%M:%S')  $*" | tee -a logs/refresh.log; }
 case "$1" in
   base)       $H --out results/t3_harness ;;
