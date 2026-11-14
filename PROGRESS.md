@@ -77,6 +77,28 @@ km.
   with UPGRADED = all 16 regions plus the missing steps). Check the
   download sizes against the ~2.5 GB left. Then the harness runs, learned
   Tobler, figures and tables.
+- **Meeting with Danni (13 Nov, #137):**
+  - Danni agreed to drop the Bay Area. Prof. Jacobs presents in Reykjavík.
+  - Danni wants every implementation detail in Methods: architecture,
+    learning rate, optimizer, parameters, pipeline. The cited inventory is
+    `paper/IMPLEMENTATION_DETAILS.md`. There is no encoder–decoder; the
+    only trained network is the learned-Tobler MLP. Brian writes the text.
+  - Jonathan: the 2008–2016 OSM files have no timestamps. The timestamped
+    crawl is the one we already read (Danni's ENGRFS copy). Open question
+    to Jonathan: does the new `OSM_GPS_traces` folder hold timestamped
+    traces our copy lacks?
+- **Refresh phase 1** (`cluster/refresh_v11_prep.sh`, job 381231, started
+  18:30):
+  - October's combined data, covariates and results are archived to
+    `data/archive/v1_2026-10_downstream`.
+  - It then runs the steps that need no downloads: dem_quality,
+    mode_check, combine, findings, terrain 5 m, land cover, context,
+    coarse and Copernicus terrain.
+  - Last, the size checks: new 1 m DEM cells, new lidar blocks
+    (`cluster/v11_lidar_size.py`), and embeddings still to fetch.
+    `t2_embed.py --reuse` copies October's value wherever a segment
+    midpoint is unchanged.
+  - Then phase 2 (downloads), within the ~2.5 GB left.
 - Brian has `paper/main.pdf` as the current draft. It is the 10 Nov build,
   the same as Tianyi's; only comments have changed since.
 

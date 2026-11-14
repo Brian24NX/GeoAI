@@ -58,7 +58,38 @@ def midpoints(key):
             ((s.lat0 + s.lat1) / 2).to_numpy())
 
 
-def run(key, year):
+def reuse(key, year, sid, lon, lat, emb, done, old):
+    """13 Nov 2026 (T1 v1.1 rebuild, #135): segment ids changed, but most
+    segments are the same 50 m of trail. The embedding is read at the
+    midpoint, so a segment whose midpoint equals an old one's (to 1e-7
+    degrees, ~1 cm) gets the old value and is not fetched again.
+    old = the archived dir holding segments_L50.parquet and t2/."""
+    f = Path(old) / "t2" / f"aef{year}_{key}.parquet"
+    if not f.exists():
+        print(f"  {key}: no old embeddings in {f}", flush=True)
+        return
+    o = pd.read_parquet(Path(old) / "segments_L50.parquet",
+                        columns=["region", "segment_id", "lat0", "lon0",
+                                 "lat1", "lon1"],
+                        filters=[("region", "==", key)])
+    o = o.merge(pd.read_parquet(f), on="segment_id")
+    ok = np.isfinite(o[[f"aef{i:02d}" for i in range(64)]]).all(axis=1)
+    o = o[ok.to_numpy()]
+    k_old = list(zip(np.round((o.lon0 + o.lon1) / 2 * 1e7).astype("int64"),
+                     np.round((o.lat0 + o.lat1) / 2 * 1e7).astype("int64")))
+    row = {k: i for i, k in enumerate(k_old)}
+    vals = o[[f"aef{i:02d}" for i in range(64)]].to_numpy(np.float32)
+    k_new = zip(np.round(lon * 1e7).astype("int64"),
+                np.round(lat * 1e7).astype("int64"))
+    hit = np.array([row.get(k, -1) for k in k_new])
+    m = hit >= 0
+    emb[m] = vals[hit[m]]
+    done[m] = True
+    print(f"  {key}: {m.sum():,} of {len(sid):,} segments reuse the old "
+          f"embedding; {(~m).sum():,} to fetch", flush=True)
+
+
+def run(key, year, old=None):
     sid, lon, lat = midpoints(key)
     idx = pd.read_parquet(INDEX, columns=["path", "crs", "year",
                                           "wgs84_west", "wgs84_south",
@@ -70,6 +101,8 @@ def run(key, year):
               & (idx.wgs84_south < lat.max())]
     emb = np.full((len(sid), 64), np.nan, dtype=np.float32)
     done = np.zeros(len(sid), bool)
+    if old:
+        reuse(key, year, sid, lon, lat, emb, done, old)
     t0 = time.time()
     for row in idx.itertuples():
         to_utm = Transformer.from_crs(4326, row.crs, always_xy=True)
@@ -108,9 +141,21 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--region", nargs="+", required=True)
     ap.add_argument("--year", type=int, default=2022)
+    ap.add_argument("--reuse", metavar="OLD_DIR",
+                    help="archived build (segments_L50.parquet + t2/) whose "
+                         "embeddings are copied for unchanged midpoints")
+    ap.add_argument("--count-only", action="store_true",
+                    help="with --reuse: report how many segments would be "
+                         "fetched, fetch nothing")
     a = ap.parse_args()
     for k in a.region:
-        run(k, a.year)
+        if a.count_only:
+            sid, lon, lat = midpoints(k)
+            reuse(k, a.year, sid, lon, lat,
+                  np.full((len(sid), 64), np.nan, np.float32),
+                  np.zeros(len(sid), bool), a.reuse)
+            continue
+        run(k, a.year, a.reuse)
 
 
 if __name__ == "__main__":
