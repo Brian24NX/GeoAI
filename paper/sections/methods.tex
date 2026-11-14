@@ -45,9 +45,19 @@ $z$:
 with $z$ the SD of the path's 5~m pitches divided by 0.10 and $v$ in km/h;
 on all walking segments, $a_0 = 1.598$, $a_1 = -0.173$, $k_0 = 2.152$,
 $k_1 = -0.392$ and $s_0 = 0.043$.
-% TODO (Brian, Methods rewrite Thu 12 Nov; decided 8 Nov, #130): one short
-% paragraph on learned Tobler, beside Eq. (1), not replacing it; what it must
-% say is in the Paper Rewrite Guide (Methods).
+% DRAFT by Claude (13 Nov 2026, after Danni asked for architecture and
+% training details), from paper/IMPLEMENTATION_DETAILS.md (each fact cited
+% to the code there; learned_tobler.py, run_all.py, t3_harness.py).
+% Brian: rewrite it in your own words.
+\textbf{Learned Tobler.} A small multilayer perceptron (12 terrain
+covariates, two hidden layers of 32 SiLU units, 5 outputs; about 1.9k
+weights; not an encoder--decoder) gives each segment its own constants
+$a$, $k_\pm$, $s_0$ of the reference curve and a spread $\log\sigma$;
+slope enters only through the curve. Its output layer starts at the
+reference fit. It is trained on the Student-$t$ negative log-likelihood
+($\nu=5$) with Adam (learning rate $10^{-3}$, batches of 2,048), early
+stopping on the stopping outings (patience 5), and averaged over three
+seeds.
 
 \textbf{Predictive distributions and tests.} Every model predicts its
 point estimate plus the quantiles of its residuals on held-out outings of
@@ -66,3 +76,12 @@ the median residual of a hike's first kilometre, shrunk by 0.61 (fitted on
 calibration outings), applied to the rest. Asymmetry is the ratio of speed
 down to speed up on out-and-back pairs (one outing, one OSM way, mean grade
 at least 3\%).
+
+% DRAFT by Claude (13 Nov 2026), from paper/IMPLEMENTATION_DETAILS.md.
+% Brian: rewrite it in your own words.
+\textbf{Implementation.} Curves are fitted by robust least squares
+(soft-L1 loss; SciPy), and the ridge penalty is chosen on the stopping
+outings. The trees are scikit-learn histogram gradient boosting (learning
+rate 0.05, up to 1,000 iterations, 31 leaves, at least 200 segments per
+leaf, early stopping after 30 rounds). Pretrained embeddings are frozen.
+All runs use 8 CPU cores (Python 3.12, scikit-learn 1.9, PyTorch 2.14).

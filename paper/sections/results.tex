@@ -35,6 +35,32 @@ $^\ddagger$Terrain inputs; residual-quantile spread (its own Student-t
 spread); mean of 3 seeds.}
 \end{table}
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_curve}
+\caption{(a) Walking speed vs slope in the walking direction: median per
+2\% bin (dots), middle 50\% of segments (gray), our refitted curve,
+Campbell et al.'s median curve~\cite{campbell2022variability} and
+Tobler's function~\cite{tobler1993}. (b) Speed down / speed up for the same
+hiker on the same trail (out-and-back pairs; 95\% intervals resample
+outings) and the ratio each curve implies.}
+\label{fig:curve}
+\end{figure}
+
+% Fig. 3 is defined here, before the text that cites it, so the wide
+% float lands at the top of page 4 (13 Nov 2026: defined later, it
+% slid to page 5).
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_skill_regions}
+\caption{CRPS skill vs the refitted slope curve. (a) By model, for new
+hikes in known regions (light; 95\% intervals resample outings) and in
+regions the model never saw (dark; intervals resample regions). (b) Each
+region held out:
+terrain vs OSM tags (additive models); terrain beats tags in 16 of 17.}
+\label{fig:skill}
+\end{figure*}
+
 
 \textbf{Tobler's function fails everywhere.} Walking speed peaks near
 4.2~km/h on level to gently descending trail, not at 6~km/h
@@ -113,28 +139,6 @@ regions, the median error in moving time after the first kilometre is
 13.6\% for the slope curve and 13.0\% with terrain, but 10.0\% with the
 hiker's pace on that kilometre and 9.6\% with both.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_curve}
-\caption{(a) Walking speed vs slope in the walking direction: median per
-2\% bin (dots), middle 50\% of segments (gray), our refitted curve,
-Campbell et al.'s median curve~\cite{campbell2022variability} and
-Tobler's function~\cite{tobler1993}. (b) Speed down / speed up for the same
-hiker on the same trail (out-and-back pairs; 95\% intervals resample
-outings) and the ratio each curve implies.}
-\label{fig:curve}
-\end{figure}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{fig_skill_regions}
-\caption{CRPS skill vs the refitted slope curve. (a) By model, for new
-hikes in known regions (light; 95\% intervals resample outings) and in
-regions the model never saw (dark; intervals resample regions). (b) Each
-region held out:
-terrain vs OSM tags (additive models); terrain beats tags in 16 of 17.}
-\label{fig:skill}
-\end{figure*}
 
 % Dropped for the 4-page budget (paper/OUTLINE.md); restore if space allows:
 % the travel-mode result (one shared curve x a constant per mode: runners

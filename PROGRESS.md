@@ -99,7 +99,20 @@ km.
     `t2_embed.py --reuse` copies October's value wherever a segment
     midpoint is unchanged.
   - Then phase 2 (downloads), within the ~2.5 GB left.
-- Brian has `paper/main.pdf` as the current draft. It is the 10 Nov build,
+- **Methods gets the implementation details** (Brian's request, after
+  Danni's).
+  - Two paragraphs drafted by Claude, marked for Brian to rewrite:
+    "Learned Tobler" (the MLP's layers, loss, Adam settings, early
+    stopping, seeds), replacing the TODO, and "Implementation" (solvers,
+    ridge penalty, tree settings, frozen embeddings, software, CPUs).
+  - They pushed Fig. 3 to page 5. Fixed by defining Figs. 2 and 3 right
+    after Table I in `results.tex` (no words changed).
+  - Now 4 pages of content; the references spill onto page 5, which the
+    kit allows.
+  - `paper/main.pdf` is rebuilt. Tianyi's version stays in commit
+    677064a. The numbers and figures are still October's (17 regions)
+    until the v1.1 rerun.
+- Brian has `paper/main.pdf` as the current draft (13 Nov build). It is the 10 Nov build,
   the same as Tianyi's; only comments have changed since.
 
 ## Thu 12 Nov 2026
