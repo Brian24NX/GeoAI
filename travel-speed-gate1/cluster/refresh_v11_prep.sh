@@ -33,7 +33,11 @@ if [ ! -e "$ARCH/segments_L50.parquet" ]; then
 fi
 KEYS=$($PY -c "import regions; print(' '.join(k for k in regions.CANDIDATES if regions.kept(k)))")
 LVR="wm adk catskills greenmtn shenandoah smokies pisgah frontrange wasatch cascades gorge olympic sangabriel tahoe"
-step dem_quality    $PY -u -W ignore t1_dem_quality.py --n 300
+# dem_quality is a diagnostic (USGS service; it timed out with a 504 on
+# 13 Nov): a failure is logged, not fatal; rerun it on its own later.
+say "start dem_quality"
+if $PY -u -W ignore t1_dem_quality.py --n 300 >> logs/refresh_steps.log 2>&1; then
+  say "done  dem_quality"; else say "SKIPPED dem_quality (failed; rerun later)"; fi
 step mode_check     $PY -u -W ignore t1_mode_check.py
 step combine        $PY -u -W ignore t1_combine.py
 step findings       $PY -u -W ignore t1_findings.py
