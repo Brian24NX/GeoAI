@@ -59,6 +59,17 @@ km.
   - The 1 m DEM count is pending.
   - The OSM downloads used 8.45 GB of the 11 GB cap, so about 2.5 GB is
     left: the lidar alone uses most of it. Ask Brian before phase 2.
+- 1 m DEM size check: 162 new cells (~0.16 GB). **Brian raised the cap
+  to 13 GB in all (19 Nov)**, so the new lidar + DEM may add up to 4.5 GB;
+  the jobs stop at 4.0 GB (`cluster/v11_common.sh` guard).
+- **Submitted 19 Nov:**
+  - `refresh_v11_fetch.sh` (job 389906): 1 m DEM, terrain1m, embeddings
+    with --reuse, weather, terrain curve and effects;
+  - `refresh_v11_lidar.sh` (job 389907): lidar vegetation, then strata;
+  - harness array 389908: 25 runs, after the fetch job;
+  - harness array 389909: 7 vegetation runs, after both jobs.
+  - Then: the learned Tobler (laptop, from the harness folds), the paper
+    tables and figures, and the paper's numbers (v1.1).
 - ENGRFS was very slow on 19 Nov evening (a `stat` timed out; reads take
   minutes).
 
