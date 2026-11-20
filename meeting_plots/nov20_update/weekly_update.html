@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Weekly Update, 16–20 Nov 2026</title>
+<!-- One page, plain words (Brian prefers this; see 13 Nov). Facts: PROGRESS.md
+     13 Nov; DECISIONS_LOG #137; results/t1_summary (T1 v1.1, cluster). -->
+<style>
+@page { size: letter; margin: 0.55in 0.65in; }
+:root { --ink: #1b221d; --quiet: #56625a; --line: #d3dbd1; --tint: #eef1ec; }
+* { box-sizing: border-box; }
+body { margin: 0; color: var(--ink); font: 10.5pt/1.42 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+h1 { font-size: 19pt; margin: 0 0 1pt; letter-spacing: -0.01em; }
+.byline { color: var(--quiet); font-size: 9.5pt; margin-bottom: 8pt; }
+h2 { font-size: 12pt; margin: 12pt 0 3pt; break-after: avoid; }
+p { margin: 0 0 4pt; }
+ul, ol { margin: 0 0 4pt 16pt; padding: 0; }
+li { margin: 2pt 0; }
+.lead { font-size: 11.5pt; }
+table { border-collapse: collapse; width: 78%; font-size: 10pt; margin: 4pt 0 4pt; }
+th, td { text-align: left; padding: 3pt 8pt; border-bottom: 1px solid var(--line); }
+th { font-weight: 600; border-bottom: 1.5px solid var(--ink); }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; }
+.box { background: var(--tint); border-radius: 6pt; padding: 7pt 11pt; margin: 12pt 0 6pt; }
+.box p:last-child, .box ol:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<h1>Weekly Update, 16–20 Nov 2026</h1>
+<div class="byline">Brian Zhou · CSE 5999 hiking-speed project · for Danni Beaulieu · 20 Nov 2026</div>
+<p class="lead"><b>In short:</b> I had an exam this week, so I haven't started rewriting the paper yet. Methods now has the implementation details you asked for. The 16-region data is rebuilt and barely changed. I'd like to send the full draft on Wed 2 Dec instead of today.</p>
+
+<h2>1. Implementation details are in Methods</h2>
+<p>You asked whether the model is an MLP or an encoder–decoder. There is no encoder–decoder. Most models are fitted curves, ridge regression and boosted trees. The one neural network is the <b>learned Tobler</b> (Table I, last row): a small MLP.</p>
+<ul>
+  <li><b>Network:</b> 12 terrain inputs → two hidden layers of 32 (SiLU) → 5 outputs: each segment's own curve constants and a spread. About 1.9k weights.</li>
+  <li><b>Training:</b> Adam, learning rate 0.001, batches of 2,048, Student-t loss, early stopping, 3 seeds.</li>
+  <li><b>Other models:</b> robust least squares for the curves; the ridge penalty is picked on held-out hikes; trees use learning rate 0.05, up to 1,000 rounds and 31 leaves. Pretrained embeddings are frozen.</li>
+</ul>
+<p>The paper still fits in 4 pages, not counting references.</p>
+
+<h2>2. The 16-region data is rebuilt</h2>
+<p>All 16 regions are rebuilt with the fixed download and the joined-up anonymous hikes. The data barely changed:</p>
+<table>
+  <tr><th>Same 16 regions</th><th class="n">October</th><th class="n">Now</th></tr>
+  <tr><td>Hiking traces</td><td class="n">2,699</td><td class="n">2,654</td></tr>
+  <tr><td>Walking hours</td><td class="n">4,585</td><td class="n">4,623</td></tr>
+</table>
+<p>Next, the model inputs (terrain, vegetation, satellite) are being redone for the rebuilt trail segments, and then every model reruns. That gives the new numbers for Table I and the figures.</p>
+
+<h2>3. Older OSM data: nothing to add</h2>
+<p>Jonathan confirmed that the 2008–2016 files have no timestamps, so they can't give speeds. The data with timestamps is the lab's 2016–2022 copy, which we already use in full.</p>
+
+<div class="box">
+<p><b>Question for you</b></p>
+<p>Can I send the full draft to you, Tianyi and Prof. Jacobs on <b>Wed 2 Dec</b>? Next week has Thanksgiving, and I need the new numbers and my rewrite first. That still leaves over a month before the 10 Jan deadline.</p>
+</div>
+
+<h2>Next steps</h2>
+<ul>
+  <li><b>Next week:</b> new numbers; I rewrite the Introduction and Methods (their numbers won't change).</li>
+  <li><b>Mon 30 Nov – Tue 1 Dec:</b> I rewrite Results and Discussion with the new numbers.</li>
+  <li><b>Wed 2 Dec:</b> the full draft goes to you, Tianyi and Prof. Jacobs.</li>
+</ul>
+
+</body>
+</html>

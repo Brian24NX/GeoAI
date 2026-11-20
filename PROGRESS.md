@@ -41,6 +41,27 @@ km.
 
 ---
 
+## Thu 19 Nov 2026
+
+- Brian had an exam all week, so no sessions ran 14-18 Nov. The plan
+  (new numbers over the weekend, rewrite Mon-Thu, full draft Fri 20 Nov)
+  slipped.
+- **Brief for Fri 20 Nov:** `meeting_plots/nov20_update/weekly_update.html`
+  produces `Weekly_Update_16-20Nov.pdf` (one page, plain words). It covers
+  the implementation details in Methods, T1 v1.1 against October, and
+  "the older OSM data has no timestamps". It asks Danni to move the full
+  draft to **Wed 2 Dec**.
+- **Refresh phase 1** (job 381389) ran its size checks:
+  - new lidar blocks: 4,576, about **2.19 GB** (San Gabriels 1.41,
+    Shenandoah 0.39, Tahoe 0.17);
+  - embeddings: most segments reuse October's values; about 33,000 are
+    to fetch (Cascades 10,685).
+  - The 1 m DEM count is pending.
+  - The OSM downloads used 8.45 GB of the 11 GB cap, so about 2.5 GB is
+    left: the lidar alone uses most of it. Ask Brian before phase 2.
+- ENGRFS was very slow on 19 Nov evening (a `stat` timed out; reads take
+  minutes).
+
 ## Fri 13 Nov 2026
 
 - **All 4 short tiles are re-downloaded** (Cascades finished at 01:01).
