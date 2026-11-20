@@ -70,6 +70,14 @@ km.
   - harness array 389909: 7 vegetation runs, after both jobs.
   - Then: the learned Tobler (laptop, from the harness folds), the paper
     tables and figures, and the paper's numbers (v1.1).
+- **CSE 5999 Progress Report #3:** `progress_report_3/`, CVPR template, 4
+  pages, 20 references, all 7 required sections.
+  - Drafted with Claude from the project files, as #2 was. Section 6
+    discloses the AI use.
+  - Its numbers are October's (v1), labelled as such; the dataset counts
+    are v1.1.
+  - Due Fri 20 Nov 23:59 (two free late days). The course asks that Brian
+    discuss it with Danni first: the 20 Nov meeting.
 - ENGRFS was very slow on 19 Nov evening (a `stat` timed out; reads take
   minutes).
 
