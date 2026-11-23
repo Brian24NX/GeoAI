@@ -40,6 +40,7 @@ os.environ.setdefault("GDAL_HTTP_USERAGENT",
 import numpy as np
 import pandas as pd
 import rasterio
+import rasterio.errors
 from pyproj import Transformer
 
 INDEX = Path("cache/aef/aef_index.parquet")
@@ -113,14 +114,27 @@ def run(key, year, old=None):
             continue
         url = HTTPS + row.path.split("opendata.source.coop/", 1)[1]
         pts = np.nonzero(m)[0]
-        with rasterio.open(url) as src:
-            # visit points block by block so each block is fetched once
-            r, c = rasterio.transform.rowcol(src.transform, x[pts], y[pts])
-            order = np.lexsort((np.asarray(c) // 1024,
-                                np.asarray(r) // 1024))
-            pts = pts[order]
-            vals = np.array(list(src.sample(zip(x[pts], y[pts]))),
-                            dtype=np.float32)
+        # 19 Nov 2026: a range request came back short ("TIFFFillTile: Read
+        # error ... got 14244 bytes, expected 549718") and killed the run;
+        # retry the whole tile a few times before giving up.
+        for attempt in range(5):
+            try:
+                with rasterio.open(url) as src:
+                    # visit points block by block so each block is fetched once
+                    r, c = rasterio.transform.rowcol(src.transform, x[pts],
+                                                     y[pts])
+                    order = np.lexsort((np.asarray(c) // 1024,
+                                        np.asarray(r) // 1024))
+                    pts = pts[order]
+                    vals = np.array(list(src.sample(zip(x[pts], y[pts]))),
+                                    dtype=np.float32)
+                break
+            except rasterio.errors.RasterioError as err:
+                if attempt == 4:
+                    raise
+                print(f"  {key}: read error ({err}); retry {attempt + 1} "
+                      "in 60 s", flush=True)
+                time.sleep(60)
         bad = (vals == -128).all(axis=1)
         vals = (vals / 127.5) ** 2 * np.sign(vals)
         vals[bad] = np.nan
@@ -147,8 +161,15 @@ def main():
     ap.add_argument("--count-only", action="store_true",
                     help="with --reuse: report how many segments would be "
                          "fetched, fetch nothing")
+    ap.add_argument("--skip-done", action="store_true",
+                    help="skip regions whose output is newer than the "
+                         "combined segments (resume a stopped run)")
     a = ap.parse_args()
     for k in a.region:
+        f = OUT / f"aef{a.year}_{k}.parquet"
+        if a.skip_done and f.exists() and f.stat().st_mtime > SEG.stat().st_mtime:
+            print(f"{k}: {f} is newer than {SEG}; skipped", flush=True)
+            continue
         if a.count_only:
             sid, lon, lat = midpoints(k)
             reuse(k, a.year, sid, lon, lat,
