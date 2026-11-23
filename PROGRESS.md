@@ -63,7 +63,9 @@ km.
   - Tue/Wed: Brian rewrites the Introduction and Methods.
   - Thu/Fri: Thanksgiving.
   - Sat 28 Nov to Tue 1 Dec: Results and Discussion.
-  - Wed 2 Dec: the full draft (if Danni agreed).
+  - Wed 2 Dec: the full draft. **Danni agreed** at the 20 Nov meeting
+    (Brian, 23 Nov).
+- Progress Report #3 was submitted (Brian, 23 Nov).
 
 ## Thu 19 Nov 2026
 
