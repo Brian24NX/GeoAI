@@ -41,6 +41,30 @@ km.
 
 ---
 
+## Mon 23 Nov 2026
+
+- **The v1.1 refresh stalled for 4 days.**
+  - The fetch job (389906) did the 1 m DEM and terrain1m, then failed at
+    18:38 on 19 Nov in `t2_embed.py`: a truncated HTTP range read of an
+    AlphaEarth tile.
+  - So both harness arrays sat as DependencyNeverSatisfied. The lidar job
+    (389907) finished fine at 01:50 on 20 Nov, with 1.68 GB of new
+    downloads.
+- **Fix:**
+  - `t2_embed.py` retries a tile 5 times, 60 s apart, and gained
+    `--skip-done`.
+  - `cluster/refresh_v11_fetch2.sh` runs the rest: embeddings for the
+    built regions only (the 19 Nov list wrongly held unbuilt candidates),
+    weather, the terrain curve, terrain effects.
+  - Resubmitted as fetch2 394536; harness arrays 394537 (25 runs) and
+    394538 (7 runs) wait for it.
+- **Plan for Thanksgiving week:**
+  - Tue: new numbers; learned Tobler rerun; the changed-numbers list.
+  - Tue/Wed: Brian rewrites the Introduction and Methods.
+  - Thu/Fri: Thanksgiving.
+  - Sat 28 Nov to Tue 1 Dec: Results and Discussion.
+  - Wed 2 Dec: the full draft (if Danni agreed).
+
 ## Thu 19 Nov 2026
 
 - Brian had an exam all week, so no sessions ran 14-18 Nov. The plan
