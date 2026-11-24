@@ -41,6 +41,35 @@ km.
 
 ---
 
+## Tue 24 Nov 2026
+
+- **All 32 harness runs checked** (finished 23 Nov 19:08): every results
+  folder rewritten, no errors in the logs.
+- **Part 4 of the refresh** (`cluster/refresh_v11_post.sh`, job 397408,
+  10 min, no downloads): robust summary, the de-identified table for the
+  learned Tobler, Fig. 1 inset data, tag transfer, sparse traces, travel
+  modes, trail map, lidar vegetation effects, explainer data. (Job 397407
+  stopped at `t3_coarse_summary.py`, a laptop script; it ran on the laptop.)
+- **Learned Tobler rerun** on the v1.1 table (laptop, ~6 min, 5 splits ×
+  3 seeds). Same story as October: ties the trees scored the harness's way;
+  with its own spread it beats them in 4 of 5 tests (unseen regions +1.17
+  [0.63, 1.83]).
+- **The new numbers** (decision #138). Two scripts now produce them, and
+  both reproduce October's printed values from the October files:
+  `make_paper_table.py` (Table I) and `paper_numbers.py` (everything else,
+  old → new). **Main result unchanged: terrain +2.1% / +2.8% in unseen
+  regions.** Changes in meaning: terrain beats tags in 14 of 16 regions
+  (North Shore now a tie); hidden climbing is about half of the gain;
+  embeddings help about half as much as terrain everywhere; 30 m land
+  cover hurts in unseen regions.
+- **Paper updated:** Table I, all figures (Fig. 1 has 16 regions, no orange
+  dot), and every number in the draft text; a sentence that had lost its
+  first words to a comment line fixed. Still 4 pages + references. Brian's
+  list: `paper/CHANGED_NUMBERS_v1.1.md`.
+- **Next (plan):** Brian starts the Introduction today; Wed 25 Brian
+  rewrites Methods; Thanksgiving Thu–Fri; Sat 28 – Tue 1 Dec Results and
+  Discussion; Wed 2 Dec full draft to Danni, Tianyi and Prof. Jacobs.
+
 ## Mon 23 Nov 2026
 
 - **The v1.1 refresh stalled for 4 days.**

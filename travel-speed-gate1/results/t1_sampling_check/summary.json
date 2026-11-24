@@ -1,7 +1,7 @@
 {
- "traces": 1020,
- "regions": 17,
- "km_at_5s": 8963.9,
+ "traces": 932,
+ "regions": 16,
+ "km_at_5s": 8170.6,
  "rates": {
   "5": {
    "speed_ratio": 1.0,
@@ -12,108 +12,108 @@
    "speed_ratio_median_trace": 1.0,
    "distance_ratio": 1.0,
    "moving_time_ratio": 1.0,
-   "stopped_share": 0.2636
+   "stopped_share": 0.2647
   },
   "10": {
-   "speed_ratio": 0.9709,
+   "speed_ratio": 0.9714,
    "speed_ratio_ci": [
-    0.9689,
-    0.9728
+    0.9692,
+    0.9731
    ],
-   "speed_ratio_median_trace": 0.9799,
-   "distance_ratio": 0.9852,
-   "moving_time_ratio": 1.0229,
-   "stopped_share": 0.2465
+   "speed_ratio_median_trace": 0.9801,
+   "distance_ratio": 0.9857,
+   "moving_time_ratio": 1.0228,
+   "stopped_share": 0.2477
   },
   "20": {
-   "speed_ratio": 0.9254,
+   "speed_ratio": 0.9263,
    "speed_ratio_ci": [
-    0.9208,
-    0.9297
+    0.9213,
+    0.9308
    ],
-   "speed_ratio_median_trace": 0.9448,
-   "distance_ratio": 0.962,
-   "moving_time_ratio": 1.0567,
-   "stopped_share": 0.2211
+   "speed_ratio_median_trace": 0.9449,
+   "distance_ratio": 0.963,
+   "moving_time_ratio": 1.0571,
+   "stopped_share": 0.222
   },
   "30": {
-   "speed_ratio": 0.8927,
+   "speed_ratio": 0.8941,
    "speed_ratio_ci": [
-    0.8861,
-    0.8989
+    0.887,
+    0.9006
    ],
-   "speed_ratio_median_trace": 0.9178,
-   "distance_ratio": 0.9425,
-   "moving_time_ratio": 1.0778,
-   "stopped_share": 0.2051
+   "speed_ratio_median_trace": 0.9186,
+   "distance_ratio": 0.9443,
+   "moving_time_ratio": 1.0784,
+   "stopped_share": 0.206
   }
  },
  "observed": [
   {
    "interval_bin_s": "(0.0, 5.0]",
-   "median_interval_s": 2.5532,
-   "regions": 17,
-   "traces": 1044,
-   "flat_segments": 35951,
+   "median_interval_s": 2.5936,
+   "regions": 16,
+   "traces": 963,
+   "flat_segments": 33889,
    "flat_speed_ratio": 1.0
   },
   {
    "interval_bin_s": "(5.0, 10.0]",
-   "median_interval_s": 7.7963,
-   "regions": 17,
-   "traces": 627,
-   "flat_segments": 24964,
-   "flat_speed_ratio": 1.0174
+   "median_interval_s": 7.7921,
+   "regions": 16,
+   "traces": 600,
+   "flat_segments": 24932,
+   "flat_speed_ratio": 1.0266
   },
   {
    "interval_bin_s": "(10.0, 15.0]",
-   "median_interval_s": 12.6093,
-   "regions": 17,
-   "traces": 294,
-   "flat_segments": 10711,
-   "flat_speed_ratio": 0.9715
+   "median_interval_s": 12.5409,
+   "regions": 16,
+   "traces": 283,
+   "flat_segments": 10079,
+   "flat_speed_ratio": 0.9655
   },
   {
    "interval_bin_s": "(15.0, 25.0]",
-   "median_interval_s": 17.6156,
-   "regions": 17,
-   "traces": 204,
-   "flat_segments": 6575,
-   "flat_speed_ratio": 0.9183
+   "median_interval_s": 17.612,
+   "regions": 16,
+   "traces": 195,
+   "flat_segments": 6558,
+   "flat_speed_ratio": 0.919
   },
   {
    "interval_bin_s": "(25.0, 40.0]",
-   "median_interval_s": 30.0758,
-   "regions": 14,
-   "traces": 85,
-   "flat_segments": 2773,
-   "flat_speed_ratio": 0.9211
+   "median_interval_s": 30.0905,
+   "regions": 15,
+   "traces": 75,
+   "flat_segments": 2347,
+   "flat_speed_ratio": 0.9537
   },
   {
    "interval_bin_s": "(40.0, inf]",
-   "median_interval_s": 71.3355,
-   "regions": 15,
-   "traces": 55,
-   "flat_segments": 3361,
-   "flat_speed_ratio": 0.8228
+   "median_interval_s": 71.2799,
+   "regions": 14,
+   "traces": 54,
+   "flat_segments": 3341,
+   "flat_speed_ratio": 0.8206
   }
  ],
  "curve": {
   "all": {
-   "segments": 289679,
-   "peak_kmh": 4.16979741141827,
-   "peak_slope_pct": -3.715815119931804,
-   "k_up": 2.620804599433258,
-   "k_down": 2.448146925544303,
-   "flat_median_kmh": 4.161096069608491
+   "segments": 283755,
+   "peak_kmh": 4.1609830126302265,
+   "peak_slope_pct": -3.894398502060677,
+   "k_up": 2.6043677945483603,
+   "k_down": 2.4718286157343736,
+   "flat_median_kmh": 4.142779237387624
   },
   "interval_le10s": {
-   "segments": 210677,
-   "peak_kmh": 4.28354432307054,
-   "peak_slope_pct": -3.789542218059637,
-   "k_up": 2.53211910511258,
-   "k_down": 2.446247346052602,
-   "flat_median_kmh": 4.2733396953570155
+   "segments": 206671,
+   "peak_kmh": 4.277911016718506,
+   "peak_slope_pct": -3.9566809228764486,
+   "k_up": 2.5095477340050665,
+   "k_down": 2.4541092079128872,
+   "flat_median_kmh": 4.256255491211555
   }
  }
 }

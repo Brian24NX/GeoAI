@@ -12,7 +12,7 @@ Draft figures for the IGARSS paper (paper/OUTLINE.md), IEEE column width
                    (Fig. 3 in the paper; the single ones serve the slides)
   fig_hike_time.png error in predicted moving time per hike, in held-out
                    regions (after each hike's first km), by model
-  fig_curve.png    (T4) speed vs slope in 17 regions vs Tobler and Campbell,
+  fig_curve.png    (T4) speed vs slope in 16 regions vs Tobler and Campbell,
                    and the down/up ratio on same-hiker out-and-back pairs
                    (results/t1_findings: numbers.json, slope_bins.csv)
 
@@ -210,7 +210,7 @@ def _tobler(s):
 
 
 def fig_curve():
-    """Fig. 2 (T4): (a) walking speed vs slope in 17 regions: median and
+    """Fig. 2 (T4): (a) walking speed vs slope in 16 regions: median and
     quartiles per 2% bin, the refitted curve, Tobler and Campbell's
     published median; (b) speed down / speed up on out-and-back pairs (same
     hiker, same trail), with what each curve implies."""
@@ -292,7 +292,7 @@ LABELS = {  # region: (short name, label offset in points, alignment)
 
 
 def fig_map():
-    """Fig. 1: the 17 regions (circle area = walking hours) and an inset
+    """Fig. 1: the 16 regions (circle area = walking hours) and an inset
     of the White Mountains' walking segments colored by speed. Needs the
     Natural Earth files in cache/naturalearth/ (ne_110m_admin_0_countries,
     ne_110m_admin_1_states_provinces_lines; public domain)."""

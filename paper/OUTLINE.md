@@ -67,9 +67,9 @@ value. A hiker's own pace still matters most.
 ## 2. Data (~0.75 page)
 
 - **Source:** OSM GPS traces (API pages + original files + the lab's crawl
-  of 1.5M uploads). 17 regions in the US and Canada; 2,876 hiking traces;
-  the walking analysis set has 2,046 traces in 1,992 outings, 4,702 moving
-  hours, 290,640 segments of 50 m.
+  of 1.5M uploads). 16 regions in the US and Canada (v1.1, 24 Nov); 2,654 hiking traces;
+  the walking analysis set has 1,904 traces in 1,861 outings, 4,623 moving
+  hours, 284,711 segments of 50 m.
 - **Pipeline (one paragraph):**
   - deduplicate (same recording, group hikes → outings);
   - stop removal;

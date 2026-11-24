@@ -7,19 +7,19 @@
 
 \textbf{Why tags transfer less well.} Not because tag values mean
 different things in different places: within the same hike, harder
-sac\_scale grades are slower in every region with enough tagged trail
-(mountain\_hiking vs hiking $-5\%$, 10 of 10 regions; harder grades
+sac\_scale grades are slower in nearly every region with enough tagged
+trail (mountain\_hiking vs hiking $-6\%$, 10 of 11 regions; harder grades
 $-11\%$, 8 of 8). Tags are mapped unevenly (sac\_scale is on 1--96\% of
 walked trail, by region), but in unseen regions the additive tag model
 scores about the same on tagged and untagged segments; the loss is mostly
-in the boosted trees ($+1.5\% \to +0.4\%$), as if they fit region-specific
+in the boosted trees ($+1.4\% \to +0.2\%$), as if they fit region-specific
 tag combinations. Terrain exists on every trail, and its effect has the
-same sign in all 17 regions (steppiest vs smoothest fifth, $-12\%$).
+same sign in all 16 regions (steppiest vs smoothest fifth, $-12\%$).
 
 \textbf{What terrain captures.} Uneven grade within the segment, such as
 rock steps and short pitches, plus difficulty beyond grade. Its additive
-gain is largest on descents and level trail ($+2.3$ to $+2.8\%$) and
-smallest on steep climbs ($+0.8\%$; trees $+2.6\%$), as if footing
+gain is largest on descents and level trail ($+2.4$ to $+2.6\%$) and
+smallest on steep climbs ($+0.9\%$; trees $+3.3\%$), as if footing
 matters most going down.
 The signal is the trail's elevation profile, not micro-relief: 1~m lidar
 adds little over the 5~m grid, and STRIDE's off-path roughness and
@@ -27,9 +27,9 @@ understory terms add nothing on trails or make it worse.
 
 \textbf{Use.} The terrain-adjusted function, Eq.~(\ref{eq:terrain}), needs only
 a DEM. Fitted on the other
-16 regions, it gives a pace for all 3,369~km of White Mountains trail,
+15 regions, it gives a pace for all 3,369~km of White Mountains trail,
 77\% of which no trace in our data covers. It travels less far than the full terrain model, though
-($+0.6\%$ with a whole zone held out, $-0.3\%$ between East and West).
+($+0.6\%$ with a whole zone held out, $-0.4\%$ between East and West).
 
 \textbf{Limits.} Our hikers are OSM uploaders, not a random sample. Sparse
 traces read slow (Sec.~\ref{sec:data}), as hiking functions depend on the
@@ -47,14 +47,14 @@ few percent because GPS noise and the hiker dominate.
 % in forests: the canopy), the slope curve is 4.9% worse and terrain no longer
 % beats tags, so where only such data exist, tags may do as well.
 Weather~\cite{thornton2022daymet} (a factor in~\cite{huang2026modeling})
-slows our hikers on hot days ($-3\%$
+slows our hikers on hot days ($-3.5\%$
 above 25$^\circ$C) and with snow cover ($-4\%$), but neither weather
-($-0.0\%$) nor date and time of day improves predictions in new regions.
+($-0.2\%$) nor date and time of day improves predictions in new regions.
 
-\textbf{Conclusion.} Across 17 North American regions, terrain from
+\textbf{Conclusion.} Across 16 North American regions, terrain from
 elevation data predicts hiking speed in regions a model has never seen
 better than OSM tags, which keep only part of their gain there; vegetation
-adds little, and satellite embeddings help mainly where the model was
-trained. Tobler's function is too fast on gentle trail and overstates the
+adds little, and satellite embeddings help about half as much as
+terrain. Tobler's function is too fast on gentle trail and overstates the
 speed-up downhill. The terrain-adjusted function keeps part of the terrain
 gain and needs only a DEM, though a hiker's own pace matters most.

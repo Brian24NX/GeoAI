@@ -18,7 +18,7 @@ and the side slope, from the 5~m grid and, where available, 1~m lidar,
 which adds STRIDE's ground roughness~\cite{campbell2024stride}; (d)~2021
 land cover and tree canopy at 30~m~\cite{dewitz2023nlcd}; (e)~2022
 AlphaEarth satellite embeddings at the segment
-midpoint~\cite{brown2025alphaearth,alphaearth2025}; (f)~in the 15 regions
+midpoint~\cite{brown2025alphaearth,alphaearth2025}; (f)~in the 14 regions
 with lidar point clouds, understory density (returns at 0.85--1.2~m among
 those below 1.2~m~\cite{campbell2018understory}), canopy cover and height
 within 3~m of the path. As a control,
@@ -43,8 +43,8 @@ $z$:
 \label{eq:terrain}
 \end{equation}
 with $z$ the SD of the path's 5~m pitches divided by 0.10 and $v$ in km/h;
-on all walking segments, $a_0 = 1.598$, $a_1 = -0.173$, $k_0 = 2.152$,
-$k_1 = -0.392$ and $s_0 = 0.043$.
+on all walking segments, $a_0 = 1.598$, $a_1 = -0.173$, $k_0 = 2.156$,
+$k_1 = -0.392$ and $s_0 = 0.044$.
 % DRAFT by Claude (13 Nov 2026, after Danni asked for architecture and
 % training details), from paper/IMPLEMENTATION_DETAILS.md (each fact cited
 % to the code there; learned_tobler.py, run_all.py, t3_harness.py).
@@ -65,7 +65,7 @@ the training data (training outings split 70/15/15 into fitting, early
 stopping and calibration), so calibration has to transfer too. Splits never
 separate a segment from its hike: 5 folds of outings (new hikes) or of
 uploaders (new hikers), 5 folds of 10~km UTM squares (new places) and, the
-headline, leave one region out (17 folds); stricter checks hold out whole
+headline, leave one region out (16 folds); stricter checks hold out whole
 zones, half the continent, or a region together with all its hikers. We
 report the CRPS~\cite{gneiting2007strictly} of $\ln v$ as skill against the refitted
 slope curve, $1-\mathrm{CRPS}/\mathrm{CRPS}_{\mathrm{slope}}$, with 95\%

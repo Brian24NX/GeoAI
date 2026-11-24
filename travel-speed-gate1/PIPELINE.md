@@ -214,10 +214,10 @@ cd ../meeting_plots/oct16 && tectonic slides.tex
 
 | In the paper | File | Made by |
 |---|---|---|
-| Dataset counts (2,876 traces, 1,992 outings, 290,640 segments, 4,702 h) | `results/t1_all/DATA_CARD.md` | `t1_combine.py` |
+| Dataset counts (v1.1: 2,654 traces, 1,861 outings, 284,711 segments, 4,623 h) | `results/t1_all/DATA_CARD.md` | `t1_combine.py` |
 | Fig. 1, the regions map | `results/t1_summary/regions.csv`, `results/fig1_wm_segments.parquet` | `t1_summary.py`, `make_paper_data.py` |
 | Fig. 2, speed vs slope and the down/up ratio | `results/t1_findings/numbers.json`, `slope_bins.csv` | `t1_findings.py` |
-| Table I and Fig. 3, skill scores | `metrics.csv`, `skill_ci.csv` in the `t3_harness*` folders | harness runs `base`, `terrain15m`, `landcover`, `aef`, `aefterrain` |
+| Table I and Fig. 3, skill scores | `metrics.csv`, `skill_ci.csv` in the `t3_harness*` folders; learned Tobler: `t3_learned_tobler/gate2_summary.csv` | `make_paper_table.py` prints Table I from them; every other number in the text: `paper_numbers.py NEW [OLD]` |
 | Fig. 4, per region | `t3_harness_terrain15m/loro_by_region.csv` | `terrain15m` |
 | Fig. 5, whole-hike time | `t3_harness_terrain15m/hike_times.csv` | `terrain15m` |
 | Eq. 1, the terrain-adjusted formula | `results/t4_terrain_curve/formula.json` | `t4_terrain_curve.py` |

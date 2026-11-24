@@ -7,15 +7,14 @@
 % (CSE 5999 and IEEE both require it).
 
 \textbf{Sources.} We use public GPS traces uploaded to
-OpenStreetMap (OSM)~\cite{osm} in 17 mountain regions of the United States
+OpenStreetMap (OSM)~\cite{osm} in 16 mountain regions of the United States
 and Canada (Fig.~\ref{fig:map}), chosen for relief, trail density and lidar
 coverage. The traces come from three sources: the OSM trackpoints API,
 which returns the timestamped points of identifiable and trackable uploads
 tile by tile; the original GPX files of identifiable uploads, which give
 whole hikes at the device's own sampling; and our lab's crawl of 1.5 million
 original files of public and identifiable uploads from 2016--2022, which
-keeps the timestamps the API drops. Sixteen regions combine all three; the
-Bay Area uses the crawl only, because the API times out on its tiles.
+keeps the timestamps the API drops. Every region combines all three.
 
 \textbf{Processing.} Each recording is cleaned (repeated timestamps,
 steps faster than 60~km/h), split at gaps over 5~min and thinned to points
@@ -26,17 +25,17 @@ region), and
 the matched path is cut into 50~m segments. Each segment records its moving
 speed, its signed slope along the direction of travel from the 5~m USGS
 3DEP elevation grid~\cite{sugarbaker2017status} (resampled from 1~m lidar
-under at least 83\% of walked trail in 13 regions), the OSM tags of its way
+under at least 83\% of walked trail in 12 regions), the OSM tags of its way
 and the trace's recording interval. Duplicate uploads are removed, and
 traces that start within 15~min and 1~km of each other form one outing (a
 group hike), the unit we resample. Travel mode is inferred per trace,
 anchored on trails closed to bikes and horses. Against the activity labels
-in 327 traces' files, 93\% of labelled hikes are classed as walking, and
-5\% of labelled traces we class as walking say bike or ski.
+in 334 traces' files, 92\% of labelled hikes are classed as walking, and
+5.5\% of labelled traces we class as walking say bike or ski.
 
-\textbf{The dataset.} The regions hold 2,876 hiking traces. The walking
-analysis set (walking traces on trails) has 290,640 segments (14,532~km)
-from 2,046 traces in 1,992 outings and 4,702 moving hours. Its uploaders are
+\textbf{The dataset.} The regions hold 2,654 hiking traces. The walking
+analysis set (walking traces on trails) has 284,711 segments (14,236~km)
+from 1,904 traces in 1,861 outings and 4,623 moving hours. Its uploaders are
 OSM mappers and enthusiasts rather than a random sample of hikers. Sparse
 traces read slow,
 because straight lines between points cut corners and short stops hide
@@ -47,9 +46,8 @@ measured speed by 11\%. The gains we report hold at every recording rate
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_map}
-\caption{The 17 regions. Circle area is walking hours (1,992 outings,
-4,702 h in total). Blue: full OSM download plus the lab crawl; orange: lab
-crawl only. Inset: the White Mountains' 34,535 walking segments colored by
+\caption{The 16 regions. Circle area is walking hours (1,861 outings,
+4,623 h in total). Inset: the White Mountains' 34,607 walking segments colored by
 speed.}
 \label{fig:map}
 \end{figure}

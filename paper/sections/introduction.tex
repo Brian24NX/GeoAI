@@ -43,17 +43,17 @@ satellite embeddings summarize imagery worldwide~\cite{brown2025alphaearth}.
 To our knowledge, no study has tested which of the two works in regions a
 model has never seen.
 
-We test it on public OpenStreetMap GPS traces~\cite{osm} from 17 mountain
+We test it on public OpenStreetMap GPS traces~\cite{osm} from 16 mountain
 regions of the United States and Canada. We contribute (i)~a dataset of
-290,640 walking traversals of 50~m trail segments (1,992 outings) with
+284,711 walking traversals of 50~m trail segments (1,861 outings) with
 slope, OSM tags and remote-sensing covariates (Sec.~\ref{sec:data});
 (ii)~a transfer test that holds out whole regions (also with their
 hikers), zones or half the continent and scores predictive distributions with the continuous ranked
 probability score (CRPS)~\cite{gneiting2007strictly}, against published
 hiking functions (Sec.~\ref{sec:methods}); and (iii)~the finding that
 terrain measured from elevation data transfers ($+2.1$ to $+2.8\%$ CRPS
-skill over a refitted slope curve in unseen regions, ahead of tags in 16 of
-17 with additive models), while tags add $+0.4$ to $+0.9\%$ and neither vegetation, from 30~m
+skill over a refitted slope curve in unseen regions, ahead of tags in 14 of
+16 with additive models), while tags add $+0.2$ to $+0.8\%$ and neither vegetation, from 30~m
 maps or lidar point clouds, nor satellite embeddings match it
 (Sec.~\ref{sec:results}). We also give a terrain-adjusted hiking function with one DEM-derived input
-($+1.0\%$).
+($+0.7\%$).

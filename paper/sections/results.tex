@@ -17,20 +17,20 @@ STRIDE as published (refitted).}
 \toprule
 Model & New hikes & New 10 km & \textbf{Unseen region} \\
 \midrule
-Tobler 1993 & $-12.8$ & $-12.7$ & $-12.5$ \\
-Campbell 2022 & $-0.9$ & $-0.9$ & $-0.5$ \\
-STRIDE 2024 & $-17.2$ ($+0.2$) & $-17.3$ ($+0.2$) & $-16.8$ ($+0.2$) \\
-OSM tags & $+1.3$ / $+1.5$ & $+1.1$ / $+1.5$ & $+0.9$ / $+0.4$ \\
-30 m vegetation & $+0.0$ / $+0.1$ & $-0.0$ / $-0.1$ & $-0.1$ / $-0.8$ \\
-Embeddings & $+1.4$ / $+2.6$ & $+1.4$ / $+1.9$ & $+1.1$ / $+1.1$ \\
-Lidar vegetation$^\dagger$ & $+0.4$ / $+0.5$ & $+0.4$ / $+0.3$ & $+0.3$ / $+0.2$ \\
-\textbf{Terrain} & $+2.2$ / $+3.2$ & $+2.1$ / $+2.8$ & $\mathbf{+2.1}$ / $\mathbf{+2.8}$ \\
-Terrain + emb.\ + tags & $+3.7$ / $+5.1$ & $+3.8$ / $+5.1$ & $+3.0$ / $+3.9$ \\
-Eq.~(1), one input & $+1.0$ & $+1.0$ & $+1.0$ \\
-Learned Tobler$^\ddagger$ & $+3.2$ ($+3.8$) & $+2.9$ ($+3.5$) & $+3.0$ ($+3.4$) \\
+Tobler 1993 & $-12.4$ & $-12.7$ & $-11.8$ \\
+Campbell 2022 & $-0.6$ & $-0.8$ & $+0.1$ \\
+STRIDE 2024 & $-16.5$ ($+0.2$) & $-17.1$ ($+0.2$) & $-16.0$ ($+0.2$) \\
+OSM tags & $+1.3$ / $+1.4$ & $+1.2$ / $+0.9$ & $+0.8$ / $+0.2$ \\
+30 m vegetation & $-0.1$ / $-0.1$ & $+0.0$ / $-0.2$ & $-0.6$ / $-1.4$ \\
+Embeddings & $+1.0$ / $+1.9$ & $+1.3$ / $+1.7$ & $+1.3$ / $+1.2$ \\
+Lidar vegetation$^\dagger$ & $+0.3$ / $+0.5$ & $+0.3$ / $+0.5$ & $+0.4$ / $+0.2$ \\
+\textbf{Terrain} & $+2.1$ / $+3.3$ & $+2.0$ / $+2.8$ & $\mathbf{+2.1}$ / $\mathbf{+2.8}$ \\
+Terrain + emb.\ + tags & $+3.2$ / $+5.0$ & $+3.6$ / $+4.9$ & $+3.4$ / $+3.7$ \\
+Eq.~(1), one input & $+1.1$ & $+0.9$ & $+0.7$ \\
+Learned Tobler$^\ddagger$ & $+3.2$ ($+4.0$) & $+3.0$ ($+3.6$) & $+3.0$ ($+4.0$) \\
 \bottomrule
 \end{tabular}\\[2pt]
-{\scriptsize $^\dagger$The 15 regions with lidar point clouds.
+{\scriptsize $^\dagger$The 14 regions with lidar point clouds.
 $^\ddagger$Terrain inputs; residual-quantile spread (its own Student-t
 spread); mean of 3 seeds.}
 \end{table}
@@ -57,7 +57,7 @@ outings) and the ratio each curve implies.}
 hikes in known regions (light; 95\% intervals resample outings) and in
 regions the model never saw (dark; intervals resample regions). (b) Each
 region held out:
-terrain vs OSM tags (additive models); terrain beats tags in 16 of 17.}
+terrain vs OSM tags (additive models); terrain beats tags in 14 of 16.}
 \label{fig:skill}
 \end{figure*}
 
@@ -66,78 +66,81 @@ terrain vs OSM tags (additive models); terrain beats tags in 16 of 17.}
 4.2~km/h on level to gently descending trail, not at 6~km/h
 (Fig.~\ref{fig:curve}a): Tobler's function is about 20\% too fast within
 $\pm$10\% grade and 18\% too slow on climbs steeper than 25\%, and in
-unseen regions it scores $-12.5\%$ (Table~\ref{tab:skill}), worse in all
-17. Campbell et al.'s published median curve~\cite{campbell2022variability}
+unseen regions it scores $-11.8\%$ (Table~\ref{tab:skill}), worse in all
+16. Campbell et al.'s published median curve~\cite{campbell2022variability}
 is about 20\% too fast on climbs steeper than 25\%; it ties our refit on
-average ($-0.5\%$) but ranges by region from $-3.8\%$ (White Mountains) to
-$+5.8\%$ (Shenandoah). Pooled over unseen regions, every model's 90\%
-intervals cover about 89\% of segments (as little as 81\% in the North
+average ($+0.1\%$) but ranges by region from $-3.6\%$ (Adirondacks) to
+$+3.2\%$ (Olympic). Pooled over unseen regions, every model's 90\%
+intervals cover 88--89\% of segments (as little as 81\% in the North
 Shore).
 
 \textbf{Downhill is faster, but less than Tobler implies.} For the same
-hiker on the same trail (2,763 out-and-back pairs from 1,145 outings;
+hiker on the same trail (2,688 out-and-back pairs from 1,084 outings;
 Fig.~\ref{fig:curve}b), descending is 8\% faster than climbing at
-3--10\% grade and 22--23\% above 20\%, not the 42\% Tobler implies. Our
+3--10\% grade and 21--24\% above 20\%, not the 42\% Tobler implies. Our
 pooled curve implies nearly the same ratios, so its asymmetry is not an
 artifact of who walks which slopes.
 
 \textbf{Map tags transfer less well.} OSM tags improve on the slope curve
-for new hikes in known regions ($+1.3\%$ / $+1.5\%$, additive / trees). In
-unseen regions the additive model keeps two thirds of that ($+0.9\%$
-[0.1, 1.7]) and the trees lose most of it ($+0.4\%$ [$-1.1$, 1.6]).
+for new hikes in known regions ($+1.3\%$ / $+1.4\%$, additive / trees). In
+unseen regions the additive model keeps about 60\% of that ($+0.8\%$
+[0.0, 1.6]) and the trees lose most of it ($+0.2\%$ [$-1.1$, 1.3]).
 
 \textbf{Terrain transfers.} Terrain from elevation gains nearly as much in
-unseen regions as within them, $+2.1\%$ [1.5, 3.1] / $+2.8\%$ [1.8, 4.1]. It
-beats tags in 16 of 17 held-out regions (Fig.~\ref{fig:skill}b; 14 of 17
-with trees) and, on average, even a slope curve refitted on the held-out
-region's own other hikers ($+1.2\%$). Terrain minus tags is $+0.7$ to
-$+2.2$ points (95\% interval), above zero in every bootstrap draw. Uneven
-grade inside the segment, which one average slope hides, carries over half
-of the gain: the hidden-climbing control alone gives $+1.2\%$ / $+1.6\%$.
+unseen regions as within them, $+2.1\%$ [1.3, 3.2] / $+2.8\%$ [1.8, 4.2]. It
+beats tags in 14 of 16 held-out regions (Fig.~\ref{fig:skill}b; North
+Shore is a tie; 13 of 16 with trees) and, on average, even a slope curve refitted on the held-out
+region's own other hikers ($+1.7\%$). Terrain minus tags is $+0.6$ to
+$+2.4$ points (95\% interval), above zero in every bootstrap draw. Uneven
+grade inside the segment, which one average slope hides, carries about half
+of the gain: the hidden-climbing control alone gives $+1.0\%$ / $+1.3\%$.
 Terrain is neither a region
-proxy (within regions it adds $\sim$1.9 points to a learned offset per
-region) nor a hiker proxy (it adds $\sim$2.3 points to the hiker's own
+proxy (within regions it adds $\sim$1.8 points to a learned offset per
+region) nor a hiker proxy (it adds $\sim$2.0 points to the hiker's own
 pace).
 % TODO (Brian, Results rewrite; decided 8 Nov, DECISIONS_LOG #130): one
 % sentence on learned Tobler (Table I, last row): it ties the trees with the
 % shared spread and beats them with its own; numbers in the Paper Rewrite Guide.
 
-No other input transfers as well. 30~m land cover and canopy add nothing.
-AlphaEarth embeddings help within regions ($+1.4\%$ / $+2.6\%$) but less,
-and less reliably, in unseen ones ($+1.1\%$).
+No other input transfers as well. 30~m land cover and canopy add nothing within
+regions and make unseen ones worse ($-0.6\%$ / $-1.4\%$).
+AlphaEarth embeddings help about half as much as terrain, within regions
+($+1.0\%$ / $+1.9\%$) and, less reliably, in unseen ones ($+1.3\%$
+[0.2, 2.9] / $+1.2\%$ [$-0.2$, 3.0]).
 % TODO (Brian; decided 8 Nov, #130): one sentence on aerial imagery (NAIP,
 % Tracks A and B): it helps within known regions, not in unseen ones; numbers
-% in the Paper Rewrite Guide. Vegetation from the lidar
-point clouds adds at most $+0.2$ points to terrain, within or across the
-15 regions. Terrain + tags gives $+2.6\%$ / $+3.0\%$ in unseen regions
+% in the Paper Rewrite Guide.
+Vegetation from the lidar
+point clouds adds at most $+0.25$ points to terrain, within or across the
+14 regions (in unseen regions the trees even lose 0.3). Terrain + tags gives $+2.6\%$ / $+3.0\%$ in unseen regions
 (Fig.~\ref{fig:skill}a).
-Published STRIDE~\cite{campbell2024stride} scores $-16.8\%$; refitted,
+Published STRIDE~\cite{campbell2024stride} scores $-16.0\%$; refitted,
 $+0.2\%$.
 
 \textbf{Robustness.} The terrain gain holds for newer hikes (trained to
-2019, tested on 2020 on: $+2.2\%$ / $+2.9\%$; tags $+0.9\%$), at
+2019, tested on 2020 on: $+2.1\%$ / $+2.9\%$; tags $+0.7\%$ / $+1.1\%$), at
 every GPS recording rate ($+1.7\%$ to $+2.4\%$ in unseen regions,
 additive) and with no
-neighbouring region in training: with a whole zone held out, $+1.9\%$ /
-$+2.7\%$ (tags $+0.7\%$ / $-0.1\%$); from West to East and back, $+2.6\%$
-/ $+3.3\%$ (tags $+1.5\%$ / $-0.3\%$). It also holds for hikers the
+neighbouring region in training: with a whole zone held out, $+1.8\%$ /
+$+2.5\%$ (tags $+0.8\%$ / $-0.0\%$); from West to East and back, $+2.1\%$
+/ $+2.5\%$ (tags $+0.8\%$ / $-0.4\%$). It also holds for hikers the
 model never saw: holding out uploaders instead of outings changes little
-($+2.2\%$ / $+3.2\%$), and leaving out a region together with everyone
-who hiked there (0.1--8.5\% of the training data) gives $+1.8\%$ /
-$+2.4\%$ (tags $+0.5\%$ / $-0.4\%$), above tags in every draw.
+($+2.2\%$ / $+3.1\%$), and leaving out a region together with everyone
+who hiked there (0.1--8.8\% of the training data) gives $+1.9\%$ /
+$+2.5\%$ (tags $+0.4\%$ / $+0.2\%$), above tags in every draw.
 % TODO (Brian, Results rewrite; decided 9 Nov, DECISIONS_LOG #131-#132): one
 % sentence on coarser elevation. Averaged to 10 m, terrain keeps its whole
-% gain in unseen regions (+2.1% / +2.6%); averaged to 30 m, +1.8% / +2.2%,
-% still above tags. From the real global 30 m DEM (Copernicus GLO-30, a
+% gain in unseen regions (+2.0% / +2.6%); averaged to 30 m, +1.7% / +2.1%,
+% still above tags (v1.1 numbers, 24 Nov; t3_coarse_dem/summary.md). From the real global 30 m DEM (Copernicus GLO-30, a
 % radar surface model) even the slope curve is 4.9% worse and terrain no
 % longer beats tags: a Limits clause (decided 10 Nov; discussion.tex). Numbers
 % in the Paper Rewrite Guide. Methods: half a clause on how; cite
 % copernicusdem (refs.bib).
 
-\textbf{Whole hikes: the hiker dominates.} Over 1,354 hike traces in held-out
+\textbf{Whole hikes: the hiker dominates.} Over 1,288 hike traces in held-out
 regions, the median error in moving time after the first kilometre is
-13.6\% for the slope curve and 13.0\% with terrain, but 10.0\% with the
-hiker's pace on that kilometre and 9.6\% with both.
+13.5\% for the slope curve and 13.1\% with terrain, but 9.9\% with the
+hiker's pace on that kilometre and 9.3\% with both.
 
 
 % Dropped for the 4-page budget (paper/OUTLINE.md); restore if space allows:

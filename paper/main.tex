@@ -67,16 +67,15 @@ St.\ Louis, MO, USA}
 % pages) and disclose the AI assistance.
 Estimates of walking time on trails still rely on Tobler's 1993 hiking
 function. We ask what corrects it in regions a model has never seen, using
-290,640 walking traversals of 50~m trail segments from public
-OpenStreetMap (OSM) GPS traces in 17 North American mountain regions.
+284,711 walking traversals of 50~m trail segments from public
+OpenStreetMap (OSM) GPS traces in 16 North American mountain regions.
 Holding out one region at a time and scoring calibrated predictive
-distributions (CRPS), we find Tobler's function 12.5\% worse than a
+distributions (CRPS), we find Tobler's function 11.8\% worse than a
 refitted slope curve. Terrain from elevation models, mostly airborne
 lidar, improves CRPS by 2.1--2.8\% in unseen regions and beats OSM trail
-tags in 16 of 17 (additive models); tags add 0.4--0.9\%, lidar vegetation
-adds little, and satellite embeddings help mainly where the model was
-trained. For the same hiker on
-the same trail, descending is 8--23\% faster than climbing, not 42\% as
+tags in 14 of 16 (additive models); tags add 0.2--0.8\%, lidar vegetation
+adds little, and satellite embeddings help about half as much as terrain. For the same hiker on
+the same trail, descending is 8--24\% faster than climbing, not 42\% as
 Tobler implies. A terrain-adjusted hiking function with one
 elevation-derived input keeps part of the gain, but a hiker's own pace still matters most over whole hikes.
 \end{abstract}
